@@ -44,6 +44,7 @@ class _SplashScreenState extends State<SplashScreen> {
     log(model?.toJson().toString() ?? "NULL");
     AppRouter.router.pushReplacement(AppRouter.onBoardingView);
     return;
+/*
     if (model?.id == null ||
         model?.refreshToken == null ||
         model?.accessToken == null) {
@@ -52,6 +53,7 @@ class _SplashScreenState extends State<SplashScreen> {
     } else {
       AppRouter.router.pushReplacement(AppRouter.homeView);
     }
+    */
   }
 
   @override
