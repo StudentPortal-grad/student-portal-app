@@ -20,10 +20,10 @@ abstract class AppRouter {
   static BuildContext? get context =>
       router.routerDelegate.navigatorKey.currentContext;
 
-  static const String splashView = '/splash';
+  static const String splashView = '/';
   static const String onBoardingView = '/boarding';
   static const String signupView = '/sing_up';
-  static const String otpView = '/';
+  static const String otpView = '/otp';
   static const String loginView = '/login';
   static const String setNewPassword = '/set_password';
   static const String forgetPasswordView = '/forget_password';

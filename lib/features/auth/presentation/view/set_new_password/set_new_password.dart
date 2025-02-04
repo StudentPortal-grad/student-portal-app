@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:student_portal/core/widgets/custom_appbar.dart';
 
 import '../../../../../core/loading/view/loading_dialog.dart';
 import '../../../../../core/utils/app_router.dart';
-import '../../../../../core/utils/assets_app.dart';
 import '../../../../../core/utils/text_styles.dart';
 import '../../../../../core/widgets/custom_app_button.dart';
 import '../../../../../core/widgets/custom_text_field.dart';
@@ -14,7 +12,6 @@ import '../../../../../core/widgets/custom_toast.dart';
 import '../../mange/set_new_password/set_new_password_bloc.dart';
 import '../../mange/set_new_password/set_new_password_event.dart';
 import '../../mange/set_new_password/set_new_password_state.dart';
-import '../login_view/widgets/custom_checker_data_view.dart';
 
 class SetNewPassword extends StatefulWidget {
   const SetNewPassword({super.key});

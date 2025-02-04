@@ -42,7 +42,7 @@ class _SplashScreenState extends State<SplashScreen> {
     TokenModel? model = await SecureStorage().readSecureData();
     // bool isFirst = await SecureStorage().readOnboardingData();
     log(model?.toJson().toString() ?? "NULL");
-    AppRouter.router.pushReplacement(AppRouter.loginView);
+    AppRouter.router.pushReplacement(AppRouter.onBoardingView);
     return;
     if (model?.id == null ||
         model?.refreshToken == null ||
