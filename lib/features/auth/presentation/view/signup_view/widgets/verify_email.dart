@@ -5,7 +5,8 @@ import 'package:student_portal/core/repo/user_repository.dart';
 import 'package:student_portal/features/auth/presentation/mange/login_bloc/login_state.dart';
 
 import '../../../../../../contestants.dart';
-import '../../../../../../core/utils/text_styles.dart';
+import '../../../../../../core/theming/colors.dart';
+import '../../../../../../core/theming/text_styles.dart';
 import '../../../../../../core/widgets/custom_app_button.dart';
 import '../../../../../../core/widgets/custom_pin_code_fields.dart';
 import '../../../../../../core/widgets/custom_toast.dart';
@@ -78,7 +79,7 @@ class _VerifyEmailState extends State<VerifyEmail> {
                 Text(
                   " ${UserRepository.user?.email ?? ''}",
                   style: Styles.subTitle
-                      .copyWith(fontSize: 12.sp, color: kMainColor),
+                      .copyWith(fontSize: 12.sp, color: ColorsManager.mainColor),
                 ),
                 SizedBox(height: 25.h),
                 Container(
@@ -112,8 +113,8 @@ class _VerifyEmailState extends State<VerifyEmail> {
                       style: TextStyle(
                         fontWeight: FontWeight.w600,
                         decoration: TextDecoration.underline,
-                        decorationColor: kMainColor,
-                        color: kMainColor,
+                        decorationColor: ColorsManager.mainColor,
+                        color: ColorsManager.mainColor,
                         fontSize: 14.sp,
                       ),
                     ),

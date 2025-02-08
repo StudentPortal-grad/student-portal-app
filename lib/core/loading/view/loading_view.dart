@@ -1,8 +1,8 @@
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:student_portal/core/theming/colors.dart';
 
-import '../../../contestants.dart';
 import '../../utils/assets_app.dart';
 
 class LoadingView extends StatefulWidget {
@@ -64,7 +64,7 @@ class _LoadingViewState extends State<LoadingView> {
             position: loadingProgress,
             decorator: const DotsDecorator(
               color: Color(0xffc9e1b9),
-              activeColor: kMainColor,
+              activeColor: ColorsManager.mainColor,
             ),
           )
         ],

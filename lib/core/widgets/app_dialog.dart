@@ -2,7 +2,7 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../contestants.dart';
+import '../theming/colors.dart';
 
 class AppDialogs {
   static void showErrorDialog(BuildContext context,
@@ -13,10 +13,10 @@ class AppDialogs {
       void Function()? onOkTap}) {
     AwesomeDialog(
       context: context,
-      btnOkColor: kMainColor,
+      btnOkColor: ColorsManager.mainColor,
       animType: AnimType.bottomSlide,
       padding: EdgeInsets.zero,
-      dialogBackgroundColor: kBackgroundColor,
+      dialogBackgroundColor: ColorsManager.backgroundColor,
       body: Padding(
         padding: EdgeInsets.symmetric(vertical: 20.h),
         child: Text(
@@ -50,7 +50,7 @@ class AppDialogs {
       bodyHeaderDistance: 0.0,
       body: body,
       btnOkText: okText,
-      btnOkColor: kMainColor,
+      btnOkColor: ColorsManager.mainColor,
       btnOkOnPress: onOkTap,
       dialogType: DialogType.noHeader,
       dismissOnBackKeyPress: dismissible,

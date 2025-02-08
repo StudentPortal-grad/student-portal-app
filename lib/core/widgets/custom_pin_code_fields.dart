@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
-import '../../contestants.dart';
+import '../theming/colors.dart';
 
 class CustomVerificationCode extends StatelessWidget {
   const CustomVerificationCode({
@@ -30,14 +30,14 @@ class CustomVerificationCode extends StatelessWidget {
       textStyle: TextStyle(fontSize: 30.sp, color: Colors.black),
       pinTheme: PinTheme(
         selectedFillColor: Colors.transparent,
-        selectedColor: kMainColor,
+        selectedColor: ColorsManager.mainColor,
         shape: PinCodeFieldShape.box,
         // fieldOuterPadding: EdgeInsets.all(5),
         borderRadius: BorderRadius.all(Radius.circular(16.sp)),
         fieldHeight: 60.h,
         fieldWidth: 55.w,
         errorBorderColor: Colors.red,
-        inactiveColor: kMainColor,
+        inactiveColor: ColorsManager.mainColor,
         inactiveFillColor: backgroundColor,
         activeFillColor: Colors.transparent,
         activeColor: Colors.transparent,

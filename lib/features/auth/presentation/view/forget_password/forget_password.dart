@@ -6,7 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../core/functions/validation.dart';
 import '../../../../../core/loading/view/loading_dialog.dart';
 import '../../../../../core/utils/app_router.dart';
-import '../../../../../core/utils/text_styles.dart';
+import '../../../../../core/theming/text_styles.dart';
 import '../../../../../core/widgets/custom_app_button.dart';
 import '../../../../../core/widgets/custom_appbar.dart';
 import '../../../../../core/widgets/custom_text_field.dart';

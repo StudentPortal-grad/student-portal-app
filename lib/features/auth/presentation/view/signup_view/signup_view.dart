@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../contestants.dart';
 import '../../../../../core/loading/view/loading_dialog.dart';
+import '../../../../../core/theming/colors.dart';
 import '../../../../../core/widgets/custom_toast.dart';
 import '../../mange/signup_bloc/signup_bloc.dart';
 import '../../mange/signup_bloc/signup_state.dart';
@@ -37,7 +38,7 @@ class _SignupViewState extends State<SignupView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: kBackgroundColor,
+      backgroundColor: ColorsManager.backgroundColor,
       resizeToAvoidBottomInset: true,
       body: BlocConsumer<SignupBloc, SignupState>(
         listener: (context, state) {

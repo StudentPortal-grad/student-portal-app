@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:student_portal/core/widgets/custom_appbar.dart';
-import '../../../../../contestants.dart';
 import '../../../../../core/loading/view/loading_dialog.dart';
+import '../../../../../core/theming/colors.dart';
 import '../../../../../core/utils/app_router.dart';
-import '../../../../../core/utils/text_styles.dart';
+import '../../../../../core/theming/text_styles.dart';
 import '../../../../../core/widgets/custom_app_button.dart';
 import '../../../../../core/widgets/custom_pin_code_fields.dart';
 import '../../../../../core/widgets/custom_toast.dart';
@@ -150,8 +150,8 @@ class _OtpViewState extends State<OtpView> {
                             style: TextStyle(
                               fontWeight: FontWeight.w400,
                               decoration: TextDecoration.underline,
-                              decorationColor: kMainColor,
-                              color: kMainColor,
+                              decorationColor: ColorsManager.mainColor,
+                              color: ColorsManager.mainColor,
                               fontSize: 14.sp,
                             ),
                           ),

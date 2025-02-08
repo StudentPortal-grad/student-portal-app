@@ -11,7 +11,7 @@ import '../utils/assets_app.dart';
 import 'loading_screen.dart';
 
 class CustomImageView extends StatelessWidget {
-  static const String namePackage = '.um'; // Project-specific file extension
+  static const String namePackage = 'com.example.student_portal'; // Project-specific file extension
   ///[imagePath] is required parameter for showing image
   String? imagePath;
 

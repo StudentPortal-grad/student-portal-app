@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../utils/assets_app.dart';
-import '../utils/text_styles.dart';
+import '../theming/text_styles.dart';
 
 class AuthTitle extends StatelessWidget {
   const AuthTitle({super.key, required this.title});

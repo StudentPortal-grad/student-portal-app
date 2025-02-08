@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:student_portal/features/auth/presentation/view/login_view/widgets/login_body.dart';
-import '../../../../../contestants.dart';
 import '../../../../../core/loading/view/loading_dialog.dart';
+import '../../../../../core/theming/colors.dart';
 import '../../../../../core/utils/app_router.dart';
 import '../../../../../core/widgets/custom_toast.dart';
 import '../../mange/login_bloc/login_bloc.dart';
@@ -14,7 +14,7 @@ class LoginView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: kBackgroundColor,
+      backgroundColor: ColorsManager.backgroundColor,
       body: SafeArea(
         child: BlocConsumer<LoginBloc, LoginState>(
           listener: (context, state) {

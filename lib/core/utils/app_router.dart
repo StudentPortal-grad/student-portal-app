@@ -11,6 +11,7 @@ import '../../features/auth/presentation/view/login_view/login_view.dart';
 import '../../features/auth/presentation/view/otp_view/otp_screen.dart';
 import '../../features/auth/presentation/view/set_new_password/set_new_password.dart';
 import '../../features/auth/presentation/view/signup_view/signup_view.dart';
+import '../../features/home_layout/ui/home_layout_screen.dart';
 import '../../features/onboarding/view/onboarding_view/onboarding_view.dart';
 import '../../features/onboarding/view/splash_view/splash_view.dart';
 import '../widgets/custom_animated_transition_page.dart';
@@ -20,7 +21,8 @@ abstract class AppRouter {
   static BuildContext? get context =>
       router.routerDelegate.navigatorKey.currentContext;
 
-  static const String splashView = '/';
+// auth
+  static const String splashView = '/s';
   static const String onBoardingView = '/boarding';
   static const String signupView = '/sing_up';
   static const String otpView = '/otp';
@@ -28,7 +30,7 @@ abstract class AppRouter {
   static const String setNewPassword = '/set_password';
   static const String forgetPasswordView = '/forget_password';
 
-  static const String homeView = '/home';
+  static const String homeView = '/';
 
   static final router = GoRouter(
     routes: [
@@ -62,7 +64,8 @@ abstract class AppRouter {
           state: state,
           child: withBlocProvider(
             create: (context) => LoginBloc(
-              loginUc: LoginUc(loginRepo: LoginRepoImpl(getIt.get<ApiService>())),
+              loginUc:
+                  LoginUc(loginRepo: LoginRepoImpl(getIt.get<ApiService>())),
             ),
             child: const LoginView(),
           ),
@@ -106,6 +109,14 @@ abstract class AppRouter {
           context: context,
           state: state,
           child: const SetNewPassword(),
+        ),
+      ),
+      GoRoute(
+        path: homeView,
+        pageBuilder: (context, state) => buildPage(
+          context: context,
+          state: state,
+          child: const HomeLayoutScreen(),
         ),
       ),
     ],

@@ -1,0 +1,85 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:student_portal/core/theming/colors.dart';
+import 'package:student_portal/core/utils/assets_app.dart';
+
+import '../../../../../core/widgets/custom_image_view.dart';
+
+class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
+  const HomeAppBar({super.key, this.height = 75});
+
+  final double height;
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadiusDirectional.vertical(
+            bottom: Radius.circular(35.r),
+          ),
+        ),
+        padding: EdgeInsetsDirectional.only(
+          top: 10.h,
+          start: 25.w,
+          bottom: 20.h,
+          end: 17.w,
+        ),
+        child: Row(
+          children: [
+            CustomImageView(
+              imagePath: 'https://avatars.githubusercontent.com/u/92533130',
+              circle: true,
+              height: 35.r,
+              width: 35.r,
+            ),
+            Spacer(),
+            _buildIconView(
+              onTap: () {},
+              iconPath: AssetsApp.searchIcon,
+            ),
+            _buildIconView(
+                onTap: () {},
+                iconPath: AssetsApp.notificationIcon,
+                isNotification: true),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildIconView({
+    Function()? onTap,
+    required String iconPath,
+    bool isNotification = false,
+  }) {
+    return InkWell(
+      onTap: onTap,
+      child: CircleAvatar(
+        radius: 30.r,
+        backgroundColor: ColorsManager.lightBabyBlue,
+        child: Stack(
+          alignment: Alignment.topRight,
+          children: [
+            CustomImageView(
+              imagePath: iconPath,
+              circle: true,
+              fit: BoxFit.none,
+              height: 24.r,
+              width: 24.r,
+            ),
+            if (isNotification)
+              CircleAvatar(
+                radius: 5.r,
+                backgroundColor: ColorsManager.mainColor,
+              )
+          ],
+        ),
+      ),
+    );
+  }
+
+  @override
+  Size get preferredSize => Size.fromHeight(height);
+}

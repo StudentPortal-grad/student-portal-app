@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../contestants.dart';
+import '../../../../core/theming/colors.dart';
 import '../../../../core/utils/app_router.dart';
 import '../../../../core/utils/assets_app.dart';
 import '../../../../core/utils/secure_storage.dart';
@@ -65,7 +65,7 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     final Size size = MediaQuery.sizeOf(context);
     return Scaffold(
-      backgroundColor: kBackgroundColor,
+      backgroundColor: ColorsManager.backgroundColor,
       body: Padding(
         padding: EdgeInsetsDirectional.only(
           top: size.height * 0.48,
@@ -87,7 +87,7 @@ class _SplashScreenState extends State<SplashScreen> {
               position: loadingProgress,
               decorator: const DotsDecorator(
                 color: Color(0xffc9e1b9),
-                activeColor: kMainColor,
+                activeColor: ColorsManager.mainColor,
               ),
             ),
           ],

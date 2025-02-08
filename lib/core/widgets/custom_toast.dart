@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-import '../../contestants.dart';
+import '../theming/colors.dart';
 import '../utils/app_router.dart';
 
 /// A customizable toast utility class.
@@ -68,7 +68,7 @@ class CustomToast {
     _showToast(
       toastBody: CustomToastBody(
         msg: message ?? "Success",
-        icon: const Icon(Icons.check, color: kMainColor),
+        icon: const Icon(Icons.check, color: ColorsManager.mainColor),
       ),
       durationInMillis: durationInMillis,
       gravity: gravity,
@@ -84,7 +84,7 @@ class CustomToast {
       toastBody: const CustomToastBody(
         msg: "Loading...",
         icon: CircularProgressIndicator(
-          color: kMainColor,
+          color: ColorsManager.mainColor,
           strokeWidth: 1.5,
         ),
       ),

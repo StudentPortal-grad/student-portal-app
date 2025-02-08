@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../contestants.dart';
+import '../theming/colors.dart';
 import '../utils/app_router.dart';
 
 class CustomLoginSignupButton extends StatelessWidget {
@@ -31,9 +31,9 @@ class CustomLoginSignupButton extends StatelessWidget {
             style: TextStyle(
               fontWeight: FontWeight.w400,
               fontSize: 14.sp,
-              color: kMainColor,
+              color: ColorsManager.mainColor,
               decoration: TextDecoration.underline,
-              decorationColor: kMainColor,
+              decorationColor: ColorsManager.mainColor,
             ),
           ),
         )

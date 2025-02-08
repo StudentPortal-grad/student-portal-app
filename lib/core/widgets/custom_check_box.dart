@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../contestants.dart';
+import '../theming/colors.dart';
 
 class CustomCheckBox extends StatefulWidget {
   const CustomCheckBox({super.key, required this.value, required this.onTap});
@@ -35,12 +35,12 @@ class _CustomCheckBoxState extends State<CustomCheckBox> {
         height: 20.83,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
-          color: (_value) ? kMainColor : const Color(0xff404040),
+          color: (_value) ? ColorsManager.mainColor : const Color(0xff404040),
         ),
         child: const Icon(
           Icons.check,
           size: 15,
-          color: kBackgroundColor,
+          color: ColorsManager.backgroundColor,
         ),
       ),
     );

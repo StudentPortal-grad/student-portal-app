@@ -4,7 +4,7 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../../../../contestants.dart';
+import '../../../../../../core/theming/colors.dart';
 
 class ChooseGenderButton extends StatelessWidget {
   const ChooseGenderButton({
@@ -64,7 +64,7 @@ class ChooseGenderButton extends StatelessWidget {
                   // Icon shown only in the dropdown menu
                   Icon(
                     item == 'male' ? Icons.male : Icons.female,
-                    color: kMainColor,
+                    color: ColorsManager.mainColor,
                   ),
                 ],
               ),

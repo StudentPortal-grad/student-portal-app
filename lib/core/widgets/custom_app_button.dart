@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../contestants.dart';
+import '../theming/colors.dart';
 
 class CustomAppButton extends StatelessWidget {
   const CustomAppButton({
     super.key,
     required this.label,
     required this.onTap,
-    this.backgroundColor = kMainColor,
+    this.backgroundColor = ColorsManager.mainColor,
     this.width = 300,
     this.height = 50,
     this.splashColor = const Color(0xffEAEAEA),

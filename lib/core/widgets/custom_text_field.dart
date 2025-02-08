@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../contestants.dart';
+import '../theming/colors.dart';
 
 class CustomTextField extends StatefulWidget {
   const CustomTextField({
@@ -136,7 +136,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
               ),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(widget.borderRadius?.r ?? 0),
-                borderSide: BorderSide(color: widget.activeBorderColor ?? kMainColor),
+                borderSide: BorderSide(color: widget.activeBorderColor ?? ColorsManager.mainColor),
               ),
               prefix: const SizedBox(width: 8),
 

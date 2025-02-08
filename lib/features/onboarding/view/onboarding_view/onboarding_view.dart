@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:student_portal/features/onboarding/view/onboarding_view/widgets/onboarding_body.dart';
 
 import '../../../../contestants.dart';
+import '../../../../core/theming/colors.dart';
 import '../../../../core/utils/app_router.dart';
 import '../../../../core/utils/secure_storage.dart';
 import '../../../../core/widgets/custom_app_button.dart';
@@ -62,7 +63,7 @@ class _OnboardingViewState extends State<OnboardingView> {
             mainAxisSize: MainAxisSize.min,
             position: index,
             decorator: const DotsDecorator(
-              activeColor: kMainColor,
+              activeColor: ColorsManager.mainColor,
               color: Color(0xffc9e1b9),
               activeSize: Size(10, 10),
               size: Size(8, 8),

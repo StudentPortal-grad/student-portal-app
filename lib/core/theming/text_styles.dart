@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:student_portal/contestants.dart';
+
+import 'colors.dart';
 
 abstract class Styles {
   static  TextStyle title = TextStyle(
     fontWeight: FontWeight.w700,
-    color: kMainColor,
+    color: ColorsManager.mainColor,
     fontSize: 22.sp,
   );
   static TextStyle subTitle = TextStyle(
