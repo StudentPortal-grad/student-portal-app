@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-// <!--03256A-->
-// <!--0659FD-->
-class ColorsManager {
+
+abstract class ColorsManager {
   static const Color backgroundColor = Color(0xffe0e0e0);
   static const Color mainColor = Color(0xff0659FD);
   static const Color mainColorDeep = Color(0xff25215E);
@@ -9,7 +8,7 @@ class ColorsManager {
   static const Color mainColorLight = Color(0xff0659FD);
   static const Color mainColorLightAccent = Color(0xFF457ABD);
   static const Color purple = Color(0xFF482E8C);
-  static const Color grayColor = Color(0xFF828282);
+  static const Color grayColor = Color(0xff8F92A1);
   static const Color babyBlue = Color(0xFFF0F2FF);
   static const Color lightBabyBlue = Color(0xffF5F8FF);
   static const Color silverColor = Color(0xFF8C8C9D);
@@ -23,4 +22,5 @@ class ColorsManager {
   static const Color tealColor = Color(0xFF2A9D8F);
   static const Color yellowColor = Color(0xFFF8CA55);
   static const Color black54 = Color(0xff545468);
+  static const Color black41 = Color(0xff414651);
 }

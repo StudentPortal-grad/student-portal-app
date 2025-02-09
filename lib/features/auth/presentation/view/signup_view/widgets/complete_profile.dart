@@ -32,12 +32,12 @@ class CompleteProfileView extends StatelessWidget {
                 SizedBox(height: 20.h),
                 Text(
                   "Let’s complete your profile",
-                  style: Styles.title,
+                  style: Styles.font22w700,
                 ),
                 SizedBox(height: 15.h),
                 Text(
                   "It will help us to know more about you!",
-                  style: Styles.subTitle,
+                  style: Styles.font12w400,
                 ),
                 SizedBox(height: 30.h),
 

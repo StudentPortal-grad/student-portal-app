@@ -25,4 +25,7 @@ abstract class AssetsApp {
   static const String eventIcon = "$iconPath/events_icon.svg";
   static const String resourcesIcon = "$iconPath/resources.svg";
   static const String profileIcon = "$iconPath/profile_icon.svg";
+  static const String arrowUpIcon = "$iconPath/arrow_up.svg";
+  static const String arrowDownIcon = "$iconPath/arrow_down.svg";
+  static const String shareIcon = "$iconPath/share.svg";
 }

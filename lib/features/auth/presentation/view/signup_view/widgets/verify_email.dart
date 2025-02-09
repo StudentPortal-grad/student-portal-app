@@ -68,17 +68,17 @@ class _VerifyEmailState extends State<VerifyEmail> {
               children: [
                 Text(
                   "Verify your email",
-                  style: Styles.title.copyWith(fontSize: 28.sp),
+                  style: Styles.font22w700.copyWith(fontSize: 28.sp),
                 ),
                 SizedBox(height: 15.h),
                 Text(
                   " Please fill the code to confirm your email",
-                  style: Styles.subTitle.copyWith(fontSize: 16.sp),
+                  style: Styles.font12w400.copyWith(fontSize: 16.sp),
                 ),
                 SizedBox(height: 5.h),
                 Text(
                   " ${UserRepository.user?.email ?? ''}",
-                  style: Styles.subTitle
+                  style: Styles.font12w400
                       .copyWith(fontSize: 12.sp, color: ColorsManager.mainColor),
                 ),
                 SizedBox(height: 25.h),

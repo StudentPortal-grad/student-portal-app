@@ -93,7 +93,7 @@ class _OtpViewState extends State<OtpView> {
               appBar: CustomAppBar(
                 title: Text(
                   'Enter OTP',
-                  style: Styles.title.copyWith(
+                  style: Styles.font22w700.copyWith(
                     color: Color(0xff33384B),
                   ),
                 ),
@@ -108,12 +108,12 @@ class _OtpViewState extends State<OtpView> {
                   children: [
                     Text(
                       "We’ve sent an OTP code to your email",
-                      style: Styles.subTitle.copyWith(fontSize: 16.sp),
+                      style: Styles.font12w400.copyWith(fontSize: 16.sp),
                     ),
                     SizedBox(height: 8.h),
                     Text(
                       " ${widget.email}",
-                      style: Styles.subTitle.copyWith(
+                      style: Styles.font12w400.copyWith(
                         fontSize: 14.sp,
                         color: Colors.black,
                         fontWeight: FontWeight.w600,

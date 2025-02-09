@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:student_portal/core/theming/colors.dart';
@@ -24,6 +26,7 @@ class _HomeLayoutScreenState extends State<HomeLayoutScreen> {
   int currentIndex = 0;
 
   void _onItemTapped(int index) {
+    log("index $index");
     setState(() {
       currentIndex = index;
     });
@@ -32,6 +35,7 @@ class _HomeLayoutScreenState extends State<HomeLayoutScreen> {
   List<Widget> widgetOptions = <Widget>[
     HomeScreen(),
     HomeScreen(),
+    SizedBox.shrink(),
     HomeScreen(),
     HomeScreen(),
   ];
@@ -44,6 +48,7 @@ class _HomeLayoutScreenState extends State<HomeLayoutScreen> {
       bottomNavigationBar: CustomNavBar(
         selectedItemColor: ColorsManager.mainColorLight,
         floatingOnTap: () {
+          print('Floating button tapped');
         },
         unselectedItemColor: ColorsManager.mainColorDark,
         onTap: _onItemTapped,
@@ -58,22 +63,10 @@ class _HomeLayoutScreenState extends State<HomeLayoutScreen> {
   static List<NavBarButtonItem> _buildNavBarItems() {
     return [
       NavBarButtonItem(iconPath: AssetsApp.homeIcon, title: "Home"),
-      NavBarButtonItem(
-        iconPath: AssetsApp.eventIcon,
-        title: "Events",
-      ),
-      NavBarButtonItem(
-        iconPath: 'add',
-        title: "Add",
-      ),
-      NavBarButtonItem(
-        iconPath: AssetsApp.resourcesIcon,
-        title: "Resources",
-      ),
-      NavBarButtonItem(
-        iconPath: AssetsApp.chatIcon,
-        title: "Chat",
-      ),
+      NavBarButtonItem(iconPath: AssetsApp.eventIcon, title: "Events"),
+      NavBarButtonItem(iconPath: 'add', title: "Add"),
+      NavBarButtonItem(iconPath: AssetsApp.resourcesIcon, title: "Resources"),
+      NavBarButtonItem(iconPath: AssetsApp.chatIcon, title: "Chat"),
     ];
   }
 }

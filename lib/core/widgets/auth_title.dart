@@ -22,7 +22,7 @@ class AuthTitle extends StatelessWidget {
         SizedBox(width: 10.w),
         Text(
           title,
-          style: Styles.title,
+          style: Styles.font22w700,
         ),
       ],
     );

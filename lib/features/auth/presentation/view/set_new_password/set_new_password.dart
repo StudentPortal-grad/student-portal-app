@@ -65,7 +65,7 @@ class _SetNewPasswordState extends State<SetNewPassword> {
               appBar: CustomAppBar(
                 title: Text(
                   'Set New Password',
-                  style: Styles.title.copyWith(
+                  style: Styles.font22w700.copyWith(
                     color: Color(0xff33384B),
                   ),
                 ),

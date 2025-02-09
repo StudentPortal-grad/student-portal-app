@@ -68,7 +68,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
             appBar: CustomAppBar(
               title: Text(
                 'Forgot Password',
-                style: Styles.title.copyWith(
+                style: Styles.font22w700.copyWith(
                   color: Color(0xff33384B),
                 ),
               ),
