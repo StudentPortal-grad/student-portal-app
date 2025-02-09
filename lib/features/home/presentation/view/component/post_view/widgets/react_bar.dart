@@ -7,8 +7,22 @@ import '../../../../../../../core/theming/text_styles.dart';
 import '../../../../../../../core/utils/assets_app.dart';
 import '../../../../../../../core/widgets/custom_image_view.dart';
 
-class ReactBar extends StatelessWidget {
+class ReactBar extends StatefulWidget {
   const ReactBar({super.key});
+
+  @override
+  State<ReactBar> createState() => _ReactBarState();
+}
+
+class _ReactBarState extends State<ReactBar> {
+  int react = 0;
+
+  void _onItemTapped(int index) {
+    setState(() {
+      react = index;
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -17,17 +31,19 @@ class ReactBar extends StatelessWidget {
       child: Row(
         children: [
           CustomImageView(
+            onTap: () => _onItemTapped((react == 1) ? 0 : 1 ),
             imagePath: AssetsApp.arrowUpIcon,
-            color: ColorsManager.mainColorDark,
+            color: react == 1 ? ColorsManager.mainColorDark : null,
             width: 16.w,
             height: 16.h,
           ),
           4.widthBox,
-          Text('215', style: Styles.font14w500),
+          Text(react.toString(), style: Styles.font14w500),
           4.widthBox,
           CustomImageView(
+            onTap: () => _onItemTapped((react == -1) ? 0 : -1),
             imagePath: AssetsApp.arrowDownIcon,
-            // color: ColorsManager.orangeColor,
+            color: react == -1 ? ColorsManager.orangeColor : null,
             width: 16.w,
             height: 16.h,
           ),

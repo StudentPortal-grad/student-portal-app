@@ -21,6 +21,7 @@ class CustomImageView extends StatelessWidget {
   BoxFit? fit;
   final String placeHolder;
   final Widget? placeHolderWidget;
+  final bool materialNeeded;
   Alignment? alignment;
   VoidCallback? onTap;
   EdgeInsetsGeometry? margin;
@@ -49,6 +50,7 @@ class CustomImageView extends StatelessWidget {
     this.matchTextDirection = false,
     this.placeHolder = AssetsApp.logo,
     this.placeHolderWidget,
+    this.materialNeeded = false,
   });
 
   @override
@@ -63,13 +65,20 @@ class CustomImageView extends StatelessWidget {
 
   Widget _buildWidget() {
     log('imagePath: ${imagePath ?? 'NULL'}');
-    return InkWell(
+    Widget body = InkWell(
       onTap: onTap,
       child: Padding(
         padding: margin ?? EdgeInsets.zero,
         child: _buildCircleImage(),
       ),
     );
+    if (materialNeeded) {
+      return Material(
+        type: MaterialType.transparency,
+        child: body,
+      );
+    }
+    return body;
   }
 
   ///build the image with border radius

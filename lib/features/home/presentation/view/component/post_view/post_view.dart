@@ -4,14 +4,15 @@ import 'package:student_portal/core/helpers/app_size_boxes.dart';
 import 'package:student_portal/core/theming/colors.dart';
 import 'package:student_portal/core/theming/text_styles.dart';
 import 'package:student_portal/features/home/presentation/view/component/post_view/widgets/category_tag_view.dart';
+import 'package:student_portal/features/home/presentation/view/component/post_view/widgets/post_list_images_view.dart';
 import 'package:student_portal/features/home/presentation/view/component/post_view/widgets/react_bar.dart';
 import 'package:student_portal/features/home/presentation/view/component/post_view/widgets/user_post_view.dart';
 
-import '../../../../../../core/widgets/custom_image_view.dart';
 
 class PostView extends StatelessWidget {
-  const PostView({super.key});
+  const PostView({super.key, required this.id});
 
+  final int id;
   static List<String> dummyTags = [
     'AI',
     'Researchers',
@@ -25,6 +26,12 @@ class PostView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
+        boxShadow: [
+          BoxShadow(
+              color: Colors.black.withValues(alpha: 0.4),
+              blurRadius: 7,
+              blurStyle: BlurStyle.outer),
+        ],
         color: Colors.white,
         borderRadius: BorderRadius.all(
           Radius.circular(10.r),
@@ -54,14 +61,10 @@ class PostView extends StatelessWidget {
             style: Styles.font12w400.copyWith(color: ColorsManager.grayColor),
           ),
           30.heightBox,
-          Center(
-            child: CustomImageView(
-              imagePath:
-                  'https://www.news10.com/wp-content/uploads/sites/64/2024/11/674205c2471ac7.00644903.jpeg?w=960&h=540&crop=1',
-              height: 200.h,
-              fit: BoxFit.cover,
-            ),
-          ),
+          // todo: handle it if attached pdf
+
+          PostListImagesView(),
+
           17.heightBox,
           // react bar
           ReactBar(),
@@ -70,3 +73,4 @@ class PostView extends StatelessWidget {
     );
   }
 }
+
