@@ -28,4 +28,8 @@ abstract class AssetsApp {
   static const String arrowUpIcon = "$iconPath/arrow_up.svg";
   static const String arrowDownIcon = "$iconPath/arrow_down.svg";
   static const String shareIcon = "$iconPath/share.svg";
+  static const String fileIcon = "$iconPath/file.svg";
+  static const String commentIcon = "$iconPath/comment.svg";
+
+
 }

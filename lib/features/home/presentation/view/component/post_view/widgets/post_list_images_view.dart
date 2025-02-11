@@ -17,6 +17,9 @@ class _PostListImagesViewState extends State<PostListImagesView> {
 
   @override
   Widget build(BuildContext context) {
+    // if(false){  if list's length == 1
+    //   return PostImageView(id: 1);
+    // }
     return Stack(
       alignment: Alignment.topRight,
       children: [
@@ -46,7 +49,7 @@ class _PostListImagesViewState extends State<PostListImagesView> {
             borderRadius: BorderRadius.all(Radius.circular(13.r)),
           ),
           padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 5.h),
-          child: Text('$currentIndex/4', style: TextStyle(color: Colors.white)),
+          child: Text('$currentIndex/5', style: TextStyle(color: Colors.white)),
         )
       ],
     );
@@ -64,7 +67,7 @@ class PostImageView extends StatelessWidget {
       tag: 'image$id',
       child: CustomImageView(
         materialNeeded: true,
-        onTap: () => push(ImagePostView(id: hashCode)),
+        onTap: () => push(ImagePostView(id: id)),
         imagePath:
             'https://www.news10.com/wp-content/uploads/sites/64/2024/11/674205c2471ac7.00644903.jpeg?w=960&h=540&crop=1',
         height: 200.h,

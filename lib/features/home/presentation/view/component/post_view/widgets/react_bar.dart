@@ -49,7 +49,7 @@ class _ReactBarState extends State<ReactBar> {
           ),
           Spacer(),
           CustomImageView(
-            imagePath: AssetsApp.chatIcon,
+            imagePath: AssetsApp.commentIcon,
             color: Colors.grey[300],
             width: 16.w,
             height: 16.h,

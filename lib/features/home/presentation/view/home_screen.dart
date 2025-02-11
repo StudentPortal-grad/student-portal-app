@@ -19,7 +19,7 @@ class HomeScreen extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 28.w, vertical: 15.h),
         separatorBuilder: (context, index) => 15.heightBox,
         itemBuilder: (context, index) => PostView(id: index),
-        itemCount: 5,
+        itemCount: 1,
       ),
     );
   }

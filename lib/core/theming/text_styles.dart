@@ -27,4 +27,10 @@ abstract class Styles {
     fontSize: 14.sp,
     fontWeight: FontWeight.w500,
   );
+
+  static TextStyle font14w400 = TextStyle(
+    color: Color(0xFF535862),
+    fontSize: 14.sp,
+    fontWeight: FontWeight.w400,
+  );
 }
