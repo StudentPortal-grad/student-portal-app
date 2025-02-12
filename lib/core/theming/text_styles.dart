@@ -9,12 +9,29 @@ abstract class Styles {
     color: ColorsManager.mainColor,
     fontSize: 22.sp,
   );
+  static TextStyle font16w700 = TextStyle(
+    fontWeight: FontWeight.w700,
+    color: ColorsManager.mainColor,
+    fontSize: 16.sp,
+  );
+
+  static TextStyle font15w600 = TextStyle(
+    fontWeight: FontWeight.w600,
+    color: ColorsManager.blackColor,
+    fontSize: 15.sp,
+  );
+
   static TextStyle font12w400 = TextStyle(
     fontWeight: FontWeight.w400,
     fontSize: 12.sp,
     color: Color(0xff7D8A95),
   );
 
+  static TextStyle font18w600 = TextStyle(
+    fontWeight: FontWeight.w600,
+    fontSize: 18.sp,
+    color: ColorsManager.textColor,
+  );
   static TextStyle font14w700 = TextStyle(
     color: Color(0xFF0C1326),
     fontSize: 14,

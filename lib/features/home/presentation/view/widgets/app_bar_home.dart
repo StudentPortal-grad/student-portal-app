@@ -29,6 +29,9 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
         child: Row(
           children: [
             CustomImageView(
+              onTap: () {
+                Scaffold.of(context).openDrawer();
+              },
               imagePath: 'https://avatars.githubusercontent.com/u/92533130',
               circle: true,
               height: 35.r,
