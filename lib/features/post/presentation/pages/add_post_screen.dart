@@ -47,8 +47,8 @@ class _AddPostScreenState extends State<AddPostScreen> {
         : AppDialogs.showDialog(
             context,
             alignment: AlignmentDirectional.bottomCenter,
-            body: DialogWarningBody(
-              iconWidget: DialogWarningBody.warmingIcon,
+            body: WarningDialogBody(
+              iconWidget: WarningDialogBody.warmingIcon,
               onTap: () {
                 pop();
                 AppRouter.router.pop();
