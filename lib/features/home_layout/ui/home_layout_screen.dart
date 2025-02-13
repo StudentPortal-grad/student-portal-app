@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:student_portal/core/theming/colors.dart';
+import 'package:student_portal/core/theming/text_styles.dart';
 import 'package:student_portal/core/utils/assets_app.dart';
 import 'package:student_portal/features/home_layout/ui/widgets/drawer.dart';
 import 'package:student_portal/features/home_layout/ui/widgets/nav_bar.dart';
@@ -26,11 +27,18 @@ class _HomeLayoutScreenState extends State<HomeLayoutScreen> {
   // }
 
   int currentIndex = 0;
+  bool isMenuOpen = false;
 
   void _onItemTapped(int index) {
     log("index $index");
     setState(() {
       currentIndex = index;
+    });
+  }
+
+  void toggleShowPopMenu() {
+    setState(() {
+      isMenuOpen = !isMenuOpen;
     });
   }
 
@@ -50,9 +58,11 @@ class _HomeLayoutScreenState extends State<HomeLayoutScreen> {
       body: widgetOptions[currentIndex],
       drawer: AppDrawer(),
       bottomNavigationBar: CustomNavBar(
+        isMenuOpen: isMenuOpen,
         selectedItemColor: ColorsManager.mainColorLight,
         floatingOnTap: () {
-          print('Floating button tapped');
+          toggleShowPopMenu();
+          _showPopupMenu(context, Offset(0.66.sw, 0.66.sh));
         },
         unselectedItemColor: ColorsManager.mainColorDark,
         onTap: _onItemTapped,
@@ -72,5 +82,35 @@ class _HomeLayoutScreenState extends State<HomeLayoutScreen> {
       NavBarButtonItem(iconPath: AssetsApp.resourcesIcon, title: "Resources"),
       NavBarButtonItem(iconPath: AssetsApp.chatIcon, title: "Chat"),
     ];
+  }
+
+  void _showPopupMenu(BuildContext context, Offset position) async {
+    final RenderBox overlay =
+        Overlay.of(context).context.findRenderObject() as RenderBox;
+    await showMenu(
+      color: Colors.white,
+      context: context,
+      position: RelativeRect.fromRect(
+        position & Size(50.w, 50.h), // Position of tap
+        Offset.zero & overlay.size, // Full screen
+      ),
+      items: [
+        PopupMenuItem<String>(
+          value: 'write_post',
+          child: Text('Write a Post', style: Styles.font16w500),
+          onTap: () {},
+        ),
+        PopupMenuItem<String>(
+          value: 'create_community',
+          child: Text('Create a Community', style: Styles.font16w500),
+          onTap: () {},
+        ),
+        PopupMenuItem<String>(
+          value: 'upload_resource',
+          child: Text('Upload a Resource', style: Styles.font16w500),
+          onTap: () {},
+        ),
+      ],
+    ).then((value) => toggleShowPopMenu());
   }
 }

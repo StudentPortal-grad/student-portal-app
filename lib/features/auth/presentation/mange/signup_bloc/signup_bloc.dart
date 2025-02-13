@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:student_portal/core/functions/validation.dart';
+import '../../../../../core/helpers/app_regex.dart';
 import '../../../../../core/network/api_service.dart';
 import '../../../../../core/utils/secure_storage.dart';
 import '../../../../../core/utils/service_locator.dart';
@@ -91,14 +91,14 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
   void _onPasswordStrengthChecked(
       PasswordStrengthChecked event, Emitter<SignupState> emit) {
     List<bool> strengthCriteria =
-        Validation.checkPasswordStrength(event.password);
+    AppRegex.checkPasswordStrength(event.password);
     emit(PasswordStrengthUpdated(strengthCriteria: strengthCriteria));
   }
 
   void _onConfirmPasswordChecked(
       ConfirmPasswordChecked event, Emitter<SignupState> emit) {
     bool isMatching = event.password == event.confirmPassword &&
-        Validation.checkPasswordStrength(event.password).every((c) => c);
+        AppRegex.checkPasswordStrength(event.password).every((c) => c);
     emit(ConfirmPasswordUpdated(isMatching: isMatching));
   }
 }

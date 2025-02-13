@@ -44,6 +44,11 @@ abstract class Styles {
     fontSize: 14.sp,
     fontWeight: FontWeight.w500,
   );
+  static TextStyle font16w500 = TextStyle(
+    color: Color(0xff181D27),
+    fontSize: 16.sp,
+    fontWeight: FontWeight.w500,
+  );
 
   static TextStyle font14w400 = TextStyle(
     color: Color(0xFF535862),

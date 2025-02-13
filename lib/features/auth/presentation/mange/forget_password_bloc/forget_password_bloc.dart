@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:student_portal/core/functions/validation.dart';
 import 'package:student_portal/features/auth/domain/usecases/forget_password_uc.dart';
+import '../../../../../core/helpers/app_regex.dart';
 import '../../../../../core/network/api_service.dart';
 import '../../../../../core/utils/service_locator.dart';
 import '../../../data/repo_impl/forget_password_impl.dart';
@@ -31,7 +31,7 @@ class ForgetPasswordBloc
 
   void _onForgetPasswordEmailValidation(
       ForgetPasswordEmailValidation event, Emitter<ForgetPasswordState> emit) {
-    bool isValid = (Validation.validateEmail(event.email) == null);
+    bool isValid = (AppRegex.validateEmail(event.email) == null);
     emit(ForgetPasswordEmailValidated(validEmail: isValid));
   }
 }

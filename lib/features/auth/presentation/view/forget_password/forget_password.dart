@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../../../core/functions/validation.dart';
+import '../../../../../core/helpers/app_regex.dart';
 import '../../../../../core/loading/view/loading_dialog.dart';
 import '../../../../../core/utils/app_router.dart';
 import '../../../../../core/theming/text_styles.dart';
@@ -90,7 +90,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                     builder: (context, state) {
                       return CustomTextField(
                         controller: emailController,
-                        validator: (value) => Validation.validateEmail(value),
+                        validator: (value) => AppRegex.validateEmail(value),
                         textInputType: TextInputType.emailAddress,
                         onChanged: (value) {
                           context

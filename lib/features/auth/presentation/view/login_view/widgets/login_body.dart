@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:student_portal/core/functions/validation.dart';
 
+import '../../../../../../core/helpers/app_regex.dart';
 import '../../../../../../core/utils/app_router.dart';
 import '../../../../../../core/widgets/auth_title.dart';
 import '../../../../../../core/widgets/custom_app_button.dart';
@@ -59,7 +59,7 @@ class _LoginBodyState extends State<LoginBody> {
                 labelText: 'Email',
                 hintText: "Please Enter Your Email",
                 controller: emailController,
-                validator: (value) => Validation.validateEmail(value),
+                validator: (value) => AppRegex.validateEmail(value),
                 textInputType: TextInputType.emailAddress,
                 onChanged: (value) => context
                     .read<LoginBloc>()
@@ -74,7 +74,7 @@ class _LoginBodyState extends State<LoginBody> {
                 controller: passwordController,
                 labelText: 'Password',
                 hintText: "Please Enter Your Password",
-                validator: (value) => Validation.validatePassword(value),
+                validator: (value) => AppRegex.validatePassword(value),
                 maxLines: 1,
                 textInputType: TextInputType.visiblePassword,
                 onChanged: (value) => context

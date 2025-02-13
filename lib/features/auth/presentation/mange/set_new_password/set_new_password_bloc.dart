@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:student_portal/core/functions/validation.dart';
 import '../../../../../core/errors/data/model/error_model/error_model.dart';
+import '../../../../../core/helpers/app_regex.dart';
 import '../../../../../core/network/api_service.dart';
 import '../../../../../core/utils/secure_storage.dart';
 import '../../../../../core/utils/service_locator.dart';
@@ -46,14 +46,14 @@ class SetNewPasswordBloc extends Bloc<SetNewPasswordEvent, SetNewPasswordState> 
 
   void _onPasswordStrengthChecked(
       PasswordStrengthChecked event, Emitter<SetNewPasswordState> emit) {
-    List<bool> strengthCriteria = Validation.checkPasswordStrength(event.password);
+    List<bool> strengthCriteria = AppRegex.checkPasswordStrength(event.password);
     emit(SetNewPasswordStrengthChecked(strengthCriteria: strengthCriteria));
   }
 
   void _onConfirmPasswordChecked(
       ConfirmPasswordChecked event, Emitter<SetNewPasswordState> emit) {
     bool isMatching = event.password == event.confirmPassword &&
-        Validation.checkPasswordStrength(event.password).every((criterion) => criterion);
+        AppRegex.checkPasswordStrength(event.password).every((criterion) => criterion);
     emit(SetNewPasswordConfirmed(isMatching: isMatching));
   }
 }

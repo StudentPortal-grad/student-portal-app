@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:student_portal/core/functions/validation.dart';
 import 'package:student_portal/core/widgets/auth_title.dart';
+import '../../../../../../core/helpers/app_regex.dart';
 import '../../../../../../core/widgets/custom_app_button.dart';
 import '../../../../../../core/widgets/custom_login_signup_button.dart';
 import '../../../../../../core/widgets/custom_text_field.dart';
@@ -85,7 +85,7 @@ class _SignupBodyState extends State<SignupBody> {
                     onChanged: (value) {
                       // todo : check if email is valid
                     },
-                    validator: (value) => Validation.validateEmail(value),
+                    validator: (value) => AppRegex.validateEmail(value),
                   );
                 },
               ),

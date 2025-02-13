@@ -15,6 +15,7 @@ class CustomNavBar extends StatelessWidget {
     this.barMargin = EdgeInsets.zero,
     this.itemPadding = const EdgeInsets.symmetric(vertical: 20),
     this.floatingOnTap,
+    this.isMenuOpen = false,
   });
 
   final List<NavBarButtonItem> items;
@@ -25,6 +26,7 @@ class CustomNavBar extends StatelessWidget {
   final Color? unselectedItemColor;
   final EdgeInsets barMargin;
   final EdgeInsets itemPadding;
+  final bool isMenuOpen;
   final Function()? floatingOnTap;
 
   @override
@@ -56,15 +58,20 @@ class CustomNavBar extends StatelessWidget {
                   width: 35.w,
                   height: 35.h,
                   decoration: BoxDecoration(
-                    color: ColorsManager.mainColorDark,
+                    color: isMenuOpen ? ColorsManager.mainColor : ColorsManager.mainColorDark,
                     shape: BoxShape.circle,
                   ),
                   child: InkWell(
                     onTap: floatingOnTap,
-                    child: Icon(
-                      Icons.add,
-                      color: Colors.white,
-                      size: 22.sp,
+                    child: AnimatedSwitcher(
+                      duration: const Duration(milliseconds: 300),
+                        transitionBuilder: (child, animation) => FadeTransition(opacity: animation, child: child),
+                      child: Icon(
+                        isMenuOpen ? Icons.close : Icons.add,
+                        key: ValueKey<bool>(isMenuOpen),
+                        color: Colors.white,
+                        size: 22.sp,
+                      ),
                     ),
                   ),
                 );
