@@ -7,8 +7,8 @@ abstract class AssetsApp {
 
   static const String savedImage = "$iconPath/saved_image.svg";
   static const String searchIcon = "$iconPath/search.svg";
+  static const String search2Icon = "$iconPath/search2.svg";
   static const String notificationIcon = "$iconPath/notification.svg";
-  static const String arrowBackIcon = "$iconPath/arrow_left.svg";
   static const String emailIcon = "$iconPath/email_icon.svg";
   static const String lockIcon = "$iconPath/lock_icon.svg";
   static const String person2Icon = "$iconPath/person_2_icon.svg";
@@ -30,6 +30,6 @@ abstract class AssetsApp {
   static const String shareIcon = "$iconPath/share.svg";
   static const String fileIcon = "$iconPath/file.svg";
   static const String commentIcon = "$iconPath/comment.svg";
-
-
+  static const String arrowBackIcon = "$iconPath/back_arrow.svg";
+  static const String checkIcon = "$iconPath/check_icon.svg";
 }

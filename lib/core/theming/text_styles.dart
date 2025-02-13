@@ -27,6 +27,12 @@ abstract class Styles {
     color: Color(0xff7D8A95),
   );
 
+  static TextStyle font20w600 = TextStyle(
+    fontWeight: FontWeight.w600,
+    fontSize: 20.sp,
+    color: Color(0xff120D26),
+  );
+
   static TextStyle font18w600 = TextStyle(
     fontWeight: FontWeight.w600,
     fontSize: 18.sp,

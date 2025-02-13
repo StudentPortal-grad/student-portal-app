@@ -6,7 +6,7 @@ import '../../../../../../core/helpers/app_regex.dart';
 import '../../../../../../core/widgets/custom_app_button.dart';
 import '../../../../../../core/widgets/custom_login_signup_button.dart';
 import '../../../../../../core/widgets/custom_text_field.dart';
-import '../../../../../../core/widgets/custom_toast.dart';
+import '../../../../../../core/helpers/custom_toast.dart';
 import '../../../../data/dto/signup_request/signup_request.dart';
 import '../../../mange/signup_bloc/signup_bloc.dart';
 import '../../../mange/signup_bloc/signup_event.dart';

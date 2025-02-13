@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:student_portal/core/utils/assets_app.dart';
 import 'package:student_portal/core/widgets/custom_image_view.dart';
 
@@ -18,7 +19,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   });
 
   @override
-  Size get preferredSize => const Size.fromHeight(70.0);
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
   final Widget? leading, title, action;
   final Function()? leadingOnTap, titleOnTap, actionOnTap;
   final Color? backgroundColor;
@@ -30,7 +31,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       padding: const EdgeInsetsDirectional.only(top: 20, bottom: 5),
       child: AppBar(
         centerTitle: true,
-        backgroundColor: backgroundColor,
+        backgroundColor: backgroundColor ?? Colors.white,
         surfaceTintColor: Colors.transparent,
         scrolledUnderElevation: 0,
         shadowColor: Colors.transparent,
@@ -44,7 +45,9 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             child: leading ??
                 CustomImageView(
                   imagePath: AssetsApp.arrowBackIcon,
-                  color: Colors.black,
+                  width: 21.w,
+                  height: 15.h,
+                  fit: BoxFit.none,
                 ),
           ),
         ),

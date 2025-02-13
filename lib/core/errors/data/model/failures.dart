@@ -4,9 +4,9 @@ import 'package:dio/dio.dart';
 import 'package:student_portal/core/errors/data/model/error_model/error_model.dart';
 import 'package:student_portal/core/utils/app_router.dart';
 
+import '../../../helpers/app_dialog.dart';
 import '../../../repo/user_repository.dart';
 import '../../../utils/secure_storage.dart';
-import '../../../widgets/app_dialog.dart';
 
 class ServerFailure extends Failure {
   const ServerFailure({

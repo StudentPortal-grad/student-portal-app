@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:student_portal/core/helpers/app_size_boxes.dart';
 
 import '../theming/colors.dart';
+import '../theming/text_styles.dart';
 
 class CustomTextField extends StatefulWidget {
   const CustomTextField({
@@ -80,12 +82,9 @@ class _CustomTextFieldState extends State<CustomTextField> {
         if (widget.labelText != null) ...[
           Text(
             widget.labelText ?? '',
-            style: TextStyle(
-              color: Color(0xff414651),
-              fontSize: 16.sp,
-            ),
+            style: Styles.font18w600.copyWith(fontWeight: FontWeight.w700),
           ),
-          SizedBox(height: 6.h),
+          10.heightBox,
         ],
         SizedBox(
           height: widget.height,
@@ -124,11 +123,11 @@ class _CustomTextFieldState extends State<CustomTextField> {
               isDense: true,
               disabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(widget.borderRadius?.r ?? 0),
-                borderSide: BorderSide(color: widget.borderColor ?? Colors.transparent  ),
+                borderSide: BorderSide(color: widget.borderColor ?? Colors.transparent),
               ),
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(widget.borderRadius?.r ?? 0),
-                borderSide: BorderSide(color: widget.borderColor ?? Colors.grey),
+                borderSide: BorderSide(color: widget.borderColor ?? ColorsManager.lightGreyColor),
               ),
               errorBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(widget.borderRadius?.r ?? 0),
@@ -138,19 +137,10 @@ class _CustomTextFieldState extends State<CustomTextField> {
                 borderRadius: BorderRadius.circular(widget.borderRadius?.r ?? 0),
                 borderSide: BorderSide(color: widget.activeBorderColor ?? ColorsManager.mainColor),
               ),
-              prefix: const SizedBox(width: 8),
-
               fillColor: widget.filledColor,
               filled: widget.filledColor != null,
               hoverColor: Theme.of(context).primaryColor,
               hintText: widget.hintText,
-              // labelText: widget.labelText,
-              // labelStyle: widget.labelStyle ??
-              //     TextStyle(
-              //       fontSize: 18.sp,
-              //       fontWeight: FontWeight.w400,
-              //       color: const Color(0xff828894),
-              //     ),
               hintStyle: widget.hintStyle ??
                   TextStyle(
                     fontSize: 14.sp,

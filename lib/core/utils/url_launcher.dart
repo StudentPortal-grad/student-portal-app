@@ -1,6 +1,6 @@
 import 'package:url_launcher/url_launcher.dart';
 
-import '../widgets/custom_toast.dart';
+import '../helpers/custom_toast.dart';
 
 class UrlLauncher {
   /// Launches a WhatsApp chat with the provided phone number and optional message.

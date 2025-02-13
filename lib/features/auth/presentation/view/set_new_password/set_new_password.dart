@@ -8,7 +8,7 @@ import '../../../../../core/utils/app_router.dart';
 import '../../../../../core/theming/text_styles.dart';
 import '../../../../../core/widgets/custom_app_button.dart';
 import '../../../../../core/widgets/custom_text_field.dart';
-import '../../../../../core/widgets/custom_toast.dart';
+import '../../../../../core/helpers/custom_toast.dart';
 import '../../mange/set_new_password/set_new_password_bloc.dart';
 import '../../mange/set_new_password/set_new_password_event.dart';
 import '../../mange/set_new_password/set_new_password_state.dart';

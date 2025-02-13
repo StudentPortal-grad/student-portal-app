@@ -9,7 +9,7 @@ import '../../../../../core/utils/app_router.dart';
 import '../../../../../core/theming/text_styles.dart';
 import '../../../../../core/widgets/custom_app_button.dart';
 import '../../../../../core/widgets/custom_pin_code_fields.dart';
-import '../../../../../core/widgets/custom_toast.dart';
+import '../../../../../core/helpers/custom_toast.dart';
 import '../../mange/otp_bloc/otp_bloc.dart';
 import '../../mange/otp_bloc/otp_event.dart';
 import '../../mange/otp_bloc/otp_state.dart';

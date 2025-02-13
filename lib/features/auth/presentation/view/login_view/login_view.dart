@@ -4,7 +4,7 @@ import 'package:student_portal/features/auth/presentation/view/login_view/widget
 import '../../../../../core/loading/view/loading_dialog.dart';
 import '../../../../../core/theming/colors.dart';
 import '../../../../../core/utils/app_router.dart';
-import '../../../../../core/widgets/custom_toast.dart';
+import '../../../../../core/helpers/custom_toast.dart';
 import '../../mange/login_bloc/login_bloc.dart';
 import '../../mange/login_bloc/login_state.dart';
 

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:student_portal/core/theming/colors.dart';
 import 'package:student_portal/core/theming/text_styles.dart';
+import 'package:student_portal/core/utils/app_router.dart';
 import 'package:student_portal/core/utils/assets_app.dart';
 import 'package:student_portal/features/home_layout/ui/widgets/drawer.dart';
 import 'package:student_portal/features/home_layout/ui/widgets/nav_bar.dart';
@@ -96,18 +97,18 @@ class _HomeLayoutScreenState extends State<HomeLayoutScreen> {
       ),
       items: [
         PopupMenuItem<String>(
-          value: 'write_post',
-          child: Text('Write a Post', style: Styles.font16w500),
+          value: "write_post",
+          child: Text("Write a Post", style: Styles.font16w500),
+          onTap: () => AppRouter.router.push(AppRouter.addPost),
+        ),
+        PopupMenuItem<String>(
+          value: "create_community",
+          child: Text("Create a Community", style: Styles.font16w500),
           onTap: () {},
         ),
         PopupMenuItem<String>(
-          value: 'create_community',
-          child: Text('Create a Community', style: Styles.font16w500),
-          onTap: () {},
-        ),
-        PopupMenuItem<String>(
-          value: 'upload_resource',
-          child: Text('Upload a Resource', style: Styles.font16w500),
+          value: "upload_resource",
+          child: Text("Upload a Resource", style: Styles.font16w500),
           onTap: () {},
         ),
       ],

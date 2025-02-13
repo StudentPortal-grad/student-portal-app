@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../contestants.dart';
 import '../../../../../core/loading/view/loading_dialog.dart';
 import '../../../../../core/theming/colors.dart';
-import '../../../../../core/widgets/custom_toast.dart';
+import '../../../../../core/helpers/custom_toast.dart';
 import '../../mange/signup_bloc/signup_bloc.dart';
 import '../../mange/signup_bloc/signup_state.dart';
 import 'widgets/complete_profile.dart';

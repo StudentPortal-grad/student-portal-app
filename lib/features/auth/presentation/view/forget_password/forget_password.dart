@@ -10,7 +10,7 @@ import '../../../../../core/theming/text_styles.dart';
 import '../../../../../core/widgets/custom_app_button.dart';
 import '../../../../../core/widgets/custom_appbar.dart';
 import '../../../../../core/widgets/custom_text_field.dart';
-import '../../../../../core/widgets/custom_toast.dart';
+import '../../../../../core/helpers/custom_toast.dart';
 import '../../mange/forget_password_bloc/forget_password_bloc.dart';
 import '../../mange/forget_password_bloc/forget_password_event.dart';
 import '../../mange/forget_password_bloc/forget_password_state.dart';

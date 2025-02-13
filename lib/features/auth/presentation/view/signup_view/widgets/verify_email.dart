@@ -9,7 +9,7 @@ import '../../../../../../core/theming/colors.dart';
 import '../../../../../../core/theming/text_styles.dart';
 import '../../../../../../core/widgets/custom_app_button.dart';
 import '../../../../../../core/widgets/custom_pin_code_fields.dart';
-import '../../../../../../core/widgets/custom_toast.dart';
+import '../../../../../../core/helpers/custom_toast.dart';
 import '../../../mange/signup_bloc/signup_bloc.dart';
 import '../../../mange/signup_bloc/signup_event.dart';
 import '../../../mange/signup_bloc/signup_state.dart';
