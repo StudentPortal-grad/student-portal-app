@@ -51,7 +51,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
               iconWidget: WarningDialogBody.warmingIcon,
               onTap: () {
                 pop();
-                AppRouter.router.pop();
+                pop();
               },
               buttonTitle: 'Discard',
               mainButton: ColorsManager.mainColor,
@@ -65,7 +65,9 @@ class _AddPostScreenState extends State<AddPostScreen> {
   Widget build(BuildContext context) {
     return PopScope(
       canPop: false,
-      onPopInvokedWithResult: (didPop, result) => back(),
+      onPopInvokedWithResult: (didPop, result) {
+        if(didPop == false)  back();
+      },
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: CustomAppBar(
