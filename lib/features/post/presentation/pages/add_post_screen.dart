@@ -10,6 +10,7 @@ import 'package:student_portal/core/widgets/custom_image_view.dart';
 import 'package:student_portal/core/widgets/custom_text_field.dart';
 
 import '../../../../core/helpers/extensions.dart';
+import '../widgets/search_for_tags.dart';
 import '../widgets/warning_dialog_body.dart';
 
 class AddPostScreen extends StatefulWidget {
@@ -66,7 +67,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
     return PopScope(
       canPop: false,
       onPopInvokedWithResult: (didPop, result) {
-        if(didPop == false)  back();
+        if (didPop == false) back();
       },
       child: Scaffold(
         backgroundColor: Colors.white,
@@ -78,7 +79,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
           leadingOnTap: () => back(),
           action: CustomImageView(
             onTap: () {
-              // saving logic
+              // TODO: saving logic
               AppRouter.router.pop();
             },
             imagePath: AssetsApp.checkIcon,
@@ -87,7 +88,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
             height: 26.r,
           ),
         ),
-        body: Padding(
+        body: SingleChildScrollView(
           padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 10.h),
           child: Column(
             spacing: 30.h,
@@ -98,20 +99,26 @@ class _AddPostScreenState extends State<AddPostScreen> {
                 labelText: 'Title',
                 hintText: 'Title',
               ),
+              SearchForTags(),
               CustomTextField(
-                controller: contentController,
-                prefixIcon: CustomImageView(
-                  imagePath: AssetsApp.search2Icon,
-                  fit: BoxFit.none,
+                labelIcon: InkWell(
+                  onTap: () {
+                    // TODO: SHOW
+                  },
+                  child: Tooltip(
+                    message: 'More Information',
+                    child: Icon(
+                      Icons.error_outline_rounded,
+                      color: ColorsManager.black41,
+                    ),
+                  ),
                 ),
-                hintText: 'Search for tags',
+                controller: contentController,
+                labelText: 'Content',
+                hintText: 'Write the content here',
+                textInputType: TextInputType.multiline,
+                maxLines: 5,
               ),
-              CustomTextField(
-                  controller: TextEditingController(),
-                  labelText: 'Content',
-                  hintText: 'Write the content here',
-                  textInputType: TextInputType.multiline,
-                  maxLines: 5),
             ],
           ),
         ),
@@ -122,6 +129,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
 
 /*
 add these into post or resource
+  formatting styles:
   Bold → *word*
   Italic → _word_
   Underline → ~word~
