@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:student_portal/core/helpers/app_dialog.dart';
+import 'package:student_portal/core/helpers/app_size_boxes.dart';
 import 'package:student_portal/core/theming/colors.dart';
 import 'package:student_portal/core/theming/text_styles.dart';
 import 'package:student_portal/core/utils/app_router.dart';
@@ -103,7 +104,12 @@ class _AddPostScreenState extends State<AddPostScreen> {
               CustomTextField(
                 labelIcon: InkWell(
                   onTap: () {
-                    // TODO: SHOW
+                    AppDialogs.showDialog(
+                      context,
+                      okText: 'Ok, I got it',
+                      onOkTap: () {},
+                      body: _buildFormattingGuideBody(),
+                    );
                   },
                   child: Tooltip(
                     message: 'More Information',
@@ -122,6 +128,44 @@ class _AddPostScreenState extends State<AddPostScreen> {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildFormattingGuideBody() {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 24.w),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          16.heightBox,
+          Text(
+            'Formatting Guide',
+            style: Styles.font15w600,
+          ),
+          Divider(),
+          16.heightBox,
+          _formatRow('Bold', '*word*'),
+          _formatRow('Italic', '_word_'),
+          _formatRow('Underline', '~word~'),
+          _formatRow('Strikethrough', '-word-'),
+          _formatRow('Hashtag', '#word'),
+          _formatRow('Code Block', '`word`'),
+          8.heightBox,
+        ],
+      ),
+    );
+  }
+
+  Widget _formatRow(String title, String example) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(title, style: Styles.font15w600),
+          Text(example, style: Styles.font14w500),
+        ],
       ),
     );
   }

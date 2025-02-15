@@ -47,6 +47,7 @@ class AppDialogs {
       context: context,
       animType: AnimType.bottomSlide,
       padding: innerPadding ?? EdgeInsets.zero,
+      dialogBackgroundColor: ColorsManager.backgroundColor,
       bodyHeaderDistance: 0.0,
       body: body,
       btnOkText: okText,
