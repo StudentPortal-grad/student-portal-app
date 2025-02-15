@@ -37,6 +37,7 @@ class CustomTextField extends StatefulWidget {
     this.width,
     this.maxLines,
     this.expanded = false,
+    this.labelIcon,
   });
 
   final TextEditingController controller;
@@ -54,6 +55,7 @@ class CustomTextField extends StatefulWidget {
   final EdgeInsetsGeometry? contentPadding;
   final String? errorText;
   final int? maxLines;
+  final Widget? labelIcon;
 
   @override
   State<CustomTextField> createState() => _CustomTextFieldState();
@@ -80,9 +82,15 @@ class _CustomTextFieldState extends State<CustomTextField> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if (widget.labelText != null) ...[
-          Text(
-            widget.labelText ?? '',
-            style: Styles.font18w600.copyWith(fontWeight: FontWeight.w700),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                widget.labelText ?? '',
+                style: Styles.font18w600.copyWith(fontWeight: FontWeight.w700),
+              ),
+              widget.labelIcon ?? SizedBox.shrink(),
+            ],
           ),
           10.heightBox,
         ],
