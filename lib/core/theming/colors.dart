@@ -24,4 +24,5 @@ abstract class ColorsManager {
   static const Color yellowColor = Color(0xFFF8CA55);
   static const Color black54 = Color(0xff545468);
   static const Color black41 = Color(0xff414651);
+  static const Color black53 = Color(0xFF535862);
 }

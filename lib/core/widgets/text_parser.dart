@@ -12,12 +12,12 @@ class TextParser extends StatelessWidget {
     return RichText(
       text: TextSpan(
         style: TextStyle(fontSize: 16, color: Colors.black),
-        children: _parseText(text),
+        children: parseTextStyles(text, onHashTagTap: onHashTagTap),
       ),
     );
   }
 
-  List<TextSpan> _parseText(String input) {
+  static List<TextSpan> parseTextStyles(String input, {Function(String)? onHashTagTap}) {
     final RegExp regex = RegExp(
       r'(\*.*?\*)|(_.*?_)|(~.*?~)|(-.*?-)|(\#\w+)|(`(?:.|\n)*?`)',
       multiLine: true,
@@ -53,6 +53,7 @@ class TextParser extends StatelessWidget {
         matchText = matchText.substring(1, matchText.length - 1);
       } else if (matchText.startsWith('#')) {
         style = TextStyle(color: Colors.blue, fontWeight: FontWeight.bold);
+
         recognizer = TapGestureRecognizer()
           ..onTap = () => onHashTagTap?.call(matchText.substring(1));
       }

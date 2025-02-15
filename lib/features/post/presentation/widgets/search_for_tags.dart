@@ -36,8 +36,8 @@ class _SearchForTagsState extends State<SearchForTags> {
 
   @override
   void dispose() {
-    _textEditingController.dispose();
     super.dispose();
+    // _textEditingController.dispose();
   }
 
   @override

@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:student_portal/core/helpers/app_dialog.dart';
 import 'package:student_portal/core/helpers/app_size_boxes.dart';
+import 'package:student_portal/core/helpers/file_service.dart';
 import 'package:student_portal/core/theming/colors.dart';
 import 'package:student_portal/core/theming/text_styles.dart';
 import 'package:student_portal/core/utils/app_router.dart';
@@ -11,7 +14,9 @@ import 'package:student_portal/core/widgets/custom_image_view.dart';
 import 'package:student_portal/core/widgets/custom_text_field.dart';
 
 import '../../../../core/helpers/extensions.dart';
+import '../widgets/file_attachment_item.dart';
 import '../widgets/search_for_tags.dart';
+import '../widgets/upload_button.dart';
 import '../widgets/warning_dialog_body.dart';
 
 class AddPostScreen extends StatefulWidget {
@@ -24,6 +29,7 @@ class AddPostScreen extends StatefulWidget {
 class _AddPostScreenState extends State<AddPostScreen> {
   late final TextEditingController titleController;
   late final TextEditingController contentController;
+  List<String> paths = [];
 
   @override
   void initState() {
@@ -36,6 +42,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
   void dispose() {
     titleController.dispose();
     contentController.dispose();
+    paths.clear();
     super.dispose();
   }
 
@@ -125,6 +132,33 @@ class _AddPostScreenState extends State<AddPostScreen> {
                 textInputType: TextInputType.multiline,
                 maxLines: 5,
               ),
+              UploadButton(
+                onTap: () async {
+                  File? file = await FileService.pickFile();
+                  if (file?.path != null) {
+                    final String path = file!.path.trim();
+                    print("FILE PATHHHH $path");
+                    paths.add(path);
+                    setState(() {});
+                  }
+                },
+              ),
+              ListView.separated(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                itemBuilder: (context, index) {
+                  final String filePath = paths.toList()[index];
+                  return FileAttachmentItem(
+                    fileName: filePath,
+                    onDelete: () {
+                      paths.remove(filePath);
+                      setState(() {});
+                    },
+                  );
+                },
+                separatorBuilder: (context, index) => 5.heightBox,
+                itemCount: paths.length,
+              )
             ],
           ),
         ),
