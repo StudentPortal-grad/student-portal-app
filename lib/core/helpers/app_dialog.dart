@@ -33,21 +33,20 @@ class AppDialogs {
     ).show();
   }
 
-  static Future<void> showDialog(
-    BuildContext context, {
-    String? okText,
-    bool dismissible = true,
-    EdgeInsets? outterPadding,
-    EdgeInsets? innerPadding,
-    AlignmentDirectional? alignment,
-    void Function()? onOkTap,
-    Widget? body,
-  }) async {
+  static Future<void> showDialog(BuildContext context,
+      {String? okText,
+      bool dismissible = true,
+      EdgeInsets? outterPadding,
+      EdgeInsets? innerPadding,
+      AlignmentDirectional? alignment,
+      void Function()? onOkTap,
+      Widget? body,
+      Color? backgroundColor}) async {
     await AwesomeDialog(
       context: context,
       animType: AnimType.bottomSlide,
       padding: innerPadding ?? EdgeInsets.zero,
-      dialogBackgroundColor: ColorsManager.backgroundColor,
+      dialogBackgroundColor: backgroundColor ?? ColorsManager.whiteColor,
       bodyHeaderDistance: 0.0,
       body: body,
       btnOkText: okText,
