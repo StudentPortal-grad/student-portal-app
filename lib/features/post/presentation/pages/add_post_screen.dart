@@ -112,7 +112,6 @@ class _AddPostScreenState extends State<AddPostScreen> {
                 labelIcon: InkWell(
                   onTap: () {
                     AppDialogs.showDialog(
-
                       context,
                       okText: 'Ok, I got it',
                       onOkTap: () {},

@@ -76,7 +76,7 @@ class CustomNavBar extends StatelessWidget {
                   ),
                 );
               }
-              return GestureDetector(
+              return InkWell(
                 onTap: () => onTap?.call(index),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
