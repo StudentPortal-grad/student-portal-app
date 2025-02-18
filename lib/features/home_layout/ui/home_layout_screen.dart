@@ -104,12 +104,12 @@ class _HomeLayoutScreenState extends State<HomeLayoutScreen> {
         PopupMenuItem<String>(
           value: "create_community",
           child: Text("Create a Community", style: Styles.font16w500),
-          onTap: () {},
+
         ),
         PopupMenuItem<String>(
           value: "upload_resource",
           child: Text("Upload a Resource", style: Styles.font16w500),
-          onTap: () {},
+          onTap: () => AppRouter.router.push(AppRouter.addResource),
         ),
       ],
     ).then((value) => toggleShowPopMenu());

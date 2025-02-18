@@ -12,23 +12,27 @@ import 'package:student_portal/core/utils/assets_app.dart';
 import 'package:student_portal/core/widgets/custom_appbar.dart';
 import 'package:student_portal/core/widgets/custom_image_view.dart';
 import 'package:student_portal/core/widgets/custom_text_field.dart';
+import 'package:student_portal/features/resource/presentation/widgets/select_visibility.dart';
 
 import '../../../../core/helpers/extensions.dart';
-import '../widgets/file_attachment_item.dart';
-import '../widgets/search_for_tags.dart';
-import '../widgets/upload_button.dart';
-import '../widgets/warning_dialog_body.dart';
+import '../../../post/presentation/widgets/file_attachment_item.dart';
+import '../../../post/presentation/widgets/search_for_tags.dart';
+import '../../../post/presentation/widgets/upload_button.dart';
+import '../../../post/presentation/widgets/warning_dialog_body.dart';
+import '../widgets/select_category.dart';
 
-class AddPostScreen extends StatefulWidget {
-  const AddPostScreen({super.key});
+class AddResourcesScreen extends StatefulWidget {
+  const AddResourcesScreen({super.key});
 
   @override
-  State<AddPostScreen> createState() => _AddPostScreenState();
+  State<AddResourcesScreen> createState() => _AddResourcesScreenState();
 }
 
-class _AddPostScreenState extends State<AddPostScreen> {
+class _AddResourcesScreenState extends State<AddResourcesScreen> {
   late final TextEditingController titleController;
   late final TextEditingController contentController;
+  String? category;
+  String? visibility;
   List<String> paths = [];
 
   @override
@@ -81,7 +85,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
         backgroundColor: Colors.white,
         appBar: CustomAppBar(
           title: Text(
-            'New Post',
+            'Upload Resource',
             style: Styles.font20w600,
           ),
           leadingOnTap: () => back(),
@@ -107,6 +111,8 @@ class _AddPostScreenState extends State<AddPostScreen> {
                 labelText: 'Title',
                 hintText: 'Title',
               ),
+              SelectVisibility(value: visibility, onChange: (p0) => visibility = p0),
+              SelectCategory(value: category, onChange: (p0) => category = p0),
               SearchForTags(),
               CustomTextField(
                 labelIcon: InkWell(
@@ -204,14 +210,3 @@ class _AddPostScreenState extends State<AddPostScreen> {
     );
   }
 }
-
-/*
-add these into post or resource
-  formatting styles:
-  Bold → *word*
-  Italic → _word_
-  Underline → ~word~
-  Strikethrough → -word-
-  Hashtag → #word
-  Code Block → `word`
-*/

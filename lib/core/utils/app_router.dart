@@ -15,6 +15,7 @@ import '../../features/auth/presentation/view/signup_view/signup_view.dart';
 import '../../features/home_layout/ui/home_layout_screen.dart';
 import '../../features/onboarding/view/onboarding_view/onboarding_view.dart';
 import '../../features/onboarding/view/splash_view/splash_view.dart';
+import '../../features/resource/presentation/pages/add_resource_screen.dart';
 import '../helpers/custom_animated_transition_page.dart';
 import '../network/api_service.dart';
 
@@ -34,6 +35,7 @@ abstract class AppRouter {
   // home
   static const String homeView = '/';
   static const String addPost = '/add_post';
+  static const String addResource = '/add_resource';
 
   static final router = GoRouter(
     routes: [
@@ -128,6 +130,14 @@ abstract class AppRouter {
           context: context,
           state: state,
           child: AddPostScreen(),
+        ),
+      ),
+      GoRoute(
+        path: addResource,
+        pageBuilder: (context, state) => buildPage(
+          context: context,
+          state: state,
+          child: AddResourcesScreen(),
         ),
       ),
     ],

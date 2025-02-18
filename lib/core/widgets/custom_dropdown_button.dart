@@ -1,3 +1,4 @@
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:student_portal/core/helpers/app_size_boxes.dart';
@@ -46,7 +47,8 @@ class CustomDropdownButton<T> extends StatefulWidget {
   final FocusNode? focusNode;
 
   @override
-  State<CustomDropdownButton<T>> createState() => _CustomDropdownButtonState<T>();
+  State<CustomDropdownButton<T>> createState() =>
+      _CustomDropdownButtonState<T>();
 }
 
 class _CustomDropdownButtonState<T> extends State<CustomDropdownButton<T>> {
@@ -71,12 +73,30 @@ class _CustomDropdownButtonState<T> extends State<CustomDropdownButton<T>> {
         SizedBox(
           height: widget.height,
           width: widget.width,
-          child: DropdownButtonFormField<T>(
+          child: DropdownButtonFormField2<T>(
             value: widget.value,
             items: widget.items,
             onChanged: widget.enabled ? widget.onChanged : null,
-            validator: (value) => widget.validator != null ? widget.validator!(value) : null,
+            validator: (value) =>
+                widget.validator != null ? widget.validator!(value) : null,
             focusNode: widget.focusNode,
+            iconStyleData: const IconStyleData(
+              icon: Icon(
+                Icons.keyboard_arrow_down_rounded,
+                color: Color(0xff7E7476),
+              ),
+              iconSize: 24,
+            ),
+            hint: Text(
+              widget.hintText ?? '',
+              style: widget.hintStyle ??
+                  TextStyle(
+                    fontSize: 14.sp,
+                    fontWeight: FontWeight.w400,
+                    height: 1.5,
+                    color: const Color(0xff828894),
+                  ),
+            ),
             decoration: InputDecoration(
               errorText: widget.errorText,
               contentPadding: widget.contentPadding,
@@ -84,34 +104,33 @@ class _CustomDropdownButtonState<T> extends State<CustomDropdownButton<T>> {
               suffixIcon: widget.suffix,
               isDense: true,
               disabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(widget.borderRadius?.r ?? 0),
-                borderSide: BorderSide(color: widget.borderColor ?? Colors.transparent),
+                borderRadius:
+                    BorderRadius.circular(widget.borderRadius?.r ?? 0),
+                borderSide:
+                    BorderSide(color: widget.borderColor ?? Colors.transparent),
               ),
               enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(widget.borderRadius?.r ?? 0),
-                borderSide: BorderSide(color: widget.borderColor ?? ColorsManager.lightGreyColor),
+                borderRadius:
+                    BorderRadius.circular(widget.borderRadius?.r ?? 0),
+                borderSide: BorderSide(
+                    color: widget.borderColor ?? ColorsManager.lightGreyColor),
               ),
               errorBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(widget.borderRadius?.r ?? 0),
+                borderRadius:
+                    BorderRadius.circular(widget.borderRadius?.r ?? 0),
                 borderSide: const BorderSide(color: Colors.red),
               ),
               focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(widget.borderRadius?.r ?? 0),
-                borderSide: BorderSide(color: widget.activeBorderColor ?? ColorsManager.mainColor),
+                borderRadius:
+                    BorderRadius.circular(widget.borderRadius?.r ?? 0),
+                borderSide: BorderSide(
+                    color: widget.activeBorderColor ?? ColorsManager.mainColor),
               ),
               fillColor: widget.filledColor,
               filled: widget.filledColor != null,
               hoverColor: Theme.of(context).primaryColor,
-              hintText: widget.hintText,
-              hintStyle: widget.hintStyle ??
-                  TextStyle(
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w400,
-                    color: const Color(0xff828894),
-                  ),
             ),
-            style: widget.textStyle,
-            dropdownColor: widget.filledColor ?? Colors.white,
+            style: widget.textStyle ?? Styles.font16w500.copyWith(fontWeight: FontWeight.w400),
           ),
         ),
       ],
