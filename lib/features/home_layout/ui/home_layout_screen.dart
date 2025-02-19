@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:student_portal/core/helpers/app_size_boxes.dart';
 import 'package:student_portal/core/theming/colors.dart';
 import 'package:student_portal/core/theming/text_styles.dart';
 import 'package:student_portal/core/utils/app_router.dart';
@@ -89,26 +90,44 @@ class _HomeLayoutScreenState extends State<HomeLayoutScreen> {
     final RenderBox overlay =
         Overlay.of(context).context.findRenderObject() as RenderBox;
     await showMenu(
-      color: Colors.white,
+      color: Colors.transparent,
       context: context,
       position: RelativeRect.fromRect(
-        position & Size(50.w, 50.h), // Position of tap
+        position & Size(70.w, 50.h), // Position of tap
         Offset.zero & overlay.size, // Full screen
       ),
       items: [
         PopupMenuItem<String>(
           value: "write_post",
-          child: Text("Write a Post", style: Styles.font16w500),
+          child: Row(
+            children: [
+              CircleAvatar(radius: 15.r, backgroundColor: ColorsManager.whiteColor, child: Icon(Icons.edit, color: ColorsManager.mainColor,size: 18.r,)),
+              10.widthBox,
+              Text("Write a Post", style: Styles.font16w500.copyWith(color: Colors.white)),
+            ],
+          ),
           onTap: () => AppRouter.router.push(AppRouter.addPost),
         ),
         PopupMenuItem<String>(
           value: "create_community",
-          child: Text("Create a Community", style: Styles.font16w500),
+          child: Row(
+            children: [
+              CircleAvatar(radius: 15.r, backgroundColor: ColorsManager.whiteColor, child: Icon(Icons.people_alt_rounded, color: ColorsManager.mainColor,size: 18.r,)),
+              10.widthBox,
+              Text("Create a Community", style: Styles.font16w500.copyWith(color: Colors.white)),
+            ],
+          ),
 
         ),
         PopupMenuItem<String>(
           value: "upload_resource",
-          child: Text("Upload a Resource", style: Styles.font16w500),
+          child: Row(
+            children: [
+              CircleAvatar(radius: 15.r, backgroundColor: ColorsManager.whiteColor, child: Icon(Icons.local_offer, color: ColorsManager.mainColor,size: 18.r,)),
+              10.widthBox,
+              Text("Upload a Resource", style: Styles.font16w500.copyWith(color: Colors.white)),
+            ],
+          ),
           onTap: () => AppRouter.router.push(AppRouter.addResource),
         ),
       ],
