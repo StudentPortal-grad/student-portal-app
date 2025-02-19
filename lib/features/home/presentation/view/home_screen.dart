@@ -14,8 +14,8 @@ class HomeScreen extends StatelessWidget {
         physics: const BouncingScrollPhysics(),
         padding: EdgeInsets.symmetric(horizontal: 28.w, vertical: 15.h),
         separatorBuilder: (context, index) => 15.heightBox,
-        itemBuilder: (context, index) => PostView(id: index),
-        itemCount: 1,
+        itemBuilder: (context, index) => PostView(id: index,),
+        itemCount: 2,
       ),
     );
   }
