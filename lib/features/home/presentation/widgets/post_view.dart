@@ -3,11 +3,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:student_portal/core/helpers/app_size_boxes.dart';
 import 'package:student_portal/core/theming/colors.dart';
 import 'package:student_portal/core/theming/text_styles.dart';
-import 'package:student_portal/features/home/presentation/view/component/post_view/widgets/category_tag_view.dart';
-import 'package:student_portal/features/home/presentation/view/component/post_view/widgets/pdf_post_view.dart';
-import 'package:student_portal/features/home/presentation/view/component/post_view/widgets/post_list_images_view.dart';
-import 'package:student_portal/features/home/presentation/view/component/post_view/widgets/react_bar.dart';
-import 'package:student_portal/features/home/presentation/view/component/post_view/widgets/user_post_view.dart';
+import 'package:student_portal/features/home/presentation/widgets/category_tag_view.dart';
+import 'package:student_portal/features/home/presentation/widgets/pdf_post_view.dart';
+import 'package:student_portal/features/home/presentation/widgets/post_list_images_view.dart';
+import 'package:student_portal/features/home/presentation/widgets/react_bar.dart';
+import 'package:student_portal/features/home/presentation/widgets/user_post_view.dart';
 
 class PostView extends StatelessWidget {
   const PostView({super.key, required this.id});

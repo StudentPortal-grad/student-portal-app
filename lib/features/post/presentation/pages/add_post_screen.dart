@@ -206,7 +206,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
 }
 
 /*
-add these into post or resource
+add these into post_model or resource
   formatting styles:
   Bold → *word*
   Italic → _word_

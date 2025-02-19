@@ -6,7 +6,7 @@ import 'package:student_portal/core/widgets/custom_text_field.dart';
 import '../../../../core/theming/colors.dart';
 import '../../../../core/utils/assets_app.dart';
 import '../../../../core/widgets/custom_image_view.dart';
-import '../../../home/presentation/view/component/post_view/widgets/category_tag_view.dart';
+import '../../../home/presentation/widgets/category_tag_view.dart';
 
 class SearchForTags extends StatefulWidget {
   const SearchForTags({super.key});

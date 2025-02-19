@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:student_portal/core/helpers/app_size_boxes.dart';
-import 'component/post_view/post_view.dart';
+import '../widgets/post_view.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});

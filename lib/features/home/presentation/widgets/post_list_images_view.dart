@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../../../../../core/helpers/extensions.dart';
-import '../../../../../../../core/widgets/custom_image_view.dart';
-import '../image_post_screen.dart';
+import '../../../../core/helpers/extensions.dart';
+import '../../../../core/widgets/custom_image_view.dart';
+import '../pages/image_post_screen.dart';
 
 class PostListImagesView extends StatefulWidget {
   const PostListImagesView({super.key});
@@ -17,8 +17,8 @@ class _PostListImagesViewState extends State<PostListImagesView> {
 
   @override
   Widget build(BuildContext context) {
-    // if(false){  if list's length == 1
-    //   return PostImageView(id: 1);
+    // if (false) {
+    //   return PostImageView(id: 1);//if list's length == 1
     // }
     return Stack(
       alignment: Alignment.topRight,

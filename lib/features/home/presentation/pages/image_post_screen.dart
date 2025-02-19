@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../../../../core/widgets/custom_image_view.dart';
+import '../../../../core/widgets/custom_image_view.dart';
 
 class ImagePostView extends StatelessWidget {
   const ImagePostView({
