@@ -50,6 +50,7 @@ abstract class AppRouter {
       GoRoute(
         path: onBoardingView,
         pageBuilder: (context, state) => buildPage(
+          useSlideTransition: true,
           context: context,
           state: state,
           child: const OnboardingView(),
@@ -58,6 +59,7 @@ abstract class AppRouter {
       GoRoute(
         path: signupView,
         pageBuilder: (context, state) => buildPage(
+          useSlideTransition: true,
           context: context,
           state: state,
           child: withBlocProvider(
@@ -69,6 +71,7 @@ abstract class AppRouter {
       GoRoute(
         path: loginView,
         pageBuilder: (context, state) => buildPage(
+          useSlideTransition: true,
           context: context,
           state: state,
           child: withBlocProvider(
@@ -83,6 +86,7 @@ abstract class AppRouter {
       GoRoute(
         path: forgetPasswordView,
         pageBuilder: (context, state) => buildPage(
+          useSlideTransition: true,
           context: context,
           state: state,
           child: const ForgetPassword(),
@@ -96,6 +100,7 @@ abstract class AppRouter {
             return buildPage(
               context: context,
               state: state,
+              useSlideTransition: true,
               child: OtpView(
                 email: args?['email'] ?? '',
                 isForgetPassword: args?['isForgetPassword'] as bool?,
@@ -118,6 +123,7 @@ abstract class AppRouter {
           context: context,
           state: state,
           child: const SetNewPassword(),
+          useSlideTransition: true,
         ),
       ),
       GoRoute(
@@ -126,6 +132,7 @@ abstract class AppRouter {
           context: context,
           state: state,
           child: const HomeLayoutScreen(),
+          useSlideTransition: true,
         ),
       ),
       GoRoute(
@@ -177,7 +184,7 @@ abstract class AppRouter {
     required BuildContext context,
     required GoRouterState state,
     required Widget child,
-    bool useSlideTransition = true,
+    bool useSlideTransition = false,
   }) {
     return useSlideTransition
         ? buildPageWithSlideTransition(
