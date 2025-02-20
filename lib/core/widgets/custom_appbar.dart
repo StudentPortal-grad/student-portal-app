@@ -27,46 +27,43 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsetsDirectional.only(top: 20, bottom: 5),
-      child: AppBar(
-        centerTitle: true,
-        backgroundColor: backgroundColor ?? Colors.white,
-        surfaceTintColor: Colors.transparent,
-        scrolledUnderElevation: 0,
-        shadowColor: Colors.transparent,
-        foregroundColor: Colors.transparent,
-        elevation: elevation,
-        leading: InkWell(
-          highlightColor: Colors.transparent,
-          splashColor: Colors.transparent,
-          onTap: leadingOnTap ?? () => AppRouter.router.pop(),
-          child: Center(
-            child: leading ??
-                CustomImageView(
-                  imagePath: AssetsApp.arrowBackIcon,
-                  width: 21.w,
-                  height: 15.h,
-                  fit: BoxFit.none,
-                ),
-          ),
+    return AppBar(
+      centerTitle: true,
+      backgroundColor: backgroundColor ?? Colors.white,
+      surfaceTintColor: Colors.transparent,
+      scrolledUnderElevation: 0,
+      shadowColor: Colors.transparent,
+      foregroundColor: Colors.transparent,
+      elevation: elevation,
+      leading: InkWell(
+        highlightColor: Colors.transparent,
+        splashColor: Colors.transparent,
+        onTap: leadingOnTap ?? () => AppRouter.router.pop(),
+        child: Center(
+          child: leading ??
+              CustomImageView(
+                imagePath: AssetsApp.arrowBackIcon,
+                width: 21.w,
+                height: 15.h,
+                fit: BoxFit.none,
+              ),
         ),
-        title: InkWell(
-          highlightColor: Colors.transparent,
-          splashColor: Colors.transparent,
-          onTap: titleOnTap,
-          child: title ?? const SizedBox(),
-        ),
-        actions: [
-          InkWell(
-            highlightColor: Colors.transparent,
-            splashColor: Colors.transparent,
-            onTap: actionOnTap ?? () {},
-            child: action ?? const SizedBox(),
-          ),
-          const SizedBox(width: 15)
-        ],
       ),
+      title: InkWell(
+        highlightColor: Colors.transparent,
+        splashColor: Colors.transparent,
+        onTap: titleOnTap,
+        child: title ?? const SizedBox(),
+      ),
+      actions: [
+        InkWell(
+          highlightColor: Colors.transparent,
+          splashColor: Colors.transparent,
+          onTap: actionOnTap ?? () {},
+          child: action ?? const SizedBox(),
+        ),
+        const SizedBox(width: 15)
+      ],
     );
   }
 }

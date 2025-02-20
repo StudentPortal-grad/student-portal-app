@@ -132,6 +132,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
                     )
                   : widget.suffix,
               isDense: true,
+               suffixIconConstraints: BoxConstraints.tight(Size(40.r, 25.r)),
               disabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(widget.borderRadius?.r ?? 0),
                 borderSide: BorderSide(color: widget.borderColor ?? Colors.transparent),

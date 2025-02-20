@@ -61,7 +61,7 @@ class PostView extends StatelessWidget {
           10.heightBox,
           TextParser(
             onHashTagTap: (p0) {
-              print('HASHTAG');
+              print('HASH TAG');
               print(p0);
             },
             onMentionTap: (p0) {
