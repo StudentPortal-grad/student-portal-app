@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:student_portal/core/helpers/app_size_boxes.dart';
+import 'package:student_portal/core/utils/app_router.dart';
 import '../widgets/post_view.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -13,7 +14,10 @@ class HomeScreen extends StatelessWidget {
         physics: const BouncingScrollPhysics(),
         padding: EdgeInsets.symmetric(horizontal: 28.w, vertical: 15.h),
         separatorBuilder: (context, index) => 15.heightBox,
-        itemBuilder: (context, index) => PostView(id: index,),
+        itemBuilder: (context, index) => InkWell(
+          onTap: () => AppRouter.router.push(AppRouter.postDetails),
+          child: PostView(id: index),
+        ),
         itemCount: 2,
       ),
     );

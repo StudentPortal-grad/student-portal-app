@@ -5,6 +5,8 @@ import 'package:student_portal/core/utils/service_locator.dart';
 import 'package:student_portal/features/auth/domain/usecases/login_uc.dart';
 import 'package:student_portal/features/auth/presentation/mange/signup_bloc/signup_bloc.dart';
 import 'package:student_portal/features/post/presentation/pages/add_post_screen.dart';
+import 'package:student_portal/features/post/presentation/pages/post_details_screen.dart';
+import 'package:student_portal/features/resource/presentation/pages/resource_details_screen.dart';
 import '../../features/auth/data/repo_impl/login_repo_impl.dart';
 import '../../features/auth/presentation/mange/login_bloc/login_bloc.dart';
 import '../../features/auth/presentation/view/forget_password/forget_password.dart';
@@ -36,6 +38,8 @@ abstract class AppRouter {
   static const String homeView = '/';
   static const String addPost = '/add_post';
   static const String addResource = '/add_resource';
+  static const String postDetails = '/post_details';
+  static const String resourceDetails = '/resource_details';
 
   static final router = GoRouter(
     routes: [
@@ -88,13 +92,13 @@ abstract class AppRouter {
         path: otpView,
         pageBuilder: (context, state) {
           if (state.extra is Map<String, dynamic>) {
-            final args = state.extra as Map<String, dynamic>;
+            final args = state.extra as Map<String, dynamic>?;
             return buildPage(
               context: context,
               state: state,
               child: OtpView(
-                email: args['email'],
-                isForgetPassword: args['isForgetPassword'] as bool?,
+                email: args?['email'] ?? '',
+                isForgetPassword: args?['isForgetPassword'] as bool?,
               ),
             );
           } else {
@@ -139,6 +143,28 @@ abstract class AppRouter {
           state: state,
           child: AddResourcesScreen(),
         ),
+      ),
+      GoRoute(
+        path: postDetails,
+        pageBuilder: (context, state) {
+          final args = state.extra as Map<String, dynamic>?;
+          return buildPage(
+            context: context,
+            state: state,
+            child: PostDetailsScreen(),
+          );
+        },
+      ),
+      GoRoute(
+        path: resourceDetails,
+        pageBuilder: (context, state) {
+          final args = state.extra as Map<String, dynamic>?;
+          return buildPage(
+            context: context,
+            state: state,
+            child: ResourceDetailsScreen(),
+          );
+        },
       ),
     ],
   );
