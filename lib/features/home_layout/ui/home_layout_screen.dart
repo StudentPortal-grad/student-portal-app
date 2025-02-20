@@ -10,8 +10,11 @@ import 'package:student_portal/core/utils/assets_app.dart';
 import 'package:student_portal/features/home_layout/ui/widgets/drawer.dart';
 import 'package:student_portal/features/home_layout/ui/widgets/nav_bar.dart';
 
+import '../../chats/presentation/pages/chats_screen.dart';
+import '../../events/presentation/pages/events_screen.dart';
 import '../../home/presentation/pages/home_screen.dart';
 import '../../home/presentation/widgets/app_bar_home.dart';
+import '../../resource/presentation/pages/resources_screen.dart';
 
 class HomeLayoutScreen extends StatefulWidget {
   const HomeLayoutScreen({super.key});
@@ -44,12 +47,12 @@ class _HomeLayoutScreenState extends State<HomeLayoutScreen> {
     });
   }
 
-  List<Widget> widgetOptions = <Widget>[
+  static List<Widget> widgetOptions = <Widget>[
     HomeScreen(),
-    HomeScreen(),
+    EventsScreen(),
     SizedBox.shrink(),
-    HomeScreen(),
-    HomeScreen(),
+    ResourcesScreen(),
+    ChatsScreen(),
   ];
 
   @override
