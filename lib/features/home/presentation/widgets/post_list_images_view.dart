@@ -17,8 +17,8 @@ class _PostListImagesViewState extends State<PostListImagesView> {
 
   @override
   Widget build(BuildContext context) {
-    // if (false) {
-    //   return PostImageView(id: 1);//if list's length == 1
+    // if (true) {
+      return PostImageView(id: 1);//if list's length == 1
     // }
     return Stack(
       alignment: Alignment.topRight,
@@ -63,15 +63,18 @@ class PostImageView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // todo: handle zoom in and optimize layout
     return Hero(
       tag: 'image$id',
       child: CustomImageView(
         materialNeeded: true,
         onTap: () => push(ImagePostView(id: id)),
-        imagePath:
-            'https://www.news10.com/wp-content/uploads/sites/64/2024/11/674205c2471ac7.00644903.jpeg?w=960&h=540&crop=1',
+        imagePath: 'assets/images/dummy_image.png',
+        // imagePath:
+        //     'https://www.news10.com/wp-content/uploads/sites/64/2024/11/674205c2471ac7.00644903.jpeg?w=960&h=540&crop=1',
         height: 200.h,
-        fit: BoxFit.cover,
+        width: 1.sw,
+        fit: BoxFit.fitWidth,
       ),
     );
   }

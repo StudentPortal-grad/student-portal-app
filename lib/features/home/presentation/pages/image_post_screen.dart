@@ -33,11 +33,13 @@ class ImagePostView extends StatelessWidget {
           Expanded(
             child: Hero(
               tag: 'image$id',
-              child: CustomImageView(
-                materialNeeded: true,
-                imagePath:
-                    'https://www.news10.com/wp-content/uploads/sites/64/2024/11/674205c2471ac7.00644903.jpeg?w=960&h=540&crop=1',
-                fit: BoxFit.contain,
+              child: Center(
+                child: CustomImageView(
+                  materialNeeded: true,
+                  imagePath: 'assets/images/dummy_image.png',
+                      // 'https://www.news10.com/wp-content/uploads/sites/64/2024/11/674205c2471ac7.00644903.jpeg?w=960&h=540&crop=1',
+                  fit: BoxFit.contain,
+                ),
               ),
             ),
           ),

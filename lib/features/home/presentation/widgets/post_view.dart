@@ -11,9 +11,10 @@ import 'package:student_portal/features/home/presentation/widgets/react_bar.dart
 import 'package:student_portal/features/home/presentation/widgets/user_post_view.dart';
 
 class PostView extends StatelessWidget {
-  const PostView({super.key, required this.id});
+  const PostView({super.key, required this.id, this.detailsChildren});
 
   final int id;
+  final List<Widget>? detailsChildren;
   static List<String> dummyTags = [
     'AI',
     'Researchers',
@@ -59,8 +60,14 @@ class PostView extends StatelessWidget {
           Text('Research Methods AI', style: Styles.font14w700),
           10.heightBox,
           TextParser(
-            onHashTagTap: (p0) {},
-            onMentionTap: (p0) {},
+            onHashTagTap: (p0) {
+              print('HASHTAG');
+              print(p0);
+            },
+            onMentionTap: (p0) {
+              print('on Mention');
+              print(p0);
+            },
             text:
                 'The world of @AI research is vast and exciting, and there are many different types of #AI research methods to choose from. Here are some of the most popular methods:',
             style: Styles.font12w400
@@ -73,6 +80,10 @@ class PostView extends StatelessWidget {
           17.heightBox,
           // react bar
           ReactBar(),
+          if (detailsChildren != null) ...[
+            17.heightBox,
+            ...detailsChildren!,
+          ]
         ],
       ),
     );
