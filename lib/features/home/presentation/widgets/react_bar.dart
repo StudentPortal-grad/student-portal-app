@@ -8,7 +8,9 @@ import '../../../../core/utils/assets_app.dart';
 import '../../../../core/widgets/custom_image_view.dart';
 
 class ReactBar extends StatefulWidget {
-  const ReactBar({super.key});
+  const ReactBar({super.key, this.removeShare = false});
+
+  final bool removeShare;
 
   @override
   State<ReactBar> createState() => _ReactBarState();
@@ -23,7 +25,6 @@ class _ReactBarState extends State<ReactBar> {
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -31,7 +32,7 @@ class _ReactBarState extends State<ReactBar> {
       child: Row(
         children: [
           CustomImageView(
-            onTap: () => _onItemTapped((react == 1) ? 0 : 1 ),
+            onTap: () => _onItemTapped((react == 1) ? 0 : 1),
             imagePath: AssetsApp.arrowUpIcon,
             color: react == 1 ? ColorsManager.mainColorDark : null,
             width: 16.w,
@@ -57,13 +58,15 @@ class _ReactBarState extends State<ReactBar> {
           4.widthBox,
           Text('15', style: Styles.font14w500),
           Spacer(),
-          CustomImageView(
-            imagePath: AssetsApp.shareIcon,
-            width: 16.w,
-            height: 16.h,
-          ),
-          4.widthBox,
-          Text('Share', style: Styles.font14w500),
+          if (!widget.removeShare) ...[
+            CustomImageView(
+              imagePath: AssetsApp.shareIcon,
+              width: 16.w,
+              height: 16.h,
+            ),
+            4.widthBox,
+            Text('Share', style: Styles.font14w500),
+          ]
         ],
       ),
     );
