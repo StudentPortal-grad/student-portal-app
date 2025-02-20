@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:student_portal/core/helpers/app_size_boxes.dart';
 import 'package:student_portal/core/theming/colors.dart';
 import 'package:student_portal/core/theming/text_styles.dart';
+import 'package:student_portal/core/widgets/text_parser.dart';
 import 'package:student_portal/features/home/presentation/widgets/category_tag_view.dart';
 import 'package:student_portal/features/home/presentation/widgets/pdf_post_view.dart';
 import 'package:student_portal/features/home/presentation/widgets/post_list_images_view.dart';
@@ -28,9 +29,10 @@ class PostView extends StatelessWidget {
       decoration: BoxDecoration(
         boxShadow: [
           BoxShadow(
-              color: Colors.black.withValues(alpha: 0.4),
-              blurRadius: 7,
-              blurStyle: BlurStyle.outer),
+            color: Colors.black.withValues(alpha: 0.3),
+            blurRadius: 7,
+            blurStyle: BlurStyle.outer,
+          ),
         ],
         color: Colors.white,
         borderRadius: BorderRadius.all(
@@ -56,15 +58,17 @@ class PostView extends StatelessWidget {
           20.heightBox,
           Text('Research Methods AI', style: Styles.font14w700),
           10.heightBox,
-          Text(
-            'The world of AI research is vast and exciting, and there are many different types of AI research methods to choose from. Here are some of the most popular methods:',
-            style: Styles.font12w400.copyWith(color: ColorsManager.grayColor),
+          TextParser(
+            onHashTagTap: (p0) {},
+            onMentionTap: (p0) {},
+            text:
+                'The world of @AI research is vast and exciting, and there are many different types of #AI research methods to choose from. Here are some of the most popular methods:',
+            style: Styles.font12w400
+                .copyWith(color: ColorsManager.grayColor, height: 1.9),
           ),
           30.heightBox,
 
-          (id == 0) ?
-          PostListImagesView() :
-          PdfPostView(),
+          (id == 0) ? PostListImagesView() : PdfPostView(),
 
           17.heightBox,
           // react bar

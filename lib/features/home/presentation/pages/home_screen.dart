@@ -9,7 +9,6 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      // backgroundColor: ColorsManager.backgroundColor,
       child: ListView.separated(
         physics: const BouncingScrollPhysics(),
         padding: EdgeInsets.symmetric(horizontal: 28.w, vertical: 15.h),
