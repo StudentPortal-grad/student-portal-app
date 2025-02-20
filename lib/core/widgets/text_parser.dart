@@ -1,25 +1,39 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:student_portal/core/theming/colors.dart';
 
 class TextParser extends StatelessWidget {
   final String text;
   final Function(String)? onHashTagTap;
+  final Function(String)? onMentionTap;
+  final TextStyle? style;
 
-  const TextParser({super.key, required this.text, this.onHashTagTap});
+  const TextParser({
+    super.key,
+    required this.text,
+    this.onHashTagTap,
+    this.style,
+    this.onMentionTap,
+  });
 
   @override
   Widget build(BuildContext context) {
     return RichText(
       text: TextSpan(
-        style: TextStyle(fontSize: 16, color: Colors.black),
-        children: parseTextStyles(text, onHashTagTap: onHashTagTap),
+        style: style ?? TextStyle(fontSize: 16, color: Colors.black),
+        children: parseTextStyles(
+          text,
+          onHashTagTap: onHashTagTap,
+          onMentionTap: onMentionTap,
+        ),
       ),
     );
   }
 
-  static List<TextSpan> parseTextStyles(String input, {Function(String)? onHashTagTap}) {
+  static List<TextSpan> parseTextStyles(String input,
+      {Function(String)? onHashTagTap, Function(String)? onMentionTap}) {
     final RegExp regex = RegExp(
-      r'(\*.*?\*)|(_.*?_)|(~.*?~)|(-.*?-)|(\#\w+)|(`(?:.|\n)*?`)',
+      r'(\*.*?\*)|(_.*?_)|(~.*?~)|(-.*?-)|(\#\w+)|(@\w+)|(`(?:.|\n)*?`)',
       multiLine: true,
     );
 
@@ -52,10 +66,15 @@ class TextParser extends StatelessWidget {
             fontFamily: 'monospace', backgroundColor: Colors.grey[200]);
         matchText = matchText.substring(1, matchText.length - 1);
       } else if (matchText.startsWith('#')) {
-        style = TextStyle(color: Colors.blue, fontWeight: FontWeight.bold);
+        style = TextStyle(color: ColorsManager.mainColorLight, fontWeight: FontWeight.bold);
 
         recognizer = TapGestureRecognizer()
           ..onTap = () => onHashTagTap?.call(matchText.substring(1));
+      } else if (matchText.startsWith('@')) {
+        style = TextStyle(
+            color: ColorsManager.mainColor, fontWeight: FontWeight.bold);
+        recognizer = TapGestureRecognizer()
+          ..onTap = () => onMentionTap?.call(matchText.substring(1));
       }
 
       spans
