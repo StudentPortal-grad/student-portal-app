@@ -52,23 +52,23 @@ class _CommentBarState extends State<CommentBar> {
           child: CustomTextField(
             height: 38.h,
             controller: commentController,
-            suffix: isEmpty ? null : InkWell(
-              onTap: (){
-                print(commentController.text);
-              },
-              child: CircleAvatar(
-                  radius: 15.r,
-                  backgroundColor: ColorsManager.mainColor,
-                  child: Icon(
-                    Icons.send,
-                    color: ColorsManager.whiteColor,
-                    size: 15.sp,
-                  )),
-            ),
+            suffix: isEmpty
+                ? null
+                : InkWell(
+                    onTap: () {
+                      print(commentController.text);
+                    },
+                    child: Icon(
+                      Icons.send_rounded,
+                      color: ColorsManager.mainColor,
+                      size: 20.sp,
+                    ),
+                  ),
             hintText: 'Comment',
             expanded: true,
             textInputType: TextInputType.multiline,
-            contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 5.h),
+            contentPadding:
+                EdgeInsets.symmetric(horizontal: 16.w, vertical: 5.h),
           ),
         ),
       ],
