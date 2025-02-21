@@ -36,12 +36,11 @@ class CustomNavBar extends StatelessWidget {
         color: backgroundColor ?? Colors.white,
         borderRadius: BorderRadius.vertical(top: Radius.circular(20.r)),
         boxShadow: [
-          if (backgroundColor != null)
-            BoxShadow(
-              color: backgroundColor!.withValues(alpha: 0.3),
-              offset: const Offset(0, 5),
-              blurRadius: 10,
-            ),
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.3),
+            offset: const Offset(0, 5),
+            blurRadius: 15,
+          ),
         ],
       ),
       margin: barMargin,

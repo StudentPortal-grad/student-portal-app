@@ -16,6 +16,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.actionOnTap,
     this.backgroundColor,
     this.elevation = 0,
+    this.centerTitle = true,
   });
 
   @override
@@ -24,11 +25,12 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Function()? leadingOnTap, titleOnTap, actionOnTap;
   final Color? backgroundColor;
   final double elevation;
+  final bool centerTitle;
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      centerTitle: true,
+      centerTitle: centerTitle,
       backgroundColor: backgroundColor ?? Colors.white,
       surfaceTintColor: Colors.transparent,
       scrolledUnderElevation: 0,

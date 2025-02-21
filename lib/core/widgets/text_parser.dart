@@ -2,13 +2,13 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:student_portal/core/theming/colors.dart';
 
-class TextParser extends StatelessWidget {
+class AppText extends StatelessWidget {
   final String text;
   final Function(String)? onHashTagTap;
   final Function(String)? onMentionTap;
   final TextStyle? style;
 
-  const TextParser({
+  const AppText({
     super.key,
     required this.text,
     this.onHashTagTap,

@@ -58,8 +58,8 @@ class _HomeLayoutScreenState extends State<HomeLayoutScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: HomeAppBar(),
-      backgroundColor: ColorsManager.backgroundColor,
+      appBar: (currentIndex != 4) ? HomeAppBar() : null, // disappear appbar in chat screen
+      backgroundColor: (currentIndex != 4) ? ColorsManager.backgroundColor : Colors.white,
       body: widgetOptions[currentIndex],
       drawer: AppDrawer(),
       bottomNavigationBar: CustomNavBar(

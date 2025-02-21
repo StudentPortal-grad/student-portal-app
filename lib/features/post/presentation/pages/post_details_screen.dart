@@ -50,7 +50,7 @@ class _PostDetailsScreenState extends State<PostDetailsScreen> {
           detailsChildren: [
             CommentBar(),
             20.heightBox,
-            PostCommentsView(),
+            ...List.generate(2, (index) => PostCommentsView()),
           ],
         ),
       ),
@@ -95,7 +95,7 @@ class PostCommentsView extends StatelessWidget {
                 width: 250.w,
                 child: Column(
                   children: [
-                    TextParser(
+                    AppText(
                       text:
                           'These methods include quantitative techniques, such as statistical analysis and machine learning algorithms.',
                     ),

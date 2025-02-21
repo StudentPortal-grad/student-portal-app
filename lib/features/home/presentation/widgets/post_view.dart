@@ -59,7 +59,7 @@ class PostView extends StatelessWidget {
           20.heightBox,
           Text('Research Methods AI', style: Styles.font14w700),
           10.heightBox,
-          TextParser(
+          AppText(
             onHashTagTap: (p0) {
               print('HASH TAG');
               print(p0);

@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:student_portal/core/utils/service_locator.dart';
 import 'package:student_portal/features/auth/domain/usecases/login_uc.dart';
 import 'package:student_portal/features/auth/presentation/mange/signup_bloc/signup_bloc.dart';
+import 'package:student_portal/features/chats/presentation/pages/dm_screen.dart';
 import 'package:student_portal/features/post/presentation/pages/add_post_screen.dart';
 import 'package:student_portal/features/post/presentation/pages/post_details_screen.dart';
 import 'package:student_portal/features/resource/presentation/pages/resource_details_screen.dart';
@@ -40,6 +41,9 @@ abstract class AppRouter {
   static const String addResource = '/add_resource';
   static const String postDetails = '/post_details';
   static const String resourceDetails = '/resource_details';
+
+  //chat
+  static const String dmScreen = '/dm';
 
   static final router = GoRouter(
     routes: [
@@ -170,6 +174,17 @@ abstract class AppRouter {
             context: context,
             state: state,
             child: ResourceDetailsScreen(),
+          );
+        },
+      ),
+      GoRoute(
+        path: dmScreen,
+        pageBuilder: (context, state) {
+          final args = state.extra as Map<String, dynamic>?;
+          return buildPage(
+            context: context,
+            state: state,
+            child: DmScreen(),
           );
         },
       ),
