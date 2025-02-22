@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:student_portal/contestants.dart';
 import 'package:student_portal/core/helpers/app_size_boxes.dart';
 
 import '../../../../core/theming/colors.dart';
@@ -42,7 +43,7 @@ class _CommentBarState extends State<CommentBar> {
     return Row(
       children: [
         CustomImageView(
-          imagePath: 'https://avatars.githubusercontent.com/u/92533130',
+          imagePath: kUserImage,
           circle: true,
           height: 38.r,
           width: 38.r,

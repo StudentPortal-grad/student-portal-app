@@ -4,7 +4,7 @@ import 'package:student_portal/core/helpers/app_size_boxes.dart';
 import 'package:student_portal/core/theming/colors.dart';
 
 import '../../../../core/widgets/custom_image_view.dart';
-import '../../../../core/widgets/text_parser.dart';
+import '../../../../core/widgets/app_text.dart';
 import '../../data/model/message.dart' as model;
 
 class MessageItemView extends StatelessWidget {

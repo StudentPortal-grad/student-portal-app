@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:student_portal/contestants.dart';
 import 'package:student_portal/core/helpers/app_size_boxes.dart';
 import 'package:student_portal/core/theming/colors.dart';
 import 'package:student_portal/core/theming/text_styles.dart';
@@ -26,7 +27,7 @@ class AppDrawer extends StatelessWidget {
           Row(
             children: [
               CustomImageView(
-                imagePath: 'https://avatars.githubusercontent.com/u/92533130',
+                imagePath: kUserImage,
                 circle: true,
                 height: 58.r,
                 width: 58.r,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:student_portal/contestants.dart';
 import 'package:student_portal/core/theming/colors.dart';
 import 'package:student_portal/core/utils/assets_app.dart';
 
@@ -32,7 +33,7 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
               onTap: () {
                 Scaffold.of(context).openDrawer();
               },
-              imagePath: 'https://avatars.githubusercontent.com/u/92533130',
+              imagePath: kUserImage,
               circle: true,
               height: 35.r,
               width: 35.r,
