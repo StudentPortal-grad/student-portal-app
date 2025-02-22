@@ -145,6 +145,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.7.11"
+  deep_text:
+    dependency: "direct main"
+    description:
+      name: deep_text
+      sha256: "9156c0271f104f2ee17d4f0fb2840a8d44c9ee98df4f2a3df5ace901c2386854"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.3"
   device_frame:
     dependency: transitive
     description:
