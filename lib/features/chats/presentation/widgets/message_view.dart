@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:student_portal/core/helpers/app_size_boxes.dart';
 import 'package:student_portal/core/theming/colors.dart';
 
+import '../../../../core/theming/text_styles.dart';
 import '../../../../core/widgets/custom_image_view.dart';
 import '../../../../core/widgets/app_text.dart';
 import '../../data/model/message.dart' as model;
@@ -20,19 +21,20 @@ class MessageItemView extends StatelessWidget {
       children: [
         Container(
           padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 15.h),
-          decoration: self
-              ? BoxDecoration(
-                  color: ColorsManager.lightGreyColor.withOpacity(0.4),
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(13.r),
+          decoration: BoxDecoration(
+                  color: ColorsManager.lightBabyBlue,
+            borderRadius: self
+                ? BorderRadius.only(
+                    topLeft: Radius.circular(10.r),
+                    bottomRight: Radius.circular(10.r),
+                    bottomLeft: Radius.circular(10.r),
+                  )
+                : BorderRadius.only(
+                    bottomLeft: Radius.circular(10.r),
+                    topRight: Radius.circular(10.r),
+                    bottomRight: Radius.circular(10.r),
                   ),
-                )
-              : BoxDecoration(
-                  color: ColorsManager.mainColor,
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(13.r),
-                  ),
-                ),
+          ),
           child: Column(
             children: [
               if (message.files?.isNotEmpty ?? false) ...[
@@ -43,32 +45,26 @@ class MessageItemView extends StatelessWidget {
                     alignment: AlignmentDirectional.centerEnd,
                     child: AppText(
                       text: message.message ?? '',
-                      // style: AppTextStyles.blackMedium.copyWith(height: 1.50),
-                      // size: 16.sp,
+                      style: Styles.font16w500.copyWith(fontWeight: FontWeight.w400),
                     ),
                   ),
                 ]
               ] else
                 AppText(
                   text: message.message ?? '',
-                  // style: AppTextStyles.blackMedium.copyWith(height: 1.50),
-                  // size: 16.sp,
+                  style: Styles.font16w500.copyWith(fontWeight: FontWeight.w400),
                 ),
             ],
           ),
         ),
-        5.heightBox,
+        6.heightBox,
         Row(
           mainAxisSize: MainAxisSize.min,
           children: [
             AppText(
-              text: message.updatedAt ?? '',
-              // style: ,
+              text: message.createdAt ?? '',
+              style: Styles.font12w400.copyWith(color: Color(0xff9E9F9F)),
             ),
-            // if(self) ...[
-            //   5.widthBox,
-            //   Icon(message.id == '0' ? FontAwesomeIcons.circle : FontAwesomeIcons.circleCheck, color: AppColors.primary, size: 12.sp),
-            // ]
           ],
         )
       ],

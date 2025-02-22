@@ -52,10 +52,10 @@ class Message {
 
   static List<Message> dummyData() {
     return [
-      Message(from: '1', to: '0', message: 'Hii', files: [], id: '1'),
-      Message(from: '0', to: '1', message: 'Hii', files: [], id: '1'),
-      Message(from: '1', to: '0', message: 'How R U', files: [], id: '1'),
-      Message(from: '0', to: '1', message: 'Fine', files: [], id: '1'),
+      Message(from: '1', to: '0', message: 'Hii', files: [], id: '1',createdAt: '12:00'),
+      Message(from: '0', to: '1', message: 'Hii', files: [], id: '1', createdAt: '12:00',),
+      Message(from: '1', to: '0', message: 'How R U', files: [], id: '1', createdAt: '12:00'),
+      Message(from: '0', to: '1', message: 'Fine', files: [], id: '1', createdAt: '12:00'),
     ];
   }
 
