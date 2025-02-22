@@ -16,6 +16,7 @@ class DmScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       backgroundColor: Colors.white,
       appBar: CustomAppBar(
         toolbarHeight: kToolbarHeight * 1.2,
@@ -55,8 +56,7 @@ class DmScreen extends StatelessWidget {
             ),
           ),
           15.heightBox,
-          MessageField(),
-          15.heightBox,
+          MessageField(controller: TextEditingController()),
         ],
       ),
     );
