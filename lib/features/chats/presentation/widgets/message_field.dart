@@ -2,6 +2,7 @@ import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:student_portal/core/helpers/app_size_boxes.dart';
+import 'package:student_portal/core/helpers/file_service.dart';
 import 'package:student_portal/core/theming/colors.dart';
 import 'package:student_portal/core/utils/assets_app.dart';
 import 'package:student_portal/core/widgets/custom_text_field.dart';
@@ -104,15 +105,25 @@ class _MessageFieldState extends State<MessageField> {
                   ),
                 ),
                 15.widthBox,
-                CustomImageView(imagePath: AssetsApp.attachmentIcon),
+                CustomImageView(
+                  imagePath: AssetsApp.attachmentIcon,
+                  onTap: () async {
+                    final file = await FileService.pickFile();
+                    print(file?.path ?? 'not selected');
+                  },
+                ),
                 5.widthBox,
                 (isEmpty)
                     ? IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          // todo handle recording logic and ui
+                        },
                         icon: Icon(Icons.mic_none, color: ColorsManager.gray),
                       )
                     : IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          // todo send message logic
+                        },
                         icon: Icon(Icons.send_rounded,
                             color: ColorsManager.mainColor),
                       ),
@@ -124,7 +135,8 @@ class _MessageFieldState extends State<MessageField> {
         if (isEmojiPickerVisible)
           EmojiPicker(
             onBackspacePressed: () {
-              _controller.text = _controller.text.characters.skipLast(1).toString();
+              _controller.text =
+                  _controller.text.characters.skipLast(1).toString();
             },
             onEmojiSelected: (category, emoji) {
               _controller.text += emoji.emoji;

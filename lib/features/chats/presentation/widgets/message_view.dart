@@ -17,12 +17,13 @@ class MessageItemView extends StatelessWidget {
   Widget build(BuildContext context) {
     final self = message.from == '0'; //UserRepository.user?.id
     return Column(
-      crossAxisAlignment: self ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+      crossAxisAlignment:
+          self ? CrossAxisAlignment.end : CrossAxisAlignment.start,
       children: [
         Container(
-          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 15.h),
+          padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
           decoration: BoxDecoration(
-                  color: ColorsManager.lightBabyBlue,
+            color: ColorsManager.lightBabyBlue,
             borderRadius: self
                 ? BorderRadius.only(
                     topLeft: Radius.circular(10.r),
@@ -36,7 +37,9 @@ class MessageItemView extends StatelessWidget {
                   ),
           ),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              if (message.reply != null) ...[_buildReply(userName: 'You', reply: message.reply!), 8.heightBox],
               if (message.files?.isNotEmpty ?? false) ...[
                 CustomImageView(imagePath: message.files?[0].url),
                 if (message.message?.isNotEmpty ?? false) ...[
@@ -45,14 +48,16 @@ class MessageItemView extends StatelessWidget {
                     alignment: AlignmentDirectional.centerEnd,
                     child: AppText(
                       text: message.message ?? '',
-                      style: Styles.font16w500.copyWith(fontWeight: FontWeight.w400),
+                      style: Styles.font16w500
+                          .copyWith(fontWeight: FontWeight.w400),
                     ),
                   ),
                 ]
               ] else
                 AppText(
                   text: message.message ?? '',
-                  style: Styles.font16w500.copyWith(fontWeight: FontWeight.w400),
+                  style:
+                      Styles.font16w500.copyWith(fontWeight: FontWeight.w400),
                 ),
             ],
           ),
@@ -68,6 +73,33 @@ class MessageItemView extends StatelessWidget {
           ],
         )
       ],
+    );
+  }
+
+  Widget _buildReply({String? userName, required model.Message reply}) {
+    return IntrinsicHeight(
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            width: 2,
+            color: ColorsManager.mainColor,
+          ),
+          10.widthBox,
+          Column(
+            children: [
+              Text(
+                userName ?? '',
+                style: Styles.font15w500,
+              ),
+              AppText(
+                  text: reply.message ?? '',
+                  style:
+                      Styles.font16w500.copyWith(fontWeight: FontWeight.w400)),
+            ],
+          )
+        ],
+      ),
     );
   }
 }

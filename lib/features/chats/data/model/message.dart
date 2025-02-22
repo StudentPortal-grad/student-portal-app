@@ -9,6 +9,7 @@ class Message {
     this.id,
     this.createdAt,
     this.updatedAt,
+    this.reply,
   });
 
   Message.fromJson(dynamic json) {
@@ -26,6 +27,7 @@ class Message {
     final update = DateTime.tryParse(json?['updatedAt'] ?? '');
     if (create != null) updatedAt = DateFormat.jm().format(create.toLocal());
     if (update != null) updatedAt = DateFormat.jm().format(update.toLocal());
+    if(json['reply'] != null) reply = Message.fromJson(json['reply']);
   }
 
   String? from;
@@ -35,6 +37,7 @@ class Message {
   String? id;
   String? createdAt;
   String? updatedAt;
+  Message? reply;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -47,13 +50,17 @@ class Message {
     map['_id'] = id;
     map['createdAt'] = createdAt;
     map['updatedAt'] = updatedAt;
+    if (reply != null) {
+      map['reply'] = reply?.toJson();
+    }
     return map;
   }
 
   static List<Message> dummyData() {
     return [
-      Message(from: '1', to: '0', message: 'Hii', files: [], id: '1',createdAt: '12:00'),
+      Message(from: '1', to: '0', message: 'Hii', files: [], id: '1',createdAt: '12:00',reply: Message(message: 'Hii', files: [], id: '1', createdAt: '12:00')),
       Message(from: '0', to: '1', message: 'Hii', files: [], id: '1', createdAt: '12:00',),
+      Message(from: '0', to: '1', message: 'Hii', files: [], id: '1',createdAt: '12:00',reply: Message(message: 'Hii', files: [], id: '1', createdAt: '12:00')),
       Message(from: '1', to: '0', message: 'How R U', files: [], id: '1', createdAt: '12:00'),
       Message(from: '0', to: '1', message: 'Fine', files: [], id: '1', createdAt: '12:00'),
     ];
