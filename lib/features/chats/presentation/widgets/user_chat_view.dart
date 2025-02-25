@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:student_portal/contestants.dart';
 import 'package:student_portal/core/helpers/app_size_boxes.dart';
 
 import '../../../../core/theming/colors.dart';
@@ -29,6 +30,7 @@ class UserChatView extends StatelessWidget {
           CustomImageView(
             height: 56.r,
             width: 56.r,
+            imagePath: kUserImage,
             circle: true,
             fit: BoxFit.contain,
           ),

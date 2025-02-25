@@ -39,7 +39,7 @@ class MessageItemView extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              if (message.reply != null) ...[_buildReply(userName: 'You', reply: message.reply!), 8.heightBox],
+              // if (message.reply != null) ...[_buildReply(userName: 'You', reply: message.reply!), 8.heightBox],
               if (message.files?.isNotEmpty ?? false) ...[
                 CustomImageView(imagePath: message.files?[0].url),
                 if (message.message?.isNotEmpty ?? false) ...[

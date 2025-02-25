@@ -4,6 +4,7 @@ abstract class AssetsApp {
   static const String logo = "$imagePath/logo_img.png";
   static const String dialogDecoration = "$imagePath/dialog_decoration.png";
   static const String testVideoImage = "$imagePath/test_video_image.png";
+  static const String pickImage = '$imagePath/pick_image.png';
 
   static const String savedImage = "$iconPath/saved_image.svg";
   static const String searchIcon = "$iconPath/search.svg";

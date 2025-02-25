@@ -134,7 +134,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
               ),
               UploadButton(
                 onTap: () async {
-                  File? file = await FileService.pickFile();
+                  File? file = await FileService.pickImage();
                   if (file?.path != null) {
                     final String path = file!.path.trim();
                     print("FILE PATHHHH $path");

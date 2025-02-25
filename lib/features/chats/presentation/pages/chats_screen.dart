@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:student_portal/core/helpers/app_size_boxes.dart';
+import 'package:student_portal/core/utils/app_router.dart';
 import 'package:student_portal/features/chats/data/model/message.dart';
 
 import '../../../../core/theming/colors.dart';
@@ -30,7 +31,8 @@ class ChatsScreen extends StatelessWidget {
                   // reverse: true,
                   itemBuilder: (context, index) => UserChatView(
                     pinned: index == 0,
-                    user: User(id: (index + 1).toString(), fullname: 'User $index'),
+                    user: User(
+                        id: (index + 1).toString(), fullname: 'User $index'),
                     lastMessage: Message(
                         to: '0',
                         from: '1',
@@ -51,9 +53,10 @@ class ChatsScreen extends StatelessWidget {
 
   Widget _buildMessagesAppBar() {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text("Messaging", style: Styles.font20w600),
+        Spacer(),
         InkWell(
           onTap: () {},
           child: CircleAvatar(
@@ -67,9 +70,23 @@ class ChatsScreen extends StatelessWidget {
               width: 26.r,
             ),
           ),
-        )
+        ),
+        20.widthBox,
+        InkWell(
+          onTap: () => AppRouter.router.push(AppRouter.createGroup),
+          child: Tooltip(
+            message: 'Create A Group',
+            child: CircleAvatar(
+              radius: 17.r,
+              backgroundColor: ColorsManager.lightBabyBlue,
+              child: Icon(
+                Icons.add,
+                color: ColorsManager.mainColor,
+              ),
+            ),
+          ),
+        ),
       ],
     );
   }
 }
-

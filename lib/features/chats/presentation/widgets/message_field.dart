@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -25,6 +26,8 @@ class _MessageFieldState extends State<MessageField> {
   bool isTyping = false;
   bool isEmpty = true;
   bool isEmojiPickerVisible = false;
+  bool isRecording = false;
+  DateTime? _recordingStartTime;
 
   @override
   void initState() {
@@ -95,7 +98,8 @@ class _MessageFieldState extends State<MessageField> {
                     borderColor: Colors.transparent,
                     focusNode: _focusNode,
                     controller: _controller,
-                    hintText: "Type message...",
+                    hintText: isRecording ? "Recording..." : "Type message...",
+                    enabled: !isRecording,
                     activeBorderColor: Colors.transparent,
                     hintStyle: Styles.font14w400
                         .copyWith(color: ColorsManager.lightGreyColor2),
@@ -105,24 +109,21 @@ class _MessageFieldState extends State<MessageField> {
                   ),
                 ),
                 15.widthBox,
-                CustomImageView(
-                  imagePath: AssetsApp.attachmentIcon,
-                  onTap: () async {
-                    final file = await FileService.pickFile();
-                    print(file?.path ?? 'not selected');
-                  },
-                ),
+                if (!isRecording)
+                  CustomImageView(
+                    imagePath: AssetsApp.attachmentIcon,
+                    onTap: () async {
+                      final file = await FileService.pickFile();
+                      log(file?.path ?? 'not selected');
+                    },
+                  ),
                 5.widthBox,
                 (isEmpty)
-                    ? IconButton(
-                        onPressed: () {
-                          // todo handle recording logic and ui
-                        },
-                        icon: Icon(Icons.mic_none, color: ColorsManager.gray),
-                      )
+                    ? SizedBox.shrink()
                     : IconButton(
                         onPressed: () {
-                          // todo send message logic
+                          log('Message: ${_controller.text}');
+                          // TODO: Implement send message logic
                         },
                         icon: Icon(Icons.send_rounded,
                             color: ColorsManager.mainColor),
@@ -143,6 +144,51 @@ class _MessageFieldState extends State<MessageField> {
             },
           ),
       ],
+    );
+  }
+
+  Widget _buildAudionButton() {
+    return GestureDetector(
+      onLongPressStart: (_) async {
+        setState(() {
+          isRecording = true;
+          _recordingStartTime = DateTime.now();
+        });
+
+        // await _audioService.startRecording(); // Start Recording
+      },
+      onLongPressEnd: (_) async {
+        if (isRecording) {
+          final now = DateTime.now();
+          final duration = now.difference(_recordingStartTime!);
+
+          if (duration.inSeconds < 1) {
+            // await _audioService.cancelRecording(); // Cancel if too short
+            log("Recording canceled (too short)");
+          } else {
+            // final audioPath = await _audioService.stopRecording();
+            // if (audioPath != null) {
+            //   log('Audio recorded at: $audioPath');
+            //   TODO: Handle sending/storing the audio file
+            // }
+          }
+
+          setState(() {
+            isRecording = false;
+            _recordingStartTime = null;
+          });
+        }
+      },
+      onLongPressMoveUpdate: (details) {
+        // TODO: Add visual feedback for cancel gesture
+      },
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8),
+        child: Icon(
+          isRecording ? Icons.mic : Icons.mic_none,
+          color: isRecording ? ColorsManager.mainColor : ColorsManager.gray,
+        ),
+      ),
     );
   }
 }

@@ -8,6 +8,7 @@ import 'package:student_portal/features/chats/presentation/pages/dm_screen.dart'
 import 'package:student_portal/features/post/presentation/pages/add_post_screen.dart';
 import 'package:student_portal/features/post/presentation/pages/post_details_screen.dart';
 import 'package:student_portal/features/resource/presentation/pages/resource_details_screen.dart';
+import 'package:student_portal/features/groups/presentation/screens/create_group_screen.dart';
 import '../../features/auth/data/repo_impl/login_repo_impl.dart';
 import '../../features/auth/presentation/mange/login_bloc/login_bloc.dart';
 import '../../features/auth/presentation/view/forget_password/forget_password.dart';
@@ -41,6 +42,7 @@ abstract class AppRouter {
   static const String addResource = '/add_resource';
   static const String postDetails = '/post_details';
   static const String resourceDetails = '/resource_details';
+  static const String createGroup = '/create_group';
 
   //chat
   static const String dmScreen = '/dm';
@@ -176,6 +178,15 @@ abstract class AppRouter {
             child: ResourceDetailsScreen(),
           );
         },
+      ),
+      GoRoute(
+        path: createGroup,
+        pageBuilder: (context, state) => buildPage(
+          useSlideTransition: true,
+          context: context,
+          state: state,
+          child: const CreateGroupScreen(),
+        ),
       ),
       GoRoute(
         path: dmScreen,

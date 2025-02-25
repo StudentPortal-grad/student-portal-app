@@ -194,7 +194,7 @@ extension ImageTypeExtension on String {
       return ImageType.network;
     } else if (endsWith('.svg')) {
       return ImageType.svg;
-    } else if (endsWith(CustomImageView.namePackage)) {
+    } else if (contains(CustomImageView.namePackage)) {
       return ImageType.file;
     } else {
       return ImageType.png;

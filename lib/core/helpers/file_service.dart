@@ -46,6 +46,23 @@ class FileService {
     return null; // No file selected
   }
 
+  /// Pick an image
+  static Future<File?> pickImage() async {
+    if (!await _requestPermission()) {
+      log("Storage permission denied");
+      return null;
+    }
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      type: FileType.image,
+    );
+
+    if (result != null && result.files.single.path != null) {
+      return File(result.files.single.path!);
+    }
+    return null; // No file selected
+  }
+
+
 // /// Upload the selected file to the server
 // Future<String?> uploadFile(File file) async {
 //   String fileName = basename(file.path);
