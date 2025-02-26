@@ -1,5 +1,6 @@
 import 'package:deep_text/deep_text.dart';
 import 'package:flutter/material.dart';
+import 'package:student_portal/core/theming/colors.dart';
 
 class AppText extends StatelessWidget {
   final String text;
@@ -26,6 +27,8 @@ class AppText extends StatelessWidget {
             fontSize: 16,
             color: Colors.black,
           ),
+      mentionStyle: const TextStyle(color: ColorsManager.mainColor),
+      hashTagStyle: const TextStyle(color: ColorsManager.mainColorLight),
     );
   }
 }
