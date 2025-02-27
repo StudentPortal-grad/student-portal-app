@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:widget_zoom/widget_zoom.dart';
 import '../../../../core/widgets/custom_image_view.dart';
 
 class ImagePostView extends StatelessWidget {
@@ -22,18 +23,18 @@ class ImagePostView extends StatelessWidget {
           ),
           onPressed: () => Navigator.pop(context),
         ),
-        title: const Text(
-          "Post",
-          style: TextStyle(color: Colors.white),
-        ),
+        // title: const Text(
+        //   "Post",
+        //   style: TextStyle(color: Colors.white),
+        // ),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
-            child: Hero(
-              tag: 'image$id',
-              child: Center(
+            child: WidgetZoom(
+              heroAnimationTag: 'image$id',
+              zoomWidget: Center(
                 child: CustomImageView(
                   materialNeeded: true,
                   imagePath: 'assets/images/dummy_image.png',

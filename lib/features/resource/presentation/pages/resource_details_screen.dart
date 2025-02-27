@@ -39,7 +39,8 @@ class _ResourceDetailsScreenState extends State<ResourceDetailsScreen> {
       backgroundColor: ColorsManager.backgroundColor,
       appBar: CustomAppBar(
         backgroundColor: ColorsManager.whiteColor,
-        title: Text('Resource Details', style: Styles.font20w600),
+        centerTitle: false,
+        title: Text('Resource', style: Styles.font20w600),
       ),
       body: SingleChildScrollView(
         controller: scrollController,

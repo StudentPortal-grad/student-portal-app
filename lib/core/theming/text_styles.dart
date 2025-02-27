@@ -14,6 +14,12 @@ abstract class Styles {
     color: ColorsManager.mainColor,
     fontSize: 16.sp,
   );
+  static TextStyle font18w700 = TextStyle(
+    fontWeight: FontWeight.w700,
+    color: ColorsManager.blackColor,
+    fontSize: 18.sp,
+  );
+
 
   static TextStyle font15w600 = TextStyle(
     fontWeight: FontWeight.w600,

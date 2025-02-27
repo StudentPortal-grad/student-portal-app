@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import '../../../../core/helpers/extensions.dart';
 import '../../../../core/widgets/custom_image_view.dart';
 import '../pages/image_post_screen.dart';
@@ -63,7 +62,6 @@ class PostImageView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // todo: handle zoom in and optimize layout
     return Hero(
       tag: 'image$id',
       child: CustomImageView(

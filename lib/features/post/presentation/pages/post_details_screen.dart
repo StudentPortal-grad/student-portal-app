@@ -37,8 +37,9 @@ class _PostDetailsScreenState extends State<PostDetailsScreen> {
       resizeToAvoidBottomInset: true,
       backgroundColor: ColorsManager.backgroundColor,
       appBar: CustomAppBar(
+        centerTitle: false,
         backgroundColor: ColorsManager.whiteColor,
-        title: Text('Post Details', style: Styles.font20w600),
+        title: Text('Post', style: Styles.font20w600),
       ),
       body: SingleChildScrollView(
         controller: scrollController,
