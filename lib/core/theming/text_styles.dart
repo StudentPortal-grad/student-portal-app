@@ -72,4 +72,10 @@ abstract class Styles {
     fontSize: 14.sp,
     fontWeight: FontWeight.w400,
   );
+
+  static TextStyle font13w400 = TextStyle(
+    color: ColorsManager.lightGreyColor,
+    fontSize: 13.sp,
+    fontWeight: FontWeight.w400,
+  );
 }

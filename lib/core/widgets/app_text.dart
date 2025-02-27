@@ -29,6 +29,7 @@ class AppText extends StatelessWidget {
           ),
       mentionStyle: const TextStyle(color: ColorsManager.mainColor),
       hashTagStyle: const TextStyle(color: ColorsManager.mainColorLight),
+      enablePhones: false,
     );
   }
 }
