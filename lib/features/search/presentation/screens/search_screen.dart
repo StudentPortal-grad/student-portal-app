@@ -28,6 +28,7 @@ class _SearchScreenState extends State<SearchScreen>
     with TickerProviderStateMixin {
   late final TextEditingController _controller;
   late final TabController _tabController;
+  bool isEmpty = true;
 
   @override
   void initState() {
@@ -64,17 +65,23 @@ class _SearchScreenState extends State<SearchScreen>
                 fit: BoxFit.none,
               ),
               hintText: 'Search...',
-              onFieldSubmitted: (p0) {},
+              onFieldSubmitted: (p0) {
+                setState(() {
+                  isEmpty = p0.isEmpty;
+                });
+              },
             ),
             20.heightBox,
-            // Expanded(child: NotFoundView()),
-            Expanded(child: SearchBodyView(tabController: _tabController)),
+            isEmpty
+                ? Expanded(child: NotFoundView())
+                : Expanded(child: SearchBodyView(tabController: _tabController)),
           ],
         ),
       ),
     );
   }
 }
+
 class SearchBodyView extends StatelessWidget {
   const SearchBodyView({super.key, required this.tabController});
 

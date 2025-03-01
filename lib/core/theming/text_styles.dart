@@ -44,6 +44,7 @@ abstract class Styles {
     color: Color(0xff120D26),
   );
 
+
   static TextStyle font18w600 = TextStyle(
     fontWeight: FontWeight.w600,
     fontSize: 18.sp,
