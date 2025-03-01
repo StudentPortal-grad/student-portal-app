@@ -68,6 +68,7 @@ dependencies:
   widget_zoom: ^0.0.4
   deep_text: ^1.0.4
   emoji_picker_flutter: ^4.3.0
+  timeago: ^3.7.0
 
 dev_dependencies:
   flutter_test:

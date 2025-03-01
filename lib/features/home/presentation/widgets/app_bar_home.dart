@@ -47,7 +47,9 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
               iconPath: AssetsApp.searchIcon,
             ),
             _buildIconView(
-                onTap: () {},
+                onTap: () {
+                  AppRouter.router.push(AppRouter.notification);
+                },
                 iconPath: AssetsApp.notificationIcon,
                 isNotification: true),
           ],

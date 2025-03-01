@@ -2,6 +2,8 @@ import 'package:deep_text/deep_text.dart';
 import 'package:flutter/material.dart';
 import 'package:student_portal/core/theming/colors.dart';
 
+import '../theming/text_styles.dart';
+
 class AppText extends StatelessWidget {
   final String text;
   final Function(String)? onHashTagTap;
@@ -22,6 +24,7 @@ class AppText extends StatelessWidget {
       text: text,
       onHashTagTap: onHashTagTap,
       onMentionTap: onMentionTap,
+      boldStyle: Styles.font16w700.copyWith(color: Colors.black),
       defaultStyle: style ??
           TextStyle(
             fontSize: 16,

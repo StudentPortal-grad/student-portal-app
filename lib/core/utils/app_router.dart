@@ -18,6 +18,7 @@ import '../../features/auth/presentation/view/otp_view/otp_screen.dart';
 import '../../features/auth/presentation/view/set_new_password/set_new_password.dart';
 import '../../features/auth/presentation/view/signup_view/signup_view.dart';
 import '../../features/home_layout/ui/home_layout_screen.dart';
+import '../../features/notification/presentation/screens/notifications_screen.dart';
 import '../../features/onboarding/view/onboarding_view/onboarding_view.dart';
 import '../../features/onboarding/view/splash_view/splash_view.dart';
 import '../../features/resource/presentation/pages/add_resource_screen.dart';
@@ -50,6 +51,9 @@ abstract class AppRouter {
 
   // search
   static const String searchScreen = '/search';
+
+  // notification
+  static const String notification = '/notification';
 
   static final router = GoRouter(
     routes: [
@@ -211,6 +215,17 @@ abstract class AppRouter {
             context: context,
             state: state,
             child: SearchScreen(),
+          );
+        },
+      ),
+      GoRoute(
+        path: notification,
+        pageBuilder: (context, state) {
+          final args = state.extra as Map<String, dynamic>?;
+          return buildPage(
+            context: context,
+            state: state,
+            child: NotificationsScreen(),
           );
         },
       ),
