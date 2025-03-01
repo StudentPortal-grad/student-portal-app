@@ -9,6 +9,7 @@ import 'package:student_portal/features/post/presentation/pages/add_post_screen.
 import 'package:student_portal/features/post/presentation/pages/post_details_screen.dart';
 import 'package:student_portal/features/resource/presentation/pages/resource_details_screen.dart';
 import 'package:student_portal/features/groups/presentation/screens/create_group_screen.dart';
+import 'package:student_portal/features/search/presentation/screens/search_screen.dart';
 import '../../features/auth/data/repo_impl/login_repo_impl.dart';
 import '../../features/auth/presentation/mange/login_bloc/login_bloc.dart';
 import '../../features/auth/presentation/view/forget_password/forget_password.dart';
@@ -46,6 +47,9 @@ abstract class AppRouter {
 
   //chat
   static const String dmScreen = '/dm';
+
+  // search
+  static const String searchScreen = '/search';
 
   static final router = GoRouter(
     routes: [
@@ -196,6 +200,17 @@ abstract class AppRouter {
             context: context,
             state: state,
             child: DmScreen(),
+          );
+        },
+      ),
+      GoRoute(
+        path: searchScreen,
+        pageBuilder: (context, state) {
+          final args = state.extra as Map<String, dynamic>?;
+          return buildPage(
+            context: context,
+            state: state,
+            child: SearchScreen(),
           );
         },
       ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:student_portal/contestants.dart';
 import 'package:student_portal/core/theming/colors.dart';
+import 'package:student_portal/core/utils/app_router.dart';
 import 'package:student_portal/core/utils/assets_app.dart';
 
 import '../../../../../core/widgets/custom_image_view.dart';
@@ -40,7 +41,9 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
             ),
             Spacer(),
             _buildIconView(
-              onTap: () {},
+              onTap: () {
+                AppRouter.router.push(AppRouter.searchScreen);
+              },
               iconPath: AssetsApp.searchIcon,
             ),
             _buildIconView(

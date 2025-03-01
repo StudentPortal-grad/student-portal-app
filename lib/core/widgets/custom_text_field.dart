@@ -40,6 +40,7 @@ class CustomTextField extends StatefulWidget {
     this.labelIcon,
     this.focusNode,
     this.textInputAction,
+    this.onFieldSubmitted,
   });
 
   final TextEditingController controller;
@@ -60,6 +61,7 @@ class CustomTextField extends StatefulWidget {
   final Widget? labelIcon;
   final FocusNode? focusNode;
   final TextInputAction? textInputAction;
+  final Function(String)? onFieldSubmitted;
 
   @override
   State<CustomTextField> createState() => _CustomTextFieldState();
@@ -103,6 +105,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
           width: widget.width,
           child: TextFormField(
             textInputAction: widget.textInputAction,
+            onFieldSubmitted: widget.onFieldSubmitted,
             scrollPadding: EdgeInsets.zero,
             onChanged: widget.onChanged,
             focusNode: widget.focusNode,
