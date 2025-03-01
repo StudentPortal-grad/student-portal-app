@@ -13,6 +13,7 @@ import '../widgets/searched_events.dart';
 import '../widgets/searched_people.dart';
 import '../widgets/searched_posts.dart';
 import '../widgets/searched_resources.dart';
+import 'not_found_search_view.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key, this.searchText});
@@ -66,40 +67,56 @@ class _SearchScreenState extends State<SearchScreen>
               onFieldSubmitted: (p0) {},
             ),
             20.heightBox,
-            TabBar(
-              controller: _tabController,
-              splashFactory: NoSplash.splashFactory,
-              isScrollable: true,
-              dividerColor: Colors.transparent,
-              tabAlignment: TabAlignment.start,
-              labelStyle: Styles.font16w500,
-              indicator: UnderlineTabIndicator(
-                  borderSide: BorderSide(color: ColorsManager.mainColor, width: 3.w),
-                  borderRadius: BorderRadius.circular(7.r)),
-              labelColor: ColorsManager.mainColor,
-              tabs: [
-                Tab(text: 'Posts'),
-                Tab(text: 'Resources'),
-                Tab(text: 'Events'),
-                Tab(text: 'Communities'),
-                Tab(text: 'People'),
-              ],
-            ),
-            Expanded(
-              child: TabBarView(
-                controller: _tabController,
-                children: [
-                  SearchedPosts(),
-                  SearchedResources(),
-                  SearchedEvents(),
-                  SearchedCommunities(),
-                  SearchedPeople(),
-                ],
-              ),
-            ),
+            // Expanded(child: NotFoundView()),
+            Expanded(child: SearchBodyView(tabController: _tabController)),
           ],
         ),
       ),
+    );
+  }
+}
+class SearchBodyView extends StatelessWidget {
+  const SearchBodyView({super.key, required this.tabController});
+
+  final TabController tabController;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        TabBar(
+          controller: tabController,
+          splashFactory: NoSplash.splashFactory,
+          isScrollable: true,
+          dividerColor: Colors.transparent,
+          tabAlignment: TabAlignment.start,
+          labelStyle: Styles.font16w500,
+          indicator: UnderlineTabIndicator(
+              borderSide:
+                  BorderSide(color: ColorsManager.mainColor, width: 3.w),
+              borderRadius: BorderRadius.circular(7.r)),
+          labelColor: ColorsManager.mainColor,
+          tabs: [
+            Tab(text: 'Posts'),
+            Tab(text: 'Resources'),
+            Tab(text: 'Events'),
+            Tab(text: 'Communities'),
+            Tab(text: 'People'),
+          ],
+        ),
+        Expanded(
+          child: TabBarView(
+            controller: tabController,
+            children: [
+              SearchedPosts(),
+              SearchedResources(),
+              SearchedEvents(),
+              SearchedCommunities(),
+              SearchedPeople(),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }

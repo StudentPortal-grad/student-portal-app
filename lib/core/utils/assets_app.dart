@@ -9,6 +9,7 @@ abstract class AssetsApp {
   static const String savedImage = "$iconPath/saved_image.svg";
   static const String searchIcon = "$iconPath/search.svg";
   static const String search2Icon = "$iconPath/search2.svg";
+  static const String search3Icon = "$iconPath/search3.svg";
   static const String notificationIcon = "$iconPath/notification.svg";
   static const String emailIcon = "$iconPath/email_icon.svg";
   static const String lockIcon = "$iconPath/lock_icon.svg";
