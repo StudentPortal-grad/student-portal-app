@@ -92,8 +92,9 @@ class ProfileDetails extends StatelessWidget {
         ),
         20.heightBox,
         Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+          // mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            35.widthBox,
             Icon(Icons.person_rounded, color: ColorsManager.mainColorLight,size: 20.sp),
             3.widthBox,
             "Student at Damanhour University".make(
