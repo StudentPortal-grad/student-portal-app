@@ -18,6 +18,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.elevation = 0,
     this.centerTitle = true,
     this.toolbarHeight,
+    this.leadingIconColor,
   });
 
   @override
@@ -28,6 +29,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final double elevation;
   final bool centerTitle;
   final double? toolbarHeight;
+  final Color? leadingIconColor;
 
   @override
   Widget build(BuildContext context) {
@@ -47,6 +49,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           child: leading ??
               CustomImageView(
                 imagePath: AssetsApp.arrowBackIcon,
+                color: leadingIconColor,
                 width: 21.w,
                 height: 15.h,
                 fit: BoxFit.none,

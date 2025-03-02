@@ -4,6 +4,7 @@ import 'package:student_portal/contestants.dart';
 import 'package:student_portal/core/helpers/app_size_boxes.dart';
 import 'package:student_portal/core/theming/colors.dart';
 import 'package:student_portal/core/theming/text_styles.dart';
+import 'package:student_portal/core/utils/app_router.dart';
 import 'package:student_portal/core/utils/assets_app.dart';
 import 'package:student_portal/core/widgets/custom_app_button.dart';
 import 'package:student_portal/core/widgets/custom_image_view.dart';
@@ -60,7 +61,12 @@ class AppDrawer extends StatelessWidget {
             child: Column(
               spacing: 17.h,
               children: [
-                _buildDrawerItem(title: "Profile", icon: Icons.person),
+                _buildDrawerItem(
+                    title: "Profile",
+                    icon: Icons.person,
+                    onTap: () {
+                      AppRouter.router.push(AppRouter.profile);
+                    }),
                 _buildDrawerItem(title: "Account Settings", icon: Icons.settings),
                 _buildDrawerItem(title: "BookMark", icon: Icons.local_offer),
                 _buildDrawerItem(title: "Your Communities", icon: Icons.people),
@@ -87,7 +93,9 @@ class AppDrawer extends StatelessWidget {
           30.heightBox,
           CustomAppButton(
             label: "Sign Out",
-            onTap: () {},
+            onTap: () {
+              AppRouter.clearAndNavigate(AppRouter.loginView);
+            },
             backgroundColor: Colors.white,
             textStyle: Styles.font15w600.copyWith(color: ColorsManager.orangeColor),
           ),
