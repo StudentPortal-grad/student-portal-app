@@ -11,7 +11,9 @@ import '../../../../core/widgets/custom_appbar.dart';
 import '../../../../core/widgets/custom_image_view.dart';
 
 class ProfileCardView extends StatelessWidget {
-  const ProfileCardView({super.key});
+  const ProfileCardView({super.key, this.onPostsTap});
+
+  final Function()? onPostsTap;
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +67,11 @@ class ProfileCardView extends StatelessWidget {
                       .copyWith(color: ColorsManager.grayColor)),
               25.heightBox,
               // to show posts, followers, following and title
-              ProfileDetails(),
+              ProfileDetails(
+                onPostsTap: onPostsTap,
+                onFollowersTap: () {},
+                onFollowingTap: () {},
+              ),
             ],
           ),
         ),
@@ -75,7 +81,16 @@ class ProfileCardView extends StatelessWidget {
 }
 
 class ProfileDetails extends StatelessWidget {
-  const ProfileDetails({super.key});
+  const ProfileDetails({
+    super.key,
+    this.onPostsTap,
+    this.onFollowersTap,
+    this.onFollowingTap,
+  });
+
+  final Function()? onPostsTap;
+  final Function()? onFollowersTap;
+  final Function()? onFollowingTap;
 
   @override
   Widget build(BuildContext context) {
@@ -83,11 +98,11 @@ class ProfileDetails extends StatelessWidget {
       children: [
         Row(
           children: [
-            _buildStatItem("10", "Posts", () => print('Posts')),
+            _buildStatItem("10", "Posts", onPostsTap),
             _buildDivider(),
-            _buildStatItem("10", "Followers", () => print('Followers')),
+            _buildStatItem("10", "Followers", onFollowersTap),
             _buildDivider(),
-            _buildStatItem("10", "Following", () => print('Following')),
+            _buildStatItem("10", "Following", onFollowingTap),
           ],
         ),
         20.heightBox,
@@ -95,10 +110,12 @@ class ProfileDetails extends StatelessWidget {
           // mainAxisAlignment: MainAxisAlignment.center,
           children: [
             35.widthBox,
-            Icon(Icons.person_rounded, color: ColorsManager.mainColorLight,size: 20.sp),
+            Icon(Icons.person_rounded,
+                color: ColorsManager.mainColorLight, size: 20.sp),
             3.widthBox,
             "Student at Damanhour University".make(
-              style: Styles.font14w400.copyWith(color: ColorsManager.mainColorLight),
+              style: Styles.font14w400
+                  .copyWith(color: ColorsManager.mainColorLight),
             ),
           ],
         ),
@@ -112,7 +129,7 @@ class ProfileDetails extends StatelessWidget {
         color: Color(0xffdddddd),
       );
 
-  Widget _buildStatItem(String count, String label, VoidCallback onTap) {
+  Widget _buildStatItem(String count, String label, VoidCallback? onTap) {
     return Expanded(
       child: InkWell(
         onTap: onTap,

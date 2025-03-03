@@ -17,17 +17,29 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen>
     with TickerProviderStateMixin {
   late final TabController _tabController;
+  late final ScrollController _scrollController;
 
   @override
   void initState() {
     _tabController = TabController(length: 3, vsync: this);
+    _scrollController = ScrollController();
     super.initState();
   }
 
   @override
   void dispose() {
     _tabController.dispose();
+    _scrollController.dispose();
     super.dispose();
+  }
+
+  _onPostTap()async {
+    _tabController.animateTo(1,
+        duration: Duration(milliseconds: 400), curve: Curves.fastOutSlowIn);
+    await Future.delayed(Duration(milliseconds: 400));
+    _scrollController.animateTo(_scrollController.position.maxScrollExtent,
+        duration: Duration(milliseconds: 400), curve: Curves.fastOutSlowIn);
+    setState(() {});
   }
 
   @override
@@ -35,9 +47,10 @@ class _ProfileScreenState extends State<ProfileScreen>
     return Scaffold(
       backgroundColor: ColorsManager.backgroundColorDeep,
       body: SingleChildScrollView(
+        controller: _scrollController,
         child: Column(
           children: [
-            ProfileCardView(),
+            ProfileCardView(onPostsTap: _onPostTap),
             TabBar(
               splashFactory: NoSplash.splashFactory,
               dividerColor: Colors.transparent,
