@@ -93,12 +93,12 @@ class _CustomTextFieldState extends State<CustomTextField> {
             children: [
               Text(
                 widget.labelText ?? '',
-                style: Styles.font18w600.copyWith(fontWeight: FontWeight.w700),
+                style: widget.labelStyle ?? Styles.font16w500,
               ),
               widget.labelIcon ?? SizedBox.shrink(),
             ],
           ),
-          10.heightBox,
+          6.heightBox,
         ],
         SizedBox(
           height: widget.height,

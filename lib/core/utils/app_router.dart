@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:student_portal/core/utils/service_locator.dart';
 import 'package:student_portal/features/auth/domain/usecases/login_uc.dart';
-import 'package:student_portal/features/auth/presentation/mange/signup_bloc/signup_bloc.dart';
 import 'package:student_portal/features/chats/presentation/pages/dm_screen.dart';
 import 'package:student_portal/features/community/presentation/screens/community_screen.dart';
 import 'package:student_portal/features/community/presentation/screens/create_community_screen.dart';
@@ -15,12 +14,13 @@ import 'package:student_portal/features/resource/presentation/pages/resource_det
 import 'package:student_portal/features/groups/presentation/screens/create_group_screen.dart';
 import 'package:student_portal/features/search/presentation/screens/search_screen.dart';
 import '../../features/auth/data/repo_impl/login_repo_impl.dart';
-import '../../features/auth/presentation/mange/login_bloc/login_bloc.dart';
-import '../../features/auth/presentation/view/forget_password/forget_password.dart';
-import '../../features/auth/presentation/view/login_view/login_view.dart';
-import '../../features/auth/presentation/view/otp_view/otp_screen.dart';
-import '../../features/auth/presentation/view/set_new_password/set_new_password.dart';
-import '../../features/auth/presentation/view/signup_view/signup_view.dart';
+import '../../features/auth/presentation/manager/login_bloc/login_bloc.dart';
+import '../../features/auth/presentation/manager/signup_bloc/signup_bloc.dart';
+import '../../features/auth/presentation/screens/forget_password.dart';
+import '../../features/auth/presentation/screens/login_view.dart';
+import '../../features/auth/presentation/screens/otp_screen.dart';
+import '../../features/auth/presentation/screens/set_new_password.dart';
+import '../../features/auth/presentation/screens/signup_view.dart';
 import '../../features/home_layout/ui/home_layout_screen.dart';
 import '../../features/notification/presentation/screens/notifications_screen.dart';
 import '../../features/onboarding/view/onboarding_view/onboarding_view.dart';
@@ -35,11 +35,11 @@ abstract class AppRouter {
       router.routerDelegate.navigatorKey.currentContext;
 
   // auth
-  static const String splashView = '/s';
+  static const String splashView = '/splash';
   static const String onBoardingView = '/boarding';
+  static const String loginView = '/login';
   static const String signupView = '/sing_up';
   static const String otpView = '/otp';
-  static const String loginView = '/login';
   static const String setNewPassword = '/set_password';
   static const String forgetPasswordView = '/forget_password';
 

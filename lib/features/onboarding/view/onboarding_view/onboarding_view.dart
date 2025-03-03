@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:student_portal/features/onboarding/view/onboarding_view/widgets/onboarding_body.dart';
 
-import '../../../../contestants.dart';
 import '../../../../core/theming/colors.dart';
 import '../../../../core/utils/app_router.dart';
 import '../../../../core/utils/secure_storage.dart';
@@ -75,12 +74,12 @@ class _OnboardingViewState extends State<OnboardingView> {
             onTap: () async {
               if (index != 2) {
                 controller.nextPage(
-                  duration: kNavDuration,
+                  duration: Duration(milliseconds: 300),
                   curve: Curves.linear,
                 );
               } else {
                 await SecureStorage().writeOnboardingData(false);
-                AppRouter.router.pushReplacement(AppRouter.signupView);
+                AppRouter.router.go(AppRouter.loginView);
               }
             },
           ),
