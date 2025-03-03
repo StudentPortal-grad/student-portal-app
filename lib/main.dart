@@ -4,7 +4,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:device_preview/device_preview.dart';
-import 'core/theming/colors.dart';
 import 'core/utils/app_local_storage.dart';
 import 'core/utils/my_bloc_observer.dart';
 import 'core/utils/service_locator.dart';
@@ -19,7 +18,6 @@ void main() async {
     const SystemUiOverlayStyle(
       statusBarBrightness: Brightness.light,
       statusBarIconBrightness: Brightness.dark,
-      statusBarColor: ColorsManager.backgroundColor,
     ),
   );
   runApp(
