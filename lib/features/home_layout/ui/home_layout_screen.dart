@@ -113,6 +113,7 @@ class _HomeLayoutScreenState extends State<HomeLayoutScreen> {
         ),
         PopupMenuItem<String>(
           value: "create_community",
+          onTap: () => AppRouter.router.push(AppRouter.createCommunity),
           child: Row(
             children: [
               CircleAvatar(radius: 15.r, backgroundColor: ColorsManager.whiteColor, child: Icon(Icons.people_alt_rounded, color: ColorsManager.mainColor,size: 18.r,)),

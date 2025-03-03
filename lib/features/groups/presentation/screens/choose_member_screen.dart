@@ -13,14 +13,16 @@ import '../../../auth/data/model/user_model/user.dart';
 import '../../../home/presentation/widgets/category_tag_view.dart';
 
 class ChooseMemberScreen extends StatelessWidget {
-  const ChooseMemberScreen({super.key});
+  const ChooseMemberScreen({super.key, this.title});
+
+  final String? title;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: CustomAppBar(
-        title: Text('New Group', style: Styles.font20w600),
+        title: Text(title ?? 'New Group', style: Styles.font20w600),
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 24.w),
@@ -47,7 +49,8 @@ class ChooseMemberScreen extends StatelessWidget {
             20.heightBox,
             CustomTextField(
               controller: TextEditingController(),
-              prefixIcon: CustomImageView(imagePath: AssetsApp.search2Icon,fit: BoxFit.none),
+              prefixIcon: CustomImageView(
+                  imagePath: AssetsApp.search2Icon, fit: BoxFit.none),
               hintText: 'Search',
             ),
             20.heightBox,
