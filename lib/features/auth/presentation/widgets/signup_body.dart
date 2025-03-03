@@ -97,6 +97,7 @@ class _SignupBodyState extends State<SignupBody> {
                 onTap: () {
                   widget.nextPage?.call();
                   return;
+                  //
                   context.read<SignupBloc>().add(
                         SignupRequested(
                           signupRequest: SignupRequest(
