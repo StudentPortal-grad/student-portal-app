@@ -61,12 +61,12 @@ class PostView extends StatelessWidget {
           10.heightBox,
           AppText(
             onHashTagTap: (p0) {
-              print('HASH TAG');
-              print(p0);
+              debugPrint('HASH TAG');
+              debugPrint(p0);
             },
             onMentionTap: (p0) {
-              print('on Mention');
-              print(p0);
+              debugPrint('on Mention');
+              debugPrint(p0);
             },
             text:
                 'The world of @AI research is vast and exciting, and there are many different types of #AI research methods to choose from. Here are some of the most popular methods:',

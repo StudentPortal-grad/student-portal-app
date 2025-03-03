@@ -16,7 +16,6 @@ import 'signup_event.dart';
 import 'signup_state.dart';
 
 class SignupBloc extends Bloc<SignupEvent, SignupState> {
-
   final SignupUc signupUc =
       SignupUc(signupRepo: SignupRepoImpl(getIt.get<ApiService>()));
   final VerifyEmailUc verifyEmailUc = VerifyEmailUc(
@@ -25,7 +24,6 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
       CheckEmailUc(checkEmailRepo: CheckEmailRepoImpl(getIt.get<ApiService>()));
   final UpdateDateUc updateDataUc =
       UpdateDateUc(updateDataRepo: UpdateDataImpl(getIt.get<ApiService>()));
-
 
   SignupBloc() : super(SignupInitial()) {
     on<SignupRequested>(_onSignupRequested);
@@ -91,7 +89,7 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
   void _onPasswordStrengthChecked(
       PasswordStrengthChecked event, Emitter<SignupState> emit) {
     List<bool> strengthCriteria =
-    AppRegex.checkPasswordStrength(event.password);
+        AppRegex.checkPasswordStrength(event.password);
     emit(PasswordStrengthUpdated(strengthCriteria: strengthCriteria));
   }
 

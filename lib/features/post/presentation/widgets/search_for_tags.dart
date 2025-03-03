@@ -57,7 +57,7 @@ class _SearchForTagsState extends State<SearchForTags> {
             });
           },
           onSelected: (String selection) {
-            print('SelectedOption: $selection');
+            debugPrint('SelectedOption: $selection');
             setState(() {
               dummyTags.add(selection);
             });

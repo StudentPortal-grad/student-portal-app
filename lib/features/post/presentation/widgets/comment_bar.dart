@@ -57,7 +57,7 @@ class _CommentBarState extends State<CommentBar> {
                 ? null
                 : InkWell(
                     onTap: () {
-                      print(commentController.text);
+                      debugPrint(commentController.text);
                     },
                     child: Icon(
                       Icons.send_rounded,

@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../core/helpers/app_regex.dart';
-import '../../../data/dto/login_request/login_request.dart';
+import '../../../data/dto/login_request.dart';
 import '../../../domain/usecases/login_uc.dart';
 import 'login_event.dart';
 import 'login_state.dart';

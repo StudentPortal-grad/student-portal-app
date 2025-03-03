@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:student_portal/core/helpers/app_size_boxes.dart';
@@ -100,7 +102,7 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
                   itemBuilder: (context, index) => MemberItemView(
                     user: User(fullname: "Mina"),
                     onRemoveTap: (id) {
-                      print(id);
+                      log(id);
                     },
                   ),
                   separatorBuilder: (context, index) => 15.heightBox,
@@ -118,7 +120,7 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
     if (_formKey.currentState!.validate()) {
       // TODO: Implement group creation logic
       // This will be connected to your backend service
-      print('Group Name: ${_groupNameController.text}');
+      log('Group Name: ${_groupNameController.text}');
     }
   }
 }

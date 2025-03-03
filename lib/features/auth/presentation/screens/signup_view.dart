@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../../contestants.dart';
-import '../../../../../core/loading/view/loading_dialog.dart';
-import '../../../../../core/theming/colors.dart';
-import '../../../../../core/helpers/custom_toast.dart';
-import '../../mange/signup_bloc/signup_bloc.dart';
-import '../../mange/signup_bloc/signup_state.dart';
-import 'widgets/complete_profile.dart';
-import 'widgets/signup_body.dart';
-import 'widgets/verify_email.dart';
+import '../../../../core/loading/view/loading_dialog.dart';
+import '../../../../core/theming/colors.dart';
+import '../../../../core/helpers/custom_toast.dart';
+import '../manager/signup_bloc/signup_bloc.dart';
+import '../manager/signup_bloc/signup_state.dart';
+import '../widgets/complete_profile.dart';
+import '../widgets/signup_body.dart';
+import '../widgets/verify_email.dart';
 
 class SignupView extends StatefulWidget {
   const SignupView({super.key});
@@ -35,10 +34,17 @@ class _SignupViewState extends State<SignupView> {
     super.dispose();
   }
 
+  void _nextPage() {
+    _pageController.nextPage(
+      duration: Duration(milliseconds: 300),
+      curve: Curves.linear,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: ColorsManager.backgroundColor,
+      backgroundColor: ColorsManager.whiteColor,
       resizeToAvoidBottomInset: true,
       body: BlocConsumer<SignupBloc, SignupState>(
         listener: (context, state) {
@@ -57,7 +63,7 @@ class _SignupViewState extends State<SignupView> {
             onPopInvokedWithResult: (didPop, result) {
               if (didPop) {
                 _pageController.previousPage(
-                  duration: kNavDuration,
+                  duration: Duration(milliseconds: 300),
                   curve: Curves.linear,
                 );
               }
@@ -70,9 +76,9 @@ class _SignupViewState extends State<SignupView> {
                 });
               },
               physics: const NeverScrollableScrollPhysics(),
-              children: const [
-                SignupBody(),
-                VerifyEmail(),
+              children:  [
+                SignupBody(nextPage: _nextPage),
+                VerifyEmailView(),
                 CompleteProfileView(),
               ],
             ),

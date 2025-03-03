@@ -137,7 +137,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
                   File? file = await FileService.pickImage();
                   if (file?.path != null) {
                     final String path = file!.path.trim();
-                    print("FILE PATHHHH $path");
+                    debugPrint("FILE PATHHHH $path");
                     paths.add(path);
                     setState(() {});
                   }

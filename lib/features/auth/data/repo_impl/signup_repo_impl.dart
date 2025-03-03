@@ -7,7 +7,7 @@ import '../../../../core/errors/data/model/failures.dart';
 import '../../../../core/network/api_service.dart';
 import '../../../../core/repo/user_repository.dart';
 import '../../domain/repo/signup_repo.dart';
-import '../dto/signup_request/signup_request.dart';
+import '../dto/signup_request.dart';
 import '../model/signup_response/signup_response.dart';
 
 

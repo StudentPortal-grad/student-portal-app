@@ -143,7 +143,7 @@ class _AddResourcesScreenState extends State<AddResourcesScreen> {
                   File? file = await FileService.pickFile();
                   if (file?.path != null) {
                     final String path = file!.path.trim();
-                    print("FILE PATHHHH $path");
+                    debugPrint("FILE PATH $path");
                     paths.add(path);
                     setState(() {});
                   }

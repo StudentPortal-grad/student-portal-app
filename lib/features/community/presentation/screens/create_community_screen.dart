@@ -103,7 +103,7 @@ class _CreateCommunityScreenState extends State<CreateCommunityScreen> {
                   itemBuilder: (context, index) => MemberItemView(
                     user: User(fullname: "Mina"),
                     onRemoveTap: (id) {
-                      print(id);
+                      debugPrint(id);
                     },
                   ),
                   separatorBuilder: (context, index) => 15.heightBox,
@@ -121,7 +121,7 @@ class _CreateCommunityScreenState extends State<CreateCommunityScreen> {
     if (_formKey.currentState!.validate()) {
       // Implement Community creation logic
       // This will be connected to your backend service
-      print('Group Name: ${_groupNameController.text}');
+      debugPrint('Group Name: ${_groupNameController.text}');
     }
   }
 }

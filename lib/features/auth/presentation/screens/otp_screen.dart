@@ -3,21 +3,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:student_portal/core/widgets/custom_appbar.dart';
-import '../../../../../core/loading/view/loading_dialog.dart';
-import '../../../../../core/theming/colors.dart';
-import '../../../../../core/utils/app_router.dart';
-import '../../../../../core/theming/text_styles.dart';
-import '../../../../../core/widgets/custom_app_button.dart';
-import '../../../../../core/widgets/custom_pin_code_fields.dart';
-import '../../../../../core/helpers/custom_toast.dart';
-import '../../mange/otp_bloc/otp_bloc.dart';
-import '../../mange/otp_bloc/otp_event.dart';
-import '../../mange/otp_bloc/otp_state.dart';
+import '../../../../core/loading/view/loading_dialog.dart';
+import '../../../../core/theming/colors.dart';
+import '../../../../core/utils/app_router.dart';
+import '../../../../core/theming/text_styles.dart';
+import '../../../../core/widgets/custom_app_button.dart';
+import '../../../../core/widgets/custom_pin_code_fields.dart';
+import '../../../../core/helpers/custom_toast.dart';
+import '../manager/otp_bloc/otp_bloc.dart';
+import '../manager/otp_bloc/otp_event.dart';
+import '../manager/otp_bloc/otp_state.dart';
+
 
 class OtpView extends StatefulWidget {
   const OtpView({super.key, required this.email, this.isForgetPassword});
 
-  /// todo test it
+  // todo: don't forget test with forget password while integration with backend
 
   final bool? isForgetPassword;
   final String email;

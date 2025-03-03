@@ -8,7 +8,7 @@ import '../../../../core/network/api_service.dart';
 import '../../../../core/repo/user_repository.dart';
 import '../../../../core/utils/secure_storage.dart';
 import '../../domain/repo/login_repo.dart';
-import '../dto/login_request/login_request.dart';
+import '../dto/login_request.dart';
 import '../model/login_response/login_response.dart';
 
 

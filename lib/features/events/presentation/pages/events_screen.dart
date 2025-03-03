@@ -5,7 +5,7 @@ import 'package:student_portal/core/helpers/app_size_boxes.dart';
 
 import '../../../../core/theming/text_styles.dart';
 import '../widgets/event_item_view.dart';
-import '../widgets/up_coming_eventI_itm_view.dart';
+import '../widgets/upcoming_event_item_view.dart';
 
 class EventsScreen extends StatelessWidget {
   const EventsScreen({super.key});

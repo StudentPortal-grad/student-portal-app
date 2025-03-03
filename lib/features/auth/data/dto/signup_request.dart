@@ -6,9 +6,9 @@ class SignupRequest extends Equatable {
   final String? fullName;
 
   const SignupRequest({
-    required this.email,
-    required this.password,
-    required this.fullName,
+    this.email,
+    this.password,
+    this.fullName,
   });
 
   factory SignupRequest.fromJson(Map<String, dynamic> json) => SignupRequest(

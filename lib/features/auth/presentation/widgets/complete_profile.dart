@@ -3,13 +3,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../../../../../../core/theming/colors.dart';
-import '../../../../../../core/utils/assets_app.dart';
-import '../../../../../../core/theming/text_styles.dart';
-import '../../../../../../core/widgets/custom_app_button.dart';
-import '../../../../../../core/widgets/custom_text_field.dart';
-import '../../../mange/signup_bloc/signup_bloc.dart';
-import '../../../mange/signup_bloc/signup_state.dart';
+import '../../../../core/theming/colors.dart';
+import '../../../../core/utils/assets_app.dart';
+import '../../../../core/theming/text_styles.dart';
+import '../../../../core/widgets/custom_app_button.dart';
+import '../../../../core/widgets/custom_text_field.dart';
+import '../manager/signup_bloc/signup_bloc.dart';
+import '../manager/signup_bloc/signup_state.dart';
 import 'choose_gender_button.dart';
 
 class CompleteProfileView extends StatelessWidget {

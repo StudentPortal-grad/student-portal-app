@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:student_portal/features/auth/presentation/view/login_view/widgets/login_body.dart';
-import '../../../../../core/loading/view/loading_dialog.dart';
-import '../../../../../core/theming/colors.dart';
-import '../../../../../core/utils/app_router.dart';
-import '../../../../../core/helpers/custom_toast.dart';
-import '../../mange/login_bloc/login_bloc.dart';
-import '../../mange/login_bloc/login_state.dart';
+import 'package:student_portal/features/auth/presentation/widgets/login_body.dart';
+import '../../../../core/loading/view/loading_dialog.dart';
+import '../../../../core/theming/colors.dart';
+import '../../../../core/utils/app_router.dart';
+import '../../../../core/helpers/custom_toast.dart';
+import '../manager/login_bloc/login_bloc.dart';
+import '../manager/login_bloc/login_state.dart';
 
 class LoginView extends StatelessWidget {
   const LoginView({super.key});
@@ -14,7 +14,7 @@ class LoginView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: ColorsManager.backgroundColor,
+      backgroundColor: ColorsManager.whiteColor,
       body: SafeArea(
         child: BlocConsumer<LoginBloc, LoginState>(
           listener: (context, state) {

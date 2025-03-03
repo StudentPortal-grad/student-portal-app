@@ -3,15 +3,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:student_portal/core/widgets/custom_appbar.dart';
 
-import '../../../../../core/loading/view/loading_dialog.dart';
-import '../../../../../core/utils/app_router.dart';
-import '../../../../../core/theming/text_styles.dart';
-import '../../../../../core/widgets/custom_app_button.dart';
-import '../../../../../core/widgets/custom_text_field.dart';
-import '../../../../../core/helpers/custom_toast.dart';
-import '../../mange/set_new_password/set_new_password_bloc.dart';
-import '../../mange/set_new_password/set_new_password_event.dart';
-import '../../mange/set_new_password/set_new_password_state.dart';
+import '../../../../core/loading/view/loading_dialog.dart';
+import '../../../../core/utils/app_router.dart';
+import '../../../../core/theming/text_styles.dart';
+import '../../../../core/widgets/custom_app_button.dart';
+import '../../../../core/widgets/custom_text_field.dart';
+import '../../../../core/helpers/custom_toast.dart';
+import '../manager/set_new_password/set_new_password_bloc.dart';
+import '../manager/set_new_password/set_new_password_event.dart';
+import '../manager/set_new_password/set_new_password_state.dart';
 
 class SetNewPassword extends StatefulWidget {
   const SetNewPassword({super.key});
@@ -126,8 +126,7 @@ class _SetNewPasswordState extends State<SetNewPassword> {
                       },
                     ),
                     SizedBox(height: 32.h),
-                    BlocSelector<SetNewPasswordBloc, SetNewPasswordState,
-                        bool>(
+                    BlocSelector<SetNewPasswordBloc, SetNewPasswordState, bool>(
                       selector: (state) {
                         if (state is SetNewPasswordConfirmed) {
                           return state.isMatching;

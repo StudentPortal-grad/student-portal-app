@@ -3,17 +3,19 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../../../core/helpers/app_regex.dart';
-import '../../../../../core/loading/view/loading_dialog.dart';
-import '../../../../../core/utils/app_router.dart';
-import '../../../../../core/theming/text_styles.dart';
-import '../../../../../core/widgets/custom_app_button.dart';
-import '../../../../../core/widgets/custom_appbar.dart';
-import '../../../../../core/widgets/custom_text_field.dart';
-import '../../../../../core/helpers/custom_toast.dart';
-import '../../mange/forget_password_bloc/forget_password_bloc.dart';
-import '../../mange/forget_password_bloc/forget_password_event.dart';
-import '../../mange/forget_password_bloc/forget_password_state.dart';
+import 'package:student_portal/core/helpers/app_size_boxes.dart';
+import '../../../../core/helpers/app_regex.dart';
+import '../../../../core/loading/view/loading_dialog.dart';
+import '../../../../core/utils/app_router.dart';
+import '../../../../core/theming/text_styles.dart';
+import '../../../../core/widgets/custom_app_button.dart';
+import '../../../../core/widgets/custom_appbar.dart';
+import '../../../../core/widgets/custom_text_field.dart';
+import '../../../../core/helpers/custom_toast.dart';
+import '../manager/forget_password_bloc/forget_password_bloc.dart';
+import '../manager/forget_password_bloc/forget_password_event.dart';
+import '../manager/forget_password_bloc/forget_password_state.dart';
+
 
 class ForgetPassword extends StatefulWidget {
   const ForgetPassword({super.key});
@@ -65,33 +67,27 @@ class _ForgetPasswordState extends State<ForgetPassword> {
         },
         builder: (context, state) {
           return Scaffold(
+            backgroundColor: Colors.white,
             appBar: CustomAppBar(
               title: Text(
-                'Forgot Password',
-                style: Styles.font22w700.copyWith(
-                  color: Color(0xff33384B),
-                ),
+                'Set Password',
+                style: Styles.font20w600,
               ),
             ),
-            body: Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: 20.w,
-                vertical: 10.h,
-              ),
+            body: SingleChildScrollView(
+              padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(height: 50.h),
-                  Text(
-                    "Email",
-                  ),
-                  SizedBox(height: 6.h),
+                  25.heightBox,
                   BlocBuilder<ForgetPasswordBloc, ForgetPasswordState>(
                     builder: (context, state) {
                       return CustomTextField(
                         controller: emailController,
+                        labelText: 'Email',
                         validator: (value) => AppRegex.validateEmail(value),
                         textInputType: TextInputType.emailAddress,
+                        hintText: 'Please Enter Your Email',
                         onChanged: (value) {
                           context
                               .read<ForgetPasswordBloc>()
@@ -103,11 +99,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                   const SizedBox(height: 20),
                   Text(
                     "A link will be delivered to your email address",
-                    style: TextStyle(
-                      fontWeight: FontWeight.w400,
-                      fontSize: 16,
-                      color: Color(0xff535862),
-                    ),
+                    style: Styles.font14w400.copyWith(),
                   ),
                   const SizedBox(height: 40),
                   BlocSelector<ForgetPasswordBloc, ForgetPasswordState, bool>(

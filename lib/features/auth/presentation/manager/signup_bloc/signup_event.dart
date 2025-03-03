@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import '../../../data/dto/signup_request/signup_request.dart';
+import '../../../data/dto/signup_request.dart';
 
 abstract class SignupEvent extends Equatable {
   @override

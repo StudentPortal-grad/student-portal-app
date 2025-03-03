@@ -2,26 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:student_portal/core/repo/user_repository.dart';
-import 'package:student_portal/features/auth/presentation/mange/login_bloc/login_state.dart';
-
-import '../../../../../../contestants.dart';
 import '../../../../../../core/theming/colors.dart';
 import '../../../../../../core/theming/text_styles.dart';
 import '../../../../../../core/widgets/custom_app_button.dart';
 import '../../../../../../core/widgets/custom_pin_code_fields.dart';
 import '../../../../../../core/helpers/custom_toast.dart';
-import '../../../mange/signup_bloc/signup_bloc.dart';
-import '../../../mange/signup_bloc/signup_event.dart';
-import '../../../mange/signup_bloc/signup_state.dart';
+import '../manager/login_bloc/login_state.dart';
+import '../manager/signup_bloc/signup_bloc.dart';
+import '../manager/signup_bloc/signup_event.dart';
+import '../manager/signup_bloc/signup_state.dart';
 
-class VerifyEmail extends StatefulWidget {
-  const VerifyEmail({super.key});
+
+class VerifyEmailView extends StatefulWidget {
+  const VerifyEmailView({super.key});
 
   @override
-  State<VerifyEmail> createState() => _VerifyEmailState();
+  State<VerifyEmailView> createState() => _VerifyEmailViewState();
 }
 
-class _VerifyEmailState extends State<VerifyEmail> {
+class _VerifyEmailViewState extends State<VerifyEmailView> {
   String pinCode = '';
   late final TextEditingController pinController;
 
@@ -58,8 +57,8 @@ class _VerifyEmailState extends State<VerifyEmail> {
       builder: (context, state) {
         return Padding(
           padding: EdgeInsetsDirectional.only(
-            start: kHorizontal.w,
-            end: kHorizontal.w,
+            start: 24.w,
+            end: 24.w,
             top: 150.h,
           ),
           child: SingleChildScrollView(
