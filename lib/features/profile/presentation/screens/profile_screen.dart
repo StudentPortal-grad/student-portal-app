@@ -4,6 +4,8 @@ import 'package:student_portal/core/theming/colors.dart';
 import '../../../../core/theming/text_styles.dart';
 import '../widgets/about_profile_user_view.dart';
 import '../widgets/profile_card_veiw.dart';
+import '../widgets/profile_posts_view.dart';
+import '../widgets/profile_resources_view.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -32,37 +34,40 @@ class _ProfileScreenState extends State<ProfileScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ColorsManager.backgroundColorDeep,
-      body: Column(
-        children: [
-          ProfileCardView(),
-          TabBar(
-            splashFactory: NoSplash.splashFactory,
-            dividerColor: Colors.transparent,
-            labelStyle: Styles.font14w400,
-            indicator: UnderlineTabIndicator(
-              borderSide:
-                  BorderSide(color: ColorsManager.mainColor, width: 2.5.w),
-              borderRadius: BorderRadius.circular(7.r),
-            ),
-            labelColor: ColorsManager.mainColor,
-            tabs: [
-              Tab(text: 'ABOUT'),
-              Tab(text: 'POST'),
-              Tab(text: 'RESOURCES'),
-            ],
-            controller: _tabController,
-          ),
-          Expanded(
-            child: TabBarView(
-              controller: _tabController,
-              children: [
-                AboutProfileUserView(),
-                Container(),
-                Container(),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            ProfileCardView(),
+            TabBar(
+              splashFactory: NoSplash.splashFactory,
+              dividerColor: Colors.transparent,
+              labelStyle: Styles.font14w400,
+              indicator: UnderlineTabIndicator(
+                borderSide:
+                    BorderSide(color: ColorsManager.mainColor, width: 2.5.w),
+                borderRadius: BorderRadius.circular(7.r),
+              ),
+              labelColor: ColorsManager.mainColor,
+              tabs: [
+                Tab(text: 'ABOUT'),
+                Tab(text: 'POST'),
+                Tab(text: 'RESOURCES'),
               ],
+              controller: _tabController,
             ),
-          ),
-        ],
+            SizedBox(
+              height: 0.75.sh,
+              child: TabBarView(
+                controller: _tabController,
+                children: [
+                  AboutProfileUserView(),
+                  ProfilePostsView(),
+                  ProfileResourcesView(),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
