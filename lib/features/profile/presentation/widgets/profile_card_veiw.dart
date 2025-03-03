@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:student_portal/core/helpers/app_size_boxes.dart';
 import 'package:student_portal/core/helpers/app_text_view.dart';
+import 'package:student_portal/core/utils/app_router.dart';
 
 import '../../../../contestants.dart';
 import '../../../../core/theming/colors.dart';
@@ -69,8 +70,12 @@ class ProfileCardView extends StatelessWidget {
               // to show posts, followers, following and title
               ProfileDetails(
                 onPostsTap: onPostsTap,
-                onFollowersTap: () {},
-                onFollowingTap: () {},
+                onFollowersTap: () {
+                  AppRouter.router.push(AppRouter.followers);
+                },
+                onFollowingTap: () {
+                  AppRouter.router.push(AppRouter.followings);
+                },
               ),
             ],
           ),

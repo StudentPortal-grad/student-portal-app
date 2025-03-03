@@ -7,6 +7,7 @@ import 'package:student_portal/features/auth/presentation/mange/signup_bloc/sign
 import 'package:student_portal/features/chats/presentation/pages/dm_screen.dart';
 import 'package:student_portal/features/post/presentation/pages/add_post_screen.dart';
 import 'package:student_portal/features/post/presentation/pages/post_details_screen.dart';
+import 'package:student_portal/features/profile/presentation/screens/following_screen.dart';
 import 'package:student_portal/features/profile/presentation/screens/profile_screen.dart';
 import 'package:student_portal/features/resource/presentation/pages/resource_details_screen.dart';
 import 'package:student_portal/features/groups/presentation/screens/create_group_screen.dart';
@@ -22,6 +23,7 @@ import '../../features/home_layout/ui/home_layout_screen.dart';
 import '../../features/notification/presentation/screens/notifications_screen.dart';
 import '../../features/onboarding/view/onboarding_view/onboarding_view.dart';
 import '../../features/onboarding/view/splash_view/splash_view.dart';
+import '../../features/profile/presentation/screens/followers_screen.dart';
 import '../../features/resource/presentation/pages/add_resource_screen.dart';
 import '../helpers/custom_animated_transition_page.dart';
 import '../network/api_service.dart';
@@ -58,6 +60,8 @@ abstract class AppRouter {
 
   // profile
   static const String profile= '/profile';
+  static const String followings = '/followings';
+  static const String followers = '/followers';
 
   static final router = GoRouter(
     routes: [
@@ -241,6 +245,28 @@ abstract class AppRouter {
             context: context,
             state: state,
             child: ProfileScreen(),
+          );
+        },
+      ),
+      GoRoute(
+        path: followers,
+        pageBuilder: (context, state) {
+          final args = state.extra as Map<String, dynamic>?;
+          return buildPage(
+            context: context,
+            state: state,
+            child: FollowersScreen(),
+          );
+        },
+      ),
+      GoRoute(
+        path: followings,
+        pageBuilder: (context, state) {
+          final args = state.extra as Map<String, dynamic>?;
+          return buildPage(
+            context: context,
+            state: state,
+            child: FollowingScreen(),
           );
         },
       ),
