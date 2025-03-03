@@ -26,6 +26,7 @@ abstract class ColorsManager {
   static const Color textColor = Color(0xff0D1326);
   static const Color whiteColor = Color(0xFFFFFFFF);
   static const Color orangeColor = Color(0xFFEF4923);
+  static const Color greenColor = Color(0xff32D583);
   static const Color tealColor = Color(0xFF2A9D8F);
   static const Color yellowColor = Color(0xFFF8CA55);
   static const Color black54 = Color(0xff545468);

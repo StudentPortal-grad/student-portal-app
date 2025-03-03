@@ -2,18 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:student_portal/core/helpers/app_size_boxes.dart';
 import 'package:student_portal/core/helpers/app_text_view.dart';
-import 'package:student_portal/core/utils/app_router.dart';
-import 'package:student_portal/features/profile/presentation/widgets/profile_details.dart';
 
 import '../../../../contestants.dart';
 import '../../../../core/theming/colors.dart';
 import '../../../../core/theming/text_styles.dart';
+import '../../../../core/utils/app_router.dart';
 import '../../../../core/utils/assets_app.dart';
 import '../../../../core/widgets/custom_appbar.dart';
 import '../../../../core/widgets/custom_image_view.dart';
+import 'community_details.dart';
 
-class ProfileCardView extends StatelessWidget {
-  const ProfileCardView({super.key, this.onPostsTap});
+class CommunityCardView extends StatelessWidget {
+  const CommunityCardView({super.key, this.onPostsTap});
 
   final Function()? onPostsTap;
 
@@ -33,8 +33,8 @@ class ProfileCardView extends StatelessWidget {
           child: CustomImageView(
             width: 1.sw,
             height: 160.h,
-            imagePath: AssetsApp.backgroundProfile,
-            fit: BoxFit.fill,
+            imagePath: AssetsApp.backgroundCommunity,
+            fit: BoxFit.cover,
           ),
         ),
 
@@ -51,37 +51,40 @@ class ProfileCardView extends StatelessWidget {
           top: 118.h,
           left: 0,
           right: 0,
-          child: Column(
-            children: [
-              CustomImageView(
-                imagePath: kUserImage,
-                width: 85.r,
-                height: 85.r,
-                circle: true,
-              ),
-              10.heightBox,
-              "Mina Zarif".make(
-                  style: Styles.font22w700
-                      .copyWith(color: ColorsManager.textColor)),
-              5.heightBox,
-              "@Mina10".make(
-                  style: Styles.font14w400
-                      .copyWith(color: ColorsManager.grayColor)),
-              25.heightBox,
-              // to show posts, followers, following and title
-              ProfileDetails(
-                onPostsTap: onPostsTap,
-                onFollowersTap: () {
-                  AppRouter.router.push(AppRouter.followers);
-                },
-                onFollowingTap: () {
-                  AppRouter.router.push(AppRouter.followings);
-                },
-              ),
-            ],
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 24.w),
+            child: Column(
+              children: [
+                CustomImageView(
+                  imagePath: kUserImage,
+                  width: 85.r,
+                  height: 85.r,
+                  circle: true,
+                ),
+                10.heightBox,
+                "Flutter Gang".make(
+                    style: Styles.font22w700
+                        .copyWith(color: ColorsManager.textColor)),
+                5.heightBox,
+                "@flutter".make(
+                    style: Styles.font14w400
+                        .copyWith(color: ColorsManager.grayColor)),
+                25.heightBox,
+                // to show posts, followers, following and title
+                CommunityDetails(
+                  onPostsTap: onPostsTap,
+                  onFollowersTap: () {
+                    AppRouter.router.push(AppRouter.followers);
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       ],
     );
   }
 }
+
+
+

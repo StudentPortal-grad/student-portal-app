@@ -69,7 +69,13 @@ class AppDrawer extends StatelessWidget {
                     }),
                 _buildDrawerItem(title: "Account Settings", icon: Icons.settings),
                 _buildDrawerItem(title: "BookMark", icon: Icons.local_offer),
-                _buildDrawerItem(title: "Your Communities", icon: Icons.people),
+                _buildDrawerItem(
+                    title: "Your Communities",
+                    icon: Icons.people,
+                    onTap: () {
+                      // temporarily navigate to community screen
+                      AppRouter.router.push(AppRouter.community);
+                    }),
               ],
             ),
           ),

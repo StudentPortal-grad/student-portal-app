@@ -5,6 +5,7 @@ import 'package:student_portal/core/utils/service_locator.dart';
 import 'package:student_portal/features/auth/domain/usecases/login_uc.dart';
 import 'package:student_portal/features/auth/presentation/mange/signup_bloc/signup_bloc.dart';
 import 'package:student_portal/features/chats/presentation/pages/dm_screen.dart';
+import 'package:student_portal/features/community/presentation/screens/community_screen.dart';
 import 'package:student_portal/features/community/presentation/screens/create_community_screen.dart';
 import 'package:student_portal/features/post/presentation/pages/add_post_screen.dart';
 import 'package:student_portal/features/post/presentation/pages/post_details_screen.dart';
@@ -64,6 +65,9 @@ abstract class AppRouter {
   static const String profile= '/profile';
   static const String followings = '/followings';
   static const String followers = '/followers';
+
+  // community
+  static const String community = '/community';
 
   static final router = GoRouter(
     routes: [
@@ -280,6 +284,17 @@ abstract class AppRouter {
             context: context,
             state: state,
             child: CreateCommunityScreen(),
+          );
+        },
+      ),
+      GoRoute(
+        path: community,
+        pageBuilder: (context, state) {
+          final args = state.extra as Map<String, dynamic>?;
+          return buildPage(
+            context: context,
+            state: state,
+            child: CommunityScreen(),
           );
         },
       ),

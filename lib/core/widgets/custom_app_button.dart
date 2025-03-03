@@ -25,6 +25,9 @@ class CustomAppButton extends StatelessWidget {
     this.inactiveColor,
     this.prefixIcon,
     this.borderColor,
+    this.padding,
+    this.margin,
+    this.spacing,
   });
 
   final String label;
@@ -36,6 +39,8 @@ class CustomAppButton extends StatelessWidget {
   final Widget? suffixIcon, prefixIcon;
   final bool activeButton;
   final Color? borderColor;
+  final EdgeInsetsGeometry? padding, margin;
+  final double? spacing;
 
   @override
   Widget build(BuildContext context) {
@@ -48,21 +53,24 @@ class CustomAppButton extends StatelessWidget {
         height: height.h,
         width: width.w,
         decoration: BoxDecoration(
-          color: (activeButton) ? backgroundColor : inactiveColor ?? backgroundColor.withValues(alpha: 0.5) ,
+          color: (activeButton)
+              ? backgroundColor
+              : inactiveColor ?? backgroundColor.withValues(alpha: 0.5),
           borderRadius: BorderRadiusDirectional.circular(borderRadius.r),
           border: Border.all(color: borderColor ?? Colors.transparent),
         ),
+        padding: padding,
+        margin: margin,
         child: Row(
+          spacing: spacing ?? 0,
           mainAxisAlignment: MainAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             if (prefixIcon != null) prefixIcon!,
-            const SizedBox(width: 10),
             Text(
               label,
               style: textStyle,
             ),
-            const SizedBox(width: 10),
             if (suffixIcon != null) suffixIcon!,
           ],
         ),

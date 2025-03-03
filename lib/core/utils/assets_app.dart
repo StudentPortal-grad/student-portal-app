@@ -6,6 +6,7 @@ abstract class AssetsApp {
   static const String testVideoImage = "$imagePath/test_video_image.png";
   static const String pickImage = '$imagePath/pick_image.png';
   static const String backgroundProfile = '$imagePath/background_profile.png';
+  static const String backgroundCommunity = '$imagePath/background_community.png';
 
   static const String savedImage = "$iconPath/saved_image.svg";
   static const String searchIcon = "$iconPath/search.svg";
