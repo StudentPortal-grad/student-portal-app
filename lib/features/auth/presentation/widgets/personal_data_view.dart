@@ -4,8 +4,10 @@ import 'package:student_portal/core/helpers/app_text_view.dart';
 import 'package:student_portal/core/widgets/custom_appbar.dart';
 
 import '../../../../core/helpers/file_service.dart';
+import '../../../../core/theming/colors.dart';
 import '../../../../core/theming/text_styles.dart';
 import '../../../../core/utils/assets_app.dart';
+import '../../../../core/widgets/custom_app_button.dart';
 import '../../../../core/widgets/custom_image_view.dart';
 import '../../../../core/widgets/custom_phone_number_input.dart';
 import '../../../../core/widgets/custom_text_field.dart';
@@ -81,6 +83,15 @@ class _PersonalDataViewState extends State<PersonalDataView> {
                       // ));
                     }
                   },
+                ),
+                CustomAppButton(
+                  margin: EdgeInsets.only(top: 20.h),
+                  onTap: () {},
+                  label: "Next",
+                  textStyle: Styles.font16w700
+                      .copyWith(color: ColorsManager.whiteColor),
+                  width: 260.w,
+                  height: 40.h,
                 ),
               ],
             ),
