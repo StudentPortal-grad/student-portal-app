@@ -37,14 +37,14 @@ abstract class AppRouter {
   // auth
   static const String splashView = '/splash';
   static const String onBoardingView = '/boarding';
-  static const String loginView = '/login';
+  static const String loginView = '/';
   static const String signupView = '/sing_up';
   static const String otpView = '/otp';
   static const String setNewPassword = '/set_password';
   static const String forgetPasswordView = '/forget_password';
 
   // home
-  static const String homeView = '/';
+  static const String homeView = '/home';
   static const String addPost = '/add_post';
   static const String addResource = '/add_resource';
   static const String createCommunity = '/create_community';

@@ -46,7 +46,7 @@ class InvitationItemView extends StatelessWidget {
                   Expanded(
                     child: CustomAppButton(
                       backgroundColor: Colors.transparent,
-                      borderColor: ColorsManager.lightGreyColor,
+                      borderColor: ColorsManager.lightGrayColor,
                       borderRadius: 15.r,
                       label: 'Decline',
                       textStyle:

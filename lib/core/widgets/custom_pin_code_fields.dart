@@ -10,10 +10,10 @@ class CustomVerificationCode extends StatelessWidget {
     this.onChange,
     this.onCompleted,
     this.backgroundColor = const Color(0xffFAFAFC),
-    required this.codeController,
+     this.codeController,
   });
 
-  final TextEditingController codeController;
+  final TextEditingController? codeController;
   final Function(String value)? onCompleted, onChange;
   final Color backgroundColor;
 
@@ -32,9 +32,9 @@ class CustomVerificationCode extends StatelessWidget {
         selectedFillColor: Colors.transparent,
         selectedColor: ColorsManager.mainColor,
         shape: PinCodeFieldShape.box,
-        // fieldOuterPadding: EdgeInsets.all(5),
+        fieldOuterPadding: EdgeInsets.symmetric(horizontal: 4.w),
         borderRadius: BorderRadius.all(Radius.circular(16.sp)),
-        fieldHeight: 60.h,
+        fieldHeight: 55.h,
         fieldWidth: 55.w,
         errorBorderColor: Colors.red,
         inactiveColor: ColorsManager.mainColor,

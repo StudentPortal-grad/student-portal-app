@@ -15,6 +15,21 @@ class SignupRequested extends SignupEvent {
   List<Object?> get props => [signupRequest];
 }
 
+class OnPinCodeChanged extends SignupEvent {
+  final String pinCode;
+
+  OnPinCodeChanged({required this.pinCode});
+}
+
+class OnPageChanged extends SignupEvent {
+  final int index;
+
+  OnPageChanged({required this.index});
+
+  @override
+  List<Object?> get props => [index];
+}
+
 class VerifyEmailRequested extends SignupEvent {
   final String pinCode;
   final String email;
@@ -56,7 +71,8 @@ class ConfirmPasswordChecked extends SignupEvent {
   final String password;
   final String confirmPassword;
 
-  ConfirmPasswordChecked({required this.password, required this.confirmPassword});
+  ConfirmPasswordChecked(
+      {required this.password, required this.confirmPassword});
 
   @override
   List<Object?> get props => [password, confirmPassword];

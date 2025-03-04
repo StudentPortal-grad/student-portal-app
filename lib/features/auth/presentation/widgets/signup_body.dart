@@ -15,43 +15,12 @@ import '../manager/signup_bloc/signup_bloc.dart';
 import '../manager/signup_bloc/signup_event.dart';
 import '../manager/signup_bloc/signup_state.dart';
 
-
-class SignupBody extends StatefulWidget {
-  const SignupBody({super.key, this.nextPage});
-
-  final Function()? nextPage;
-
-  @override
-  State<SignupBody> createState() => _SignupBodyState();
-}
-
-class _SignupBodyState extends State<SignupBody> {
-  late final TextEditingController emailController;
-  late final TextEditingController fullNameController;
-  late final TextEditingController passwordController;
-  late final TextEditingController confirmPasswordController;
-
-  @override
-  void initState() {
-    super.initState();
-    emailController = TextEditingController();
-    fullNameController = TextEditingController();
-    passwordController = TextEditingController();
-    confirmPasswordController = TextEditingController();
-  }
-
-  @override
-  void dispose() {
-    emailController.dispose();
-    fullNameController.dispose();
-    passwordController.dispose();
-    confirmPasswordController.dispose();
-    super.dispose();
-  }
+class SignupBody extends StatelessWidget {
+  const SignupBody({super.key, });
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<SignupBloc, SignupState>(
+    return BlocConsumer<SignupBloc, SignupState>(
       listener: (context, state) {
         if (state is SignupSuccess) {
           CustomToast(context).showSuccessToast(
@@ -59,68 +28,87 @@ class _SignupBodyState extends State<SignupBody> {
           );
         }
       },
-      child: SingleChildScrollView(
-        padding: EdgeInsetsDirectional.only(start: 20.w, end: 20.w, top: 60.h),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            AuthTitle(title: 'Sign Up'),
-            50.heightBox,
-            CustomTextField(
-              controller: fullNameController,
-              labelText: 'Full Name',
-              textInputType: TextInputType.name,
-              onChanged: (value) {
-                //todo : check if name is valid
-              },
-              hintText: "Please Enter Your Full name",
-            ),
-            15.heightBox,
-            BlocBuilder<SignupBloc, SignupState>(
-              builder: (context, state) {
-                return CustomTextField(
-                  controller: emailController,
-                  textInputType: TextInputType.emailAddress,
-                  labelText: "Email",
-                  hintText: "Please Enter Your Email",
-                  onChanged: (value) {
-                    // todo : check if email is valid
-                  },
-                  validator: (value) => AppRegex.validateEmail(value),
-                );
-              },
-            ),
-            40.heightBox,
-            Center(
-              child: CustomAppButton(
-                activeButton: true,
-                onTap: () {
-                  widget.nextPage?.call();
-                  return;
-                  // temporary til integration with backed
-                  context.read<SignupBloc>().add(
-                        SignupRequested(
-                          signupRequest: SignupRequest(
-                            email: emailController.text,
-                            password: passwordController.text,
-                            fullName: fullNameController.text,
-                          ),
-                        ),
-                      );
+      builder: (context, state) {
+        final bloc = context.read<SignupBloc>();
+        return SingleChildScrollView(
+          padding:
+              EdgeInsetsDirectional.only(start: 20.w, end: 20.w, top: 60.h),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              AuthTitle(title: 'Sign Up'),
+              50.heightBox,
+              CustomTextField(
+                controller: bloc.fullNameController,
+                labelText: 'Full Name',
+                textInputType: TextInputType.name,
+                onChanged: (value) {
+                  //todo : check if name is valid
                 },
-                label: "Sign Up",
-                textStyle:
-                    Styles.font16w700.copyWith(color: ColorsManager.whiteColor),
-                width: 260.w,
-                height: 40.h,
+                hintText: "Please Enter Your Full name",
               ),
-            ),
-            SizedBox(height: 30.h),
-            const CustomLoginSignupButton(isLogin: false),
-            SizedBox(height: 30.h),
-          ],
-        ),
-      ),
+              18.heightBox,
+              CustomTextField(
+                controller: bloc.emailController,
+                textInputType: TextInputType.emailAddress,
+                labelText: "Email",
+                hintText: "Please Enter Your Email",
+                onChanged: (value) {
+                  // todo : check if email is valid
+                },
+                validator: (value) => AppRegex.validateEmail(value),
+              ),
+              18.heightBox,
+              CustomTextField(
+                controller: bloc.passwordController,
+                labelText: 'Password',
+                textInputType: TextInputType.visiblePassword,
+                onChanged: (value) {
+                  //todo : check if name is valid
+                },
+                hintText: "Please Enter Your Password",
+              ),
+              18.heightBox,
+              CustomTextField(
+                controller: bloc.confirmPasswordController,
+                labelText: 'Confirm Password',
+                textInputType: TextInputType.visiblePassword,
+                onChanged: (value) {
+                  //todo : check if name is valid
+                },
+                hintText: "Please Confirm Your Password",
+              ),
+              40.heightBox,
+              Center(
+                child: CustomAppButton(
+                  activeButton: true,
+                  onTap: () {
+                    bloc.nextPage();
+                    return;
+                    // temporary til integration with backed
+                    context.read<SignupBloc>().add(
+                          SignupRequested(
+                            signupRequest: SignupRequest(
+                              email: bloc.emailController.text,
+                              password: bloc.passwordController.text,
+                              fullName: bloc.fullNameController.text,
+                            ),
+                          ),
+                        );
+                  },
+                  label: "Sign Up",
+                  textStyle: Styles.font16w700
+                      .copyWith(color: ColorsManager.whiteColor),
+                  width: 260.w,
+                  height: 40.h,
+                ),
+              ),
+              20.heightBox,
+              const CustomLoginSignupButton(isLogin: false),
+            ],
+          ),
+        );
+      },
     );
   }
 }

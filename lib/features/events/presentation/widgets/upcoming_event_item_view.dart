@@ -38,7 +38,7 @@ class UpComingEventItemView extends StatelessWidget {
                   Icon(
                     Icons.calendar_month,
                     size: 15.r,
-                    color: ColorsManager.lightGreyColor,
+                    color: ColorsManager.lightGrayColor,
                   ),
                   1.5.widthBox,
                   Text('Sat, 1 May 2025 • 11:00 AM', style: Styles.font13w400)
@@ -55,7 +55,7 @@ class UpComingEventItemView extends StatelessWidget {
                   Icon(
                     Icons.location_on_rounded,
                     size: 16.r,
-                    color: ColorsManager.lightGreyColor,
+                    color: ColorsManager.lightGrayColor,
                   ),
                   1.5.widthBox,
                   Text('36 Guild Street London, UK', style: Styles.font13w400)

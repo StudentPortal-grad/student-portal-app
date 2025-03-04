@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:student_portal/core/helpers/app_size_boxes.dart';
 import '../../../../core/helpers/app_regex.dart';
 import '../../../../core/loading/view/loading_dialog.dart';
+import '../../../../core/theming/colors.dart';
 import '../../../../core/utils/app_router.dart';
 import '../../../../core/theming/text_styles.dart';
 import '../../../../core/widgets/custom_app_button.dart';
@@ -112,15 +113,25 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                     builder: (context, isValidEmail) {
                       return Center(
                         child: CustomAppButton(
-                          activeButton: isValidEmail,
+                          // activeButton: isValidEmail,
                           onTap: () {
+                            AppRouter.router.pushReplacement(
+                              AppRouter.otpView,
+                              extra: {
+                                "email": "mina Zarif",
+                                'isForgetPassword': true,
+                              },
+                            );
+                            return;
                             context.read<ForgetPasswordBloc>().add(
                                   ForgetPasswordRequested(
                                       email: emailController.text),
                                 );
                           },
                           label: "Confirm",
+                          textStyle: Styles.font16w700.copyWith(color: ColorsManager.whiteColor),
                           width: 260.w,
+                          height: 40.h,
                         ),
                       );
                     },

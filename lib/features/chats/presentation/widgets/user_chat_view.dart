@@ -59,7 +59,7 @@ class UserChatView extends StatelessWidget {
                   Text(
                     lastMessage?.message ?? '',
                     style: Styles.font12w400.copyWith(
-                        fontSize: 14.sp, color: ColorsManager.lightGreyColor),
+                        fontSize: 14.sp, color: ColorsManager.lightGrayColor),
                   ),
                 ],
               ),
@@ -70,7 +70,7 @@ class UserChatView extends StatelessWidget {
             lastMessage?.createdAt ?? '',
             style: Styles.font12w400.copyWith(
               fontSize: 10.sp,
-              color: ColorsManager.lightGreyColor,
+              color: ColorsManager.lightGrayColor,
             ),
           ),
         ],

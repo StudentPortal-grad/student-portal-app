@@ -36,7 +36,7 @@ class PostCommentsView extends StatelessWidget {
                 Container(
                   width: 1,
                   // height: double.infinity, // This makes it expand to available height
-                  color: ColorsManager.lightGreyColor,
+                  color: ColorsManager.lightGrayColor,
                 ),
                 Spacer(),
               ],

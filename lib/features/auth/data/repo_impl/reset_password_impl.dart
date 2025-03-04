@@ -19,8 +19,11 @@ class ResetPasswordImpl implements ResetPasswordRepo {
       {required String resetToken, required String password}) async {
     try {
       var data = await apiService.patch(
-        endpoint: ApiEndpoints.resetPassword(resetToken),
-        data: {"password": password},
+        endpoint: ApiEndpoints.resetPassword,
+        data: {
+          "token": resetToken,
+          "password": password,
+        },
       );
       var response = ResetPasswordResponse.fromJson(data);
       UserRepository.setUser(response.data);

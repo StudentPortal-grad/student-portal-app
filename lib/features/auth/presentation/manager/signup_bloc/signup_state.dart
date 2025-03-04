@@ -9,6 +9,10 @@ abstract class SignupState extends Equatable {
 
 class SignupInitial extends SignupState {}
 
+class SignupPageChanged extends SignupState {}
+
+class SignupPinCodeChanged extends SignupState {}
+
 class SignupLoading extends SignupState {}
 
 class SignupSuccess extends SignupState {

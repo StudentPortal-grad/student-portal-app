@@ -51,7 +51,7 @@ class WarningDialogBody extends StatelessWidget {
           height: 44.h,
           backgroundColor: Colors.transparent,
           textStyle: Styles.font16w700.copyWith(color: Colors.black),
-          borderColor: ColorsManager.lightGreyColor,
+          borderColor: ColorsManager.lightGrayColor,
           label: "Cancel",
           onTap: () => pop(),
         ),

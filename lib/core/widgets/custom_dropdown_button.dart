@@ -63,7 +63,7 @@ class _CustomDropdownButtonState<T> extends State<CustomDropdownButton<T>> {
             children: [
               Text(
                 widget.labelText ?? '',
-                style: Styles.font18w600.copyWith(fontWeight: FontWeight.w700),
+                style: widget.labelStyle ?? Styles.font18w600.copyWith(fontWeight: FontWeight.w700),
               ),
               widget.labelIcon ?? SizedBox.shrink(),
             ],
@@ -113,7 +113,7 @@ class _CustomDropdownButtonState<T> extends State<CustomDropdownButton<T>> {
                 borderRadius:
                     BorderRadius.circular(widget.borderRadius?.r ?? 0),
                 borderSide: BorderSide(
-                    color: widget.borderColor ?? ColorsManager.lightGreyColor),
+                    color: widget.borderColor ?? ColorsManager.lightGrayColor),
               ),
               errorBorder: OutlineInputBorder(
                 borderRadius:

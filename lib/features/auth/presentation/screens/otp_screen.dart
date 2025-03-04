@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:student_portal/core/helpers/app_size_boxes.dart';
 import 'package:student_portal/core/widgets/custom_appbar.dart';
 import '../../../../core/loading/view/loading_dialog.dart';
 import '../../../../core/theming/colors.dart';
@@ -51,11 +52,11 @@ class _OtpViewState extends State<OtpView> {
     return BlocProvider(
       create: (context) {
         final otpBloc = OtpBloc();
-        if (widget.isForgetPassword == false) {
-          otpBloc.add(SendOtpVerify(email: widget.email));
-        } else {
-          otpBloc.add(SendOtpForgetPassword(pinCode: "", email: widget.email));
-        }
+        // if (widget.isForgetPassword == false) {
+        //   otpBloc.add(SendOtpVerify(email: widget.email));
+        // } else {
+        //   otpBloc.add(SendOtpForgetPassword(pinCode: "", email: widget.email));
+        // }
         return otpBloc;
       },
       child: BlocConsumer<OtpBloc, OtpState>(
@@ -91,6 +92,7 @@ class _OtpViewState extends State<OtpView> {
           return PopScope(
             canPop: false,
             child: Scaffold(
+              backgroundColor: Colors.white,
               appBar: CustomAppBar(
                 title: Text(
                   'Enter OTP',
@@ -99,28 +101,22 @@ class _OtpViewState extends State<OtpView> {
                   ),
                 ),
               ),
-              body: Padding(
-                padding: EdgeInsetsDirectional.only(
-                  start: 20.w,
-                  end: 20.w,
-                  top: 50.h,
-                ),
+              body: SingleChildScrollView(
+                padding: EdgeInsetsDirectional.only(start: 20.w, end: 20.w, top: 30.h),
                 child: Column(
                   children: [
                     Text(
                       "We’ve sent an OTP code to your email",
-                      style: Styles.font12w400.copyWith(fontSize: 16.sp),
+                      style: Styles.font16w500.copyWith(fontWeight: FontWeight.w400,color: ColorsManager.grayColor2),
                     ),
-                    SizedBox(height: 8.h),
+                    3.heightBox,
                     Text(
                       " ${widget.email}",
-                      style: Styles.font12w400.copyWith(
-                        fontSize: 14.sp,
-                        color: Colors.black,
-                        fontWeight: FontWeight.w600,
+                      style: Styles.font16w500.copyWith(
+                        fontWeight: FontWeight.w400,
                       ),
                     ),
-                    SizedBox(height: 25.h),
+                   50.heightBox,
                     CustomVerificationCode(
                       codeController: pinController,
                       onChange: (value) {
@@ -129,7 +125,7 @@ class _OtpViewState extends State<OtpView> {
                         setState(() {});
                       },
                     ),
-                    SizedBox(height: 40.h),
+                    32.heightBox,
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -163,9 +159,14 @@ class _OtpViewState extends State<OtpView> {
                     Align(
                       alignment: Alignment.bottomCenter,
                       child: CustomAppButton(
-                        activeButton: pinCode.length == 5,
+                        activeButton: pinCode.length == 4,
                         label: "Continue",
+                        textStyle: Styles.font16w700.copyWith(color: ColorsManager.whiteColor),
+                        width: 260.w,
+                        height: 40.h,
                         onTap: () {
+
+                          return;
                           if (widget.isForgetPassword == false) {
                             context.read<OtpBloc>().add(
                                   VerifyEmail(

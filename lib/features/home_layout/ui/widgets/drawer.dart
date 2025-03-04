@@ -119,7 +119,7 @@ class AppDrawer extends StatelessWidget {
       onTap: onTap,
       child: Row(
         children: [
-          Icon(icon, color: ColorsManager.lightGreyColor),
+          Icon(icon, color: ColorsManager.lightGrayColor),
           12.widthBox,
           Text(title, style: Styles.font15w600),
         ],

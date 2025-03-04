@@ -1,5 +1,5 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../../core/helpers/app_regex.dart';
 import '../../../../../core/network/api_service.dart';
 import '../../../../../core/utils/secure_storage.dart';
 import '../../../../../core/utils/service_locator.dart';
@@ -16,6 +16,15 @@ import 'signup_event.dart';
 import 'signup_state.dart';
 
 class SignupBloc extends Bloc<SignupEvent, SignupState> {
+  SignupBloc() : super(SignupInitial()) {
+    on<SignupRequested>(_onSignupRequested);
+    on<VerifyEmailRequested>(_onVerifyEmailRequested);
+    on<ResendCodeRequested>(_onResendCodeRequested);
+    on<UpdateDataRequested>(_onUpdateDataRequested);
+    on<OnPageChanged>(_onPageChanged);
+    on<OnPinCodeChanged>(_onPinCodeChanged);
+  }
+
   final SignupUc signupUc =
       SignupUc(signupRepo: SignupRepoImpl(getIt.get<ApiService>()));
   final VerifyEmailUc verifyEmailUc = VerifyEmailUc(
@@ -25,13 +34,33 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
   final UpdateDateUc updateDataUc =
       UpdateDateUc(updateDataRepo: UpdateDataImpl(getIt.get<ApiService>()));
 
-  SignupBloc() : super(SignupInitial()) {
-    on<SignupRequested>(_onSignupRequested);
-    on<VerifyEmailRequested>(_onVerifyEmailRequested);
-    on<ResendCodeRequested>(_onResendCodeRequested);
-    on<UpdateDataRequested>(_onUpdateDataRequested);
-    on<PasswordStrengthChecked>(_onPasswordStrengthChecked);
-    on<ConfirmPasswordChecked>(_onConfirmPasswordChecked);
+  // Controllers
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController fullNameController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController confirmPasswordController =
+      TextEditingController();
+  String pinCode = '';
+  final PageController pageController = PageController();
+  int index = 0;
+
+  nextPage() {
+    pageController.nextPage(
+        duration: const Duration(milliseconds: 300), curve: Curves.easeIn);
+  }
+
+  previousPage() {
+    pageController.previousPage(
+        duration: const Duration(milliseconds: 300), curve: Curves.easeIn);
+  }
+
+  _onPageChanged(OnPageChanged event, Emitter<SignupState> emit) async {
+    index = event.index;
+    emit(SignupPageChanged());
+  }
+  _onPinCodeChanged(OnPinCodeChanged event, Emitter<SignupState> emit) async {
+    pinCode = event.pinCode;
+    emit(SignupPinCodeChanged());
   }
 
   Future<void> _onSignupRequested(
@@ -84,19 +113,5 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
       (error) => emit(UpdateDataFailure(error: error)),
       (response) => emit(UpdateDataSuccess()),
     );
-  }
-
-  void _onPasswordStrengthChecked(
-      PasswordStrengthChecked event, Emitter<SignupState> emit) {
-    List<bool> strengthCriteria =
-        AppRegex.checkPasswordStrength(event.password);
-    emit(PasswordStrengthUpdated(strengthCriteria: strengthCriteria));
-  }
-
-  void _onConfirmPasswordChecked(
-      ConfirmPasswordChecked event, Emitter<SignupState> emit) {
-    bool isMatching = event.password == event.confirmPassword &&
-        AppRegex.checkPasswordStrength(event.password).every((c) => c);
-    emit(ConfirmPasswordUpdated(isMatching: isMatching));
   }
 }

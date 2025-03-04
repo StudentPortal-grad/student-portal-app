@@ -102,7 +102,7 @@ class _MessageFieldState extends State<MessageField> {
                     enabled: !isRecording,
                     activeBorderColor: Colors.transparent,
                     hintStyle: Styles.font14w400
-                        .copyWith(color: ColorsManager.lightGreyColor2),
+                        .copyWith(color: ColorsManager.lightGrayColor2),
                     textInputAction: TextInputAction.done,
                     onChanged: (p0) {},
                     contentPadding: EdgeInsets.symmetric(vertical: 10.h),

@@ -21,9 +21,10 @@ class VerifyEmailRepoImpl implements VerifyEmailRepo {
       {required String pinCode, required String email}) async {
     try {
       var data = await apiService.post(
-        endpoint: ApiEndpoints.verifyEmail(pinCode),
+        endpoint: ApiEndpoints.verifyEmail,
         data: {
           "email": email,
+          "pinCode": pinCode
         },
       );
       log("Verify Success");
