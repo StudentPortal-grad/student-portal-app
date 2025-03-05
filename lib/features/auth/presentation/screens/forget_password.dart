@@ -96,18 +96,8 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                         child: CustomAppButton(
                           activeButton: isValidEmail,
                           onTap: () {
-                            AppRouter.router.pushReplacement(
-                              AppRouter.otpView,
-                              extra: {
-                                "email": "mina Zarif",
-                                'isForgetPassword': true,
-                              },
-                            );
-                            return;
-                            context.read<ForgetPasswordBloc>().add(
-                                  ForgetPasswordRequested(
-                                      email: bloc.emailController.text),
-                                );
+                            bloc.add(ForgetPasswordRequested(
+                                email: bloc.emailController.text));
                           },
                           label: "Confirm",
                           textStyle: Styles.font16w700.copyWith(color: ColorsManager.whiteColor),

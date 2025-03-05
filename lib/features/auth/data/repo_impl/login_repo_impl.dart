@@ -9,7 +9,7 @@ import '../../../../core/repo/user_repository.dart';
 import '../../../../core/utils/secure_storage.dart';
 import '../../domain/repo/login_repo.dart';
 import '../dto/login_request.dart';
-import '../model/login_response/login_response.dart';
+import '../model/user_model/user.dart';
 
 
 class LoginRepoImpl implements LoginRepo {
@@ -18,7 +18,7 @@ class LoginRepoImpl implements LoginRepo {
   LoginRepoImpl(this.apiService);
 
   @override
-  Future<Either<Failure, LoginResponse>> login({
+  Future<Either<Failure, bool>> login({
     required LoginRequest loginRequest,
   }) async {
     log('login');
@@ -28,15 +28,14 @@ class LoginRepoImpl implements LoginRepo {
         endpoint: ApiEndpoints.login,
         data: loginRequest.toJson(),
       );
-      // if(success)
       log('login success');
       SecureStorage().writeSecureData(
         id: data['data']['user']['_id'],
         accessToken: data['data']['token'],
       );
-      var response = LoginResponse.fromJson(data);
-      UserRepository.setUser(response.data);
-      return Right(response);
+      User user = User.fromJson(data['data']['user']);
+      UserRepository.setUser(user);
+      return Right(true);
     } on DioException catch (e) {
       log('login error: ${e.response?.data}');
       return Left(ServerFailure.fromDioError(e));
