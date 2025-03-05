@@ -38,7 +38,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
             CustomToast(context).showErrorToast(message: state.error.error);
           }
           if (state is ForgetPasswordSuccess) {
-            CustomToast(context).showSuccessToast(message: "Email was sent");
+            CustomToast(context).showSuccessToast(message: state.message);
             AppRouter.router.pushReplacement(
               AppRouter.otpView,
               extra: {
@@ -94,6 +94,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                     builder: (context, isValidEmail) {
                       return Center(
                         child: CustomAppButton(
+                          loading: state is ForgetPasswordLoading,
                           activeButton: isValidEmail,
                           onTap: () {
                             bloc.add(ForgetPasswordRequested(

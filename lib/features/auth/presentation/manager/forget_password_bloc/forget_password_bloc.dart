@@ -28,7 +28,7 @@ class ForgetPasswordBloc
 
     data.fold(
       (error) => emit(ForgetPasswordFailure(error: error)),
-      (response) => emit(ForgetPasswordSuccess(response: response)),
+      (response) => emit(ForgetPasswordSuccess(message: response)),
     );
   }
 

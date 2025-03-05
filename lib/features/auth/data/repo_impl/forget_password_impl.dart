@@ -6,7 +6,6 @@ import '../../../../core/errors/data/model/error_model/error_model.dart';
 import '../../../../core/errors/data/model/failures.dart';
 import '../../../../core/network/api_service.dart';
 import '../../domain/repo/forget_password_repo.dart';
-import '../model/forget_password_response/forget_password_response.dart';
 
 class ForgetPasswordImpl implements ForgetPasswordRepo {
   final ApiService apiService;
@@ -14,14 +13,14 @@ class ForgetPasswordImpl implements ForgetPasswordRepo {
   ForgetPasswordImpl(this.apiService);
 
   @override
-  Future<Either<Failure, ForgetPasswordResponse>> forgetPassword(
+  Future<Either<Failure, String>> forgetPassword(
       {required String email}) async {
     try {
       var data = await apiService.post(
         endpoint: ApiEndpoints.forgetPassword,
         data: {"email": email},
       );
-      return Right(ForgetPasswordResponse.fromJson(data));
+      return Right(data['data']['message']);
     } on DioException catch (e) {
       return Left(ServerFailure.fromDioError(e));
     }

@@ -1,6 +1,5 @@
 import 'package:equatable/equatable.dart';
 import '../../../../../core/errors/data/model/error_model/error_model.dart';
-import '../../../data/model/forget_password_response/forget_password_response.dart';
 
 abstract class OtpState extends Equatable {
   @override
@@ -36,12 +35,12 @@ class SendOtpFailure extends OtpState {
 class ResendEmailLoading extends OtpState {}
 
 class ResendEmailSuccess extends OtpState {
-  final ForgetPasswordResponse response;
+  final String message;
 
-  ResendEmailSuccess(this.response);
+  ResendEmailSuccess(this.message);
 
   @override
-  List<Object?> get props => [response];
+  List<Object?> get props => [message];
 }
 
 class ResendEmailFailure extends OtpState {

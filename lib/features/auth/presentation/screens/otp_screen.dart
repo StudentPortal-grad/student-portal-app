@@ -19,8 +19,6 @@ import '../manager/otp_bloc/otp_state.dart';
 class OtpView extends StatefulWidget {
   const OtpView({super.key, required this.email, this.isForgetPassword});
 
-  // todo: don't forget test with forget password while integration with backend
-
   final bool? isForgetPassword;
   final String email;
 
