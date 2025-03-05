@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:student_portal/features/auth/data/dto/otp_dto.dart';
 import 'package:student_portal/features/auth/domain/usecases/verify_email_uc.dart';
 import '../../../../../core/network/api_service.dart';
 import '../../../../../core/utils/service_locator.dart';
@@ -37,19 +38,17 @@ class OtpBloc extends Bloc<OtpEvent, OtpState> {
 
   void _onOtpCodeChanged(OtpCodeChanged event, Emitter<OtpState> emit) {
     otpCode = event.pinCode;
-    isValidate = event.pinCode.length == 4;
-    emit(OtpInputChanged(otpValid: event.pinCode.length == 4));
+    isValidate = (event.pinCode.length == 6);
+    emit(OtpInputChanged(otpValid: isValidate));
   }
 
   Future<void> _onSendOtpForgetPassword(
       SendOtpForgetPassword event, Emitter<OtpState> emit) async {
     emit(OtpLoading());
-
-    var data = await verifyForgetPasswordUc.call(
-      pinCode: event.pinCode,
+    var data = await verifyForgetPasswordUc.call(OtpDto(
+      pinCode: otpCode,
       email: event.email,
-    );
-
+    ));
     data.fold(
       (error) => emit(OtpFailure(error)),
       (response) => emit(OtpSuccess()),

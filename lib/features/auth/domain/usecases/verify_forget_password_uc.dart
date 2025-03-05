@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 
 import '../../../../core/errors/data/model/error_model/error_model.dart';
+import '../../data/dto/otp_dto.dart';
 import '../repo/verify_forget_password_repo.dart';
 
 class VerifyForgetPasswordUc {
@@ -9,6 +10,6 @@ class VerifyForgetPasswordUc {
   VerifyForgetPasswordUc({required this.verifyPasswordRepo});
 
   Future<Either<Failure, String>> call(
-          {required String pinCode, required String email}) =>
-      verifyPasswordRepo.verifyForgetPassword(pinCode: pinCode, email: email);
+      OtpDto otpDto) =>
+      verifyPasswordRepo.verifyForgetPassword(otpDto);
 }

@@ -19,6 +19,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.centerTitle = true,
     this.toolbarHeight,
     this.leadingIconColor,
+    this.showLeading = true,
   });
 
   @override
@@ -27,7 +28,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Function()? leadingOnTap, titleOnTap, actionOnTap;
   final Color? backgroundColor;
   final double elevation;
-  final bool centerTitle;
+  final bool centerTitle, showLeading;
   final double? toolbarHeight;
   final Color? leadingIconColor;
 
@@ -41,7 +42,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       shadowColor: Colors.transparent,
       foregroundColor: Colors.transparent,
       elevation: elevation,
-      leading: InkWell(
+      leading: showLeading ? InkWell(
         highlightColor: Colors.transparent,
         splashColor: Colors.transparent,
         onTap: leadingOnTap ?? () => AppRouter.router.pop(),
@@ -55,7 +56,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 fit: BoxFit.none,
               ),
         ),
-      ),
+      ) :null,
       title: InkWell(
         highlightColor: Colors.transparent,
         splashColor: Colors.transparent,

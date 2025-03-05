@@ -10,7 +10,7 @@ import '../../../utils/secure_storage.dart';
 
 class ServerFailure extends Failure {
   const ServerFailure({
-    required super.error,
+    super.error,
     super.args,
     super.name,
     super.status,
@@ -56,8 +56,8 @@ class ServerFailure extends Failure {
         statusCode == 300) {
       return ServerFailure(
         name: response['name'],
-        error: response['error'],
-        status: response['status'],
+        // error: response['error'],
+        // status: response['status'],
         // args: response['args'] ?? {},
       );
     } else {

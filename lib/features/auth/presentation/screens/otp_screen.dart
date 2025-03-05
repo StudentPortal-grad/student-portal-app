@@ -5,7 +5,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:student_portal/core/helpers/app_size_boxes.dart';
 import 'package:student_portal/core/widgets/custom_appbar.dart';
-import '../../../../core/loading/view/loading_dialog.dart';
 import '../../../../core/theming/colors.dart';
 import '../../../../core/utils/app_router.dart';
 import '../../../../core/theming/text_styles.dart';
@@ -76,30 +75,15 @@ class _OtpViewState extends State<OtpView> {
       child: BlocConsumer<OtpBloc, OtpState>(
         listener: (context, state) {
           log('state: $state');
-          if (state is OtpLoading || state is ResendEmailLoading) {
-            LoadingDialog.showLoadingDialog(context);
-          } else {
-            LoadingDialog.hideLoadingDialog();
-          }
-
+         if(state is ResendEmailSuccess) {
+           restartTimer();
+         }
           if (state is OtpFailure) {
-            CustomToast(context).showErrorToast(message: state.error.name);
-          }
-
-          if (state is ResendEmailFailure) {
-            CustomToast(context).showErrorToast(message: state.error.name);
+            CustomToast(context).showErrorToast(message: state.error.error);
           }
           if (state is OtpSuccess) {
-            CustomToast(context).showSuccessToast(message: 'Email Verified');
-            if (widget.isForgetPassword == false) {
-              AppRouter.clearAndNavigate(AppRouter.homeView);
-            } else {
-              AppRouter.router.pushReplacement(AppRouter.setNewPassword);
-            }
-          }
-
-          if (state is ResendEmailSuccess || state is SendOtpSuccess) {
-            CustomToast(context).showSuccessToast(message: "Email was sent");
+            CustomToast(context).showSuccessToast(message: 'OTP verified successfully');
+            AppRouter.clearAndNavigate(AppRouter.setNewPassword);
           }
         },
         builder: (context, state) {
@@ -153,9 +137,7 @@ class _OtpViewState extends State<OtpView> {
                         InkWell(
                           onTap: remainingTime == 0
                               ? () {
-                                  // otpBloc.add(ResendEmail(email: widget.email));
-                                  // if email send success
-                                  restartTimer();
+                                  otpBloc.add(ResendEmail(email: widget.email));
                                 }
                               : null, // Disable button if countdown is not over
                           child: Text(
@@ -173,9 +155,9 @@ class _OtpViewState extends State<OtpView> {
                         ),
                       ],
                     ),
-                    SizedBox(height: 32.h),
+                    32.heightBox,
                     CustomAppButton(
-                      activeButton: otpBloc.isValidate,
+                      activeButton: true,
                       loading: state is OtpLoading,
                       label: "Continue",
                       textStyle: Styles.font16w700
@@ -183,23 +165,13 @@ class _OtpViewState extends State<OtpView> {
                       width: 260.w,
                       height: 40.h,
                       onTap: () {
-                        AppRouter.router.pushReplacement(AppRouter.setNewPassword);
-                        return;
-                        if (widget.isForgetPassword == false) {
-                          context.read<OtpBloc>().add(
-                                VerifyEmail(
-                                  pinCode: otpBloc.otpCode,
-                                  email: widget.email,
-                                ),
-                              );
-                        } else {
-                          context.read<OtpBloc>().add(
-                                SendOtpForgetPassword(
-                                  pinCode: otpBloc.otpCode,
-                                  email: widget.email,
-                                ),
-                              );
-                        }
+                        if (otpBloc.otpCode.length < 6 || remainingTime == 0) return;
+                        otpBloc.add(
+                          SendOtpForgetPassword(
+                            pinCode: otpBloc.otpCode,
+                            email: widget.email,
+                          ),
+                        );
                       },
                     ),
                   ],
