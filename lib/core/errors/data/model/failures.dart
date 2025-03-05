@@ -10,35 +10,33 @@ import '../../../utils/secure_storage.dart';
 
 class ServerFailure extends Failure {
   const ServerFailure({
-    super.error,
-    super.args,
-    super.name,
-    super.status,
+    super.message,
+    super.success,
   });
 
   factory ServerFailure.fromDioError(DioException dioError) {
     switch (dioError.type) {
       case DioExceptionType.connectionTimeout:
         return const ServerFailure(
-          error: "Connection Timeout",
+          message: "Connection Timeout",
         );
       case DioExceptionType.sendTimeout:
-        return const ServerFailure(error: "Send Timeout");
+        return const ServerFailure(message: "Send Timeout");
       case DioExceptionType.receiveTimeout:
-        return const ServerFailure(error: "Receive Timeout");
+        return const ServerFailure(message: "Receive Timeout");
       case DioExceptionType.badResponse:
         return ServerFailure.fromResponse(
           statusCode: dioError.response!.statusCode!,
           response: dioError.response!.data!,
         );
       case DioExceptionType.cancel:
-        return const ServerFailure(error: 'Request to ApiServer was canceled');
+        return const ServerFailure(message: 'Request to ApiServer was canceled');
       case DioExceptionType.connectionError:
-        return const ServerFailure(error: "Connection Error");
+        return const ServerFailure(message: "Connection Error");
       case DioExceptionType.unknown:
-        return ServerFailure(error: dioError.message);
+        return ServerFailure(message: dioError.message);
       default:
-        return ServerFailure(error: dioError.message);
+        return ServerFailure(message: dioError.message);
     }
   }
 
@@ -55,19 +53,20 @@ class ServerFailure extends Failure {
         statusCode == 409 ||
         statusCode == 300) {
       return ServerFailure(
-        name: response['name'],
+        message: response['message'],
         // error: response['error'],
         // status: response['status'],
         // args: response['args'] ?? {},
       );
     } else {
       return const ServerFailure(
-        error: 'Oops, Unexpected error occurred, Please try again later',
+        message: 'Oops, Unexpected error occurred, Please try again later',
       );
     }
   }
 
   static isTokenExpired(dynamic response) {
+    // todo// check it with backend
     try {
       final msg = response is Map ? (response['name'] ?? "") : '';
       if (msg == 'TOKEN_EXPIRED' ||

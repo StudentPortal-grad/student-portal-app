@@ -14,15 +14,6 @@ class SetNewPasswordRequested extends SetNewPasswordEvent {
   List<Object?> get props => [password];
 }
 
-class PasswordStrengthChecked extends SetNewPasswordEvent {
-  final String password;
-
-  PasswordStrengthChecked({required this.password});
-
-  @override
-  List<Object?> get props => [password];
-}
-
 class ConfirmPasswordChecked extends SetNewPasswordEvent {
   final String password;
   final String confirmPassword;

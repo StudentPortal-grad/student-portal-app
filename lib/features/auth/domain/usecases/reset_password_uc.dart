@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 
 import '../../../../core/errors/data/model/error_model/error_model.dart';
-import '../../data/model/reset_password_response/reset_password_response.dart';
+import '../../data/dto/set_new_password_dto.dart';
 import '../repo/reset_password_repo.dart';
 
 class ResetPasswordUc {
@@ -9,11 +9,8 @@ class ResetPasswordUc {
 
   ResetPasswordUc({required this.resetPasswordRepo});
 
-  Future<Either<Failure, ResetPasswordResponse>> call({
-    required String resetToken,
-    required String password,
-  }) async {
-    return resetPasswordRepo.setNewPassword(
-        resetToken: resetToken, password: password);
+  Future<Either<Failure, bool>> call(
+      {required SetNewPasswordDto setNewPasswordDto}) async {
+    return resetPasswordRepo.setNewPassword(setNewPasswordDto);
   }
 }

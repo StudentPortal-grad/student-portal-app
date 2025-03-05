@@ -79,7 +79,7 @@ class _OtpViewState extends State<OtpView> {
            restartTimer();
          }
           if (state is OtpFailure) {
-            CustomToast(context).showErrorToast(message: state.error.error);
+            CustomToast(context).showErrorToast(message: state.error.message);
           }
           if (state is OtpSuccess) {
             CustomToast(context).showSuccessToast(message: 'OTP verified successfully');

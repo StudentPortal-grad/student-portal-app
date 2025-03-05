@@ -35,7 +35,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
           final bloc = context.read<ForgetPasswordBloc>();
           log('state: $state');
           if (state is ForgetPasswordFailure) {
-            CustomToast(context).showErrorToast(message: state.error.error);
+            CustomToast(context).showErrorToast(message: state.error.message);
           }
           if (state is ForgetPasswordSuccess) {
             CustomToast(context).showSuccessToast(message: state.message);

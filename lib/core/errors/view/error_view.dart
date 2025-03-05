@@ -17,7 +17,7 @@ class ErrorView extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         Text(
-          error.error ?? 'Ops! Something went wrong!',
+          error.message ?? 'Ops! Something went wrong!',
           textAlign: TextAlign.center,
           style: TextStyle(
             color: Colors.white,

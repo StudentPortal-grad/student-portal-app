@@ -1,6 +1,5 @@
 import 'package:equatable/equatable.dart';
 import '../../../../../core/errors/data/model/error_model/error_model.dart';
-import '../../../data/model/reset_password_response/reset_password_response.dart';
 
 abstract class SetNewPasswordState extends Equatable {
   @override
@@ -12,12 +11,12 @@ class SetNewPasswordInitial extends SetNewPasswordState {}
 class SetNewPasswordLoading extends SetNewPasswordState {}
 
 class SetNewPasswordSuccess extends SetNewPasswordState {
-  final ResetPasswordResponse response;
+  final bool success;
 
-  SetNewPasswordSuccess({required this.response});
+  SetNewPasswordSuccess({required this.success});
 
   @override
-  List<Object?> get props => [response];
+  List<Object?> get props => [success];
 }
 
 class SetNewPasswordFailure extends SetNewPasswordState {
@@ -27,15 +26,6 @@ class SetNewPasswordFailure extends SetNewPasswordState {
 
   @override
   List<Object?> get props => [error];
-}
-
-class SetNewPasswordStrengthChecked extends SetNewPasswordState {
-  final List<bool> strengthCriteria;
-
-  SetNewPasswordStrengthChecked({required this.strengthCriteria});
-
-  @override
-  List<Object?> get props => [strengthCriteria];
 }
 
 class SetNewPasswordConfirmed extends SetNewPasswordState {

@@ -28,7 +28,7 @@ class SignupView extends StatelessWidget {
             LoadingDialog.hideLoadingDialog();
           }
           if (state is SignupFailure) {
-            CustomToast(context).showErrorToast(message: state.error.error);
+            CustomToast(context).showErrorToast(message: state.error.message);
           }
         },
         builder: (context, state) {

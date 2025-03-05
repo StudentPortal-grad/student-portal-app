@@ -19,9 +19,9 @@ class GetPostsImpl implements GetPostsRepo {
     } on DioException catch (e) {
       log('Dio Failure ${e.toString()}');
       return Left(ServerFailure.fromDioError(e)); // Handle Dio errors here
-    } catch (e) {
+    }  catch (e) {
       log('UnexpectedFailure ${e.toString()}');
-      return Left(Failure(error: 'Unexpected Error'));
+      return Left(Failure(message:'Unexpected Error'));
       // return Left(UnexpectedFailure(e.toString())); // Handle unexpected errors
     }
   }

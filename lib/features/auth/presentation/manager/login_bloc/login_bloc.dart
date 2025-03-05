@@ -28,7 +28,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       ),
     );
     data.fold(
-      (error) => emit(LogInFailure(error: error.name ?? 'Unknown error')),
+      (error) => emit(LogInFailure(error: error.message ?? 'Unknown error')),
       (response) => emit(LogInSuccess(success: response)),
     );
   }
