@@ -27,7 +27,7 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
   final _groupNameController = TextEditingController();
   String? groupImage;
   List<User> members = [
-    User(id: '', fullname: 'test'),
+    User(id: '', name: 'test'),
   ];
 
   @override
@@ -100,7 +100,7 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
                 height: 350.h,
                 child: ListView.separated(
                   itemBuilder: (context, index) => MemberItemView(
-                    user: User(fullname: "Mina"),
+                    user: User(name: "Mina"),
                     onRemoveTap: (id) {
                       log(id);
                     },

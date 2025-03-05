@@ -41,7 +41,7 @@ class MemberItemView extends StatelessWidget {
           10.widthBox,
           Expanded(
             child: Text(
-              user.fullname ?? '',
+              user.name ?? '',
               style: Styles.font18w600.copyWith(fontWeight: FontWeight.w500),
               overflow: TextOverflow.ellipsis,
             ),

@@ -59,7 +59,7 @@ class ChooseMemberScreen extends StatelessWidget {
                 itemCount: 5,
                 separatorBuilder: (context, index) => 15.heightBox,
                 itemBuilder: (context, index) => MemberItemView(
-                  user: User(fullname: 'Mina'),
+                  user: User(name: 'Mina'),
                   showRemoveIcon: false,
                   showIsMemberSelected: true,
                 ),

@@ -26,7 +26,7 @@ class _CreateCommunityScreenState extends State<CreateCommunityScreen> {
   final _groupNameController = TextEditingController();
   String? communityImage;
   List<User> members = [
-    User(id: '', fullname: 'test'),
+    User(id: '', name: 'test'),
   ];
 
   @override
@@ -101,7 +101,7 @@ class _CreateCommunityScreenState extends State<CreateCommunityScreen> {
                 height: 350.h,
                 child: ListView.separated(
                   itemBuilder: (context, index) => MemberItemView(
-                    user: User(fullname: "Mina"),
+                    user: User(name: "Mina"),
                     onRemoveTap: (id) {
                       debugPrint(id);
                     },

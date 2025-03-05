@@ -32,7 +32,7 @@ class ChatsScreen extends StatelessWidget {
                   itemBuilder: (context, index) => UserChatView(
                     pinned: index == 0,
                     user: User(
-                        id: (index + 1).toString(), fullname: 'User $index'),
+                        id: (index + 1).toString(), name: 'User $index'),
                     lastMessage: Message(
                         to: '0',
                         from: '1',

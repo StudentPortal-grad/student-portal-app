@@ -41,7 +41,7 @@ class UserChatView extends StatelessWidget {
               Row(
                 children: [
                   Text(
-                    user?.fullname ?? '',
+                    user?.name ?? '',
                     style:
                         Styles.font18w600.copyWith(fontWeight: FontWeight.w500),
                   ),

@@ -1,130 +1,172 @@
-import 'package:equatable/equatable.dart';
-import 'package:student_portal/features/auth/data/model/user_model/picture.dart';
+import '../../../../../core/utils/assets_app.dart';
+import 'profile.dart';
+import 'address.dart';
+import 'friend.dart';
+import 'user_role.dart';
 
-
-class User extends Equatable {
+class User {
   final String? id;
-  final String? fullname;
-  final String? email;
-  final String? contactNumber;
-  final String? role;
-  final String? activityLevel;
-  final DateTime? dateOfBirth;
-  final List<dynamic>? goals;
-  final Picture? picture;
-  final dynamic currWorkoutPlan;
-  final dynamic currNutritionPlan;
-  final dynamic currSupplementPlan;
-  final List<dynamic>? savedBlogs;
-  final List<dynamic>? notifications;
-  final bool? emailActive;
-  final bool? active;
+  final String? name;
+  final String? username;
   final String? gender;
-  final num? height;
-  final num? weight;
-  final String? allergies;
-  final String? healthIssues;
+  final String? phoneNumber;
+  final DateTime? dateOfBirth;
+  final String? university;
+  final String? college;
+  final String? email;
+  final String? role;
+  final String profilePicture;
+  final Profile? profile;
+  final List<Address>? addresses;
+  final List<Friend>? friends;
+  final int? level;
+  final double? gpa;
+  final String? universityEmail;
+  final bool universityEmailVerified;
+  final String? tempEmail;
+  final bool emailVerified;
+  final List<UserRole>? roles;
+  final String? status;
+  final bool? isGraduated;
+  final int? graduationYear;
 
-  const User({
+  User({
     this.id,
-    this.fullname,
-    this.email,
-    this.contactNumber,
-    this.dateOfBirth,
-    this.role,
-    this.activityLevel,
-    this.goals,
-    this.picture,
-    this.currWorkoutPlan,
-    this.currNutritionPlan,
-    this.currSupplementPlan,
-    this.savedBlogs,
-    this.notifications,
-    this.emailActive,
-    this.active,
+    this.name,
+    this.username,
     this.gender,
-    this.height,
-    this.weight,
-    this.allergies,
-    this.healthIssues,
+    this.phoneNumber,
+    this.dateOfBirth,
+    this.university,
+    this.college,
+     this.email,
+    this.role,
+    this.profilePicture = AssetsApp.profileImage,
+    this.profile,
+    this.addresses,
+    this.friends,
+    this.level,
+    this.gpa,
+    this.universityEmail,
+    this.universityEmailVerified = false,
+    this.tempEmail,
+    this.emailVerified = false,
+    this.roles,
+     this.status,
+    this.isGraduated = false,
+    this.graduationYear,
   });
 
-  factory User.fromJson(Map<String, dynamic> json) => User(
-        id: json['_id'] as String?,
-        fullname: json['fullname'] as String?,
-        email: json['email'] as String?,
-        contactNumber: json['contactNumber'] as String?,
-        dateOfBirth: json['dateOfBirth'] == null
-            ? null
-            : DateTime.parse(json['dateOfBirth'] as String),
-        role: json['role'] as String?,
-        activityLevel: json['activityLevel'] as String?,
-        goals: json['goals'],
-        picture: json['picture'] == null
-            ? null
-            : Picture.fromJson(json['picture'] as Map<String, dynamic>),
-        currWorkoutPlan: json['currWorkoutPlan'] as dynamic,
-        currNutritionPlan: json['currNutritionPlan'] as dynamic,
-        currSupplementPlan: json['currSupplementPlan'] as dynamic,
-        savedBlogs: json['savedBlogs'] as List<dynamic>?,
-        notifications: json['notifications'] as List<dynamic>?,
-        emailActive: json['emailActive'] as bool?,
-        active: json['active'] as bool?,
-        gender: json['gender'] as String?,
-        height: json['height'] as num?,
-        weight: json['weight'] as num?,
-        healthIssues: json['healthIssues'] as String?,
-        allergies: json['allergies'] as String?,
-      );
+  /// Convert a `User` object into a JSON map
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'username': username,
+      'gender': gender,
+      'phoneNumber': phoneNumber,
+      'dateOfBirth': dateOfBirth?.toIso8601String(),
+      'university': university,
+      'college': college,
+      'email': email,
+      'role': role,
+      'profilePicture': profilePicture,
+      'profile': profile?.toJson(),
+      'addresses': addresses?.map((a) => a.toJson()).toList(),
+      'friends': friends?.map((f) => f.toJson()).toList(),
+      'level': level,
+      'gpa': gpa,
+      'universityEmail': universityEmail,
+      'universityEmailVerified': universityEmailVerified,
+      'tempEmail': tempEmail,
+      'emailVerified': emailVerified,
+      'roles': roles?.map((r) => r.toJson()).toList(),
+      'status': status,
+      'isGraduated': isGraduated,
+      'graduationYear': graduationYear,
+    };
+  }
 
-  Map<String, dynamic> toJson() => {
-        '_id': id,
-        'fullname': fullname,
-        'email': email,
-        'contactNumber': contactNumber,
-        'dateOfBirth': dateOfBirth?.toIso8601String(),
-        'role': role,
-        'goals': goals,
-        'activityLevel': activityLevel,
-        'picture': picture?.toJson(),
-        'currWorkoutPlan': currWorkoutPlan,
-        'currNutritionPlan': currNutritionPlan,
-        'currSupplementPlan': currSupplementPlan,
-        'savedBlogs': savedBlogs,
-        'notifications': notifications,
-        'emailActive': emailActive,
-        'active': active,
-        'gender': gender,
-        'height': height,
-        'weight': weight,
-        'healthIssues': healthIssues,
-        'allergies': allergies,
-      };
+  /// Convert a JSON map into a `User` object
+  factory User.fromJson(Map<String, dynamic> json) {
+    return User(
+      id: json['id'],
+      name: json['name'],
+      username: json['username'],
+      gender: json['gender'],
+      phoneNumber: json['phoneNumber'],
+      dateOfBirth: json['dateOfBirth'] != null ? DateTime.parse(json['dateOfBirth']) : null,
+      university: json['university'],
+      college: json['college'],
+      email: json['email'],
+      role: json['role'],
+      profilePicture: json['profilePicture'] ?? AssetsApp.profileImage,
+      profile: json['profile'] != null ? Profile.fromJson(json['profile']) : null,
+      addresses: json['addresses'] != null ? (json['addresses'] as List).map((a) => Address.fromJson(a)).toList() : null,
+      friends: json['friends'] != null ? (json['friends'] as List).map((f) => Friend.fromJson(f)).toList() : null,
+      level: json['level'],
+      gpa: (json['gpa'] as num?)?.toDouble(),
+      universityEmail: json['universityEmail'],
+      universityEmailVerified: json['universityEmailVerified'] ?? false,
+      tempEmail: json['tempEmail'],
+      emailVerified: json['emailVerified'] ?? false,
+      roles: json['roles'] != null ? (json['roles'] as List).map((r) => UserRole.fromJson(r)).toList() : null,
+      status: json['status'],
+      isGraduated: json['isGraduated'] ?? false,
+      graduationYear: json['graduationYear'],
+    );
+  }
 
-  @override
-  List<Object?> get props {
-    return [
-      id,
-      fullname,
-      email,
-      role,
-      contactNumber,
-      dateOfBirth,
-      activityLevel,
-      goals,
-      picture,
-      currWorkoutPlan,
-      currNutritionPlan,
-      currSupplementPlan,
-      savedBlogs,
-      notifications,
-      emailActive,
-      active,
-      gender,
-      height,
-      weight,
-      healthIssues,
-      allergies
-    ];
+  /// Create a `User` object from raw data
+  factory User.fromData({
+    String? id,
+    String? name,
+    String? username,
+    String? gender,
+    String? phoneNumber,
+    DateTime? dateOfBirth,
+    String? university,
+    String? college,
+    required String email,
+    String? role,
+    Profile? profile,
+    List<Address>? addresses,
+    List<Friend>? friends,
+    int? level,
+    double? gpa,
+    String? universityEmail,
+    bool universityEmailVerified = false,
+    String? tempEmail,
+    bool emailVerified = false,
+    List<UserRole>? roles,
+    required String status,
+    bool isGraduated = false,
+    int? graduationYear,
+  }) {
+    return User(
+      id: id,
+      name: name,
+      username: username,
+      gender: gender,
+      phoneNumber: phoneNumber,
+      dateOfBirth: dateOfBirth,
+      university: university,
+      college: college,
+      email: email,
+      role: role,
+      profile: profile,
+      addresses: addresses,
+      friends: friends,
+      level: level,
+      gpa: gpa,
+      universityEmail: universityEmail,
+      universityEmailVerified: universityEmailVerified,
+      tempEmail: tempEmail,
+      emailVerified: emailVerified,
+      roles: roles,
+      status: status,
+      isGraduated: isGraduated,
+      graduationYear: graduationYear,
+    );
   }
 }
