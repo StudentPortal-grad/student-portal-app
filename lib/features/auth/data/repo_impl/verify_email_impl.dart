@@ -9,7 +9,6 @@ import '../../../../core/errors/data/model/failures.dart';
 import '../../../../core/network/api_service.dart';
 import '../../../../core/utils/secure_storage.dart';
 import '../../domain/repo/verify_email_repo.dart';
-import '../model/verify_response/verify_response.dart';
 
 class VerifyEmailRepoImpl implements VerifyEmailRepo {
   final ApiService apiService;
@@ -17,7 +16,7 @@ class VerifyEmailRepoImpl implements VerifyEmailRepo {
   VerifyEmailRepoImpl(this.apiService);
 
   @override
-  Future<Either<Failure, VerifyResponse>> verifyEmail(
+  Future<Either<Failure, bool>> verifyEmail(
       {required String pinCode, required String email}) async {
     try {
       var data = await apiService.post(
@@ -33,7 +32,7 @@ class VerifyEmailRepoImpl implements VerifyEmailRepo {
         accessToken: data['data']['accessToken'],
         refreshToken: data['data']['refreshToken'],
       );
-      return Right(VerifyResponse.fromJson(data));
+      return Right(true);
     } on DioException catch (e) {
       return Left(ServerFailure.fromDioError(e));
     }
