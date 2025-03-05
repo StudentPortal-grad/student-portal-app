@@ -1,13 +1,15 @@
 class Profile {
   final String? bio;
-  final List<String>? interests;
+  final List<String?>? interests;
 
   Profile({this.bio, this.interests});
 
   factory Profile.fromJson(Map<String, dynamic> json) {
     return Profile(
       bio: json['bio'],
-      interests: json['interests'],
+      interests: (json['interests'] as List<dynamic>?)
+          ?.map((e) => e as String?)
+          .toList(),
     );
   }
 

@@ -1,26 +1,26 @@
 import 'package:equatable/equatable.dart';
 
-class SignupRequest extends Equatable {
+class SignupDTO extends Equatable {
   final String? email;
   final String? password;
   final String? fullName;
 
-  const SignupRequest({
+  const SignupDTO({
     this.email,
     this.password,
     this.fullName,
   });
 
-  factory SignupRequest.fromJson(Map<String, dynamic> json) => SignupRequest(
+  factory SignupDTO.fromJson(Map<String, dynamic> json) => SignupDTO(
         email: json['email'] as String?,
         password: json['password'] as String?,
-        fullName: json['fullname'] as String?,
+        fullName: json['name'] as String?,
       );
 
   Map<String, dynamic> toJson() => {
         'email': email,
         'password': password,
-        'fullname': fullName,
+        'name': fullName,
       };
 
   @override

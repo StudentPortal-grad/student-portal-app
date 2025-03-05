@@ -18,7 +18,7 @@ class SignupRepoImpl implements SignupRepo {
 
   @override
   Future<Either<Failure, SignupResponse>> signup(
-      {required SignupRequest signupRequest}) async {
+      {required SignupDTO signupRequest}) async {
     try {
       var data = await apiService.post(
         endpoint: ApiEndpoints.signup,

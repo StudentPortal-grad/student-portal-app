@@ -6,6 +6,6 @@ import '../../data/model/signup_response/signup_response.dart';
 
 abstract class SignupRepo {
   Future<Either<Failure, SignupResponse>> signup({
-    required SignupRequest signupRequest,
+    required SignupDTO signupRequest,
   });
 }

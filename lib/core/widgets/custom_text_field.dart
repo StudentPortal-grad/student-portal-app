@@ -151,6 +151,10 @@ class _CustomTextFieldState extends State<CustomTextField> {
                 borderRadius: BorderRadius.circular(widget.borderRadius?.r ?? 0),
                 borderSide: const BorderSide(color: Colors.red),
               ),
+              focusedErrorBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(widget.borderRadius?.r ?? 0),
+                borderSide: const BorderSide(color: Colors.red),
+              ),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(widget.borderRadius?.r ?? 0),
                 borderSide: BorderSide(color: widget.activeBorderColor ?? ColorsManager.mainColor),

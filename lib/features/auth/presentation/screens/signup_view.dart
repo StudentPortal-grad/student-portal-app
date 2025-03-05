@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../core/loading/view/loading_dialog.dart';
 import '../../../../core/theming/colors.dart';
 import '../../../../core/helpers/custom_toast.dart';
 import '../manager/signup_bloc/signup_bloc.dart';
@@ -22,11 +21,6 @@ class SignupView extends StatelessWidget {
       resizeToAvoidBottomInset: true,
       body: BlocConsumer<SignupBloc, SignupState>(
         listener: (context, state) {
-          if (state is SignupLoading) {
-            LoadingDialog.showLoadingDialog(context);
-          } else {
-            LoadingDialog.hideLoadingDialog();
-          }
           if (state is SignupFailure) {
             CustomToast(context).showErrorToast(message: state.error.message);
           }

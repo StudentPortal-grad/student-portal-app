@@ -26,6 +26,7 @@ class SignupBody extends StatelessWidget {
           CustomToast(context).showSuccessToast(
             message: "Process Done Successfully",
           );
+          context.read<SignupBloc>().nextPage();
         }
       },
       builder: (context, state) {
@@ -33,79 +34,81 @@ class SignupBody extends StatelessWidget {
         return SingleChildScrollView(
           padding:
               EdgeInsetsDirectional.only(start: 20.w, end: 20.w, top: 60.h),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              AuthTitle(title: 'Sign Up'),
-              50.heightBox,
-              CustomTextField(
-                controller: bloc.fullNameController,
-                labelText: 'Full Name',
-                textInputType: TextInputType.name,
-                onChanged: (value) {
-                  //todo : check if name is valid
-                },
-                hintText: "Please Enter Your Full name",
-              ),
-              18.heightBox,
-              CustomTextField(
-                controller: bloc.emailController,
-                textInputType: TextInputType.emailAddress,
-                labelText: "Email",
-                hintText: "Please Enter Your Email",
-                onChanged: (value) {
-                  // todo : check if email is valid
-                },
-                validator: (value) => AppRegex.validateEmail(value),
-              ),
-              18.heightBox,
-              CustomTextField(
-                controller: bloc.passwordController,
-                labelText: 'Password',
-                textInputType: TextInputType.visiblePassword,
-                onChanged: (value) {
-                  //todo : check if name is valid
-                },
-                hintText: "Please Enter Your Password",
-              ),
-              18.heightBox,
-              CustomTextField(
-                controller: bloc.confirmPasswordController,
-                labelText: 'Confirm Password',
-                textInputType: TextInputType.visiblePassword,
-                onChanged: (value) {
-                  //todo : check if name is valid
-                },
-                hintText: "Please Confirm Your Password",
-              ),
-              40.heightBox,
-              Center(
-                child: CustomAppButton(
-                  activeButton: true,
-                  onTap: () {
-                    bloc.nextPage();
-                    return;
-                    // temporary til integration with backed
-                    context.read<SignupBloc>().add(
-                          SignupRequested(
-                            signupRequest: SignupRequest(
-                              email: bloc.emailController.text,
-                              password: bloc.passwordController.text,
-                              fullName: bloc.fullNameController.text,
-                            ),
-                          ),
-                        );
+          child: Form(
+            key: bloc.formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                AuthTitle(title: 'Sign Up'),
+                50.heightBox,
+                CustomTextField(
+                  controller: bloc.fullNameController,
+                  labelText: 'Full Name',
+                  textInputType: TextInputType.name,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your name';
+                    }
+                    return null;
                   },
-                  label: "Sign Up",
-                  textStyle: Styles.font16w700
-                      .copyWith(color: ColorsManager.whiteColor),
-                  width: 260.w,
-                  height: 40.h,
+                  hintText: "Please Enter Your Full name",
                 ),
-              ),
-              20.heightBox,
-              const CustomLoginSignupButton(isLogin: false),
-            ],
+                18.heightBox,
+                CustomTextField(
+                  controller: bloc.emailController,
+                  textInputType: TextInputType.emailAddress,
+                  labelText: "Email",
+                  hintText: "Please Enter Your Email",
+                  validator: (value) => AppRegex.validateEmail(value),
+                ),
+                18.heightBox,
+                CustomTextField(
+                  controller: bloc.passwordController,
+                  labelText: 'Password',
+                  textInputType: TextInputType.visiblePassword,
+                  validator: (value) => AppRegex.validatePassword(value),
+                  hintText: "Please Enter Your Password",
+                ),
+                18.heightBox,
+                CustomTextField(
+                  controller: bloc.confirmPasswordController,
+                  labelText: 'Confirm Password',
+                  validator: (value) {
+                    if (value != bloc.passwordController.text) {
+                      return 'Passwords do not match';
+                    }
+                    return null;
+                  },
+                  textInputType: TextInputType.visiblePassword,
+                  hintText: "Please Confirm Your Password",
+                ),
+                40.heightBox,
+                Center(
+                  child: CustomAppButton(
+                    activeButton: true,
+                    loading: state is SignupLoading,
+                    onTap: () {
+                      bloc.add(
+                            SignupRequested(
+                              signupRequest: SignupDTO(
+                                email: bloc.emailController.text,
+                                password: bloc.passwordController.text,
+                                fullName: bloc.fullNameController.text,
+                              ),
+                            ),
+                          );
+                    },
+                    label: "Sign Up",
+                    textStyle: Styles.font16w700
+                        .copyWith(color: ColorsManager.whiteColor),
+                    width: 260.w,
+                    height: 40.h,
+                  ),
+                ),
+                20.heightBox,
+                const CustomLoginSignupButton(isLogin: false),
+              ],
+            ),
           ),
         );
       },

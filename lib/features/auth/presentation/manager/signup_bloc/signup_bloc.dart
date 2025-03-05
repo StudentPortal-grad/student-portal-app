@@ -40,8 +40,9 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmPasswordController =
       TextEditingController();
-  String pinCode = '';
   final PageController pageController = PageController();
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  String pinCode = '';
   int index = 0;
 
   nextPage() {
@@ -58,6 +59,7 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
     index = event.index;
     emit(SignupPageChanged());
   }
+
   _onPinCodeChanged(OnPinCodeChanged event, Emitter<SignupState> emit) async {
     pinCode = event.pinCode;
     emit(SignupPinCodeChanged());
@@ -65,6 +67,7 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
 
   Future<void> _onSignupRequested(
       SignupRequested event, Emitter<SignupState> emit) async {
+    if (!formKey.currentState!.validate()) return;
     emit(SignupLoading());
     var data = await signupUc.call(signupRequest: event.signupRequest);
 

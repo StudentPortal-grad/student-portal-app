@@ -11,6 +11,6 @@ class SignupUc {
   SignupUc({required this.signupRepo});
 
   Future<Either<Failure, SignupResponse>> call(
-          {required SignupRequest signupRequest}) =>
+          {required SignupDTO signupRequest}) =>
       signupRepo.signup(signupRequest: signupRequest);
 }

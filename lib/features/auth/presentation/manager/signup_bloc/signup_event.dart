@@ -7,7 +7,7 @@ abstract class SignupEvent extends Equatable {
 }
 
 class SignupRequested extends SignupEvent {
-  final SignupRequest signupRequest;
+  final SignupDTO signupRequest;
 
   SignupRequested({required this.signupRequest});
 
