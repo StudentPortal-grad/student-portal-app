@@ -31,9 +31,8 @@ class LoginRepoImpl implements LoginRepo {
       // if(success)
       log('login success');
       SecureStorage().writeSecureData(
-        id: data['data']['_id'],
-        accessToken: data['data']['accessToken'],
-        refreshToken: data['data']['refreshToken'],
+        id: data['data']['user']['_id'],
+        accessToken: data['data']['token'],
       );
       var response = LoginResponse.fromJson(data);
       UserRepository.setUser(response.data);

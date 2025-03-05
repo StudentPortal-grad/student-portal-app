@@ -17,16 +17,12 @@ class LoginView extends StatelessWidget {
       body: SafeArea(
         child: BlocConsumer<LoginBloc, LoginState>(
           listener: (context, state) {
-            if (state is LoadingFailure) {
+            if(state is LogInFailure){
               CustomToast(context).showErrorToast(message: state.error);
             }
-            if (state is LoadingSuccess) {
+            if(state is LogInSuccess){
               CustomToast(context).showSuccessToast(message: 'Login Successfully');
-              if (state.response.data?.emailActive == true) {
-                AppRouter.clearAndNavigate(AppRouter.homeView);
-              } else {
-                // AppRouter.router.pushReplacement(AppRouter.otpView);
-              }
+              AppRouter.clearAndNavigate(AppRouter.homeView);
             }
           },
           builder: (context, state) {

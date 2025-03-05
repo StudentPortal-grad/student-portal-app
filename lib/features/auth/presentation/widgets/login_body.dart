@@ -83,7 +83,7 @@ class LoginBody extends StatelessWidget {
                 builder: (context, isValid) {
                   return Center(
                     child: CustomAppButton(
-                      loading: state is LoadingState,
+                      loading: state is LogInLoading,
                       activeButton: isValid,
                       onTap: () {
                         bloc.add(LoginRequested(

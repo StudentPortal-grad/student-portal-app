@@ -36,13 +36,13 @@ class SecureStorage {
       await storage.read(key: resetTokenKey);
 
   writeSecureData({
-    required String id,
-    required String accessToken,
-    required String refreshToken,
+    String? id,
+    String? accessToken,
+    String? refreshToken,
   }) async {
-    await storage.write(key: idKey, value: id);
-    await storage.write(key: accessTokenKey, value: accessToken);
-    await storage.write(key: refreshTokenKey, value: refreshToken);
+    if (id != null) await storage.write(key: idKey, value: id);
+    if (accessToken != null) await storage.write(key: accessTokenKey, value: accessToken);
+    if (refreshToken != null) await storage.write(key: refreshTokenKey, value: refreshToken);
   }
 
   writeSecureErrorResponse({

@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import '../../../data/model/login_response/login_response.dart';
 
 abstract class LoginState extends Equatable {
   @override
@@ -7,21 +8,21 @@ abstract class LoginState extends Equatable {
 
 class LoginInitial extends LoginState {}
 
-class LoadingState extends LoginState {}
+class LogInLoading extends LoginState {}
 
-class LoadingSuccess extends LoginState {
-  final dynamic response;
+class LogInSuccess extends LoginState {
+  final LoginResponse loginResponse;
 
-  LoadingSuccess({required this.response});
+  LogInSuccess({required this.loginResponse});
 
   @override
-  List<Object?> get props => [response];
+  List<Object?> get props => [loginResponse];
 }
 
-class LoadingFailure extends LoginState {
+class LogInFailure extends LoginState {
   final String error;
 
-  LoadingFailure({required this.error});
+  LogInFailure({required this.error});
 
   @override
   List<Object?> get props => [error];

@@ -1,5 +1,5 @@
 abstract class ApiEndpoints {
-  static const String baseUrl = "http://192.168.1.7:3000/";
+  static const String baseUrl = "http://192.168.1.7:8080/v1/";
 
   // Auth Endpoints
   static const String login = "auth/login";
@@ -10,10 +10,8 @@ abstract class ApiEndpoints {
   static const String resetPassword = "auth/reset-password";
   static const String logout = "auth/logout";
 
-
   static String verifyForgetEmail(String pinCode) =>
       "api/v1/clients/auth/verifyForgotPassword/$pinCode";
-
 
   // User Endpoints
   static const String userProfile = "user/profile";

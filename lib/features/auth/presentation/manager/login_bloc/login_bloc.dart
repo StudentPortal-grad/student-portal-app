@@ -19,7 +19,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
   Future<void> _onLoginRequested(
       LoginRequested event, Emitter<LoginState> emit) async {
-    emit(LoadingState());
+    emit(LogInLoading());
 
     var data = await loginUc.call(
       loginRequest: LoginRequest(
@@ -29,8 +29,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     );
 
     data.fold(
-      (error) => emit(LoadingFailure(error: error.name ?? 'Unknown error')),
-      (response) => emit(LoadingSuccess(response: response)),
+      (error) => emit(LogInFailure(error: error.name ?? 'Unknown error')),
+      (response) => emit(LogInSuccess(loginResponse: response)),
     );
   }
 
