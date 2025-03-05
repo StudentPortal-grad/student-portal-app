@@ -67,7 +67,7 @@ class _HomeLayoutScreenState extends State<HomeLayoutScreen> {
         selectedItemColor: ColorsManager.mainColorLight,
         floatingOnTap: () {
           toggleShowPopMenu();
-          _showPopupMenu(context, Offset(0.66.sw, 0.66.sh));
+          _showPopupMenu(context, Offset(0.66.sw, .735.sh));
         },
         unselectedItemColor: ColorsManager.mainColorDark,
         onTap: _onItemTapped,
@@ -93,7 +93,7 @@ class _HomeLayoutScreenState extends State<HomeLayoutScreen> {
     final RenderBox overlay =
         Overlay.of(context).context.findRenderObject() as RenderBox;
     await showMenu(
-      color: Colors.transparent,
+      color: Colors.black54.withValues(alpha: 0.45),
       context: context,
       position: RelativeRect.fromRect(
         position & Size(70.w, 50.h), // Position of tap
