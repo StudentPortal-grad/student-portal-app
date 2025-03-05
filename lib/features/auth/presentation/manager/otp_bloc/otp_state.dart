@@ -52,3 +52,9 @@ class ResendEmailFailure extends OtpState {
   @override
   List<Object?> get props => [error];
 }
+
+class OtpInputChanged extends OtpState {
+  final bool otpValid;
+
+  OtpInputChanged({required this.otpValid});
+}

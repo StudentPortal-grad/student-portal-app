@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import '../theming/colors.dart';
 
@@ -28,6 +29,7 @@ class CustomAppButton extends StatelessWidget {
     this.padding,
     this.margin,
     this.spacing,
+    this.loading = false,
   });
 
   final String label;
@@ -41,10 +43,13 @@ class CustomAppButton extends StatelessWidget {
   final Color? borderColor;
   final EdgeInsetsGeometry? padding, margin;
   final double? spacing;
+  final bool loading;
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return loading
+        ? ButtonLoading()
+        : InkWell(
       splashColor: splashColor,
       highlightColor: splashColor,
       onTap: (activeButton) ? onTap : null,
@@ -73,6 +78,26 @@ class CustomAppButton extends StatelessWidget {
             ),
             if (suffixIcon != null) suffixIcon!,
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class ButtonLoading extends StatelessWidget {
+  const ButtonLoading({super.key, this.size});
+
+  final double? size;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsetsDirectional.only(end: 10.w),
+      child: FittedBox(
+        fit: BoxFit.scaleDown,
+        child: SpinKitThreeInOut(
+          color: ColorsManager.mainColor,
+          size: size ?? 30.sp,
         ),
       ),
     );

@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:student_portal/features/auth/domain/usecases/forget_password_uc.dart';
 import '../../../../../core/helpers/app_regex.dart';
@@ -16,6 +17,8 @@ class ForgetPasswordBloc
     on<ForgetPasswordRequested>(_onForgetPasswordRequested);
     on<ForgetPasswordEmailValidation>(_onForgetPasswordEmailValidation);
   }
+
+  final TextEditingController emailController = TextEditingController();
 
   Future<void> _onForgetPasswordRequested(
       ForgetPasswordRequested event, Emitter<ForgetPasswordState> emit) async {

@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../core/helpers/app_regex.dart';
 import '../../../data/dto/login_request.dart';
@@ -10,9 +11,11 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
   LoginBloc({required this.loginUc}) : super(LoginInitial()) {
     on<LoginRequested>(_onLoginRequested);
-    on<PasswordStrengthChecked>(_onPasswordStrengthChecked);
-    on<EmailValidationChecked>(_onEmailValidationChecked);
+    on<LoginValidation>(_onLoginValidation);
   }
+
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
 
   Future<void> _onLoginRequested(
       LoginRequested event, Emitter<LoginState> emit) async {
@@ -31,17 +34,13 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     );
   }
 
-  void _onPasswordStrengthChecked(
-      PasswordStrengthChecked event, Emitter<LoginState> emit) {
+  void _onLoginValidation(
+      LoginValidation event, Emitter<LoginState> emit) {
     List<bool> strengthCriteria =
-    AppRegex.checkPasswordStrength(event.password);
+        AppRegex.checkPasswordStrength(passwordController.text);
     bool isSecure = strengthCriteria.every((criteria) => criteria);
-    emit(LoadingPasswordCheckerState(isPasswordSecure: isSecure));
-  }
-
-  void _onEmailValidationChecked(
-      EmailValidationChecked event, Emitter<LoginState> emit) {
-    bool isValid = (AppRegex.validateEmail(event.email) == null);
-    emit(LoadingEmailValidationState(isEmailValid: isValid));
+    bool isValid = (AppRegex.validateEmail(emailController.text) == null);
+    emit(LoginValidationState(
+        isPasswordSecure: isSecure, isEmailValid: isValid));
   }
 }

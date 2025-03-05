@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../core/errors/data/model/error_model/error_model.dart';
 import '../../../../../core/helpers/app_regex.dart';
@@ -9,15 +10,19 @@ import '../../../domain/usecases/reset_password_uc.dart';
 import 'set_new_password_event.dart';
 import 'set_new_password_state.dart';
 
-class SetNewPasswordBloc extends Bloc<SetNewPasswordEvent, SetNewPasswordState> {
-
-  final ResetPasswordUc resetPasswordUc = ResetPasswordUc(resetPasswordRepo: ResetPasswordImpl(getIt.get<ApiService>()));
+class SetNewPasswordBloc
+    extends Bloc<SetNewPasswordEvent, SetNewPasswordState> {
+  final ResetPasswordUc resetPasswordUc = ResetPasswordUc(
+      resetPasswordRepo: ResetPasswordImpl(getIt.get<ApiService>()));
 
   SetNewPasswordBloc() : super(SetNewPasswordInitial()) {
     on<SetNewPasswordRequested>(_onSetNewPasswordRequested);
     on<PasswordStrengthChecked>(_onPasswordStrengthChecked);
     on<ConfirmPasswordChecked>(_onConfirmPasswordChecked);
   }
+
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController confirmPasswordController = TextEditingController();
 
   Future<void> _onSetNewPasswordRequested(
       SetNewPasswordRequested event, Emitter<SetNewPasswordState> emit) async {
@@ -26,7 +31,8 @@ class SetNewPasswordBloc extends Bloc<SetNewPasswordEvent, SetNewPasswordState> 
     try {
       String? resetToken = await SecureStorage().readResetTokenData();
       if (resetToken == null) {
-        emit(SetNewPasswordFailure(error: const Failure(error: "Token not found")));
+        emit(SetNewPasswordFailure(
+            error: const Failure(error: "Token not found")));
         return;
       }
 
@@ -36,8 +42,8 @@ class SetNewPasswordBloc extends Bloc<SetNewPasswordEvent, SetNewPasswordState> 
       );
 
       data.fold(
-            (error) => emit(SetNewPasswordFailure(error: error)),
-            (response) => emit(SetNewPasswordSuccess(response: response)),
+        (error) => emit(SetNewPasswordFailure(error: error)),
+        (response) => emit(SetNewPasswordSuccess(response: response)),
       );
     } catch (e) {
       emit(SetNewPasswordFailure(error: Failure(error: e.toString())));
@@ -46,14 +52,16 @@ class SetNewPasswordBloc extends Bloc<SetNewPasswordEvent, SetNewPasswordState> 
 
   void _onPasswordStrengthChecked(
       PasswordStrengthChecked event, Emitter<SetNewPasswordState> emit) {
-    List<bool> strengthCriteria = AppRegex.checkPasswordStrength(event.password);
+    List<bool> strengthCriteria =
+        AppRegex.checkPasswordStrength(event.password);
     emit(SetNewPasswordStrengthChecked(strengthCriteria: strengthCriteria));
   }
 
   void _onConfirmPasswordChecked(
       ConfirmPasswordChecked event, Emitter<SetNewPasswordState> emit) {
     bool isMatching = event.password == event.confirmPassword &&
-        AppRegex.checkPasswordStrength(event.password).every((criterion) => criterion);
+        AppRegex.checkPasswordStrength(event.password)
+            .every((criterion) => criterion);
     emit(SetNewPasswordConfirmed(isMatching: isMatching));
   }
 }

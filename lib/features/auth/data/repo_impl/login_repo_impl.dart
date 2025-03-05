@@ -22,12 +22,13 @@ class LoginRepoImpl implements LoginRepo {
     required LoginRequest loginRequest,
   }) async {
     log('login');
-
+    log(loginRequest.toJson().toString());
     try {
       var data = await apiService.post(
         endpoint: ApiEndpoints.login,
         data: loginRequest.toJson(),
       );
+      // if(success)
       log('login success');
       SecureStorage().writeSecureData(
         id: data['data']['_id'],

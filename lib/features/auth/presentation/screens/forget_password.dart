@@ -5,7 +5,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:student_portal/core/helpers/app_size_boxes.dart';
 import '../../../../core/helpers/app_regex.dart';
-import '../../../../core/loading/view/loading_dialog.dart';
 import '../../../../core/theming/colors.dart';
 import '../../../../core/utils/app_router.dart';
 import '../../../../core/theming/text_styles.dart';
@@ -26,19 +25,6 @@ class ForgetPassword extends StatefulWidget {
 }
 
 class _ForgetPasswordState extends State<ForgetPassword> {
-  late final TextEditingController emailController;
-
-  @override
-  void initState() {
-    emailController = TextEditingController();
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    emailController.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,12 +32,8 @@ class _ForgetPasswordState extends State<ForgetPassword> {
       create: (context) => ForgetPasswordBloc(),
       child: BlocConsumer<ForgetPasswordBloc, ForgetPasswordState>(
         listener: (context, state) {
+          final bloc = context.read<ForgetPasswordBloc>();
           log('state: $state');
-          if (state is ForgetPasswordLoading) {
-            LoadingDialog.showLoadingDialog(context);
-          } else {
-            LoadingDialog.hideLoadingDialog();
-          }
           if (state is ForgetPasswordFailure) {
             CustomToast(context).showErrorToast(message: state.error.error);
           }
@@ -60,18 +42,19 @@ class _ForgetPasswordState extends State<ForgetPassword> {
             AppRouter.router.pushReplacement(
               AppRouter.otpView,
               extra: {
-                "email": emailController.text,
+                "email": bloc.emailController.text,
                 'isForgetPassword': true,
               },
             );
           }
         },
         builder: (context, state) {
+          final bloc = context.read<ForgetPasswordBloc>();
           return Scaffold(
             backgroundColor: Colors.white,
             appBar: CustomAppBar(
               title: Text(
-                'Set Password',
+                'Verify Email',
                 style: Styles.font20w600,
               ),
             ),
@@ -84,15 +67,13 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                   BlocBuilder<ForgetPasswordBloc, ForgetPasswordState>(
                     builder: (context, state) {
                       return CustomTextField(
-                        controller: emailController,
+                        controller: bloc.emailController,
                         labelText: 'Email',
                         validator: (value) => AppRegex.validateEmail(value),
                         textInputType: TextInputType.emailAddress,
                         hintText: 'Please Enter Your Email',
                         onChanged: (value) {
-                          context
-                              .read<ForgetPasswordBloc>()
-                              .add(ForgetPasswordEmailValidation(email: value));
+                          bloc.add(ForgetPasswordEmailValidation(email: value));
                         },
                       );
                     },
@@ -113,7 +94,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                     builder: (context, isValidEmail) {
                       return Center(
                         child: CustomAppButton(
-                          // activeButton: isValidEmail,
+                          activeButton: isValidEmail,
                           onTap: () {
                             AppRouter.router.pushReplacement(
                               AppRouter.otpView,
@@ -125,7 +106,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                             return;
                             context.read<ForgetPasswordBloc>().add(
                                   ForgetPasswordRequested(
-                                      email: emailController.text),
+                                      email: bloc.emailController.text),
                                 );
                           },
                           label: "Confirm",

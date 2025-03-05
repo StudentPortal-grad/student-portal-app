@@ -43,7 +43,7 @@ class SignupView extends StatelessWidget {
             child: PageView(
               controller: bloc.pageController,
               onPageChanged: (value) => bloc.add(OnPageChanged(index: value)),
-              // physics: const NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               children: [
                 SignupBody(),
                 VerifyEmailView(),

@@ -27,20 +27,12 @@ class LoadingFailure extends LoginState {
   List<Object?> get props => [error];
 }
 
-class LoadingPasswordCheckerState extends LoginState {
-  final bool isPasswordSecure;
+class LoginValidationState extends LoginState {
+  final bool? isEmailValid;
+  final bool? isPasswordSecure;
 
-  LoadingPasswordCheckerState({required this.isPasswordSecure});
-
-  @override
-  List<Object?> get props => [isPasswordSecure];
-}
-
-class LoadingEmailValidationState extends LoginState {
-  final bool isEmailValid;
-
-  LoadingEmailValidationState({required this.isEmailValid});
+  LoginValidationState({this.isEmailValid, this.isPasswordSecure});
 
   @override
-  List<Object?> get props => [isEmailValid];
+  List<Object?> get props => [isEmailValid, isPasswordSecure];
 }

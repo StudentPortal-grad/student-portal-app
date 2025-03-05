@@ -29,11 +29,17 @@ class OtpBloc extends Bloc<OtpEvent, OtpState> {
     on<SendOtpVerify>(_onSendOtpVerify);
     on<VerifyEmail>(_onVerifyEmail);
     on<ResendEmail>(_onResendEmail);
+    on<OtpCodeChanged>(_onOtpCodeChanged);
   }
 
-  // void _onOtpCodeChanged(OtpCodeChanged event, Emitter<OtpState> emit) {
-  //   emit(OtpInputChanged(isValid: event.pinCode.length == 5));
-  // }
+  String otpCode = '';
+  bool isValidate = false;
+
+  void _onOtpCodeChanged(OtpCodeChanged event, Emitter<OtpState> emit) {
+    otpCode = event.pinCode;
+    isValidate = event.pinCode.length == 4;
+    emit(OtpInputChanged(otpValid: event.pinCode.length == 4));
+  }
 
   Future<void> _onSendOtpForgetPassword(
       SendOtpForgetPassword event, Emitter<OtpState> emit) async {

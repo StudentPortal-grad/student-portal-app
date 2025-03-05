@@ -42,3 +42,12 @@ class ResendEmail extends OtpEvent {
   @override
   List<Object?> get props => [email];
 }
+
+class OtpCodeChanged extends OtpEvent {
+  final String pinCode;
+
+  OtpCodeChanged({required this.pinCode});
+
+  @override
+  List<Object?> get props => [pinCode];
+}

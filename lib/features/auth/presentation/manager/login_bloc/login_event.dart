@@ -15,20 +15,15 @@ class LoginRequested extends LoginEvent {
   List<Object?> get props => [email, password];
 }
 
-class PasswordStrengthChecked extends LoginEvent {
-  final String password;
+class LoginValidation extends LoginEvent {
+  final String? email;
+  final String? password;
 
-  PasswordStrengthChecked({required this.password});
-
-  @override
-  List<Object?> get props => [password];
-}
-
-class EmailValidationChecked extends LoginEvent {
-  final String email;
-
-  EmailValidationChecked({required this.email});
+  LoginValidation({
+    this.email,
+    this.password,
+  });
 
   @override
-  List<Object?> get props => [email];
+  List<Object?> get props => [email, password];
 }
