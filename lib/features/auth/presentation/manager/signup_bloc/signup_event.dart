@@ -50,12 +50,12 @@ class ResendCodeRequested extends SignupEvent {
 }
 
 class UpdateDataRequested extends SignupEvent {
-  final Map<String, dynamic> jsonData;
+  final List<String>? interests;
 
-  UpdateDataRequested({required this.jsonData});
+  UpdateDataRequested({this.interests});
 
   @override
-  List<Object?> get props => [jsonData];
+  List<Object?> get props => [interests];
 }
 
 class PasswordStrengthChecked extends SignupEvent {
@@ -76,4 +76,9 @@ class ConfirmPasswordChecked extends SignupEvent {
 
   @override
   List<Object?> get props => [password, confirmPassword];
+}
+
+class OnProfileImagePicked extends SignupEvent {
+  @override
+  List<Object?> get props => [];
 }

@@ -65,6 +65,7 @@ class SignupBody extends StatelessWidget {
                 CustomTextField(
                   controller: bloc.passwordController,
                   labelText: 'Password',
+                  obscureText: true,
                   textInputType: TextInputType.visiblePassword,
                   validator: (value) => AppRegex.validatePassword(value),
                   hintText: "Please Enter Your Password",
@@ -73,6 +74,7 @@ class SignupBody extends StatelessWidget {
                 CustomTextField(
                   controller: bloc.confirmPasswordController,
                   labelText: 'Confirm Password',
+                  obscureText: true,
                   validator: (value) {
                     if (value != bloc.passwordController.text) {
                       return 'Passwords do not match';

@@ -59,6 +59,10 @@ class ResendCodeFailure extends SignupState {
   List<Object?> get props => [error];
 }
 
+class SignupProfileImagePicked extends SignupState {}
+
+class SignupTopicSelected extends SignupState {}
+
 class UpdateDataSuccess extends SignupState {}
 
 class UpdateDataFailure extends SignupState {

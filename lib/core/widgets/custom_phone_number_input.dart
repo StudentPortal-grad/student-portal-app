@@ -9,7 +9,7 @@ import '../theming/text_styles.dart';
 class CustomPhoneNumberInput extends StatefulWidget {
   const CustomPhoneNumberInput({
     super.key,
-    required this.phoneController,
+    this.phoneController,
     this.onInputChanged,
     this.labelText,
     this.textColor,
@@ -29,9 +29,11 @@ class CustomPhoneNumberInput extends StatefulWidget {
     this.onTap,
     this.textInputAction,
     this.onFieldSubmitted,
+    this.validator,
+    this.phoneNumber,
   });
 
-  final TextEditingController phoneController;
+  final TextEditingController? phoneController;
   final Function(PhoneNumber)? onInputChanged;
   final String? labelText, hintText;
   final Color? textColor, borderColor, activeBorderColor, filledColor;
@@ -43,18 +45,21 @@ class CustomPhoneNumberInput extends StatefulWidget {
   final Function()? onTap;
   final TextInputAction? textInputAction;
   final Function(String)? onFieldSubmitted;
+  final String? Function(String?)? validator;
+  final PhoneNumber? phoneNumber;
 
   @override
   State<CustomPhoneNumberInput> createState() => _CustomPhoneNumberInputState();
 }
 
 class _CustomPhoneNumberInputState extends State<CustomPhoneNumberInput> {
-  PhoneNumber? _phoneNumber;
+  late PhoneNumber? _phoneNumber;
 
   @override
   void initState() {
     super.initState();
-    _phoneNumber = PhoneNumber(dialCode: '20', isoCode: 'EG'); // Default country code
+    _phoneNumber =
+        PhoneNumber(dialCode: '20', isoCode: 'EG'); // Default country code
   }
 
   @override
@@ -87,17 +92,18 @@ class _CustomPhoneNumberInputState extends State<CustomPhoneNumberInput> {
                 child: InternationalPhoneNumberInput(
 
                   initialValue: _phoneNumber,
-                  selectorTextStyle: widget.textStyle ?? Styles.font16w500.copyWith(color: widget.textColor),
-                  textStyle: widget.textStyle ?? Styles.font16w500.copyWith(color: widget.textColor),
+                  selectorTextStyle: widget.textStyle ??
+                      Styles.font16w500.copyWith(color: widget.textColor),
+                  textStyle: widget.textStyle ??
+                      Styles.font16w500.copyWith(color: widget.textColor),
                   focusNode: widget.focusNode,
                   textFieldController: widget.phoneController,
                   selectorConfig: const SelectorConfig(
-                    selectorType: PhoneInputSelectorType.BOTTOM_SHEET,
-                    useEmoji: true,
-                    trailingSpace: true,
-                    // showFlags: true,
-                    useBottomSheetSafeArea: true
-                  ),
+                      selectorType: PhoneInputSelectorType.BOTTOM_SHEET,
+                      useEmoji: true,
+                      trailingSpace: true,
+                      // showFlags: true,
+                      useBottomSheetSafeArea: true),
                   onInputChanged: widget.onInputChanged,
                   onInputValidated: (bool value) {
                     debugPrint("Phone number valid: $value");
@@ -106,14 +112,16 @@ class _CustomPhoneNumberInputState extends State<CustomPhoneNumberInput> {
                   onSaved: (PhoneNumber number) {
                     debugPrint('On Saved: $number');
                   },
+                  validator: widget.validator,
                   inputDecoration: InputDecoration(
                     border: InputBorder.none,
                     hintText: widget.hintText ?? "Enter phone number",
-                    hintStyle: widget.hintStyle ?? TextStyle(
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.w400,
-                      color: const Color(0xff828894),
-                    ),
+                    hintStyle: widget.hintStyle ??
+                        TextStyle(
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.w400,
+                          color: const Color(0xff828894),
+                        ),
                   ),
                 ),
               ),

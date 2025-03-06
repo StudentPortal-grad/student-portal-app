@@ -9,15 +9,21 @@ class ChoosePositionButton extends StatelessWidget {
   final String? value;
   final Function(String)? onChange;
   static List<String> options = [
-    'students',
-    'professors',
-    'graduates',
-    'other'
+    'Student',
+    'Faculty',
+    'Admin',
+    // 'Other'
   ];
 
   @override
   Widget build(BuildContext context) {
     return CustomDropdownButton<String>(
+      validator: (p0) {
+        if (p0 == null || p0.isEmpty) {
+          return 'Please select a position';
+        }
+        return null;
+      },
       hintText: 'Select Position',
       labelText: 'Position',
       labelStyle: Styles.font14w500,

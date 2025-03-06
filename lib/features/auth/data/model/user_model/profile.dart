@@ -1,6 +1,6 @@
 class Profile {
   final String? bio;
-  final List<String?>? interests;
+  final List<String>? interests;
 
   Profile({this.bio, this.interests});
 
@@ -8,7 +8,7 @@ class Profile {
     return Profile(
       bio: json['bio'],
       interests: (json['interests'] as List<dynamic>?)
-          ?.map((e) => e as String?)
+          ?.map((e) => e as String)
           .toList(),
     );
   }

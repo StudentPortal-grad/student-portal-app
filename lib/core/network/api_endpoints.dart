@@ -9,12 +9,11 @@ abstract class ApiEndpoints {
   static const String verifyOtp = 'auth/verify-reset-otp';
   static const String verifyEmail = "auth/verify-email";
   static const String resetPassword = "auth/reset-password";
+  static const String completeProfile = "auth/signup/complete";
   static const String logout = "auth/logout";
 
   // User Endpoints
-  static const String userProfile = "user/profile";
-
-  static String updateUser(String id) => "api/v1/clients/$id";
+  static const String userProfile = "users/me";
 
 // Other Services
 }

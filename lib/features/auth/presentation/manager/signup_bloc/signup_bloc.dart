@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl_phone_number_input/intl_phone_number_input.dart';
+import 'package:student_portal/core/repo/user_repository.dart';
+import 'package:student_portal/features/auth/data/dto/complete_dto.dart';
+import '../../../../../core/helpers/file_service.dart';
 import '../../../../../core/network/api_service.dart';
-import '../../../../../core/utils/secure_storage.dart';
 import '../../../../../core/utils/service_locator.dart';
 import '../../../data/dto/signup_otp_dto.dart';
-import '../../../data/model/token_model/token_model.dart';
+import '../../../data/model/user_model/profile.dart';
 import '../../../data/repo_impl/check_email_impl.dart';
 import '../../../data/repo_impl/signup_repo_impl.dart';
 import '../../../data/repo_impl/update_data_impl.dart';
@@ -24,6 +27,7 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
     on<UpdateDataRequested>(_onUpdateDataRequested);
     on<OnPageChanged>(_onPageChanged);
     on<OnPinCodeChanged>(_onPinCodeChanged);
+    on<OnProfileImagePicked>(_onPickProfileImage);
   }
 
   final SignupUc signupUc =
@@ -41,10 +45,29 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmPasswordController =
       TextEditingController();
+  String pinCode = '';
+
+  // Page Controller
   final PageController pageController = PageController();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  String pinCode = '';
   int index = 0;
+
+  // Profile Controllers
+  final TextEditingController userNameController =
+      TextEditingController(text: UserRepository.user?.username ?? '');
+  final TextEditingController phoneController = TextEditingController();
+  PhoneNumber? phoneNumber;
+  final TextEditingController dateOfBirthController = TextEditingController();
+  String? dateOfBirth;
+  String? gender;
+  String? profileImage;
+
+  // academic Controllers
+  final TextEditingController universityController = TextEditingController();
+  final TextEditingController collegeController = TextEditingController();
+  final TextEditingController gpaController = TextEditingController();
+  final TextEditingController bioController = TextEditingController();
+  String? position;
 
   nextPage() {
     pageController.nextPage(
@@ -102,14 +125,32 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
     );
   }
 
+  Future<void> _onPickProfileImage(
+      OnProfileImagePicked event, Emitter<SignupState> emit) async {
+    profileImage = (await FileService.pickImage())?.path;
+    emit(SignupProfileImagePicked());
+  }
+
   Future<void> _onUpdateDataRequested(
       UpdateDataRequested event, Emitter<SignupState> emit) async {
     emit(SignupLoading());
-    TokenModel? tokenModel = await SecureStorage().readSecureData();
 
     var data = await updateDataUc.call(
-      jsonData: event.jsonData,
-      tokenModel: tokenModel!,
+      CompleteDto(
+        phoneNumber: phoneNumber?.phoneNumber,
+        userName: userNameController.text,
+        college: collegeController.text,
+        dateOfBirth: dateOfBirthController.text,
+        gpa: double.parse(gpaController.text),
+        position: position,
+        university: universityController.text,
+        profilePicture: profileImage,
+        gender: gender,
+        profile: Profile(
+          bio: bioController.text,
+          interests: event.interests,
+        ),
+      ),
     );
 
     data.fold(

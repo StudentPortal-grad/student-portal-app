@@ -4,13 +4,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:student_portal/core/helpers/app_size_boxes.dart';
 import 'package:student_portal/core/helpers/app_text_view.dart';
 import 'package:student_portal/core/theming/colors.dart';
-import 'package:student_portal/core/utils/app_router.dart';
 import 'package:student_portal/core/widgets/custom_appbar.dart';
 import 'package:student_portal/features/auth/presentation/widgets/topic_item_view.dart';
 import '../../../../core/theming/text_styles.dart';
 import '../../../../core/widgets/custom_app_button.dart';
 import '../../domain/entities/topics.dart';
 import '../manager/signup_bloc/signup_bloc.dart';
+import '../manager/signup_bloc/signup_event.dart';
 import '../manager/signup_bloc/signup_state.dart';
 
 class CompleteProfileView extends StatefulWidget {
@@ -74,11 +74,9 @@ class _CompleteProfileViewState extends State<CompleteProfileView> {
                 20.heightBox,
                 Center(
                   child: CustomAppButton(
+                    loading: state is SignupLoading,
                     margin: EdgeInsets.only(top: 20.h),
-                    onTap: () {
-                      // if(success)
-                      AppRouter.clearAndNavigate(AppRouter.homeView);
-                    },
+                    onTap: () => bloc.add(UpdateDataRequested(interests: selectedTopics.toList())),
                     label: "Next",
                     textStyle: Styles.font16w700
                         .copyWith(color: ColorsManager.whiteColor),

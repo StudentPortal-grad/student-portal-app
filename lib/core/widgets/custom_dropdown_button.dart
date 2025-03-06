@@ -120,6 +120,11 @@ class _CustomDropdownButtonState<T> extends State<CustomDropdownButton<T>> {
                     BorderRadius.circular(widget.borderRadius?.r ?? 0),
                 borderSide: const BorderSide(color: Colors.red),
               ),
+              focusedErrorBorder: OutlineInputBorder(
+                borderRadius:
+                    BorderRadius.circular(widget.borderRadius?.r ?? 0),
+                borderSide: const BorderSide(color: Colors.red),
+              ),
               focusedBorder: OutlineInputBorder(
                 borderRadius:
                     BorderRadius.circular(widget.borderRadius?.r ?? 0),

@@ -20,56 +20,85 @@ class AcademicDataView extends StatelessWidget {
     return BlocBuilder<SignupBloc, SignupState>(
       builder: (context, state) {
         final bloc = context.read<SignupBloc>();
-        return Column(
-          children: [
-            CustomAppBar(
+        return Form(
+          key: bloc.formKey,
+          child: Column(
+            children: [
+              CustomAppBar(
                 title: "Academic Data".make(style: Styles.font20w600),
-              leadingOnTap: () => bloc.previousPage(),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 20.h),
-                child: Column(
-                  spacing: 20.h,
-                  children: [
-                    CustomTextField(
-                      textInputType: TextInputType.name,
-                      hintText: "University",
-                      labelText: 'University',
-                      labelStyle: Styles.font14w500,
-                      controller: TextEditingController(text: ''),
-                    ),
-                    CustomTextField(
-                      textInputType: TextInputType.name,
-                      hintText: "Collage",
-                      labelText: 'Collage',
-                      labelStyle: Styles.font14w500,
-                      controller: TextEditingController(text: ''),
-                    ),
-                    ChoosePositionButton(),
-                    CustomTextField(
-                      textInputType: TextInputType.number,
-                      hintText: "GPA",
-                      labelText: 'GPA',
-                      labelStyle: Styles.font14w500,
-                      controller: TextEditingController(text: ''),
-                    ),
-                    CustomAppButton(
-                      margin: EdgeInsets.only(top: 20.h),
-                      onTap: () {
-                        bloc.nextPage();
-                      },
-                      label: "Next",
-                      textStyle: Styles.font16w700
-                          .copyWith(color: ColorsManager.whiteColor),
-                      width: 260.w,
-                      height: 40.h,
-                    ),
-                  ],
+                leadingOnTap: () => bloc.previousPage(),
+              ),
+              Expanded(
+                child: SingleChildScrollView(
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 24.w, vertical: 20.h),
+                  child: Column(
+                    spacing: 20.h,
+                    children: [
+                      CustomTextField(
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter your University';
+                          }
+                        },
+                        textInputType: TextInputType.name,
+                        hintText: "University",
+                        labelText: 'University',
+                        labelStyle: Styles.font14w500,
+                        controller: bloc.universityController,
+                      ),
+                      CustomTextField(
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter your Department';
+                          }
+                        },
+                        textInputType: TextInputType.name,
+                        hintText: "Collage",
+                        labelText: 'Collage',
+                        labelStyle: Styles.font14w500,
+                        controller: bloc.collegeController,
+                      ),
+                      ChoosePositionButton(value: bloc.position,onChange: (p0) => bloc.position = p0),
+                      CustomTextField(
+                        validator: (value) {
+                          if(bloc.position != 'Student') return null;
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter a number';
+                          }
+                          final number = double.tryParse(value);
+                          if (number == null) {
+                            return 'Invalid number';
+                          }
+                          if (number > 5) {
+                            return 'GPA must be less than or equal to 5';
+                          }
+                          return null;
+                        },
+                        textInputType: TextInputType.number,
+                        hintText: "GPA",
+                        labelText: 'GPA',
+                        labelStyle: Styles.font14w500,
+                        controller: bloc.gpaController,
+                      ),
+                      CustomAppButton(
+                        margin: EdgeInsets.only(top: 20.h),
+                        onTap: () {
+                          if (bloc.formKey.currentState!.validate())
+                            bloc.nextPage();
+                        },
+                        label: "Next",
+                        textStyle: Styles.font16w700
+                            .copyWith(color: ColorsManager.whiteColor),
+                        width: 260.w,
+                        height: 40.h,
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         );
       },
     );

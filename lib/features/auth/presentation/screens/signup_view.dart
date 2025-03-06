@@ -29,11 +29,11 @@ class SignupView extends StatelessWidget {
           final bloc = context.read<SignupBloc>();
           return PopScope(
             canPop: false,
-            onPopInvokedWithResult: (didPop, result) {
-              if (didPop == false && bloc.index > 0) {
-                bloc.previousPage();
-              }
-            },
+            // onPopInvokedWithResult: (didPop, result) {
+            //   if (didPop == false && bloc.index > 0) {
+            //     bloc.previousPage();
+            //   }
+            // },
             child: PageView(
               controller: bloc.pageController,
               onPageChanged: (value) => bloc.add(OnPageChanged(index: value)),
