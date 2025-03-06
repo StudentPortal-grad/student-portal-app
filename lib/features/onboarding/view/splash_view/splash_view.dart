@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -29,7 +28,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void startLoadingAnimation() {
-    _timer = Timer.periodic(const Duration(milliseconds: 900), (timer) {
+    _timer = Timer.periodic(const Duration(milliseconds: 200), (timer) {
       if (loadingProgress < 3) {
         setState(() => loadingProgress++);
       } else {
@@ -43,7 +42,6 @@ class _SplashScreenState extends State<SplashScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       final model = await SecureStorage().readSecureData();
       final isFirst = await SecureStorage().readOnboardingData();
-      log(model?.toJson().toString() ?? "NULL");
       if (model?.id == null || model?.accessToken == null) {
         AppRouter.router.pushReplacement(
           isFirst ? AppRouter.onBoardingView : AppRouter.loginView,
