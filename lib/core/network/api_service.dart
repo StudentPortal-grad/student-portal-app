@@ -11,7 +11,6 @@ class ApiService {
     String? token,
   }) async {
     _dio.options.headers = {
-      'Content-Type': 'application/json',
       'Authorization': 'Bearer $token'
     };
     var response = await _dio.post(
@@ -29,9 +28,8 @@ class ApiService {
     String? refreshToken,
   }) async {
     _dio.options.headers = {
-      'Content-Type': 'application/json',
       'Authorization': 'Bearer $token',
-      'x-refresh-token': refreshToken,
+      if (refreshToken != null) 'x-refresh-token': refreshToken,
     };
     var response = await _dio.patch(
       endpoint,
@@ -48,9 +46,8 @@ class ApiService {
     String? refreshToken,
   }) async {
     _dio.options.headers = {
-      "Content-Type": "application/json",
       'Authorization': 'Bearer $token',
-      'x-refresh-token': refreshToken,
+      if (refreshToken != null) 'x-refresh-token': refreshToken,
     };
     var response = await _dio.get(
       endpoint,
@@ -66,9 +63,8 @@ class ApiService {
     String? refreshToken,
   }) async {
     _dio.options.headers = {
-      'Content-Type': 'application/json',
       'Authorization': 'Bearer $token',
-      'x-refresh-token': refreshToken,
+      if (refreshToken != null) 'x-refresh-token': refreshToken,
     };
     var response = await _dio.delete(
       endpoint,
@@ -85,9 +81,8 @@ class ApiService {
     String? id,
   }) async {
     _dio.options.headers = {
-      'Content-Type': 'application/json',
       'Authorization': 'Bearer $token',
-      'x-refresh-token': refreshToken,
+      if (refreshToken != null) 'x-refresh-token': refreshToken,
     };
     var response = await _dio.put(endpoint, data: data, queryParameters: {
       "id": id,
@@ -103,9 +98,8 @@ class ApiService {
     String? token,
   }) async {
     _dio.options.headers = {
-      'Content-Type': 'application/json',
       'Authorization': 'Bearer $token',
-      'x-refresh-token': refreshToken,
+      if(refreshToken != null) 'x-refresh-token': refreshToken,
     };
     var response = await _dio.patch(
       endpoint,
