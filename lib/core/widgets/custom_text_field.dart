@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:student_portal/core/helpers/app_size_boxes.dart';
 
@@ -40,7 +41,7 @@ class CustomTextField extends StatefulWidget {
     this.labelIcon,
     this.focusNode,
     this.textInputAction,
-    this.onFieldSubmitted,
+    this.onFieldSubmitted, this.inputFormatters,
   });
 
   final TextEditingController controller;
@@ -62,6 +63,7 @@ class CustomTextField extends StatefulWidget {
   final FocusNode? focusNode;
   final TextInputAction? textInputAction;
   final Function(String)? onFieldSubmitted;
+  final List<TextInputFormatter>? inputFormatters;
 
   @override
   State<CustomTextField> createState() => _CustomTextFieldState();
@@ -104,6 +106,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
           height: widget.height,
           width: widget.width,
           child: TextFormField(
+            inputFormatters: widget.inputFormatters,
             textInputAction: widget.textInputAction,
             onFieldSubmitted: widget.onFieldSubmitted,
             scrollPadding: EdgeInsets.zero,
@@ -126,6 +129,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
               errorText: widget.errorText,
               contentPadding: widget.contentPadding,
               prefixIcon: widget.prefixIcon,
+              prefixIconConstraints: BoxConstraints.tight(Size(30.r, 25.r)),
               suffixIcon: widget.textInputType == TextInputType.visiblePassword
                   ? IconButton(
                       icon: Icon(

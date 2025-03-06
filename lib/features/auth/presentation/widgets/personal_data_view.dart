@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
@@ -7,6 +8,7 @@ import 'package:student_portal/core/helpers/app_text_view.dart';
 import 'package:student_portal/core/widgets/custom_appbar.dart';
 import 'package:student_portal/features/auth/presentation/manager/signup_bloc/signup_bloc.dart';
 
+import '../../../../core/helpers/date_picker_helper.dart';
 import '../../../../core/theming/colors.dart';
 import '../../../../core/theming/text_styles.dart';
 import '../../../../core/utils/assets_app.dart';
@@ -48,9 +50,16 @@ class PersonalDataView extends StatelessWidget {
                       ),
                       ChooseGenderButton(value: bloc.gender,onChange: (p0) => bloc.gender = p0,),
                       CustomTextField(
+                        inputFormatters: [
+                          FilteringTextInputFormatter.deny(RegExp(r'\s')), // Prevent spaces
+                        ],
+                        prefixIcon: Center(child: Text('@', style: Styles.font14w500)),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Please enter your name';
+                          }
+                          if (value.contains(' ')) {
+                            return 'Username cannot contain spaces';
                           }
                         },
                         textInputType: TextInputType.name,
@@ -85,12 +94,7 @@ class PersonalDataView extends StatelessWidget {
                           }
                         },
                         onTap: () async {
-                          DateTime? birthData = await showDatePicker(
-                            context: context,
-                            initialDate: DateTime.now(),
-                            firstDate: DateTime(1900),
-                            lastDate: DateTime.now(),
-                          );
+                          DateTime? birthData = await DatePickerHelper.pickDate(context, initialDate: DateTime(2003));
                           if (birthData != null) {
                             bloc.dateOfBirth = birthData.toIso8601String();
                             bloc.dateOfBirthController.text =

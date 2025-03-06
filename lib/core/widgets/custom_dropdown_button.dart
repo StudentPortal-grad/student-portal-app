@@ -63,7 +63,8 @@ class _CustomDropdownButtonState<T> extends State<CustomDropdownButton<T>> {
             children: [
               Text(
                 widget.labelText ?? '',
-                style: widget.labelStyle ?? Styles.font18w600.copyWith(fontWeight: FontWeight.w700),
+                style: widget.labelStyle ??
+                    Styles.font18w600.copyWith(fontWeight: FontWeight.w700),
               ),
               widget.labelIcon ?? SizedBox.shrink(),
             ],
@@ -74,19 +75,27 @@ class _CustomDropdownButtonState<T> extends State<CustomDropdownButton<T>> {
           height: widget.height,
           width: widget.width,
           child: DropdownButtonFormField2<T>(
+            dropdownStyleData: DropdownStyleData(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.all(
+                  Radius.circular(5),
+                ),
+              ),
+            ),
             value: widget.value,
             items: widget.items,
             onChanged: widget.enabled ? widget.onChanged : null,
             validator: (value) =>
                 widget.validator != null ? widget.validator!(value) : null,
             focusNode: widget.focusNode,
-            iconStyleData: const IconStyleData(
-              icon: Icon(
-                Icons.keyboard_arrow_down_rounded,
-                color: Color(0xff7E7476),
-              ),
-              iconSize: 24,
-            ),
+            // iconStyleData: const IconStyleData(
+            //   icon: Icon(
+            //     Icons.keyboard_arrow_down_rounded,
+            //     color: Color(0xff7E7476),
+            //   ),
+            //   iconSize: 24,
+            // ),
             hint: Text(
               widget.hintText ?? '',
               style: widget.hintStyle ??
@@ -133,9 +142,10 @@ class _CustomDropdownButtonState<T> extends State<CustomDropdownButton<T>> {
               ),
               fillColor: widget.filledColor,
               filled: widget.filledColor != null,
-              hoverColor: Theme.of(context).primaryColor,
+              hoverColor: ColorsManager.mainColor,
             ),
-            style: widget.textStyle ?? Styles.font16w500.copyWith(fontWeight: FontWeight.w400),
+            style: widget.textStyle ??
+                Styles.font16w500.copyWith(fontWeight: FontWeight.w400),
           ),
         ),
       ],
