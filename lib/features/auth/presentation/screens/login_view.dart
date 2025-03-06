@@ -23,12 +23,10 @@ class LoginView extends StatelessWidget {
             }
             if(state is LogInSuccess){
               CustomToast(context).showSuccessToast(message: 'Login Successfully');
-              print('check');
-              print(UserRepository.user?.emailVerified);
               if(UserRepository.user?.emailVerified == true){
                 AppRouter.clearAndNavigate(AppRouter.homeView);
               }
-              // AppRouter.router.go(AppRouter.otpView,extra: {});
+              AppRouter.router.go(AppRouter.signupView, extra: {'emailNotVerified': true});
             }
           },
           builder: (context, state) {

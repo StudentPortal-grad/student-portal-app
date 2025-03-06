@@ -35,6 +35,10 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
   // Function to start the countdown timer
   void _startTimer() {
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (!mounted) {
+        timer.cancel();
+        return;
+      }
       if (remainingTime > 0) {
         setState(() {
           remainingTime--;

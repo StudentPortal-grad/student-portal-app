@@ -22,6 +22,11 @@ class SignupView extends StatelessWidget {
       resizeToAvoidBottomInset: true,
       body: BlocConsumer<SignupBloc, SignupState>(
         listener: (context, state) {
+          if (state is ResendOtpLoading) {
+            if (context.read<SignupBloc>().index != 1) {
+              context.read<SignupBloc>().pageController.jumpToPage(1);
+            }
+          }
           if (state is UpdateDataSuccess) {
             CustomToast(context).showSuccessToast(message: 'Welcome!');
             AppRouter.clearAndNavigate(AppRouter.homeView);
@@ -37,11 +42,6 @@ class SignupView extends StatelessWidget {
           final bloc = context.read<SignupBloc>();
           return PopScope(
             canPop: false,
-            // onPopInvokedWithResult: (didPop, result) {
-            //   if (didPop == false && bloc.index > 0) {
-            //     bloc.previousPage();
-            //   }
-            // },
             child: PageView(
               controller: bloc.pageController,
               onPageChanged: (value) => bloc.add(OnPageChanged(index: value)),

@@ -5,7 +5,6 @@ import 'package:student_portal/core/errors/data/model/error_model/error_model.da
 import 'package:student_portal/core/utils/app_router.dart';
 
 import '../../../helpers/app_dialog.dart';
-import '../../../repo/user_repository.dart';
 import '../../../utils/secure_storage.dart';
 
 class ServerFailure extends Failure {
@@ -30,7 +29,8 @@ class ServerFailure extends Failure {
           response: dioError.response!.data!,
         );
       case DioExceptionType.cancel:
-        return const ServerFailure(message: 'Request to ApiServer was canceled');
+        return const ServerFailure(
+            message: 'Request to ApiServer was canceled');
       case DioExceptionType.connectionError:
         return const ServerFailure(message: "Connection Error");
       case DioExceptionType.unknown:
@@ -43,8 +43,8 @@ class ServerFailure extends Failure {
   factory ServerFailure.fromResponse(
       {required int? statusCode, required dynamic response}) {
     log("Error Response: ${response.toString()}");
-    isTokenExpired(response);
-    emailNotActive(response);
+    isTokenExpired(response['error']['code']);
+    emailNotActive(response['error']['code']);
     if (statusCode == 400 ||
         statusCode == 401 ||
         statusCode == 403 ||
@@ -53,11 +53,7 @@ class ServerFailure extends Failure {
         statusCode == 409 ||
         statusCode == 300) {
       return ServerFailure(
-        message: response['message'],
-        // error: response['error'],
-        // status: response['status'],
-        // args: response['args'] ?? {},
-      );
+          message: response['message'] ?? 'Something went wrong!');
     } else {
       return const ServerFailure(
         message: 'Oops, Unexpected error occurred, Please try again later',
@@ -65,23 +61,20 @@ class ServerFailure extends Failure {
     }
   }
 
-  static isTokenExpired(dynamic response) {
-    // todo// check it with backend
+  static isTokenExpired(String errorCode) {
     try {
-      final msg = response is Map ? (response['name'] ?? "") : '';
-      if (msg == 'TOKEN_EXPIRED' ||
-          msg == 'TOKEN_NOT_FOUND' ||
-          msg == 'ACCESS_TOKEN_EXPIRED' ||
-          msg == "USER_NOT_FOUND") {
+      if (errorCode == 'TOKEN_EXPIRED' || errorCode == 'INVALID_TOKEN') {
         log('Token has expired.');
         if (AppRouter.context != null) {
           log('AppRouter.context != null');
-          AppDialogs.showErrorDialog(AppRouter.context!,
-              dismissible: false,
-              error: 'Token has expired please login again',
-              canPop: false,
-              okText: 'ok',
-              onOkTap: () => AppRouter.clearAndNavigate(AppRouter.loginView));
+          AppDialogs.showErrorDialog(
+            AppRouter.context!,
+            dismissible: false,
+            error: 'Token has expired please login again',
+            canPop: false,
+            okText: 'ok',
+            onOkTap: () => AppRouter.clearAndNavigate(AppRouter.loginView),
+          );
         }
         SecureStorage().deleteSecureData();
       }
@@ -90,14 +83,11 @@ class ServerFailure extends Failure {
     }
   }
 
-  static emailNotActive(dynamic response) {
+  static emailNotActive(String errorCode) {
     try {
-      final msg = response is Map ? (response['name'] ?? "") : '';
-      if (msg == 'EMAIL_NOT_ACTIVE') {
-        AppRouter.router.push(AppRouter.otpView, extra: {
-          "email": UserRepository.user?.email ?? "",
-          "isForgetPassword": false,
-        });
+      if (errorCode == 'EMAIL_NOT_VERIFIED') {
+        AppRouter.router
+            .go(AppRouter.signupView, extra: {'emailNotVerified': true});
       }
     } on Exception catch (e) {
       log(e.toString());

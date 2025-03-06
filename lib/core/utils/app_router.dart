@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:student_portal/core/repo/user_repository.dart';
 import 'package:student_portal/core/utils/service_locator.dart';
 import 'package:student_portal/features/auth/domain/usecases/login_uc.dart';
 import 'package:student_portal/features/chats/presentation/pages/dm_screen.dart';
@@ -16,6 +17,7 @@ import 'package:student_portal/features/search/presentation/screens/search_scree
 import '../../features/auth/data/repo_impl/login_repo_impl.dart';
 import '../../features/auth/presentation/manager/login_bloc/login_bloc.dart';
 import '../../features/auth/presentation/manager/signup_bloc/signup_bloc.dart';
+import '../../features/auth/presentation/manager/signup_bloc/signup_event.dart';
 import '../../features/auth/presentation/screens/forget_password.dart';
 import '../../features/auth/presentation/screens/login_view.dart';
 import '../../features/auth/presentation/screens/otp_screen.dart';
@@ -35,11 +37,11 @@ abstract class AppRouter {
       router.routerDelegate.navigatorKey.currentContext;
 
   // auth
-  static const String splashView = '/splash';
+  static const String splashView = '/';
   static const String onBoardingView = '/boarding';
-  static const String loginView = '/';
+  static const String loginView = '/login';
   static const String signupView = '/sing_up';
-  static const String otpView = '/otp';
+  static const String otpForgetPass = '/otp_forget_pass';
   static const String setNewPassword = '/set_password';
   static const String forgetPasswordView = '/forget_password';
 
@@ -62,7 +64,7 @@ abstract class AppRouter {
   static const String notification = '/notification';
 
   // profile
-  static const String profile= '/profile';
+  static const String profile = '/profile';
   static const String followings = '/followings';
   static const String followers = '/followers';
 
@@ -86,15 +88,25 @@ abstract class AppRouter {
       ),
       GoRoute(
         path: signupView,
-        pageBuilder: (context, state) => buildPage(
-          useSlideTransition: true,
-          context: context,
-          state: state,
-          child: withBlocProvider(
-            create: (context) => SignupBloc(),
-            child: const SignupView(),
-          ),
-        ),
+        pageBuilder: (context, state) {
+          final args = state.extra as Map<String, dynamic>?;
+          return buildPage(
+            useSlideTransition: true,
+            context: context,
+            state: state,
+            child: withBlocProvider(
+              create: (context) {
+                final bloc = SignupBloc();
+                // If email is not verified, trigger ResendCodeRequested
+                if (args != null && args['emailNotVerified'] == true) {
+                  bloc.add(ResendCodeRequested(email: UserRepository.user?.email ?? ""));
+                }
+                return bloc;
+              },
+              child: const SignupView(),
+            ),
+          );
+        },
       ),
       GoRoute(
         path: loginView,
@@ -121,7 +133,7 @@ abstract class AppRouter {
         ),
       ),
       GoRoute(
-        path: otpView,
+        path: otpForgetPass,
         pageBuilder: (context, state) {
           if (state.extra is Map<String, dynamic>) {
             final args = state.extra as Map<String, dynamic>?;
@@ -129,10 +141,7 @@ abstract class AppRouter {
               context: context,
               state: state,
               useSlideTransition: true,
-              child: OtpView(
-                email: args?['email'] ?? '',
-                isForgetPassword: args?['isForgetPassword'] as bool?,
-              ),
+              child: OtpView(email: args?['email'] ?? ''),
             );
           } else {
             return buildPage(

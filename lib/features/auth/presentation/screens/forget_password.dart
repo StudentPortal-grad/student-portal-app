@@ -40,7 +40,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
           if (state is ForgetPasswordSuccess) {
             CustomToast(context).showSuccessToast(message: state.message);
             AppRouter.router.pushReplacement(
-              AppRouter.otpView,
+              AppRouter.otpForgetPass,
               extra: {
                 "email": bloc.emailController.text,
                 'isForgetPassword': true,
