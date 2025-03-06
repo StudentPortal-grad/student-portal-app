@@ -66,6 +66,7 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
   final TextEditingController universityController = TextEditingController();
   final TextEditingController collegeController = TextEditingController();
   final TextEditingController gpaController = TextEditingController();
+  final TextEditingController levelController = TextEditingController();
   final TextEditingController bioController = TextEditingController();
   String? position;
 
@@ -142,7 +143,8 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
         college: collegeController.text,
         dateOfBirth: dateOfBirthController.text,
         gpa: double.parse(gpaController.text),
-        position: position,
+        level: int.parse(levelController.text),
+        position: position?.toLowerCase(),
         university: universityController.text,
         profilePicture: profileImage,
         gender: gender,

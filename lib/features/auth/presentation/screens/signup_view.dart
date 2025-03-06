@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:student_portal/core/utils/app_router.dart';
 import '../../../../core/theming/colors.dart';
 import '../../../../core/helpers/custom_toast.dart';
 import '../manager/signup_bloc/signup_bloc.dart';
@@ -21,7 +22,14 @@ class SignupView extends StatelessWidget {
       resizeToAvoidBottomInset: true,
       body: BlocConsumer<SignupBloc, SignupState>(
         listener: (context, state) {
+          if (state is UpdateDataSuccess) {
+            CustomToast(context).showSuccessToast(message: 'Welcome!');
+            AppRouter.clearAndNavigate(AppRouter.homeView);
+          }
           if (state is SignupFailure) {
+            CustomToast(context).showErrorToast(message: state.error.message);
+          }
+          if (state is UpdateDataFailure) {
             CustomToast(context).showErrorToast(message: state.error.message);
           }
         },
@@ -52,5 +60,3 @@ class SignupView extends StatelessWidget {
     );
   }
 }
-
-

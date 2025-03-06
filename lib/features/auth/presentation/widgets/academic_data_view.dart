@@ -81,11 +81,30 @@ class AcademicDataView extends StatelessWidget {
                         labelStyle: Styles.font14w500,
                         controller: bloc.gpaController,
                       ),
+                      CustomTextField(
+                        validator: (value) {
+                          if(bloc.position != 'Student') return null;
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter a number';
+                          }
+                          final number = double.tryParse(value);
+                          if (number == null) {
+                            return 'Invalid number';
+                          }
+                          return null;
+                        },
+                        textInputType: TextInputType.number,
+                        hintText: "Level",
+                        labelText: 'Level',
+                        labelStyle: Styles.font14w500,
+                        controller: bloc.levelController,
+                      ),
                       CustomAppButton(
                         margin: EdgeInsets.only(top: 20.h),
                         onTap: () {
-                          if (bloc.formKey.currentState!.validate())
+                          if (bloc.formKey.currentState!.validate()) {
                             bloc.nextPage();
+                          }
                         },
                         label: "Next",
                         textStyle: Styles.font16w700

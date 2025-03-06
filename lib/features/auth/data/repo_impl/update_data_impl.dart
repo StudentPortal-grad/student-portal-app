@@ -37,7 +37,7 @@ class UpdateDataImpl implements UpdateDataRepo {
       );
       var response = UpdateResponse.fromJson(data);
       UserRepository.setUser(response.data);
-      log("Update Response: ${response.toString()}");
+      log("Update Response: $data");
       return Right(response);
     } on DioException catch (e) {
       log((e.toString()));

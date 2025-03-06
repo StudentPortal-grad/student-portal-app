@@ -19,20 +19,22 @@ class CompleteDto {
   final String? college;
   final String? position;
   final num? gpa;
+  final num? level;
 
-  CompleteDto(
-      {this.profilePicture,
-      this.gender,
-      this.userName,
-      this.phoneNumber,
-      this.dateOfBirth,
-      this.university,
-      this.college,
-      this.position,
-      this.gpa,
-      this.profile});
+  CompleteDto({this.profilePicture,
+    this.gender,
+    this.userName,
+    this.phoneNumber,
+    this.dateOfBirth,
+    this.university,
+    this.college,
+    this.position,
+    this.gpa,
+    this.profile,
+    this.level});
 
-  toJson() => {
+  toJson() =>
+      {
         'profilePicture': profilePicture,
         'gender': gender,
         'userName': userName,
@@ -42,7 +44,8 @@ class CompleteDto {
         'college': college,
         'position': position,
         'gpa': gpa,
-        'profile': profile?.toJson(),
+        'level': level,
+      'profile': profile?.toJson(),
       };
 
   // Convert to FormData for Dio
@@ -65,8 +68,10 @@ class CompleteDto {
     if (college != null) formDataMap['college'] = college;
     if (position != null) formDataMap['role'] = position;
     if (gpa != null) formDataMap['gpa'] = gpa.toString();
-
-    formDataMap['profile[bio]'] = profile?.bio == null || profile!.bio!.isEmpty ? "Hey there! I'm using StudyPortal!" : profile!.bio;
+    if (level != null) formDataMap['level'] = level.toString();
+    formDataMap['profile[bio]'] = profile?.bio == null || profile!.bio!.isEmpty
+        ? "Hey there! I'm using StudyPortal!"
+        : profile!.bio;
     // Handle `profile[interests][]` as multiple form fields
     if (profile?.interests != null && profile!.interests!.isNotEmpty) {
       for (var interest in profile!.interests!) {
@@ -75,5 +80,4 @@ class CompleteDto {
     }
     return FormData.fromMap(formDataMap);
   }
-
 }
