@@ -89,13 +89,13 @@ class _CustomDropdownButtonState<T> extends State<CustomDropdownButton<T>> {
             validator: (value) =>
                 widget.validator != null ? widget.validator!(value) : null,
             focusNode: widget.focusNode,
-            // iconStyleData: const IconStyleData(
-            //   icon: Icon(
-            //     Icons.keyboard_arrow_down_rounded,
-            //     color: Color(0xff7E7476),
-            //   ),
-            //   iconSize: 24,
-            // ),
+            iconStyleData: const IconStyleData(
+              icon: Icon(
+                Icons.keyboard_arrow_down_rounded,
+                color: Color(0xff7E7476),
+              ),
+              iconSize: 24,
+            ),
             hint: Text(
               widget.hintText ?? '',
               style: widget.hintStyle ??
