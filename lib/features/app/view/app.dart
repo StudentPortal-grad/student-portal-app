@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../core/theming/colors.dart';
 import '../../../core/utils/app_router.dart';
-import '../mange/app_cubit.dart';
+import '../manager/app_cubit.dart';
 
 class SPApp extends StatelessWidget {
   const SPApp({super.key});

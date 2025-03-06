@@ -3,6 +3,7 @@ import 'package:student_portal/features/auth/data/dto/otp_dto.dart';
 import 'package:student_portal/features/auth/domain/usecases/verify_email_uc.dart';
 import '../../../../../core/network/api_service.dart';
 import '../../../../../core/utils/service_locator.dart';
+import '../../../data/dto/signup_otp_dto.dart';
 import '../../../data/repo_impl/check_email_impl.dart';
 import '../../../data/repo_impl/forget_password_impl.dart';
 import '../../../data/repo_impl/verify_email_impl.dart';
@@ -69,12 +70,15 @@ class OtpBloc extends Bloc<OtpEvent, OtpState> {
     );
   }
 
+// not used yet
   Future<void> _onVerifyEmail(VerifyEmail event, Emitter<OtpState> emit) async {
     emit(OtpLoading());
 
     var data = await verifyEmailUc.call(
-      pinCode: event.pinCode,
-      email: event.email,
+        SignupOtpDto (
+          pinCode: otpCode,
+          email: event.email,
+        )
     );
 
     data.fold(

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../core/network/api_service.dart';
 import '../../../../../core/utils/secure_storage.dart';
 import '../../../../../core/utils/service_locator.dart';
+import '../../../data/dto/signup_otp_dto.dart';
 import '../../../data/model/token_model/token_model.dart';
 import '../../../data/repo_impl/check_email_impl.dart';
 import '../../../data/repo_impl/signup_repo_impl.dart';
@@ -79,10 +80,9 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
 
   Future<void> _onVerifyEmailRequested(
       VerifyEmailRequested event, Emitter<SignupState> emit) async {
-    emit(SignupLoading());
+    emit(OtpLoading());
     var data = await verifyEmailUc.call(
-      pinCode: event.pinCode,
-      email: event.email,
+      SignupOtpDto(pinCode: pinCode, email: event.email),
     );
 
     data.fold(
@@ -93,7 +93,7 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
 
   Future<void> _onResendCodeRequested(
       ResendCodeRequested event, Emitter<SignupState> emit) async {
-    emit(SignupLoading());
+    emit(ResendOtpLoading());
     var data = await checkEmailUc.call(email: event.email);
 
     data.fold(

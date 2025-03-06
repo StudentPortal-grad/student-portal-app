@@ -15,6 +15,10 @@ class SignupPinCodeChanged extends SignupState {}
 
 class SignupLoading extends SignupState {}
 
+class OtpLoading extends SignupState {}
+
+class ResendOtpLoading extends SignupState {}
+
 class SignupSuccess extends SignupState {
   final SignupResponse signupResponse;
 

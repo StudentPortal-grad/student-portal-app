@@ -33,7 +33,7 @@ class _PersonalDataViewState extends State<PersonalDataView> {
         final bloc = context.read<SignupBloc>();
         return Column(
           children: [
-            CustomAppBar(title: "Personal Data".make(style: Styles.font20w600),leadingOnTap: () => bloc.previousPage()),
+            CustomAppBar(title: "Personal Data".make(style: Styles.font20w600),showLeading: false),
             Expanded(
               child: SingleChildScrollView(
                 padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 20.h),

@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -63,18 +62,9 @@ class _OtpViewState extends State<OtpView> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) {
-        final otpBloc = OtpBloc();
-        // if (widget.isForgetPassword == false) {
-        //   otpBloc.add(SendOtpVerify(email: widget.email));
-        // } else {
-        //   otpBloc.add(SendOtpForgetPassword(pinCode: "", email: widget.email));
-        // }
-        return otpBloc;
-      },
+      create: (context) => OtpBloc(),
       child: BlocConsumer<OtpBloc, OtpState>(
         listener: (context, state) {
-          log('state: $state');
          if(state is ResendEmailSuccess) {
            restartTimer();
          }

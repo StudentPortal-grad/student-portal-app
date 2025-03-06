@@ -24,7 +24,7 @@ class SignupBody extends StatelessWidget {
       listener: (context, state) {
         if (state is SignupSuccess) {
           CustomToast(context).showSuccessToast(
-            message: "Process Done Successfully",
+            message: state.signupResponse.message ?? 'Signup Successfully',
           );
           context.read<SignupBloc>().nextPage();
         }
