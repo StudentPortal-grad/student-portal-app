@@ -50,6 +50,8 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
   // Page Controller
   final PageController pageController = PageController();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> personalFormKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> academicFormKey = GlobalKey<FormState>();
   int index = 0;
 
   // Profile Controllers

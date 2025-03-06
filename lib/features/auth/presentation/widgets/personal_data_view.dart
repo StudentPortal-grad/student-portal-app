@@ -27,7 +27,7 @@ class PersonalDataView extends StatelessWidget {
       builder: (context, state) {
         final bloc = context.read<SignupBloc>();
         return Form(
-          key: bloc.formKey,
+          key: bloc.personalFormKey,
           child: Column(
             children: [
               CustomAppBar(
@@ -101,7 +101,7 @@ class PersonalDataView extends StatelessWidget {
                       CustomAppButton(
                         margin: EdgeInsets.only(top: 20.h),
                         onTap: () {
-                          if(!bloc.formKey.currentState!.validate()) return;
+                          if(!bloc.personalFormKey.currentState!.validate()) return;
                           bloc.nextPage();
                         },
                         label: "Next",
