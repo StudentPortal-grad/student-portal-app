@@ -13,7 +13,7 @@ abstract class ApiEndpoints {
   static const String logout = "auth/logout";
 
   // User Endpoints
-  static const String userProfile = "users/me";
+  static const String myProfile = "users/me";
 
 // Other Services
 }

@@ -34,9 +34,11 @@ class _ProfileScreenState extends State<ProfileScreen>
   }
 
   _onPostTap() async {
-    _tabController.animateTo(1, duration: Duration(milliseconds: 400), curve: Curves.fastOutSlowIn);
+    _tabController.animateTo(1,
+        duration: Duration(milliseconds: 400), curve: Curves.fastOutSlowIn);
     await Future.delayed(Duration(milliseconds: 400));
-    _scrollController.animateTo(_scrollController.position.maxScrollExtent, duration: Duration(milliseconds: 400), curve: Curves.fastOutSlowIn);
+    _scrollController.animateTo(_scrollController.position.maxScrollExtent,
+        duration: Duration(milliseconds: 400), curve: Curves.fastOutSlowIn);
     setState(() {});
   }
 

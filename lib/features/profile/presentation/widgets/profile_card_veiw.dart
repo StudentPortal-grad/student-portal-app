@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:student_portal/core/helpers/app_size_boxes.dart';
 import 'package:student_portal/core/helpers/app_text_view.dart';
+import 'package:student_portal/core/repo/user_repository.dart';
 import 'package:student_portal/core/utils/app_router.dart';
 import 'package:student_portal/features/profile/presentation/widgets/profile_details.dart';
 
-import '../../../../contestants.dart';
 import '../../../../core/theming/colors.dart';
 import '../../../../core/theming/text_styles.dart';
 import '../../../../core/utils/assets_app.dart';
@@ -54,7 +54,8 @@ class ProfileCardView extends StatelessWidget {
           child: Column(
             children: [
               CustomImageView(
-                imagePath: kUserImage,
+                placeHolder: AssetsApp.profileImage,
+                imagePath: UserRepository.user?.profilePicture ?? AssetsApp.profileImage,
                 width: 85.r,
                 height: 85.r,
                 circle: true,
