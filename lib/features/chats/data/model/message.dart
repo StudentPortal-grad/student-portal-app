@@ -1,103 +1,95 @@
 import 'package:intl/intl.dart';
 
+import 'attachment.dart';
+
 class Message {
   Message({
-    this.from,
-    this.to,
-    this.message,
-    this.files,
     this.id,
-    this.createdAt,
-    this.updatedAt,
+    required this.senderId,
+    this.content,
+    this.attachments,
+    this.status = "sent",
+    DateTime? createdAt,
     this.reply,
-  });
+  }) : createdAt = createdAt ?? DateTime.now();
 
-  Message.fromJson(dynamic json) {
-    from = json?['from'];
-    to = json?['to'];
-    message = json?['message'];
-    if (json?['files'] != null) {
-      files = [];
-      json?['files']?.forEach((v) {
-        files?.add(Media.fromJson(v));
-      });
-    }
-    id = json?['_id'];
-    final create = DateTime.tryParse(json?['createdAt'] ?? '');
-    final update = DateTime.tryParse(json?['updatedAt'] ?? '');
-    if (create != null) updatedAt = DateFormat.jm().format(create.toLocal());
-    if (update != null) updatedAt = DateFormat.jm().format(update.toLocal());
-    if(json['reply'] != null) reply = Message.fromJson(json['reply']);
+  factory Message.fromJson(Map<String, dynamic> json) {
+    return Message(
+      id: json['_id'] as String?,
+      senderId: json['senderId'] as String,
+      content: json['content'] as String?,
+      attachments: (json['attachments'] as List<dynamic>?)
+          ?.map((e) => Attachment.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      status: json['status'] as String? ?? "sent",
+      createdAt: DateTime.tryParse(json['createdAt'] ?? '') ?? DateTime.now(),
+      reply: json['reply'] != null ? Message.fromJson(json['reply']) : null,
+    );
   }
 
-  String? from;
-  String? to;
-  String? message;
-  List<Media>? files;
   String? id;
-  String? createdAt;
-  String? updatedAt;
+  String senderId;
+  String? content;
+  List<Attachment>? attachments;
+  String status;
+  DateTime createdAt;
   Message? reply;
 
   Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['from'] = from;
-    map['to'] = to;
-    map['message'] = message;
-    if (files != null) {
-      map['files'] = files?.map((v) => v.toJson()).toList();
-    }
-    map['_id'] = id;
-    map['createdAt'] = createdAt;
-    map['updatedAt'] = updatedAt;
-    if (reply != null) {
-      map['reply'] = reply?.toJson();
-    }
-    return map;
+    return {
+      '_id': id,
+      'senderId': senderId,
+      'content': content,
+      'attachments': attachments?.map((e) => e.toJson()).toList(),
+      'status': status,
+      'createdAt': createdAt.toIso8601String(),
+      'reply': reply?.toJson(),
+    };
+  }
+
+  String formattedTime() {
+    return DateFormat.jm().format(createdAt.toLocal());
   }
 
   static List<Message> dummyData() {
     return [
-      Message(from: '1', to: '0', message: 'Hii', files: [], id: '1',createdAt: '12:00',reply: Message(message: 'Hii', files: [], id: '1', createdAt: '12:00')),
-      Message(from: '0', to: '1', message: 'Hii', files: [], id: '1', createdAt: '12:00',),
-      Message(from: '0', to: '1', message: 'Hii', files: [], id: '1',createdAt: '12:00',reply: Message(message: 'Hii', files: [], id: '1', createdAt: '12:00')),
-      Message(from: '1', to: '0', message: 'How R U', files: [], id: '1', createdAt: '12:00'),
-      Message(from: '0', to: '1', message: 'Fine', files: [], id: '1', createdAt: '12:00'),
+      Message(
+        id: '1',
+        senderId: '1',
+        content: 'Hii',
+        attachments: [],
+        createdAt: DateTime.now(),
+        reply: Message(
+          id: '2',
+          senderId: '0',
+          content: 'Hii',
+          createdAt: DateTime.now(),
+        ),
+      ),
+      Message(
+        id: '3',
+        senderId: '0',
+        content: 'How R U',
+        attachments: [],
+        createdAt: DateTime.now(),
+      ),
+      Message(
+        id: '4',
+        senderId: '1',
+        content: 'Fine',
+        createdAt: DateTime.now(),
+      ),
     ];
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        other is Message && other.runtimeType == runtimeType && other.id == id;
+        (other is Message &&
+            other.runtimeType == runtimeType &&
+            other.id == id);
   }
 
   @override
   int get hashCode => id.hashCode;
-}
-
-class Media {
-  Media({
-    this.url,
-    this.type,
-    this.id,
-  });
-
-  Media.fromJson(dynamic json) {
-    url = json['secure_url'];
-    type = json['type'];
-    id = json['_id'];
-  }
-
-  String? url;
-  String? type;
-  String? id;
-
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['secure_url'] = url;
-    map['type'] = type;
-    map['_id'] = id;
-    return map;
-  }
 }

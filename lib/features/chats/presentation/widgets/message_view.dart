@@ -15,7 +15,7 @@ class MessageItemView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final self = message.from == '0'; //UserRepository.user?.id
+    final self = message.senderId == '0'; //UserRepository.user?.id
     return Column(
       crossAxisAlignment:
           self ? CrossAxisAlignment.end : CrossAxisAlignment.start,
@@ -40,14 +40,14 @@ class MessageItemView extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // if (message.reply != null) ...[_buildReply(userName: 'You', reply: message.reply!), 8.heightBox],
-              if (message.files?.isNotEmpty ?? false) ...[
-                CustomImageView(imagePath: message.files?[0].url),
-                if (message.message?.isNotEmpty ?? false) ...[
+              if (message.attachments?.isNotEmpty ?? false) ...[
+                CustomImageView(imagePath: message.attachments?[0].resource ?? ''),
+                if (message.content?.isNotEmpty ?? false) ...[
                   10.heightBox,
                   Align(
                     alignment: AlignmentDirectional.centerEnd,
                     child: AppText(
-                      text: message.message ?? '',
+                      text: message.content ?? '',
                       style: Styles.font16w500
                           .copyWith(fontWeight: FontWeight.w400),
                     ),
@@ -55,7 +55,7 @@ class MessageItemView extends StatelessWidget {
                 ]
               ] else
                 AppText(
-                  text: message.message ?? '',
+                  text: message.content ?? '',
                   style:
                       Styles.font16w500.copyWith(fontWeight: FontWeight.w400),
                 ),
@@ -67,7 +67,7 @@ class MessageItemView extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             AppText(
-              text: message.createdAt ?? '',
+              text: (message.formattedTime()),
               style: Styles.font12w400.copyWith(color: Color(0xff9E9F9F)),
             ),
           ],
@@ -93,7 +93,7 @@ class MessageItemView extends StatelessWidget {
                 style: Styles.font15w500,
               ),
               AppText(
-                  text: reply.message ?? '',
+                  text: reply.content ?? '',
                   style:
                       Styles.font16w500.copyWith(fontWeight: FontWeight.w400)),
             ],

@@ -34,10 +34,9 @@ class ChatsScreen extends StatelessWidget {
                     user: User(
                         id: (index + 1).toString(), name: 'User $index'),
                     lastMessage: Message(
-                        to: '0',
-                        from: '1',
-                        createdAt: '12:00',
-                        message: 'Hii',
+                        senderId: '1',
+                        createdAt: DateTime.parse('12:00'),
+                        content: 'Hii',
                         id: '15'),
                   ),
                   separatorBuilder: (context, index) => Divider(),

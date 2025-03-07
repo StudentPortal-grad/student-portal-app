@@ -16,5 +16,6 @@ abstract class ApiEndpoints {
   static const String myProfile = "users/me";
   static String getUserProfile(String userId) => "users/$userId";
 
-  // Other Services
+  // Messaging Endpoints
+  static const String conversations = "conversations";
 }
