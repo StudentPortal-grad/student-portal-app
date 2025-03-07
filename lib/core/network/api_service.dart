@@ -34,6 +34,7 @@ class ApiService {
   Future<Map<String, dynamic>> patch({
     required String endpoint,
     Map<String, dynamic>? data,
+    FormData? formData,
     Map<String, dynamic>? query,
     String? token,
     String? refreshToken,
@@ -42,10 +43,14 @@ class ApiService {
       'Authorization': 'Bearer $token',
       if (refreshToken != null) 'x-refresh-token': refreshToken,
     };
+
+    assert(!(data != null && formData != null),
+        "Both 'body' and 'formData' should not be provided at the same time.");
+
     var response = await _dio.patch(
       endpoint,
       queryParameters: query,
-      data: data,
+      data: data ?? formData,
     );
     return response.data;
   }
