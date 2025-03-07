@@ -18,7 +18,6 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  int loadingProgress = 0;
   Timer? _timer;
 
   @override
@@ -27,29 +26,19 @@ class _SplashScreenState extends State<SplashScreen> {
     startLoadingAnimation();
   }
 
-  void startLoadingAnimation() {
-    _timer = Timer.periodic(const Duration(milliseconds: 200), (timer) {
-      if (loadingProgress < 3) {
-        setState(() => loadingProgress++);
-      } else {
-        timer.cancel();
-        navigateToHome();
-      }
-    });
+  void startLoadingAnimation() async {
+    _timer = Timer(const Duration(seconds: 2), navigateToHome);
   }
 
-  void navigateToHome() {
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      final model = await SecureStorage().readSecureData();
-      final isFirst = await SecureStorage().readOnboardingData();
-      if (model?.id == null || model?.accessToken == null) {
-        AppRouter.router.pushReplacement(
-          isFirst ? AppRouter.onBoardingView : AppRouter.loginView,
-        );
-      } else {
-        AppRouter.router.pushReplacement(AppRouter.homeView);
-      }
-    });
+  void navigateToHome() async {
+    final model = await SecureStorage().readSecureData();
+    final isFirst = await SecureStorage().readOnboardingData();
+
+    final route = (model?.id == null || model?.accessToken == null)
+        ? (AppRouter.loginView) // isFirst ? AppRouter.onBoardingView : login
+        : AppRouter.homeView;
+
+    AppRouter.router.pushReplacement(route);
   }
 
   @override
@@ -75,7 +64,8 @@ class _SplashScreenState extends State<SplashScreen> {
             10.widthBox,
             Text(
               "Student Portal",
-              style: Styles.font22w700.copyWith(color: Colors.white, fontSize: 28.sp),
+              style: Styles.font22w700
+                  .copyWith(color: Colors.white, fontSize: 28.sp),
             ),
           ],
         ),
