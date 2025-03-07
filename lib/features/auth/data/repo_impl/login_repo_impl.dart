@@ -8,7 +8,7 @@ import '../../../../core/network/api_service.dart';
 import '../../../../core/repo/user_repository.dart';
 import '../../../../core/utils/secure_storage.dart';
 import '../../domain/repo/login_repo.dart';
-import '../dto/login_request.dart';
+import '../dto/login_dto.dart';
 import '../model/user_model/user.dart';
 
 
@@ -19,7 +19,7 @@ class LoginRepoImpl implements LoginRepo {
 
   @override
   Future<Either<Failure, bool>> login({
-    required LoginRequest loginRequest,
+    required LoginDTO loginRequest,
   }) async {
     log('login');
     log(loginRequest.toJson().toString());

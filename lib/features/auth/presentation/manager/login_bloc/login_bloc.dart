@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../core/helpers/app_regex.dart';
-import '../../../data/dto/login_request.dart';
+import '../../../data/dto/login_dto.dart';
 import '../../../domain/usecases/login_uc.dart';
 import 'login_event.dart';
 import 'login_state.dart';
@@ -22,7 +22,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     emit(LogInLoading());
 
     var data = await loginUc.call(
-      loginRequest: LoginRequest(
+      loginRequest: LoginDTO(
         email: event.email.trim(),
         password: event.password,
       ),

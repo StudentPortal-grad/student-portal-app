@@ -1,12 +1,12 @@
 import 'package:equatable/equatable.dart';
 
-class LoginRequest extends Equatable {
+class LoginDTO extends Equatable {
   final String? email;
   final String? password;
 
-  const LoginRequest({required this.email, required this.password});
+  const LoginDTO({required this.email, required this.password});
 
-  factory LoginRequest.fromJson(Map<String, dynamic> json) => LoginRequest(
+  factory LoginDTO.fromJson(Map<String, dynamic> json) => LoginDTO(
         email: json['email'] as String?,
         password: json['password'] as String?,
       );
