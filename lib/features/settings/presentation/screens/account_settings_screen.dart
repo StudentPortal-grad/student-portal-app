@@ -5,7 +5,6 @@ import 'package:student_portal/core/helpers/app_text_view.dart';
 import 'package:student_portal/core/theming/colors.dart';
 import 'package:student_portal/core/widgets/custom_appbar.dart';
 import 'package:student_portal/core/widgets/user_row_view.dart';
-import 'package:student_portal/features/notification/presentation/screens/notifications_screen.dart';
 import 'package:student_portal/features/settings/presentation/screens/personal_data_screen.dart';
 import 'package:student_portal/features/settings/presentation/screens/profile_data_screen.dart';
 
@@ -15,6 +14,7 @@ import '../../../../core/utils/app_router.dart';
 import '../../../../core/widgets/custom_app_button.dart';
 import 'academic_data.dart';
 import 'change_password_screen.dart';
+import 'notification_settings_screen.dart';
 
 class AccountSettingsScreen extends StatelessWidget {
   const AccountSettingsScreen({super.key});
@@ -95,7 +95,7 @@ class AccountSettingsScreen extends StatelessWidget {
                     title: "Notification",
                     icon: Icons.notifications_rounded,
                     onTap: () {
-                      push(NotificationsScreen());
+                      push(NotificationSettingsScreen());
                     },
                   ),
                 ],

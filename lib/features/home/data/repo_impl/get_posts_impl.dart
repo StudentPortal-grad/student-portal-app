@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import 'package:student_portal/core/errors/data/model/error_model/error_model.dart';
+import 'package:student_portal/core/errors/data/model/error_model.dart';
 
 import '../../../../core/errors/data/model/failures.dart';
 import '../../domain/repo/get_posts_repo.dart';

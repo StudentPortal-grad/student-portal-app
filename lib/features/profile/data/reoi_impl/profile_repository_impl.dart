@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import 'package:student_portal/core/errors/data/model/error_model/error_model.dart';
+import 'package:student_portal/core/errors/data/model/error_model.dart';
 import 'package:student_portal/features/profile/data/dto/update_profile_dto.dart';
 import 'package:student_portal/features/profile/domain/repo/profile_repository.dart';
 

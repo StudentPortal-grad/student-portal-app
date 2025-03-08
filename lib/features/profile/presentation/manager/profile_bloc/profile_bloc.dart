@@ -2,7 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:student_portal/features/profile/domain/usecase/get_user_profile_uc.dart';
 
-import '../../../../../core/errors/data/model/error_model/error_model.dart';
+import '../../../../../core/errors/data/model/error_model.dart';
 import '../../../../../core/network/api_service.dart';
 import '../../../../../core/utils/service_locator.dart';
 import '../../../../auth/data/model/user_model/user.dart';

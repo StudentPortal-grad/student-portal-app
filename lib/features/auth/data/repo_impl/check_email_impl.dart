@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:student_portal/core/network/api_endpoints.dart';
-import '../../../../core/errors/data/model/error_model/error_model.dart';
+import '../../../../core/errors/data/model/error_model.dart';
 import '../../../../core/errors/data/model/failures.dart';
 import '../../../../core/network/api_service.dart';
 import '../../domain/repo/check_email_repo.dart';

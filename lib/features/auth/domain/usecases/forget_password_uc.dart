@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 
-import '../../../../core/errors/data/model/error_model/error_model.dart';
+import '../../../../core/errors/data/model/error_model.dart';
 import '../repo/forget_password_repo.dart';
 
 class ForgetPasswordUc {

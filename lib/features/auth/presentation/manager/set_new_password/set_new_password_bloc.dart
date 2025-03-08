@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:student_portal/core/utils/app_router.dart';
-import '../../../../../core/errors/data/model/error_model/error_model.dart';
+import '../../../../../core/errors/data/model/error_model.dart';
 import '../../../../../core/helpers/app_regex.dart';
 import '../../../../../core/network/api_service.dart';
 import '../../../../../core/utils/secure_storage.dart';
