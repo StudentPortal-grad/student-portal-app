@@ -67,7 +67,11 @@ class AppDrawer extends StatelessWidget {
                     onTap: () {
                       AppRouter.router.push(AppRouter.profile);
                     }),
-                _buildDrawerItem(title: "Account Settings", icon: Icons.settings),
+                _buildDrawerItem(
+                  title: "Account Settings",
+                  icon: Icons.settings,
+                  onTap: () => AppRouter.router.push(AppRouter.accountSettings),
+                ),
                 _buildDrawerItem(title: "BookMark", icon: Icons.local_offer),
                 _buildDrawerItem(
                     title: "Your Communities",
@@ -90,8 +94,12 @@ class AppDrawer extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               spacing: 17.h,
               children: [
-                Text('Help',style: Styles.font15w600.copyWith(fontSize: 10.sp,color: ColorsManager.mainColor)),
-                _buildDrawerItem(title: "Support and Feedback", icon: Icons.contact_support_outlined),
+                Text('Help',
+                    style: Styles.font15w600.copyWith(
+                        fontSize: 10.sp, color: ColorsManager.mainColor)),
+                _buildDrawerItem(
+                    title: "Support and Feedback",
+                    icon: Icons.contact_support_outlined),
                 _buildDrawerItem(title: "Privacy Center", icon: Icons.shield),
               ],
             ),
@@ -103,7 +111,8 @@ class AppDrawer extends StatelessWidget {
               AppRouter.clearAndNavigate(AppRouter.loginView);
             },
             backgroundColor: Colors.white,
-            textStyle: Styles.font15w600.copyWith(color: ColorsManager.orangeColor),
+            textStyle:
+                Styles.font15w600.copyWith(color: ColorsManager.orangeColor),
           ),
         ],
       ),

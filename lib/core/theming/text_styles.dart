@@ -20,7 +20,11 @@ abstract class Styles {
     fontSize: 18.sp,
   );
 
-
+  static TextStyle font10w600 = TextStyle(
+    fontWeight: FontWeight.w600,
+    color: ColorsManager.mainColor,
+    fontSize: 10.sp,
+  );
   static TextStyle font15w600 = TextStyle(
     fontWeight: FontWeight.w600,
     color: ColorsManager.blackColor,
@@ -43,7 +47,6 @@ abstract class Styles {
     fontSize: 20.sp,
     color: Color(0xff120D26),
   );
-
 
   static TextStyle font18w600 = TextStyle(
     fontWeight: FontWeight.w600,

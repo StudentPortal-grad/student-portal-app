@@ -14,6 +14,7 @@ import 'package:student_portal/features/profile/presentation/screens/profile_scr
 import 'package:student_portal/features/resource/presentation/pages/resource_details_screen.dart';
 import 'package:student_portal/features/groups/presentation/screens/create_group_screen.dart';
 import 'package:student_portal/features/search/presentation/screens/search_screen.dart';
+import 'package:student_portal/features/settings/presentation/screens/account_settings_screen.dart';
 import '../../features/auth/data/repo_impl/login_repo_impl.dart';
 import '../../features/auth/presentation/manager/login_bloc/login_bloc.dart';
 import '../../features/auth/presentation/manager/signup_bloc/signup_bloc.dart';
@@ -71,6 +72,9 @@ abstract class AppRouter {
   // community
   static const String community = '/community';
 
+  // settings
+  static const String accountSettings = '/settings';
+
   static final router = GoRouter(
     routes: [
       GoRoute(
@@ -99,7 +103,8 @@ abstract class AppRouter {
                 final bloc = SignupBloc();
                 // If email is not verified, trigger ResendCodeRequested
                 if (args != null && args['emailNotVerified'] == true) {
-                  bloc.add(ResendCodeRequested(email: UserRepository.user?.email ?? ""));
+                  bloc.add(ResendCodeRequested(
+                      email: UserRepository.user?.email ?? ""));
                 }
                 return bloc;
               },
@@ -293,6 +298,17 @@ abstract class AppRouter {
             context: context,
             state: state,
             child: CreateCommunityScreen(),
+          );
+        },
+      ),
+      GoRoute(
+        path: accountSettings,
+        pageBuilder: (context, state) {
+          final args = state.extra as Map<String, dynamic>?;
+          return buildPage(
+            context: context,
+            state: state,
+            child: AccountSettingsScreen(),
           );
         },
       ),
