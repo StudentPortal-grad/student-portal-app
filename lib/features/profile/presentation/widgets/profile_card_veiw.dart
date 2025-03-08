@@ -54,8 +54,8 @@ class ProfileCardView extends StatelessWidget {
           child: Column(
             children: [
               CustomImageView(
-                placeHolder: AssetsApp.profileImage,
-                imagePath: UserRepository.user?.profilePicture ?? AssetsApp.profileImage,
+                placeHolder: AssetsApp.userPlaceHolder,
+                imagePath: UserRepository.user?.profilePicture ?? AssetsApp.userPlaceHolder,
                 width: 85.r,
                 height: 85.r,
                 circle: true,

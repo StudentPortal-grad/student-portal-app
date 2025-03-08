@@ -5,10 +5,16 @@ import 'package:student_portal/core/helpers/app_text_view.dart';
 import 'package:student_portal/core/theming/colors.dart';
 import 'package:student_portal/core/widgets/custom_appbar.dart';
 import 'package:student_portal/core/widgets/user_row_view.dart';
+import 'package:student_portal/features/notification/presentation/screens/notifications_screen.dart';
+import 'package:student_portal/features/settings/presentation/screens/personal_data_screen.dart';
+import 'package:student_portal/features/settings/presentation/screens/profile_data_screen.dart';
 
+import '../../../../core/helpers/extensions.dart';
 import '../../../../core/theming/text_styles.dart';
 import '../../../../core/utils/app_router.dart';
 import '../../../../core/widgets/custom_app_button.dart';
+import 'academic_data.dart';
+import 'change_password_screen.dart';
 
 class AccountSettingsScreen extends StatelessWidget {
   const AccountSettingsScreen({super.key});
@@ -45,14 +51,29 @@ class AccountSettingsScreen extends StatelessWidget {
                 children: [
                   "Account".make(style: Styles.font10w600),
                   _buildSettingsItem(
-                      title: "Profile Data", icon: Icons.person, onTap: () {}),
+                      title: "Profile Data",
+                      icon: Icons.person,
+                      onTap: () {
+                        push(ProfileDataScreen());
+                      }),
                   _buildSettingsItem(
-                      title: "Personal Data", icon: Icons.person, onTap: () {}),
+                      title: "Personal Data",
+                      icon: Icons.person,
+                      onTap: () {
+                        push(PersonalDataScreen());
+                      }),
                   _buildSettingsItem(
-                      title: "Academic Data", icon: Icons.person, onTap: () {}),
+                      title: "Academic Data",
+                      icon: Icons.person,
+                      onTap: () {
+                        push(AcademicDataScreen());
+                      }),
                   _buildSettingsItem(
                     title: "Change Password",
                     icon: Icons.settings,
+                    onTap: () {
+                      push(ChangePasswordScreen());
+                    },
                   ),
                 ],
               ),
@@ -73,7 +94,9 @@ class AccountSettingsScreen extends StatelessWidget {
                   _buildSettingsItem(
                     title: "Notification",
                     icon: Icons.notifications_rounded,
-                    onTap: () {},
+                    onTap: () {
+                      push(NotificationsScreen());
+                    },
                   ),
                 ],
               ),
