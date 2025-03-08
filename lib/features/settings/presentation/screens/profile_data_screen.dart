@@ -63,6 +63,7 @@ class ProfileDataScreen extends StatelessWidget {
             CustomTextField(
               labelText: 'Display Name',
               hintText: 'Display Name',
+              labelStyle: Styles.font14w500,
               controller:
                   TextEditingController(text: UserRepository.user?.name),
             ),
@@ -70,6 +71,7 @@ class ProfileDataScreen extends StatelessWidget {
             CustomTextField(
               labelText: 'Username',
               hintText: 'Username',
+              labelStyle: Styles.font14w500,
               inputFormatters: [
                 // Prevent spaces
                 FilteringTextInputFormatter.deny(RegExp(r'\s')),
@@ -77,6 +79,14 @@ class ProfileDataScreen extends StatelessWidget {
               prefixIcon: Center(child: Text('@', style: Styles.font14w500)),
               controller:
                   TextEditingController(text: UserRepository.user?.username),
+            ),
+            20.heightBox,
+            CustomTextField(
+              labelText: 'Bio',
+              hintText: 'Bio',
+              labelStyle: Styles.font14w500,
+              controller:
+              TextEditingController(text: UserRepository.user?.profile?.bio),
             ),
             30.heightBox,
             CustomAppButton(
