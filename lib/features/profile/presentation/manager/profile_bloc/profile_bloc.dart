@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:student_portal/core/repo/user_repository.dart';
@@ -22,14 +23,28 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     on<GetMyProfileEvent>(_getMyProfile);
     on<GetUserProfileEvent>(_getUserProfile);
     on<UpdateMyProfileEvent>(_updateMyProfile);
-    on<ChangePasswordEvent> (_changePassword);
+    on<ChangePasswordEvent>(_changePassword);
   }
 
+//formKey
+  final changePasswordFormKey = GlobalKey<FormState>();
+
+// text controllers
+  final TextEditingController currentPasswordController =
+      TextEditingController();
+  final TextEditingController newPasswordController = TextEditingController();
+  final TextEditingController confirmPasswordController =
+      TextEditingController();
+
 // usecases
-  final GetMyProfileUs getMyProfileUs = GetMyProfileUs(profileRepository: getIt<ProfileRepository>());
-  final GetUserProfileUc getUserProfileUs = GetUserProfileUc(profileRepository: getIt<ProfileRepository>());
-  final UpdateMyProfileUC updateMyProfileUC = UpdateMyProfileUC(profileRepository: getIt<ProfileRepository>());
-  final ChangePasswordUc changePasswordUc = ChangePasswordUc(profileRepository: getIt<ProfileRepository>());
+  final GetMyProfileUs getMyProfileUs =
+      GetMyProfileUs(profileRepository: getIt<ProfileRepository>());
+  final GetUserProfileUc getUserProfileUs =
+      GetUserProfileUc(profileRepository: getIt<ProfileRepository>());
+  final UpdateMyProfileUC updateMyProfileUC =
+      UpdateMyProfileUC(profileRepository: getIt<ProfileRepository>());
+  final ChangePasswordUc changePasswordUc =
+      ChangePasswordUc(profileRepository: getIt<ProfileRepository>());
 
   Future<void> _getMyProfile(
       GetMyProfileEvent event, Emitter<ProfileState> emit) async {
@@ -64,13 +79,21 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       (response) => emit(ProfileSuccessState(response)),
     );
   }
+
   Future<void> _changePassword(
       ChangePasswordEvent event, Emitter<ProfileState> emit) async {
-    emit(ProfileLoadingState());
+    emit(ChangePasswordLoadingState());
     var data = await changePasswordUc.call(event.changePasswordDto);
     data.fold(
-          (error) => emit(ChangePasswordFailureState(error)),
-          (response) => emit(ChangePasswordSuccessState(response)),
+      (error) => emit(ChangePasswordFailureState(error)),
+      (response) => emit(ChangePasswordSuccessState(response)),
     );
+  }
+  @override
+  Future<void> close() {
+    confirmPasswordController.dispose();
+    currentPasswordController.dispose();
+    newPasswordController.dispose();
+    return super.close();
   }
 }

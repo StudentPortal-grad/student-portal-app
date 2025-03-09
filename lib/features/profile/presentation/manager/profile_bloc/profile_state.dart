@@ -19,6 +19,8 @@ final class ProfileFailureState extends ProfileState {
   ProfileFailureState(this.failure);
 }
 
+final class ChangePasswordLoadingState extends ProfileState {}
+
 final class ChangePasswordFailureState extends ProfileState {
   final Failure failure;
 
