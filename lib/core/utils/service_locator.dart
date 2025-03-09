@@ -17,9 +17,7 @@ void setupServiceLocator() {
           baseUrl: ApiEndpoints.baseUrl,
           receiveDataWhenStatusError: true,
           connectTimeout: const Duration(seconds: 10),
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: {'Content-Type': 'application/json'},
         ),
       ),
     ),

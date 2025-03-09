@@ -15,6 +15,7 @@ abstract class ApiEndpoints {
   // User Endpoints
   static const String myProfile = "users/me";
   static String getUserProfile(String userId) => "users/$userId";
+  static String changePassword = "users/me/password";
 
   // Messaging Endpoints
   static const String conversations = "conversations";

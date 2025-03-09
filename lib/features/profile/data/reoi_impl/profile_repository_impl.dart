@@ -3,6 +3,8 @@ import 'dart:developer';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:student_portal/core/errors/data/model/error_model.dart';
+import 'package:student_portal/core/utils/secure_storage.dart';
+import 'package:student_portal/core/utils/service_locator.dart';
 import 'package:student_portal/features/profile/data/dto/update_profile_dto.dart';
 import 'package:student_portal/features/profile/domain/repo/profile_repository.dart';
 
@@ -11,6 +13,7 @@ import '../../../../core/network/api_endpoints.dart';
 import '../../../../core/network/api_service.dart';
 import '../../../../core/repo/user_repository.dart';
 import '../../../auth/data/model/user_model/user.dart';
+import '../dto/change_password_dto.dart';
 
 class ProfileRepositoryImpl implements ProfileRepository {
   final ApiService apiService;
@@ -55,6 +58,20 @@ class ProfileRepositoryImpl implements ProfileRepository {
       User user = User.fromJson(data['data']['user']);
       UserRepository.setUser(user);
       return Right(user);
+    } on DioException catch (e) {
+      return Left(ServerFailure.fromDioError(e));
+    }
+  }
+
+  @override
+  Future<Either<Failure, String>> changePassword({required ChangePasswordDto changePasswordDto})async {
+    try {
+      var data = await apiService.post(
+        token: getIt.get<SecureStorage>().accessTokenKey,
+        endpoint: ApiEndpoints.changePassword,
+        data: changePasswordDto.toJson(),
+      );
+      return Right(data['message'] ?? '');
     } on DioException catch (e) {
       return Left(ServerFailure.fromDioError(e));
     }
