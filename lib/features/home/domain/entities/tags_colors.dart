@@ -6,6 +6,7 @@ class TagsColors {
     TagColor(Color(0xffEBE9FE), Color(0xff6941C6)),
     TagColor(Color(0xffE9EAEB), Color(0xff252B37)),
     TagColor(Color(0xffD1FADF), Color(0xff05603A)),
+    TagColor(Color(0xffD1E9FF), Color(0xff1849A9))
   ];
 }
 

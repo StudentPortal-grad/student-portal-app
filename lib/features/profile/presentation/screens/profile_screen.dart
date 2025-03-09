@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:student_portal/core/repo/user_repository.dart';
 import 'package:student_portal/core/theming/colors.dart';
 import '../../../../core/theming/text_styles.dart';
+import '../../../../core/widgets/custom_app_button.dart';
 import '../manager/profile_bloc/profile_bloc.dart';
 import '../widgets/about_profile_user_view.dart';
 import '../widgets/profile_card_veiw.dart';
@@ -23,45 +24,51 @@ class _ProfileScreenState extends State<ProfileScreen>
     with TickerProviderStateMixin {
   late final TabController _tabController;
   late final ScrollController _scrollController;
+  late final ProfileBloc _profileBloc;
 
   @override
   void initState() {
+    super.initState();
     _tabController = TabController(length: 3, vsync: this);
     _scrollController = ScrollController();
-    super.initState();
+
+    _profileBloc = ProfileBloc();
+    final userId = widget.userId ?? UserRepository.user?.id;
+    _profileBloc.add(
+      userId == null || userId == UserRepository.user?.id
+          ? GetMyProfileEvent(refresh: false)
+          : GetUserProfileEvent(userId: userId),
+    );
   }
 
   @override
   void dispose() {
     _tabController.dispose();
     _scrollController.dispose();
+    _profileBloc.close();
     super.dispose();
   }
 
-  _onPostTap() async {
+  Future<void> _onPostTap() async {
     _tabController.animateTo(1,
-        duration: Duration(milliseconds: 400), curve: Curves.fastOutSlowIn);
-    await Future.delayed(Duration(milliseconds: 400));
+        duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
+    await Future.delayed(const Duration(milliseconds: 300));
     _scrollController.animateTo(_scrollController.position.maxScrollExtent,
-        duration: Duration(milliseconds: 400), curve: Curves.fastOutSlowIn);
-    setState(() {});
+        duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ColorsManager.backgroundColorDeep,
-      body: BlocProvider(
-        create: (context) {
-          final ProfileBloc profileBloc = ProfileBloc();
-          if (widget.userId == null || widget.userId == UserRepository.user?.id) {
-            return profileBloc..add(GetMyProfileEvent());
-          }
-          return ProfileBloc()..add(GetUserProfileEvent(userId: widget.userId ?? ''));
-        },
-        child: BlocConsumer<ProfileBloc, ProfileState>(
-          listener: (context, state) {},
+      body: BlocProvider.value(
+        value: _profileBloc,
+        child: BlocBuilder<ProfileBloc, ProfileState>(
           builder: (context, state) {
+            if (state is ProfileLoadingState) {
+              return const Center(child: CustomLoadingIndicator());
+            }
+
             if (state is ProfileSuccessState) {
               return SingleChildScrollView(
                 controller: _scrollController,
@@ -69,6 +76,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                   children: [
                     ProfileCardView(onPostsTap: _onPostTap, user: state.user),
                     TabBar(
+                      controller: _tabController,
                       splashFactory: NoSplash.splashFactory,
                       dividerColor: Colors.transparent,
                       labelStyle: Styles.font14w400,
@@ -78,12 +86,11 @@ class _ProfileScreenState extends State<ProfileScreen>
                         borderRadius: BorderRadius.circular(7.r),
                       ),
                       labelColor: ColorsManager.mainColor,
-                      tabs: [
+                      tabs: const [
                         Tab(text: 'ABOUT'),
                         Tab(text: 'POST'),
                         Tab(text: 'RESOURCES'),
                       ],
-                      controller: _tabController,
                     ),
                     SizedBox(
                       height: 0.75.sh,
@@ -91,8 +98,8 @@ class _ProfileScreenState extends State<ProfileScreen>
                         controller: _tabController,
                         children: [
                           AboutProfileUserView(userProfile: state.user.profile),
-                          ProfilePostsView(),
-                          ProfileResourcesView(),
+                          const ProfilePostsView(),
+                          const ProfileResourcesView(),
                         ],
                       ),
                     ),
@@ -100,7 +107,8 @@ class _ProfileScreenState extends State<ProfileScreen>
                 ),
               );
             }
-            return SizedBox.shrink();
+
+            return const Center(child: Text("Failed to load profile"));
           },
         ),
       ),

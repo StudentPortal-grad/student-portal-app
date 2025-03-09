@@ -48,7 +48,7 @@ class CustomAppButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return loading
-        ? ButtonLoading()
+        ? CustomLoadingIndicator()
         : InkWell(
       splashColor: splashColor,
       highlightColor: splashColor,
@@ -84,8 +84,8 @@ class CustomAppButton extends StatelessWidget {
   }
 }
 
-class ButtonLoading extends StatelessWidget {
-  const ButtonLoading({super.key, this.size});
+class CustomLoadingIndicator extends StatelessWidget {
+  const CustomLoadingIndicator({super.key, this.size});
 
   final double? size;
 

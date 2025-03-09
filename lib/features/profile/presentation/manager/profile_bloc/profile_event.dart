@@ -3,7 +3,11 @@ part of 'profile_bloc.dart';
 @immutable
 sealed class ProfileEvent {}
 
-class GetMyProfileEvent extends ProfileEvent {}
+class GetMyProfileEvent extends ProfileEvent {
+  final bool refresh;
+
+  GetMyProfileEvent({this.refresh = true});
+}
 
 class GetUserProfileEvent extends ProfileEvent {
   final String userId;

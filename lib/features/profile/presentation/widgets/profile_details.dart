@@ -5,6 +5,7 @@ import 'package:student_portal/core/helpers/app_text_view.dart';
 
 import '../../../../core/theming/colors.dart';
 import '../../../../core/theming/text_styles.dart';
+import '../../../auth/data/model/user_model/user.dart';
 
 class ProfileDetails extends StatelessWidget {
   const ProfileDetails({
@@ -12,23 +13,26 @@ class ProfileDetails extends StatelessWidget {
     this.onPostsTap,
     this.onFollowersTap,
     this.onFollowingTap,
+    this.user,
   });
 
+  final User? user;
   final Function()? onPostsTap;
   final Function()? onFollowersTap;
   final Function()? onFollowingTap;
 
   @override
   Widget build(BuildContext context) {
+    // return CustomLoadingIndicator();
     return Column(
       children: [
         Row(
           children: [
-            _buildStatItem("10", "Posts", onPostsTap),
+            _buildStatItem("0", "Posts", onPostsTap),
             _buildDivider(),
-            _buildStatItem("10", "Followers", onFollowersTap),
+            _buildStatItem("0", "Followers", onFollowersTap),
             _buildDivider(),
-            _buildStatItem("10", "Following", onFollowingTap),
+            _buildStatItem("0", "Following", onFollowingTap),
           ],
         ),
         20.heightBox,

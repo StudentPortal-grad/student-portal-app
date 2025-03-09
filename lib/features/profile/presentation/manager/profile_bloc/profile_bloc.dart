@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
+import 'package:student_portal/core/repo/user_repository.dart';
 import 'package:student_portal/features/profile/domain/use_case/get_user_profile_uc.dart';
 
 import '../../../../../core/errors/data/model/error_model.dart';
@@ -32,6 +33,10 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
 
   Future<void> _getMyProfile(
       GetMyProfileEvent event, Emitter<ProfileState> emit) async {
+    if (!event.refresh && UserRepository.user != null) {
+      emit(ProfileSuccessState(UserRepository.user!));
+      return;
+    }
     emit(ProfileLoadingState());
     var data = await getMyProfileUs.call();
     data.fold(

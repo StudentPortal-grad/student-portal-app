@@ -72,6 +72,7 @@ class ProfileCardView extends StatelessWidget {
               25.heightBox,
               // to show posts, followers, following and title
               ProfileDetails(
+                user: user,
                 onPostsTap: onPostsTap,
                 onFollowersTap: () {
                   AppRouter.router.push(AppRouter.followers);
