@@ -1,15 +1,13 @@
 import 'package:dartz/dartz.dart';
+import 'package:student_portal/features/auth/domain/repo/auth_repo.dart';
 
 import '../../../../core/errors/data/model/error_model.dart';
 import '../../data/dto/otp_dto.dart';
-import '../repo/verify_forget_password_repo.dart';
 
 class VerifyForgetPasswordUc {
-  final VerifyPasswordRepo verifyPasswordRepo;
+  final AuthRepository authRepository;
 
-  VerifyForgetPasswordUc({required this.verifyPasswordRepo});
+  VerifyForgetPasswordUc({required this.authRepository});
 
-  Future<Either<Failure, String>> call(
-      OtpDto otpDto) =>
-      verifyPasswordRepo.verifyForgetPassword(otpDto);
+  Future<Either<Failure, String>> call(OtpDto otpDto) => authRepository.verifyForgetPassword(otpDto);
 }

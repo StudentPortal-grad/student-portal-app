@@ -6,6 +6,7 @@ import 'package:student_portal/core/utils/app_router.dart';
 
 import '../../../helpers/app_dialog.dart';
 import '../../../utils/secure_storage.dart';
+import '../../../utils/service_locator.dart';
 
 class ServerFailure extends Failure {
   const ServerFailure({
@@ -76,7 +77,7 @@ class ServerFailure extends Failure {
             onOkTap: () => AppRouter.clearAndNavigate(AppRouter.loginView),
           );
         }
-        SecureStorage().deleteSecureData();
+        getIt<SecureStorage>().deleteSecureData();
       }
     } on Exception catch (e) {
       log(e.toString());

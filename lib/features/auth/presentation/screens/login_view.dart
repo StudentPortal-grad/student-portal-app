@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:student_portal/core/repo/user_repository.dart';
 import 'package:student_portal/features/auth/presentation/widgets/login_body.dart';
 import '../../../../core/theming/colors.dart';
 import '../../../../core/helpers/custom_toast.dart';
@@ -23,10 +22,11 @@ class LoginView extends StatelessWidget {
             }
             if(state is LogInSuccess){
               CustomToast(context).showSuccessToast(message: 'Login Successfully');
-              if(UserRepository.user?.emailVerified == true){
-                AppRouter.clearAndNavigate(AppRouter.homeView);
-              }
-              AppRouter.router.go(AppRouter.signupView, extra: {'emailNotVerified': true});
+              AppRouter.clearAndNavigate(AppRouter.homeView);
+              // if(UserRepository.user?.emailVerified == true){
+              //   AppRouter.clearAndNavigate(AppRouter.homeView);
+              // }
+              // AppRouter.router.go(AppRouter.signupView, extra: {'emailNotVerified': true});
             }
           },
           builder: (context, state) {

@@ -2,6 +2,8 @@ import 'dart:developer';
 
 import '../utils/app_local_storage.dart';
 import '../../features/auth/data/model/user_model/user.dart';
+import '../utils/secure_storage.dart';
+import '../utils/service_locator.dart';
 
 class UserRepository {
   static User? get user => _user ?? _getUser();
@@ -20,6 +22,7 @@ class UserRepository {
   static Future<void> removeUser() async {
     _user = null;
     await AppLocalStorage.removeData(_userKey);
+    await getIt<SecureStorage>().deleteSecureData();
   }
 
   static User? _getUser() {

@@ -8,6 +8,7 @@ import '../../../../core/theming/text_styles.dart';
 import '../../../../core/utils/app_router.dart';
 import '../../../../core/utils/assets_app.dart';
 import '../../../../core/utils/secure_storage.dart';
+import '../../../../core/utils/service_locator.dart';
 import '../../../../core/widgets/custom_image_view.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -31,8 +32,8 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void navigateToHome() async {
-    final model = await SecureStorage().readSecureData();
-    final isFirst = await SecureStorage().readOnboardingData();
+    final model = await getIt<SecureStorage>().readSecureData();
+    // final isFirst = await getIt<SecureStorage>().readOnboardingData();
 
     final route = (model?.id == null || model?.accessToken == null)
         ? (AppRouter.loginView) // isFirst ? AppRouter.onBoardingView : login

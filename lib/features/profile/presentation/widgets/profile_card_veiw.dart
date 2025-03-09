@@ -43,7 +43,9 @@ class ProfileCardView extends StatelessWidget {
           backgroundColor: Colors.transparent,
           leadingIconColor: Colors.white,
           action: Icon(Icons.more_vert_rounded, color: Colors.white),
-          actionOnTap: () {},
+          actionOnTap: () {
+            print(UserRepository.user?.profilePicture);
+          },
         ),
 
         // profile body

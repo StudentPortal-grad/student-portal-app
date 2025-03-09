@@ -1,13 +1,9 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:student_portal/features/auth/data/dto/otp_dto.dart';
+import 'package:student_portal/features/auth/domain/repo/auth_repo.dart';
 import 'package:student_portal/features/auth/domain/usecases/verify_email_uc.dart';
-import '../../../../../core/network/api_service.dart';
 import '../../../../../core/utils/service_locator.dart';
 import '../../../data/dto/signup_otp_dto.dart';
-import '../../../data/repo_impl/check_email_impl.dart';
-import '../../../data/repo_impl/forget_password_impl.dart';
-import '../../../data/repo_impl/verify_email_impl.dart';
-import '../../../data/repo_impl/verify_forget_password_impl.dart';
 import '../../../domain/usecases/check_email_uc.dart';
 import '../../../domain/usecases/forget_password_uc.dart';
 import '../../../domain/usecases/verify_forget_password_uc.dart';
@@ -16,15 +12,12 @@ import 'otp_state.dart';
 
 class OtpBloc extends Bloc<OtpEvent, OtpState> {
   final VerifyEmailUc verifyEmailUc = VerifyEmailUc(
-      verifyEmailRepo: VerifyEmailRepoImpl(getIt.get<ApiService>()));
-  final VerifyForgetPasswordUc verifyForgetPasswordUc = VerifyForgetPasswordUc(
-      verifyPasswordRepo: VerifyForgetPasswordImpl(getIt.get<ApiService>()));
+      authRepository: getIt.get<AuthRepository>());
+  final VerifyForgetPasswordUc verifyForgetPasswordUc = VerifyForgetPasswordUc(authRepository: getIt.get<AuthRepository>());
 
-  final ForgetPasswordUc forgetPasswordUc = ForgetPasswordUc(
-      forgetPasswordRepo: ForgetPasswordImpl(getIt.get<ApiService>()));
+  final ForgetPasswordUc forgetPasswordUc = ForgetPasswordUc(authRepository: getIt.get<AuthRepository>());
 
-  final CheckEmailUc checkEmailUc =
-      CheckEmailUc(checkEmailRepo: CheckEmailRepoImpl(getIt.get<ApiService>()));
+  final ResendValidationUC resendValidationUC = ResendValidationUC(authRepository: getIt.get<AuthRepository>());
 
   OtpBloc() : super(OtpInitial()) {
     on<SendOtpForgetPassword>(_onSendOtpForgetPassword);
@@ -62,7 +55,7 @@ class OtpBloc extends Bloc<OtpEvent, OtpState> {
 
     emit(OtpLoading());
 
-    var data = await checkEmailUc.call(email: event.email);
+    var data = await resendValidationUC.call(email: event.email);
 
     data.fold(
       (error) => emit(SendOtpFailure(error)),

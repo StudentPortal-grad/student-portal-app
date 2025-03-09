@@ -15,7 +15,7 @@ class User {
   final String? college;
   final String? email;
   final String? role;
-  final String profilePicture;
+  final String? profilePicture;
   final Profile? profile;
   final List<Address>? addresses;
   final List<Friend>? friends;
@@ -41,7 +41,7 @@ class User {
     this.college,
      this.email,
     this.role,
-    this.profilePicture = AssetsApp.userPlaceHolder,
+    this.profilePicture,
     this.profile,
     this.addresses,
     this.friends,
@@ -90,7 +90,7 @@ class User {
   /// Convert a JSON map into a `User` object
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
-      id: json['id'],
+      id: json['_id'],
       name: json['name'],
       username: json['username'],
       gender: json['gender'],

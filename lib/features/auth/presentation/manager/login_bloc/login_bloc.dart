@@ -1,18 +1,20 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../core/helpers/app_regex.dart';
+import '../../../../../core/utils/service_locator.dart';
 import '../../../data/dto/login_dto.dart';
+import '../../../domain/repo/auth_repo.dart';
 import '../../../domain/usecases/login_uc.dart';
 import 'login_event.dart';
 import 'login_state.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
-  final LoginUc loginUc;
-
-  LoginBloc({required this.loginUc}) : super(LoginInitial()) {
+  LoginBloc() : super(LoginInitial()) {
     on<LoginRequested>(_onLoginRequested);
     on<LoginValidation>(_onLoginValidation);
   }
+
+  final LoginUc loginUc = LoginUc(authRepository: getIt.get<AuthRepository>());
 
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
@@ -33,8 +35,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     );
   }
 
-  void _onLoginValidation(
-      LoginValidation event, Emitter<LoginState> emit) {
+  void _onLoginValidation(LoginValidation event, Emitter<LoginState> emit) {
     List<bool> strengthCriteria =
         AppRegex.checkPasswordStrength(passwordController.text);
     bool isSecure = strengthCriteria.every((criteria) => criteria);

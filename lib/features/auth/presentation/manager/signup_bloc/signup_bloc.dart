@@ -4,14 +4,10 @@ import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:student_portal/core/repo/user_repository.dart';
 import 'package:student_portal/features/auth/data/dto/complete_dto.dart';
 import '../../../../../core/helpers/file_service.dart';
-import '../../../../../core/network/api_service.dart';
 import '../../../../../core/utils/service_locator.dart';
 import '../../../data/dto/signup_otp_dto.dart';
 import '../../../data/model/user_model/profile.dart';
-import '../../../data/repo_impl/check_email_impl.dart';
-import '../../../data/repo_impl/signup_repo_impl.dart';
-import '../../../data/repo_impl/update_data_impl.dart';
-import '../../../data/repo_impl/verify_email_impl.dart';
+import '../../../domain/repo/auth_repo.dart';
 import '../../../domain/usecases/check_email_uc.dart';
 import '../../../domain/usecases/signup_uc.dart';
 import '../../../domain/usecases/update_date_uc.dart';
@@ -30,14 +26,10 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
     on<OnProfileImagePicked>(_onPickProfileImage);
   }
 
-  final SignupUc signupUc =
-      SignupUc(signupRepo: SignupRepoImpl(getIt.get<ApiService>()));
-  final VerifyEmailUc verifyEmailUc = VerifyEmailUc(
-      verifyEmailRepo: VerifyEmailRepoImpl(getIt.get<ApiService>()));
-  final CheckEmailUc checkEmailUc =
-      CheckEmailUc(checkEmailRepo: CheckEmailRepoImpl(getIt.get<ApiService>()));
-  final UpdateDateUc updateDataUc =
-      UpdateDateUc(updateDataRepo: UpdateDataImpl(getIt.get<ApiService>()));
+  final SignupUc signupUc = SignupUc(authRepository: getIt.get<AuthRepository>());
+  final VerifyEmailUc verifyEmailUc = VerifyEmailUc(authRepository: getIt.get<AuthRepository>());
+  final ResendValidationUC resendValidationUC = ResendValidationUC(authRepository: getIt.get<AuthRepository>());
+  final UpdateDateUc updateDataUc = UpdateDateUc(authRepository: getIt.get<AuthRepository>());
 
   // Controllers
   final TextEditingController emailController = TextEditingController();
@@ -120,7 +112,7 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
   Future<void> _onResendCodeRequested(
       ResendCodeRequested event, Emitter<SignupState> emit) async {
     emit(ResendOtpLoading());
-    var data = await checkEmailUc.call(email: event.email);
+    var data = await resendValidationUC.call(email: event.email);
 
     data.fold(
       (error) => emit(ResendCodeFailure(error: error)),

@@ -2,26 +2,27 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:student_portal/core/helpers/app_size_boxes.dart';
 import 'package:student_portal/core/helpers/app_text_view.dart';
+import 'package:student_portal/core/repo/user_repository.dart';
 
-import '../../contestants.dart';
 import '../theming/colors.dart';
 import '../theming/text_styles.dart';
 import 'custom_image_view.dart';
 
 class UserRowView extends StatelessWidget {
-  const UserRowView({super.key, this.onUnfollowTap, this.showRemoveIcon});
+  const UserRowView({super.key, this.onUnfollowTap, this.showRemoveIcon,  this.imageSize});
 
   final Function(String id)? onUnfollowTap;
   final bool? showRemoveIcon;
+  final double? imageSize;
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
         CustomImageView(
-          imagePath: kUserImage,
-          width: 48.r,
-          height: 48.r,
+          imagePath: UserRepository.user?.profilePicture,
+          width: imageSize ?? 48.r,
+          height: imageSize ?? 48.r,
           circle: true,
         ),
         12.widthBox,

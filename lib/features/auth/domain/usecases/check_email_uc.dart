@@ -2,12 +2,12 @@ import 'package:dartz/dartz.dart';
 
 import '../../../../core/errors/data/model/error_model.dart';
 import '../../data/model/check_email_response/check_email_response.dart';
-import '../repo/check_email_repo.dart';
+import '../repo/auth_repo.dart';
 
-class CheckEmailUc {
-final CheckEmailRepo checkEmailRepo;
+class ResendValidationUC {
+  final AuthRepository authRepository;
 
-  CheckEmailUc({required this.checkEmailRepo});
+  ResendValidationUC({required this.authRepository});
 
-  Future<Either<Failure, CheckEmailResponse>> call({required String email}) => checkEmailRepo.checkEmail(email: email);
+  Future<Either<Failure, CheckEmailResponse>> call({required String email}) => authRepository.resendVerification(email: email);
 }

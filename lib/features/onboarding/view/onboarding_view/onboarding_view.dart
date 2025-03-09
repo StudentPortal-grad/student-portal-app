@@ -7,6 +7,7 @@ import 'package:student_portal/features/onboarding/view/onboarding_view/widgets/
 import '../../../../core/theming/colors.dart';
 import '../../../../core/utils/app_router.dart';
 import '../../../../core/utils/secure_storage.dart';
+import '../../../../core/utils/service_locator.dart';
 import '../../../../core/widgets/custom_app_button.dart';
 import 'data/data.dart';
 
@@ -78,7 +79,7 @@ class _OnboardingViewState extends State<OnboardingView> {
                   curve: Curves.linear,
                 );
               } else {
-                await SecureStorage().writeOnboardingData(false);
+                await getIt<SecureStorage>().writeOnboardingData(false);
                 AppRouter.router.go(AppRouter.loginView);
               }
             },

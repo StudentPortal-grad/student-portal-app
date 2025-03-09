@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:student_portal/core/repo/user_repository.dart';
-import 'package:student_portal/core/utils/service_locator.dart';
-import 'package:student_portal/features/auth/domain/usecases/login_uc.dart';
 import 'package:student_portal/features/chats/presentation/pages/dm_screen.dart';
 import 'package:student_portal/features/community/presentation/screens/community_screen.dart';
 import 'package:student_portal/features/community/presentation/screens/create_community_screen.dart';
@@ -15,7 +13,6 @@ import 'package:student_portal/features/resource/presentation/pages/resource_det
 import 'package:student_portal/features/groups/presentation/screens/create_group_screen.dart';
 import 'package:student_portal/features/search/presentation/screens/search_screen.dart';
 import 'package:student_portal/features/settings/presentation/screens/account_settings_screen.dart';
-import '../../features/auth/data/repo_impl/login_repo_impl.dart';
 import '../../features/auth/presentation/manager/login_bloc/login_bloc.dart';
 import '../../features/auth/presentation/manager/signup_bloc/signup_bloc.dart';
 import '../../features/auth/presentation/manager/signup_bloc/signup_event.dart';
@@ -31,7 +28,6 @@ import '../../features/onboarding/view/splash_view/splash_view.dart';
 import '../../features/profile/presentation/screens/followers_screen.dart';
 import '../../features/resource/presentation/pages/add_resource_screen.dart';
 import '../helpers/custom_animated_transition_page.dart';
-import '../network/api_service.dart';
 
 abstract class AppRouter {
   static BuildContext? get context =>
@@ -120,10 +116,7 @@ abstract class AppRouter {
           context: context,
           state: state,
           child: withBlocProvider(
-            create: (context) => LoginBloc(
-              loginUc:
-                  LoginUc(loginRepo: LoginRepoImpl(getIt.get<ApiService>())),
-            ),
+            create: (context) => LoginBloc(),
             child: const LoginView(),
           ),
         ),
