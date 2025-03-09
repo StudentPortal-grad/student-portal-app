@@ -5,12 +5,12 @@ import 'package:student_portal/features/auth/domain/repo/auth_repo.dart';
 import '../../../../core/errors/data/model/error_model.dart';
 import '../../data/model/update_response/update_response.dart';
 
-class UpdateDateUc {
+class CompleteProfileUC {
   final AuthRepository authRepository;
 
-  UpdateDateUc({required this.authRepository});
+  CompleteProfileUC({required this.authRepository});
 
   Future<Either<Failure, UpdateResponse>> call(CompleteDto completeDto) async {
-    return authRepository.updateProfile(completeDto);
+    return authRepository.completeProfile(completeDto);
   }
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:student_portal/contestants.dart';
+import 'package:student_portal/core/repo/user_repository.dart';
 import 'package:student_portal/core/theming/colors.dart';
 import 'package:student_portal/core/utils/app_router.dart';
 import 'package:student_portal/core/utils/assets_app.dart';
@@ -31,10 +31,8 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
         child: Row(
           children: [
             CustomImageView(
-              onTap: () {
-                Scaffold.of(context).openDrawer();
-              },
-              imagePath: kUserImage,
+              onTap: () => Scaffold.of(context).openDrawer(),
+              imagePath: UserRepository.user?.profilePicture,
               circle: true,
               height: 35.r,
               width: 35.r,

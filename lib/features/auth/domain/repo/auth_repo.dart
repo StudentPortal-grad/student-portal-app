@@ -27,7 +27,7 @@ abstract class AuthRepository {
   Future<Either<Failure, bool>> setNewPassword(SetNewPasswordDto setNewPasswordDTO);
 
   /// User Profile Update
-  Future<Either<Failure, UpdateResponse>> updateProfile(CompleteDto completeDTO);
+  Future<Either<Failure, UpdateResponse>> completeProfile(CompleteDto completeDTO);
 
   /// logout
   Future<Either<Failure, String>> logout();

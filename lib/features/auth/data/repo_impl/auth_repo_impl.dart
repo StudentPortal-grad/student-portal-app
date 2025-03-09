@@ -127,7 +127,7 @@ class AuthRepoImpl implements AuthRepository {
   }
 
   @override
-  Future<Either<Failure, UpdateResponse>> updateProfile(
+  Future<Either<Failure, UpdateResponse>> completeProfile(
       CompleteDto completeDto) async {
     try {
       log("update DTO: ${completeDto.toJson().toString()}");

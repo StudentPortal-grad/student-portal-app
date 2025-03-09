@@ -29,7 +29,7 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
   final SignupUc signupUc = SignupUc(authRepository: getIt.get<AuthRepository>());
   final VerifyEmailUc verifyEmailUc = VerifyEmailUc(authRepository: getIt.get<AuthRepository>());
   final ResendValidationUC resendValidationUC = ResendValidationUC(authRepository: getIt.get<AuthRepository>());
-  final UpdateDateUc updateDataUc = UpdateDateUc(authRepository: getIt.get<AuthRepository>());
+  final CompleteProfileUC updateDataUc = CompleteProfileUC(authRepository: getIt.get<AuthRepository>());
 
   // Controllers
   final TextEditingController emailController = TextEditingController();
