@@ -47,7 +47,7 @@ class AppDrawer extends StatelessWidget {
                       );
                     }),
                 _buildDrawerItem(
-                  title: "Account Settings",
+                  title: "Settings",
                   icon: Icons.settings,
                   onTap: () => AppRouter.router.push(AppRouter.accountSettings),
                 ),
