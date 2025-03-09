@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:student_portal/contestants.dart';
 import 'package:student_portal/core/helpers/app_size_boxes.dart';
 import 'package:student_portal/core/theming/colors.dart';
 import 'package:student_portal/core/theming/text_styles.dart';
 import 'package:student_portal/core/utils/app_router.dart';
 import 'package:student_portal/core/utils/assets_app.dart';
-import 'package:student_portal/core/widgets/custom_app_button.dart';
 import 'package:student_portal/core/widgets/custom_image_view.dart';
+import 'package:student_portal/core/widgets/user_row_view.dart';
+import '../../../settings/presentation/widgets/logout_button.dart';
 
 class AppDrawer extends StatelessWidget {
   const AppDrawer({super.key});
@@ -25,32 +25,7 @@ class AppDrawer extends StatelessWidget {
         children: [
           _buildDrawerTitle(),
           30.heightBox,
-          Row(
-            children: [
-              CustomImageView(
-                imagePath: kUserImage,
-                circle: true,
-                height: 58.r,
-                width: 58.r,
-              ),
-              12.widthBox,
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('Mina Zarif', style: Styles.font18w600),
-                    4.heightBox,
-                    Text(
-                      '@mina10',
-                      style: Styles.font12w400,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
+          UserRowView(imageSize: 58.r),
           30.heightBox,
           Container(
             padding: EdgeInsets.all(12.r),
@@ -105,15 +80,7 @@ class AppDrawer extends StatelessWidget {
             ),
           ),
           30.heightBox,
-          CustomAppButton(
-            label: "Sign Out",
-            onTap: () {
-              AppRouter.clearAndNavigate(AppRouter.loginView);
-            },
-            backgroundColor: Colors.white,
-            textStyle:
-                Styles.font15w600.copyWith(color: ColorsManager.orangeColor),
-          ),
+          LogoutButton()
         ],
       ),
     );

@@ -7,11 +7,10 @@ import 'package:student_portal/core/widgets/custom_appbar.dart';
 import 'package:student_portal/core/widgets/user_row_view.dart';
 import 'package:student_portal/features/settings/presentation/screens/personal_data_screen.dart';
 import 'package:student_portal/features/settings/presentation/screens/profile_data_screen.dart';
+import 'package:student_portal/features/settings/presentation/widgets/logout_button.dart';
 
 import '../../../../core/helpers/extensions.dart';
 import '../../../../core/theming/text_styles.dart';
-import '../../../../core/utils/app_router.dart';
-import '../../../../core/widgets/custom_app_button.dart';
 import 'academic_data.dart';
 import 'change_password_screen.dart';
 import 'notification_settings_screen.dart';
@@ -123,17 +122,7 @@ class AccountSettingsScreen extends StatelessWidget {
               ),
             ),
             30.heightBox,
-            CustomAppButton(
-              width: 0.8.sw,
-              label: "Sign Out",
-              onTap: () {
-                // call logout endpoint
-                AppRouter.clearAndNavigate(AppRouter.loginView);
-              },
-              backgroundColor: Colors.white,
-              textStyle:
-                  Styles.font15w600.copyWith(color: ColorsManager.orangeColor),
-            ),
+            LogoutButton(),
           ],
         ),
       ),

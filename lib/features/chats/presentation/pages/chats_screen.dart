@@ -35,7 +35,7 @@ class ChatsScreen extends StatelessWidget {
                         id: (index + 1).toString(), name: 'User $index'),
                     lastMessage: Message(
                         senderId: '1',
-                        createdAt: DateTime.parse('12:00'),
+                        createdAt: DateTime.parse('2023-01-01'),
                         content: 'Hii',
                         id: '15'),
                   ),

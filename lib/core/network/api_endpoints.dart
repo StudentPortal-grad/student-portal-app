@@ -4,7 +4,7 @@ abstract class ApiEndpoints {
   // Auth Endpoints
   static const String login = "auth/login";
   static const String signup = "auth/signup/initiate";
-  static const String checkEmail = "auth/resend-verification";
+  static const String resendVerification = "auth/resend-verification";
   static const String forgetPassword = "auth/forgot-password";
   static const String verifyOtp = 'auth/verify-reset-otp';
   static const String verifyEmail = "auth/verify-email";
