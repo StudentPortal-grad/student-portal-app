@@ -18,3 +18,15 @@ final class ProfileFailureState extends ProfileState {
 
   ProfileFailureState(this.failure);
 }
+
+final class ChangePasswordFailureState extends ProfileState {
+  final Failure failure;
+
+  ChangePasswordFailureState(this.failure);
+}
+
+final class ChangePasswordSuccessState extends ProfileState {
+  final String message;
+
+  ChangePasswordSuccessState(this.message);
+}

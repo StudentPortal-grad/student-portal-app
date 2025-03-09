@@ -5,9 +5,9 @@ import '../../../../core/errors/data/model/error_model.dart';
 import '../../../auth/data/model/user_model/user.dart';
 
 class GetMyProfileUs {
-  final ProfileRepository getMyProfileRepo;
+  final ProfileRepository profileRepository;
 
-  GetMyProfileUs({required this.getMyProfileRepo});
+  GetMyProfileUs({required this.profileRepository});
 
-  Future<Either<Failure, User>> call() => getMyProfileRepo.getMyProfile();
+  Future<Either<Failure, User>> call() => profileRepository.getMyProfile();
 }

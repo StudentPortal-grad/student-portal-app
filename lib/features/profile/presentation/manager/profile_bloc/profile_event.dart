@@ -16,3 +16,9 @@ class UpdateMyProfileEvent extends ProfileEvent {
 
   UpdateMyProfileEvent({required this.updateProfileDto});
 }
+
+class ChangePasswordEvent extends ProfileEvent {
+  final ChangePasswordDto changePasswordDto;
+
+  ChangePasswordEvent({required this.changePasswordDto});
+}
