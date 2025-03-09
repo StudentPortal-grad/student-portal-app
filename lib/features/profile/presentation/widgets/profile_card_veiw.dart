@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:student_portal/core/helpers/app_size_boxes.dart';
 import 'package:student_portal/core/helpers/app_text_view.dart';
-import 'package:student_portal/core/repo/user_repository.dart';
 import 'package:student_portal/core/utils/app_router.dart';
 import 'package:student_portal/features/profile/presentation/widgets/profile_details.dart';
 
@@ -11,11 +10,13 @@ import '../../../../core/theming/text_styles.dart';
 import '../../../../core/utils/assets_app.dart';
 import '../../../../core/widgets/custom_appbar.dart';
 import '../../../../core/widgets/custom_image_view.dart';
+import '../../../auth/data/model/user_model/user.dart';
 
 class ProfileCardView extends StatelessWidget {
-  const ProfileCardView({super.key, this.onPostsTap});
+  const ProfileCardView({super.key, this.onPostsTap, this.user});
 
   final Function()? onPostsTap;
+  final User? user;
 
   @override
   Widget build(BuildContext context) {
@@ -43,9 +44,7 @@ class ProfileCardView extends StatelessWidget {
           backgroundColor: Colors.transparent,
           leadingIconColor: Colors.white,
           action: Icon(Icons.more_vert_rounded, color: Colors.white),
-          actionOnTap: () {
-            print(UserRepository.user?.profilePicture);
-          },
+          actionOnTap: () {},
         ),
 
         // profile body
@@ -57,17 +56,17 @@ class ProfileCardView extends StatelessWidget {
             children: [
               CustomImageView(
                 placeHolder: AssetsApp.userPlaceHolder,
-                imagePath: UserRepository.user?.profilePicture ?? AssetsApp.userPlaceHolder,
+                imagePath: user?.profilePicture ?? AssetsApp.userPlaceHolder,
                 width: 85.r,
                 height: 85.r,
                 circle: true,
               ),
               10.heightBox,
-              "Mina Zarif".make(
+              (user?.name ?? '').make(
                   style: Styles.font22w700
                       .copyWith(color: ColorsManager.textColor)),
               5.heightBox,
-              "@Mina10".make(
+              "@${user?.username?? ''}".make(
                   style: Styles.font14w400
                       .copyWith(color: ColorsManager.grayColor)),
               25.heightBox,

@@ -8,21 +8,13 @@ import '../../../../core/theming/text_styles.dart';
 import '../../../../core/utils/assets_app.dart';
 import '../../../../core/widgets/app_text.dart';
 import '../../../../core/widgets/custom_image_view.dart';
+import '../../../auth/data/model/user_model/profile.dart';
 import '../../../home/presentation/widgets/category_tag_view.dart';
 
 class AboutProfileUserView extends StatelessWidget {
-  const AboutProfileUserView({super.key});
+  const AboutProfileUserView({super.key, this.userProfile});
 
-  static const bio =
-      "Enjoy your favorite dish and a lovely your friends and family and have a great time. Food from local food trucks will be available for purchase.";
-  static List<String> dummyTags = [
-    'AI',
-    'Researchers',
-    'Flutter',
-    'Python',
-    'Deep Learning',
-    'Machine Learning'
-  ];
+  final Profile? userProfile;
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +63,7 @@ class AboutProfileUserView extends StatelessWidget {
           ),
           10.heightBox,
           AppText(
-            text: bio,
+            text: userProfile?.bio ?? '',
             style: Styles.font16w500.copyWith(
               fontWeight: FontWeight.w400,
               color: ColorsManager.textColor,
@@ -86,9 +78,10 @@ class AboutProfileUserView extends StatelessWidget {
             spacing: 7.w,
             runSpacing: 7.h,
             children: List.generate(
-              dummyTags.length,
+              userProfile?.interests?.length ?? 0,
               (index) => CategoryTagView(
-                title: dummyTags[index],
+                index: index,
+                title: userProfile?.interests?[index] ?? '',
               ),
             ),
           ),

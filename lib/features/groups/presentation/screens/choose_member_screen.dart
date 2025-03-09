@@ -35,6 +35,7 @@ class ChooseMemberScreen extends StatelessWidget {
               child: ListView.separated(
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (context, index) => CategoryTagView(
+                  index: index,
                   title: 'Mina',
                   removeTap: (p0) {},
                   backGround: ColorsManager.babyBlue,

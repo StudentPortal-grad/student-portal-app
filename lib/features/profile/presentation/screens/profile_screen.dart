@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:student_portal/core/repo/user_repository.dart';
 import 'package:student_portal/core/theming/colors.dart';
 import '../../../../core/theming/text_styles.dart';
+import '../manager/profile_bloc/profile_bloc.dart';
 import '../widgets/about_profile_user_view.dart';
 import '../widgets/profile_card_veiw.dart';
 import '../widgets/profile_posts_view.dart';
 import '../widgets/profile_resources_view.dart';
 
 class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({super.key});
+  const ProfileScreen({super.key, this.userId});
+
+  final String? userId;
 
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
@@ -46,40 +51,57 @@ class _ProfileScreenState extends State<ProfileScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ColorsManager.backgroundColorDeep,
-      body: SingleChildScrollView(
-        controller: _scrollController,
-        child: Column(
-          children: [
-            ProfileCardView(onPostsTap: _onPostTap),
-            TabBar(
-              splashFactory: NoSplash.splashFactory,
-              dividerColor: Colors.transparent,
-              labelStyle: Styles.font14w400,
-              indicator: UnderlineTabIndicator(
-                borderSide:
-                    BorderSide(color: ColorsManager.mainColor, width: 2.5.w),
-                borderRadius: BorderRadius.circular(7.r),
-              ),
-              labelColor: ColorsManager.mainColor,
-              tabs: [
-                Tab(text: 'ABOUT'),
-                Tab(text: 'POST'),
-                Tab(text: 'RESOURCES'),
-              ],
-              controller: _tabController,
-            ),
-            SizedBox(
-              height: 0.75.sh,
-              child: TabBarView(
-                controller: _tabController,
-                children: [
-                  AboutProfileUserView(),
-                  ProfilePostsView(),
-                  ProfileResourcesView(),
-                ],
-              ),
-            ),
-          ],
+      body: BlocProvider(
+        create: (context) {
+          final ProfileBloc profileBloc = ProfileBloc();
+          if (widget.userId == null || widget.userId == UserRepository.user?.id) {
+            return profileBloc..add(GetMyProfileEvent());
+          }
+          return ProfileBloc()..add(GetUserProfileEvent(userId: widget.userId ?? ''));
+        },
+        child: BlocConsumer<ProfileBloc, ProfileState>(
+          listener: (context, state) {},
+          builder: (context, state) {
+            if (state is ProfileSuccessState) {
+              return SingleChildScrollView(
+                controller: _scrollController,
+                child: Column(
+                  children: [
+                    ProfileCardView(onPostsTap: _onPostTap, user: state.user),
+                    TabBar(
+                      splashFactory: NoSplash.splashFactory,
+                      dividerColor: Colors.transparent,
+                      labelStyle: Styles.font14w400,
+                      indicator: UnderlineTabIndicator(
+                        borderSide: BorderSide(
+                            color: ColorsManager.mainColor, width: 2.5.w),
+                        borderRadius: BorderRadius.circular(7.r),
+                      ),
+                      labelColor: ColorsManager.mainColor,
+                      tabs: [
+                        Tab(text: 'ABOUT'),
+                        Tab(text: 'POST'),
+                        Tab(text: 'RESOURCES'),
+                      ],
+                      controller: _tabController,
+                    ),
+                    SizedBox(
+                      height: 0.75.sh,
+                      child: TabBarView(
+                        controller: _tabController,
+                        children: [
+                          AboutProfileUserView(userProfile: state.user.profile),
+                          ProfilePostsView(),
+                          ProfileResourcesView(),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            }
+            return SizedBox.shrink();
+          },
         ),
       ),
     );

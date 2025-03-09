@@ -52,6 +52,7 @@ class PostView extends StatelessWidget {
             children: List.generate(
               dummyTags.length,
               (index) => CategoryTagView(
+                index: index,
                 title: dummyTags[index],
               ),
             ),

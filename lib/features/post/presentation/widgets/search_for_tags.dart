@@ -85,6 +85,7 @@ class _SearchForTagsState extends State<SearchForTags> {
           children: List.generate(
             dummyTags.length,
             (index) => CategoryTagView(
+              index: index,
               title: dummyTags.toList()[index],
               removeTap: (String p0) {
                 setState(() {

@@ -7,6 +7,7 @@ import 'package:student_portal/core/utils/app_router.dart';
 import 'package:student_portal/core/utils/assets_app.dart';
 import 'package:student_portal/core/widgets/custom_image_view.dart';
 import 'package:student_portal/core/widgets/user_row_view.dart';
+import '../../../../core/repo/user_repository.dart';
 import '../../../settings/presentation/widgets/logout_button.dart';
 
 class AppDrawer extends StatelessWidget {
@@ -40,7 +41,10 @@ class AppDrawer extends StatelessWidget {
                     title: "Profile",
                     icon: Icons.person,
                     onTap: () {
-                      AppRouter.router.push(AppRouter.profile);
+                      AppRouter.router.push(
+                        AppRouter.profile,
+                        extra: {'userId': UserRepository.user?.id},
+                      );
                     }),
                 _buildDrawerItem(
                   title: "Account Settings",
