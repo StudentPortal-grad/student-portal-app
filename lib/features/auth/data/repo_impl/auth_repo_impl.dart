@@ -30,7 +30,6 @@ import '../../../../core/repo/user_repository.dart';
 import '../../../../core/utils/secure_storage.dart';
 import '../../../../core/utils/service_locator.dart';
 import '../../domain/repo/auth_repo.dart';
-import '../model/token_model/token_model.dart';
 import '../model/user_model/user.dart';
 
 class AuthRepoImpl implements AuthRepository {
@@ -44,6 +43,7 @@ class AuthRepoImpl implements AuthRepository {
       {required String email}) async {
     try {
       var data = await apiService.post(
+        isAuth: true,
         endpoint: ApiEndpoints.forgetPassword,
         data: {"email": email},
       );
@@ -59,6 +59,7 @@ class AuthRepoImpl implements AuthRepository {
     log(loginRequest.toJson().toString());
     try {
       var data = await apiService.post(
+        isAuth: true,
         endpoint: ApiEndpoints.login,
         data: loginRequest.toJson(),
       );
@@ -83,6 +84,7 @@ class AuthRepoImpl implements AuthRepository {
     try {
       var data = await apiService.post(
         endpoint: ApiEndpoints.resendVerification,
+        isAuth: true,
         data: {
           "email": email,
         },
@@ -99,6 +101,7 @@ class AuthRepoImpl implements AuthRepository {
     try {
       log(setNewPasswordDTO.toJson().toString());
       var data = await apiService.post(
+        isAuth: true,
         endpoint: ApiEndpoints.resetPassword,
         data: setNewPasswordDTO.toJson(),
       );
@@ -115,6 +118,7 @@ class AuthRepoImpl implements AuthRepository {
       {required SignupDTO signupRequest}) async {
     try {
       var data = await apiService.post(
+        isAuth: true,
         endpoint: ApiEndpoints.signup,
         data: signupRequest.toJson(),
       );
@@ -130,17 +134,11 @@ class AuthRepoImpl implements AuthRepository {
   Future<Either<Failure, UpdateResponse>> completeProfile(
       CompleteDto completeDto) async {
     try {
-      log("update DTO: ${completeDto.toJson().toString()}");
-      TokenModel? tokenModel = await secureStorage.readSecureData();
-      if (tokenModel == null) {
-        return Left(ServerFailure(message: "Token not found"));
-      }
-
       var data = await apiService.post(
         endpoint: ApiEndpoints.completeProfile,
         formData: await completeDto.toFormData(),
-        token: tokenModel.accessToken,
       );
+
       var response = UpdateResponse.fromJson(data);
       UserRepository.setUser(response.data);
       log("Update Response: $data");
@@ -157,6 +155,7 @@ class AuthRepoImpl implements AuthRepository {
       var data = await apiService.post(
         endpoint: ApiEndpoints.verifyEmail,
         data: signupOtpDto.toJson(),
+        isAuth: true,
       );
       log("Verify Success");
       secureStorage.writeSecureData(
@@ -178,6 +177,7 @@ class AuthRepoImpl implements AuthRepository {
       var data = await apiService.post(
         endpoint: ApiEndpoints.verifyOtp,
         data: otpDTO.toJson(),
+        isAuth: true,
       );
       String? resetToken = data['data']['resetToken'];
       if (resetToken != null) {
@@ -193,14 +193,7 @@ class AuthRepoImpl implements AuthRepository {
   @override
   Future<Either<Failure, String>> logout() async{
     try {
-      TokenModel? tokenModel = await secureStorage.readSecureData();
-      if (tokenModel == null) {
-        return Left(ServerFailure(message: "Token not found"));
-      }
-      var data = await apiService.post(
-        endpoint: ApiEndpoints.logout,
-        token: tokenModel.accessToken,
-      );
+      var data = await apiService.post(endpoint: ApiEndpoints.logout);
       UserRepository.removeUser();
       return Right(data['message']);
     } on DioException catch (e) {

@@ -3,8 +3,6 @@ import 'dart:developer';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:student_portal/core/errors/data/model/error_model.dart';
-import 'package:student_portal/core/utils/secure_storage.dart';
-import 'package:student_portal/core/utils/service_locator.dart';
 import 'package:student_portal/features/profile/data/dto/update_profile_dto.dart';
 import 'package:student_portal/features/profile/domain/repo/profile_repository.dart';
 
@@ -23,7 +21,8 @@ class ProfileRepositoryImpl implements ProfileRepository {
   @override
   Future<Either<Failure, User>> getMyProfile() async {
     try {
-      var data = await apiService.get(endpoint: ApiEndpoints.myProfile);
+      var data = await apiService.get(
+        endpoint: ApiEndpoints.myProfile);
       log(data.toString());
       User user = User.fromJson(data['data']['user']);
       UserRepository.setUser(user);
@@ -67,7 +66,6 @@ class ProfileRepositoryImpl implements ProfileRepository {
   Future<Either<Failure, String>> changePassword({required ChangePasswordDto changePasswordDto})async {
     try {
       var data = await apiService.post(
-        token: getIt.get<SecureStorage>().accessTokenKey,
         endpoint: ApiEndpoints.changePassword,
         data: changePasswordDto.toJson(),
       );

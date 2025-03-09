@@ -257,7 +257,7 @@ abstract class AppRouter {
           return buildPage(
             context: context,
             state: state,
-            child: ProfileScreen(),
+            child: ProfileScreen(userId: args?['userId'] as String?),
           );
         },
       ),

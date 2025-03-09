@@ -67,7 +67,6 @@ class ServerFailure extends Failure {
       if (errorCode == 'TOKEN_EXPIRED' || errorCode == 'INVALID_TOKEN') {
         log('Token has expired.');
         if (AppRouter.context != null) {
-          log('AppRouter.context != null');
           AppDialogs.showErrorDialog(
             AppRouter.context!,
             dismissible: false,

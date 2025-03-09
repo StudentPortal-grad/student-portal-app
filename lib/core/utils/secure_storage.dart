@@ -5,67 +5,73 @@ import '../../features/auth/data/model/token_model/token_model.dart';
 class SecureStorage {
   final FlutterSecureStorage storage = const FlutterSecureStorage();
 
-  final String idKey = 'id';
-  final String accessTokenKey = 'access_token';
-  final String refreshTokenKey = 'refresh_token';
-  final String resetTokenKey = 'reset_token';
-  final String onboardingKey = 'onboarding_key';
+  final String _idKey = 'id';
+  final String _accessTokenKey = 'access_token';
+  final String _refreshTokenKey = 'refresh_token';
+  final String _resetTokenKey = 'reset_token';
+  final String _onboardingKey = 'onboarding_key';
 
   writeOnboardingData(bool isFirst) async {
-    await storage.write(key: onboardingKey, value: isFirst.toString());
+    await storage.write(key: _onboardingKey, value: isFirst.toString());
   }
 
   Future<bool> readOnboardingData() async {
     bool isFirst = true;
-    isFirst = (await storage.read(key: onboardingKey) == "true" ||
-        await storage.read(key: onboardingKey) == null);
+    isFirst = (await storage.read(key: _onboardingKey) == "true" ||
+        await storage.read(key: _onboardingKey) == null);
     return isFirst;
   }
 
   writeResetTokenData({
     required String resetToken,
   }) async {
-    await storage.write(key: resetTokenKey, value: resetToken);
+    await storage.write(key: _resetTokenKey, value: resetToken);
   }
 
   deleteResetTokenData() async {
-    await storage.delete(key: resetTokenKey);
+    await storage.delete(key: _resetTokenKey);
   }
 
   Future<String?> readResetTokenData() async =>
-      await storage.read(key: resetTokenKey);
+      await storage.read(key: _resetTokenKey);
 
   writeSecureData({
     String? id,
     String? accessToken,
     String? refreshToken,
   }) async {
-    if (id != null) await storage.write(key: idKey, value: id);
-    if (accessToken != null) await storage.write(key: accessTokenKey, value: accessToken);
-    if (refreshToken != null) await storage.write(key: refreshTokenKey, value: refreshToken);
+    if (id != null) await storage.write(key: _idKey, value: id);
+    if (accessToken != null) {
+      await storage.write(key: _accessTokenKey, value: accessToken);
+    }
+    if (refreshToken != null) {
+      await storage.write(key: _refreshTokenKey, value: refreshToken);
+    }
   }
 
   writeSecureErrorResponse({
     required String accessToken,
     required String refreshToken,
   }) async {
-    await storage.write(key: accessTokenKey, value: accessToken);
-    await storage.write(key: refreshTokenKey, value: refreshToken);
+    await storage.write(key: _accessTokenKey, value: accessToken);
+    await storage.write(key: _refreshTokenKey, value: refreshToken);
   }
 
   Future<TokenModel?> readSecureData() async {
     TokenModel tokenModel = TokenModel(
-      id: await storage.read(key: idKey),
-      refreshToken: await storage.read(key: refreshTokenKey),
-      accessToken: await storage.read(key: accessTokenKey),
+      id: await storage.read(key: _idKey),
+      refreshToken: await storage.read(key: _refreshTokenKey),
+      accessToken: await storage.read(key: _accessTokenKey),
     );
     return tokenModel;
   }
 
+  Future<String?> readAccessToken() async => await storage.read(key: _accessTokenKey);
+
   deleteSecureData() async {
-    await storage.delete(key: idKey);
-    await storage.delete(key: accessTokenKey);
-    await storage.delete(key: refreshTokenKey);
-    // await storage.delete(key: onboardingKey);
+    await storage.delete(key: _idKey);
+    await storage.delete(key: _accessTokenKey);
+    await storage.delete(key: _refreshTokenKey);
+    await storage.delete(key: _onboardingKey);
   }
 }

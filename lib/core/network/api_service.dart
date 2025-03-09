@@ -1,4 +1,6 @@
 import 'package:dio/dio.dart';
+import '../utils/secure_storage.dart';
+import '../utils/service_locator.dart';
 
 class ApiService {
   final Dio _dio;
@@ -17,9 +19,12 @@ class ApiService {
     Map<String, dynamic>? data,
     FormData? formData,
     String? token,
+    bool isAuth = false,
   }) async {
+    if(!isAuth){
+      token = (token ?? await getIt.get<SecureStorage>().readAccessToken());
+    }
     _dio.options.headers = {'Authorization': 'Bearer $token'};
-
     assert(!(data != null && formData != null),
         "Both 'body' and 'formData' should not be provided at the same time.");
 
@@ -38,7 +43,11 @@ class ApiService {
     Map<String, dynamic>? query,
     String? token,
     String? refreshToken,
+    bool isAuth = false,
   }) async {
+    if(!isAuth){
+      token = (token ?? await getIt.get<SecureStorage>().readAccessToken());
+    }
     _dio.options.headers = {
       'Authorization': 'Bearer $token',
       if (refreshToken != null) 'x-refresh-token': refreshToken,
@@ -60,7 +69,11 @@ class ApiService {
     Map<String, dynamic>? query,
     String? token,
     String? refreshToken,
+    bool isAuth = false,
   }) async {
+    if(!isAuth){
+      token = (token ?? await getIt.get<SecureStorage>().readAccessToken());
+    }
     _dio.options.headers = {
       'Authorization': 'Bearer $token',
       if (refreshToken != null) 'x-refresh-token': refreshToken,
@@ -77,7 +90,11 @@ class ApiService {
     Map<String, dynamic>? query,
     String? token,
     String? refreshToken,
+    bool isAuth = false,
   }) async {
+    if(!isAuth){
+      token = (token ?? await getIt.get<SecureStorage>().readAccessToken());
+    }
     _dio.options.headers = {
       'Authorization': 'Bearer $token',
       if (refreshToken != null) 'x-refresh-token': refreshToken,
@@ -95,7 +112,11 @@ class ApiService {
     String? token,
     String? refreshToken,
     String? id,
+    bool isAuth = false,
   }) async {
+    if(!isAuth){
+      token = (token ?? await getIt.get<SecureStorage>().readAccessToken());
+    }
     _dio.options.headers = {
       'Authorization': 'Bearer $token',
       if (refreshToken != null) 'x-refresh-token': refreshToken,
@@ -103,25 +124,6 @@ class ApiService {
     var response = await _dio.put(endpoint, data: data, queryParameters: {
       "id": id,
     });
-    return response.data;
-  }
-
-  Future<Map<String, dynamic>> sendFormData({
-    required String endpoint,
-    required FormData formData,
-    String? refreshToken,
-    Map<String, dynamic>? params,
-    String? token,
-  }) async {
-    _dio.options.headers = {
-      'Authorization': 'Bearer $token',
-      if (refreshToken != null) 'x-refresh-token': refreshToken,
-    };
-    var response = await _dio.patch(
-      endpoint,
-      data: formData,
-      queryParameters: params ?? {},
-    );
     return response.data;
   }
 }
