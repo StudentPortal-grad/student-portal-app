@@ -63,13 +63,13 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   String? profileImage;
 
   // academic Controllers
-  final TextEditingController universityController = TextEditingController();
-  final TextEditingController collegeController = TextEditingController();
+  final TextEditingController universityController = TextEditingController(text: UserRepository.user?.university);
+  final TextEditingController collegeController = TextEditingController(text: UserRepository.user?.college);
   final TextEditingController gpaController =
       TextEditingController(text: UserRepository.user?.gpa?.toString());
   final TextEditingController levelController =
       TextEditingController(text: UserRepository.user?.level?.toString());
-  String? position;
+  String? position = UserRepository.user?.role;
 
 // usecases
   final GetMyProfileUs getMyProfileUs =
@@ -140,10 +140,11 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       UpdateMyAcademicDataEvent event, Emitter<ProfileState> emit) async {
     emit(ProfileLoadingState());
     var data = await updateMyProfileUC.call(UpdateProfileDto(
-      name: nameController.text,
-      userName: userNameController.text,
-      profile: Profile(bio: bioController.text),
-      profilePicture: profileImage,
+      university: universityController.text,
+      college: collegeController.text,
+      position: position,
+      gpa: double.tryParse(gpaController.text),
+      level: double.tryParse(levelController.text),
     ));
     data.fold(
       (error) => emit(ProfileFailureState(error)),

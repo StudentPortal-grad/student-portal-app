@@ -15,8 +15,8 @@ class Profile {
 
   Map<String, dynamic> toJson() {
     return {
-      'bio': bio,
-      'interests': interests,
+      if(bio != null) 'bio': bio,
+      if(interests != null && interests!.isNotEmpty)'interests': interests,
     };
   }
 }
