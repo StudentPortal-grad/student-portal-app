@@ -74,15 +74,21 @@ class UpdateProfileDto {
     if (position != null) formDataMap['role'] = position;
     if (gpa != null) formDataMap['gpa'] = gpa.toString();
     if (level != null) formDataMap['level'] = level.toString();
-    formDataMap['profile[bio]'] = profile?.bio == null || profile!.bio!.isEmpty
-        ? "Hey there! I'm using StudyPortal!"
-        : profile!.bio;
-    // Handle `profile[interests][]` as multiple form fields
-    if (profile?.interests != null && profile!.interests!.isNotEmpty) {
-      for (var interest in profile!.interests!) {
-        formDataMap.putIfAbsent('profile[interests][]', () => []).add(interest);
+    // Handle profile bio with default value
+    if (profile != null) {
+      formDataMap['profile[bio]'] = profile!.bio == null || profile!.bio!.isEmpty
+          ? "Hey there! I'm using StudyPortal!"
+          : profile!.bio;
+
+      // Only add interests if the list is not null and not empty
+      if (profile!.interests != null && profile!.interests!.isNotEmpty) {
+        // Add each interest as a separate field with the same name
+        for (var interest in profile!.interests!) {
+          formDataMap['profile[interests][]'] = interest;
+        }
       }
     }
+
     return FormData.fromMap(formDataMap);
   }
 }

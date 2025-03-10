@@ -111,7 +111,10 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     var data = await updateMyProfileUC.call(UpdateProfileDto(
       name: nameController.text,
       userName: userNameController.text,
-      profile: Profile(bio: bioController.text),
+      profile: Profile(
+        bio: bioController.text,
+        interests: UserRepository.user?.profile?.interests,
+      ),
       profilePicture: profileImage,
     ));
     data.fold(
