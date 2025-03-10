@@ -15,14 +15,16 @@ class GetUserProfileEvent extends ProfileEvent {
   GetUserProfileEvent({required this.userId});
 }
 
-class UpdateMyProfileEvent extends ProfileEvent {
-  final UpdateProfileDto updateProfileDto;
+class UpdateMyProfileDataEvent extends ProfileEvent {}
 
-  UpdateMyProfileEvent({required this.updateProfileDto});
-}
+class UpdateMyPersonalDataEvent extends ProfileEvent {}
+
+class UpdateMyAcademicDataEvent extends ProfileEvent {}
 
 class ChangePasswordEvent extends ProfileEvent {
   final ChangePasswordDto changePasswordDto;
 
   ChangePasswordEvent({required this.changePasswordDto});
 }
+
+class OnProfileImagePicked extends ProfileEvent {}

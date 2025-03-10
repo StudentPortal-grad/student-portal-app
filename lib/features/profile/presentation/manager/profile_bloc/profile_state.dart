@@ -32,3 +32,5 @@ final class ChangePasswordSuccessState extends ProfileState {
 
   ChangePasswordSuccessState(this.message);
 }
+
+final class OnPickProfileImageState extends ProfileState {}

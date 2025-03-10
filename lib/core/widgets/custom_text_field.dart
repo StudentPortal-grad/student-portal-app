@@ -46,7 +46,8 @@ class CustomTextField extends StatefulWidget {
 
   final TextEditingController controller;
   final Function()? onSuffixIconTap, onTap;
-  final Function(dynamic value)? validator, onChanged;
+  final String? Function(String)? validator;
+  final Function(dynamic value)? onChanged;
   final String? hintText, labelText;
   final IconData? iconData;
   final bool showSuffixIcon, showCursor;
@@ -123,7 +124,12 @@ class _CustomTextFieldState extends State<CustomTextField> {
             cursorColor: Theme.of(context).primaryColor,
             keyboardType: widget.textInputType,
             enabled: widget.enabled,
-            validator: (value) => widget.validator!(value),
+            validator: (value) {
+              if (widget.validator != null) {
+                return widget.validator!(value ?? "");
+              }
+              return null;
+            },
             onTapOutside: (_) => FocusManager.instance.primaryFocus?.unfocus(),
             decoration: InputDecoration(
               errorText: widget.errorText,

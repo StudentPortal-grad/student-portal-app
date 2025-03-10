@@ -42,7 +42,8 @@ class ChangePasswordScreen extends StatelessWidget {
             body: Form(
               key: bloc.changePasswordFormKey,
               child: SingleChildScrollView(
-                padding: EdgeInsetsDirectional.only(start: 20.w, end: 20.w, top: 30.h),
+                padding: EdgeInsetsDirectional.only(
+                    start: 20.w, end: 20.w, top: 30.h),
                 child: Column(
                   spacing: 32.h,
                   children: [

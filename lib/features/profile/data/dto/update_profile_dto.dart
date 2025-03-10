@@ -10,6 +10,7 @@ class UpdateProfileDto {
   final String? userName;
   final String? phoneNumber;
   final String? dateOfBirth;
+  final String? name;
 
   // Profile
   final Profile? profile;
@@ -21,20 +22,23 @@ class UpdateProfileDto {
   final num? gpa;
   final num? level;
 
-  UpdateProfileDto(
-      {this.profilePicture,
-      this.gender,
-      this.userName,
-      this.phoneNumber,
-      this.dateOfBirth,
-      this.university,
-      this.college,
-      this.position,
-      this.gpa,
-      this.profile,
-      this.level});
+  UpdateProfileDto({
+    this.name,
+    this.profilePicture,
+    this.gender,
+    this.userName,
+    this.phoneNumber,
+    this.dateOfBirth,
+    this.university,
+    this.college,
+    this.position,
+    this.gpa,
+    this.profile,
+    this.level,
+  });
 
   toJson() => {
+        'name': name,
         'profilePicture': profilePicture,
         'gender': gender,
         'userName': userName,
@@ -51,6 +55,7 @@ class UpdateProfileDto {
   // Convert to FormData for Dio
   Future<FormData> toFormData() async {
     final Map<String, dynamic> formDataMap = {};
+    if (name != null) formDataMap['name'] = name;
     if (profilePicture != null) {
       formDataMap['profilePicture'] = await MultipartFile.fromFile(
         profilePicture!,

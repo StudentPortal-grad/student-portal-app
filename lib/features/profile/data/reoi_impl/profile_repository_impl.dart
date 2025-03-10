@@ -48,16 +48,17 @@ class ProfileRepositoryImpl implements ProfileRepository {
   Future<Either<Failure, User>> updateProfile(
       {required UpdateProfileDto updateProfileDto}) async {
     try {
+      log(updateProfileDto.toJson().toString());
       var data = await apiService.patch(
         endpoint: ApiEndpoints.myProfile,
-        data: updateProfileDto.toJson(),
-        // formData: await updateProfileDto.toFormData(),
+        formData: await updateProfileDto.toFormData(),
       );
       log(data.toString());
       User user = User.fromJson(data['data']['user']);
       UserRepository.setUser(user);
       return Right(user);
     } on DioException catch (e) {
+      log(e.toString());
       return Left(ServerFailure.fromDioError(e));
     }
   }
