@@ -48,6 +48,7 @@ class ProfileRepositoryImpl implements ProfileRepository {
   Future<Either<Failure, User>> updateProfile(
       {required UpdateProfileDto updateProfileDto}) async {
     try {
+      log("updateProfileDTO");
       log(updateProfileDto.toJson().toString());
       var data = await apiService.patch(
         endpoint: ApiEndpoints.myProfile,

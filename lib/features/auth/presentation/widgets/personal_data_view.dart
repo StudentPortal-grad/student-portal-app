@@ -55,12 +55,13 @@ class PersonalDataView extends StatelessWidget {
                         ],
                         prefixIcon: Center(child: Text('@', style: Styles.font14w500)),
                         validator: (value) {
-                          if (value == null || value.isEmpty) {
+                          if (value.isEmpty) {
                             return 'Please enter your name';
                           }
                           if (value.contains(' ')) {
                             return 'Username cannot contain spaces';
                           }
+                          return null;
                         },
                         textInputType: TextInputType.name,
                         hintText: "User Name",
@@ -89,9 +90,10 @@ class PersonalDataView extends StatelessWidget {
                         controller: bloc.dateOfBirthController,
                         suffix: Icon(Icons.calendar_month_rounded),
                         validator: (value) {
-                          if (value == null || value.isEmpty) {
+                          if (value.isEmpty) {
                             return 'Please enter your birthDate';
                           }
+                          return null;
                         },
                         onTap: () async {
                           DateTime? birthData = await DatePickerHelper.pickDate(context, initialDate: DateTime(2003));

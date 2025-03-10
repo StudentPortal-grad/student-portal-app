@@ -38,18 +38,18 @@ class UpdateProfileDto {
   });
 
   toJson() => {
-        'name': name,
-        'profilePicture': profilePicture,
-        'gender': gender,
-        'userName': userName,
-        'phoneNumber': phoneNumber,
-        'dateOfBirth': dateOfBirth,
-        'university': university,
-        'college': college,
-        'position': position,
-        'gpa': gpa,
-        'level': level,
-        'profile': profile?.toJson(),
+        if (name != null) 'name': name,
+        if (profilePicture != null) 'profilePicture': profilePicture,
+        if (gender != null) 'gender': gender,
+        if (userName != null) 'userName': userName,
+        if (phoneNumber != null) 'phoneNumber': phoneNumber,
+        if (dateOfBirth != null) 'dateOfBirth': dateOfBirth,
+        if (university != null) 'university': university,
+        if (college != null) 'college': college,
+        if (position != null) 'position': position,
+        if (gpa != null) 'gpa': gpa,
+        if (level != null) 'level': level,
+        if (profile != null) 'profile': profile?.toJson(),
       };
 
   // Convert to FormData for Dio

@@ -58,8 +58,7 @@ class _CustomPhoneNumberInputState extends State<CustomPhoneNumberInput> {
   @override
   void initState() {
     super.initState();
-    _phoneNumber =
-        PhoneNumber(dialCode: '20', isoCode: 'EG'); // Default country code
+    _phoneNumber = widget.phoneNumber ?? PhoneNumber(dialCode: '20', isoCode: 'EG', phoneNumber: widget.phoneController?.text);
   }
 
   @override

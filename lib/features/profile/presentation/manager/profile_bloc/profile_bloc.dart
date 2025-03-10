@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:bloc/bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:meta/meta.dart';
 import 'package:student_portal/core/repo/user_repository.dart';
@@ -55,9 +56,10 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   final TextEditingController bioController =
       TextEditingController(text: UserRepository.user?.profile?.bio);
   PhoneNumber? phoneNumber;
-  final TextEditingController dateOfBirthController = TextEditingController();
+
+  final TextEditingController dateOfBirthController = TextEditingController(text: UserRepository.user?.dateOfBirth != null ? DateFormat('dd/MM/yyyy').format(UserRepository.user!.dateOfBirth!) : '');
   String? dateOfBirth;
-  String? gender;
+  String? gender = UserRepository.user?.gender;
   String? profileImage;
 
   // academic Controllers
@@ -121,12 +123,13 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   Future<void> _updatePersonalData(
       UpdateMyPersonalDataEvent event, Emitter<ProfileState> emit) async {
     emit(ProfileLoadingState());
-    var data = await updateMyProfileUC.call(UpdateProfileDto(
-      name: nameController.text,
-      userName: userNameController.text,
-      profile: Profile(bio: bioController.text),
-      profilePicture: profileImage,
-    ));
+    var data = await updateMyProfileUC.call(
+      UpdateProfileDto(
+        gender: gender,
+        phoneNumber: phoneNumber?.phoneNumber,
+        dateOfBirth: dateOfBirth,
+      ),
+    );
     data.fold(
       (error) => emit(ProfileFailureState(error)),
       (response) => emit(ProfileSuccessState(response)),
