@@ -195,6 +195,7 @@ class AuthRepoImpl implements AuthRepository {
     try {
       var data = await apiService.post(endpoint: ApiEndpoints.logout);
       UserRepository.removeUser();
+      getIt<SecureStorage>().deleteSecureData();
       return Right(data['message']);
     } on DioException catch (e) {
       log((e.toString()));

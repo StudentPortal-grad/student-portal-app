@@ -9,7 +9,7 @@ import 'package:student_portal/core/utils/app_router.dart';
 import 'package:student_portal/core/utils/assets_app.dart';
 import 'package:student_portal/features/home_layout/ui/widgets/drawer.dart';
 import 'package:student_portal/features/home_layout/ui/widgets/nav_bar.dart';
-
+import '../../../core/utils/socket_service.dart';
 import '../../chats/presentation/pages/chats_screen.dart';
 import '../../events/presentation/pages/events_screen.dart';
 import '../../home/presentation/pages/home_screen.dart';
@@ -24,12 +24,30 @@ class HomeLayoutScreen extends StatefulWidget {
 }
 
 class _HomeLayoutScreenState extends State<HomeLayoutScreen> {
-  // @override
-  // void initState() {
-  //   FirebaseManager.saveToken();
-  //   SocketService.emit('updateSocketId', message: {'token': 'Test_${AuthRepository.accessToken}'});
-  //   super.initState();
-  // }
+
+  @override
+  void initState() {
+    _listenToSocketEvents();
+    super.initState();
+  }
+
+  void _listenToSocketEvents() {
+    SocketService.socket.on('newMessage', (data) {
+      print('newMessage: $data');
+    });
+
+    SocketService.socket.on('friendRequestReceived', (data) {
+      print('friendRequestReceived: $data');
+    });
+
+    SocketService.socket.on('friendRequestAccepted', (data) {
+      print('friendRequestAccepted: $data');
+    });
+
+    SocketService.socket.on('friendRequestSent', (data) {
+      print('friendRequestSent: $data');
+    });
+  }
 
   int currentIndex = 0;
   bool isMenuOpen = false;
