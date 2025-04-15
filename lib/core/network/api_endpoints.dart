@@ -1,5 +1,8 @@
 abstract class ApiEndpoints {
-  static const String baseUrl = "http://192.168.1.7:8080/v1/";
+  static const String host = "http://192.168.1.7:8080";
+  static const String version = "/v1/";
+
+  static String baseUrl = host + version;
 
   // Auth Endpoints
   static const String login = "auth/login";
@@ -15,7 +18,7 @@ abstract class ApiEndpoints {
   // User Endpoints
   static const String myProfile = "users/me";
   static String getUserProfile(String userId) => "users/$userId";
-  static String changePassword = "users/me/password";
+  static const String changePassword = "users/me/password";
 
   // Messaging Endpoints
   static const String conversations = "conversations";

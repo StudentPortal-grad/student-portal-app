@@ -3,27 +3,36 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:device_preview/device_preview.dart';
+
 import 'core/utils/app_local_storage.dart';
 import 'core/utils/my_bloc_observer.dart';
 import 'core/utils/service_locator.dart';
+import 'core/utils/socket_service.dart';
 import 'features/app/view/app.dart';
 
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  Bloc.observer = MyBlocObserver();
   setupServiceLocator();
-  await AppLocalStorage.init();
-  await ScreenUtil.ensureScreenSize();
+
+  await Future.wait<void>([
+    AppLocalStorage.init(),
+    ScreenUtil.ensureScreenSize(),
+    SocketService.init(),
+  ]);
+
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
       statusBarBrightness: Brightness.light,
       statusBarIconBrightness: Brightness.dark,
     ),
   );
+
   runApp(
     DevicePreview(
       enabled: false,
       builder: (context) => const SPApp(),
     ),
   );
-  Bloc.observer = MyBlocObserver();
 }
