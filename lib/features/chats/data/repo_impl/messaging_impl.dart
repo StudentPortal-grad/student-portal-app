@@ -1,17 +1,5 @@
 import 'dart:async';
 import 'dart:developer';
-
-import 'package:dartz/dartz.dart';
-import 'package:dio/dio.dart';
-
-import 'package:student_portal/core/errors/data/model/error_model.dart';
-
-import 'package:student_portal/features/chats/data/dto/message_dto.dart';
-
-import 'package:student_portal/features/chats/data/model/message.dart';
-
-import '../../../../core/errors/data/model/failures.dart';
-import '../../../../core/network/api_endpoints.dart';
 import '../../../../core/network/api_service.dart';
 import '../../../../core/utils/socket_service.dart';
 import '../../domain/repo/messaging_repo.dart';
