@@ -25,7 +25,9 @@ class ConversationBloc extends Bloc<ConversationEvent, ConversationState> {
 
   // methods
   Future<void> _onGetConversationEvent(
-      GetConversationEvent event, Emitter<ConversationState> emit) async {}
+      GetConversationEvent event, Emitter<ConversationState> emit) async {
+    
+  }
 
   Future<void> _onSendMessageEvent(
       SendMessageEvent event, Emitter<ConversationState> emit) async {}
