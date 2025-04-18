@@ -4,9 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:student_portal/core/errors/data/model/error_model.dart';
 import 'package:student_portal/core/utils/app_router.dart';
 
-import '../../../helpers/app_dialog.dart';
-import '../../../utils/secure_storage.dart';
-import '../../../utils/service_locator.dart';
+import '../../../repo/user_repository.dart';
 
 class ServerFailure extends Failure {
   const ServerFailure({
@@ -66,17 +64,7 @@ class ServerFailure extends Failure {
     try {
       if (errorCode == 'TOKEN_EXPIRED' || errorCode == 'INVALID_TOKEN') {
         log('Token has expired.');
-        if (AppRouter.context != null) {
-          AppDialogs.showErrorDialog(
-            AppRouter.context!,
-            dismissible: false,
-            error: 'Token has expired please login again',
-            canPop: false,
-            okText: 'ok',
-            onOkTap: () => AppRouter.clearAndNavigate(AppRouter.loginView),
-          );
-        }
-        getIt<SecureStorage>().deleteSecureData();
+        UserRepository.invalidToken();
       }
     } on Exception catch (e) {
       log(e.toString());

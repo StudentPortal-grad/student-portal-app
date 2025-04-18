@@ -1,7 +1,9 @@
 import 'dart:developer';
 
+import '../helpers/app_dialog.dart';
 import '../utils/app_local_storage.dart';
 import '../../features/auth/data/model/user_model/user.dart';
+import '../utils/app_router.dart';
 import '../utils/secure_storage.dart';
 import '../utils/service_locator.dart';
 
@@ -33,5 +35,17 @@ class UserRepository {
       _user = null;
     }
     return _user;
+  }
+
+  static void invalidToken() {
+    AppDialogs.showErrorDialog(
+      AppRouter.context!,
+      dismissible: false,
+      error: 'Token has expired please login again',
+      canPop: false,
+      okText: 'ok',
+      onOkTap: () => AppRouter.clearAndNavigate(AppRouter.loginView),
+    );
+    getIt<SecureStorage>().deleteSecureData();
   }
 }

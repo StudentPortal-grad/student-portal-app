@@ -7,6 +7,7 @@ import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 import '../../features/auth/data/model/token_model/token_model.dart';
 import '../network/api_endpoints.dart';
+import '../repo/user_repository.dart';
 
 class SocketService {
   static Socket? _socket;
@@ -60,7 +61,12 @@ class SocketService {
     _socket!.onConnect((_) => log('Socket connected'));
     _socket!.onConnectError((error) => log('Connection error: $error'));
     _socket!.onDisconnect((_) => log('Socket disconnected'));
-    _socket!.onError((error) => log('Socket error: $error'));
+    _socket!.onError((error) {
+      log('Socket error: $error');
+      if (error['error'] == 'Invalid token') {
+        UserRepository.invalidToken();
+      }
+    });
     _socket!.onReconnect((_) => log('Socket reconnected'));
   }
 
@@ -85,4 +91,9 @@ class SocketService {
       log('Socket disconnected manually');
     }
   }
+}
+
+class SocketEvents {
+  static const String getConversations = 'getConversations';
+  static const String conversations = 'conversations';
 }
