@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:student_portal/core/helpers/app_size_boxes.dart';
@@ -53,7 +51,6 @@ class _HomeLayoutScreenState extends State<HomeLayoutScreen> {
   bool isMenuOpen = false;
 
   void _onItemTapped(int index) {
-    log("index $index");
     setState(() {
       currentIndex = index;
     });

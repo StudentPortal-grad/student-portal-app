@@ -154,6 +154,7 @@ class CustomImageView extends StatelessWidget {
             errorWidget: (context, url, error) => placeHolderWidget ??
                   Image.asset(
                     placeHolder,
+
                     height: height,
                     width: width,
                     fit: fit ?? BoxFit.cover,

@@ -30,9 +30,10 @@ class UserChatView extends StatelessWidget {
           CustomImageView(
             height: 56.r,
             width: 56.r,
-            imagePath: kUserImage,
+            imagePath: user?.profilePicture ?? '',
+            placeHolder:  kUserPlaceHolder,
             circle: true,
-            fit: BoxFit.contain,
+            fit: BoxFit.cover,
           ),
           10.widthBox,
           Column(
