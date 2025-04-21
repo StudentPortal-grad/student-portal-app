@@ -49,7 +49,6 @@ class ChatsScreen extends StatelessWidget {
                   ],
                 );
               }
-
               return const Center(child: CustomLoadingIndicator());
             },
           ),
@@ -65,7 +64,7 @@ class ChatsScreen extends StatelessWidget {
         Text("Messaging", style: Styles.font20w600),
         Spacer(),
         InkWell(
-          onTap: () {},
+          onTap: () => AppRouter.router.push(AppRouter.searchPeer),
           child: CircleAvatar(
             radius: 17.r,
             backgroundColor: ColorsManager.lightBabyBlue,
