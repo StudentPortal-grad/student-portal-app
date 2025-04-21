@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:student_portal/core/helpers/app_size_boxes.dart';
 import 'package:student_portal/core/utils/app_router.dart';
+import 'package:student_portal/core/widgets/custom_circular_progress_indicator.dart';
 import '../../../../core/theming/colors.dart';
 import '../../../../core/theming/text_styles.dart';
 import '../../../../core/utils/assets_app.dart';
@@ -17,15 +18,15 @@ class ChatsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => ChatsBloc()..add(StartListeningToConversations()),
-      child: BlocBuilder<ChatsBloc, ChatsState>(
-        builder: (context, state) {
-          if (state is ChatsStreamUpdated) {
-            return SafeArea(
-              child: Padding(
-                padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 28.w),
-                child: Column(
+    return SafeArea(
+      child: Padding(
+        padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 28.w),
+        child: BlocProvider(
+          create: (context) => ChatsBloc()..add(StartListeningToConversations()),
+          child: BlocBuilder<ChatsBloc, ChatsState>(
+            builder: (context, state) {
+              if (state is ChatsStreamUpdated) {
+                return Column(
                   children: [
                     _buildMessagesAppBar(),
                     20.heightBox,
@@ -46,13 +47,13 @@ class ChatsScreen extends StatelessWidget {
                       ),
                     ),
                   ],
-                ),
-              ),
-            );
-          }
+                );
+              }
 
-          return const Center(child: CircularProgressIndicator());
-        },
+              return const Center(child: CustomLoadingIndicator());
+            },
+          ),
+        ),
       ),
     );
   }
