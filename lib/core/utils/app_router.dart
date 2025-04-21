@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:student_portal/core/repo/user_repository.dart';
 import 'package:student_portal/features/chats/presentation/pages/dm_screen.dart';
+import 'package:student_portal/features/chats/presentation/pages/search_peer_screen.dart';
 import 'package:student_portal/features/community/presentation/screens/community_screen.dart';
 import 'package:student_portal/features/community/presentation/screens/create_community_screen.dart';
 import 'package:student_portal/features/post/presentation/pages/add_post_screen.dart';
@@ -53,6 +54,7 @@ abstract class AppRouter {
   //chat
   static const String dmScreen = '/dm';
   static const String createGroup = '/create_group';
+  static const String searchPeer = '/search_peer';
 
   // search
   static const String searchScreen = '/search';
@@ -215,6 +217,15 @@ abstract class AppRouter {
           context: context,
           state: state,
           child: const CreateGroupScreen(),
+        ),
+      ),
+      GoRoute(
+        path: searchPeer,
+        pageBuilder: (context, state) => buildPage(
+          useSlideTransition: false,
+          context: context,
+          state: state,
+          child: const SearchPeerScreen(),
         ),
       ),
       GoRoute(
