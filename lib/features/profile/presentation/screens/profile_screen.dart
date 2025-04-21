@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:student_portal/core/repo/user_repository.dart';
 import 'package:student_portal/core/theming/colors.dart';
 import '../../../../core/theming/text_styles.dart';
-import '../../../../core/widgets/custom_app_button.dart';
+import '../../../../core/widgets/custom_circular_progress_indicator.dart';
 import '../manager/profile_bloc/profile_bloc.dart';
 import '../widgets/about_profile_user_view.dart';
 import '../widgets/profile_card_veiw.dart';
