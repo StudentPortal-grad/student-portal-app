@@ -140,26 +140,39 @@ class CustomImageView extends StatelessWidget {
             color: color,
           );
         case ImageType.network:
-          return CachedNetworkImage(
-            height: height,
-            width: width,
-            fit: fit,
-            imageUrl: imagePath!,
-            color: color,
-            placeholder: (context, url) => const SizedBox(
-              height: 30,
-              width: 30,
-              child: LoadingScreen(),
-            ),
-            errorWidget: (context, url, error) => placeHolderWidget ??
-                  Image.asset(
-                    placeHolder,
-
-                    height: height,
-                    width: width,
-                    fit: fit ?? BoxFit.cover,
-                  ),
-          );
+          try {
+            return CachedNetworkImage(
+              height: height,
+              width: width,
+              fit: fit,
+              imageUrl: imagePath!,
+              color: color,
+              placeholder: (context, url) => const SizedBox(
+                height: 30,
+                width: 30,
+                child: LoadingScreen(),
+              ),
+              errorWidget: (context, url, error) {
+                log('🛑 Network image failed: $error');
+                return placeHolderWidget ??
+                    Image.asset(
+                      placeHolder,
+                      height: height,
+                      width: width,
+                      fit: fit ?? BoxFit.cover,
+                    );
+              },
+            );
+          } on Exception catch (e) {
+            log('🔥 Exception rendering CachedNetworkImage: $e');
+            return placeHolderWidget ??
+                Image.asset(
+                  placeHolder,
+                  height: height,
+                  width: width,
+                  fit: fit ?? BoxFit.cover,
+                );
+          }
         case ImageType.png:
           return Image.asset(
             imagePath!,
