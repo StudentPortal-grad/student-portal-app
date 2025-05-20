@@ -26,8 +26,7 @@ class SocketService {
 
   static Future<void> init() async {
     if (_isInitialized && _socket != null && _socket!.connected) {
-      log('Socket already connected, skipping initialization');
-      return;
+      _socket!.disconnect();
     }
 
     try {
