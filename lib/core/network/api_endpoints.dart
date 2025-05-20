@@ -25,4 +25,5 @@ abstract class ApiEndpoints {
 
   // Events Endpoint
   static const String events = '/events';
+  static String eventID (String id) => '/events/$id';
 }
