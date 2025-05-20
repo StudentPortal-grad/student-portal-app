@@ -59,15 +59,30 @@ class SocketService {
   static void _setupEventHandlers() {
     log('Setting up event handlers for socket');
     _socket!.onConnect((_) => log('Socket connected'));
-    _socket!.onConnectError((error) => log('Connection error: $error'));
+    _socket!.onConnectError((error) {
+      log('Connection error: $error');
+      if (error.toString().contains('Invalid token') || 
+          error.toString().contains('Authentication error') ||
+          error.toString().contains('Token expired')) {
+        _handleTokenError();
+      }
+    });
     _socket!.onDisconnect((_) => log('Socket disconnected'));
     _socket!.onError((error) {
       log('Socket error: $error');
-      if (error['error'] == 'Invalid token') {
-        UserRepository.invalidToken();
+      if (error.toString().contains('Invalid token') || 
+          error.toString().contains('Authentication error') ||
+          error.toString().contains('Token expired')) {
+        _handleTokenError();
       }
     });
     _socket!.onReconnect((_) => log('Socket reconnected'));
+  }
+
+  static void _handleTokenError() {
+    log('Handling token error - disconnecting socket and invalidating token');
+    disconnect();
+    UserRepository.invalidToken();
   }
 
   static void emit(String event, {Object? message}) {

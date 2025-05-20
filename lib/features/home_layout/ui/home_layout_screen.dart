@@ -25,8 +25,13 @@ class _HomeLayoutScreenState extends State<HomeLayoutScreen> {
 
   @override
   void initState() {
-    _listenToSocketEvents();
     super.initState();
+    _initializeSocket();
+  }
+
+  Future<void> _initializeSocket() async {
+    await SocketService.init();
+    _listenToSocketEvents();
   }
 
   void _listenToSocketEvents() {

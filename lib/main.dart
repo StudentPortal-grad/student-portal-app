@@ -7,7 +7,6 @@ import 'package:device_preview/device_preview.dart';
 import 'core/utils/app_local_storage.dart';
 import 'core/utils/my_bloc_observer.dart';
 import 'core/utils/service_locator.dart';
-import 'core/utils/socket_service.dart';
 import 'features/app/view/app.dart';
 
 Future<void> main() async {
@@ -19,7 +18,6 @@ Future<void> main() async {
   await Future.wait<void>([
     AppLocalStorage.init(),
     ScreenUtil.ensureScreenSize(),
-    SocketService.init(),
   ]);
 
   SystemChrome.setSystemUIOverlayStyle(
