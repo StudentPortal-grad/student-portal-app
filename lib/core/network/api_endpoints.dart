@@ -22,4 +22,7 @@ abstract class ApiEndpoints {
 
   // Messaging Endpoints
   static const String conversations = "conversations";
+
+  // Events Endpoint
+  static const String events = '/events';
 }
