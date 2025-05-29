@@ -9,6 +9,7 @@ import 'package:student_portal/core/widgets/loading_screen.dart';
 import 'package:student_portal/features/events/presentation/manager/events_bloc/events_bloc.dart';
 
 import '../../../../core/theming/text_styles.dart';
+import '../../../../core/widgets/custom_refresh_indicator.dart';
 import '../widgets/event_item_view.dart';
 import '../widgets/upcoming_event_item_view.dart';
 
@@ -42,7 +43,7 @@ class _EventsScreenState extends State<EventsScreen>
             child: Text(state.error),
           );
         }
-        return RefreshIndicator(
+        return CustomRefreshIndicator(
           onRefresh: () async => context.read<EventsBloc>().add(EventsRequested()),
           child: SingleChildScrollView(
             padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 25.w),
