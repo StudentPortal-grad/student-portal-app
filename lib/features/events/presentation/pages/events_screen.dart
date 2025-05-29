@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:student_portal/core/helpers/app_size_boxes.dart';
+import 'package:student_portal/core/utils/app_router.dart';
 
 import '../../../../core/theming/text_styles.dart';
 import '../widgets/event_item_view.dart';
@@ -13,7 +14,7 @@ class EventsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 28.w),
+      padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 25.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -32,8 +33,11 @@ class EventsScreen extends StatelessWidget {
             constraints: BoxConstraints(maxHeight: 360.h, minHeight: 300.h),
             child: ListView.separated(
               scrollDirection: Axis.horizontal,
-              itemBuilder: (context, index) => UpComingEventItemView(),
-              separatorBuilder: (context, index) => 15.widthBox,
+              itemBuilder: (context, index) => InkWell(
+                onTap: () => AppRouter.router.push(AppRouter.eventDetails),
+                child: UpComingEventItemView(),
+              ),
+              separatorBuilder: (context, index) => 5.widthBox,
               itemCount: 4,
             ),
           ),
@@ -46,8 +50,11 @@ class EventsScreen extends StatelessWidget {
           ListView.separated(
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
-            itemBuilder: (context, index) => EventItemView(),
-            separatorBuilder: (context, index) => 15.heightBox,
+            itemBuilder: (context, index) => InkWell(
+              onTap: () => AppRouter.router.push(AppRouter.eventDetails),
+              child: EventItemView(),
+            ),
+            separatorBuilder: (context, index) => 10.heightBox,
             itemCount: 3,
           ),
         ],

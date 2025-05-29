@@ -22,6 +22,7 @@ import '../../features/auth/presentation/screens/login_view.dart';
 import '../../features/auth/presentation/screens/otp_screen.dart';
 import '../../features/auth/presentation/screens/set_new_password.dart';
 import '../../features/auth/presentation/screens/signup_view.dart';
+import '../../features/events/presentation/pages/event_details.dart';
 import '../../features/home_layout/ui/home_layout_screen.dart';
 import '../../features/notification/presentation/screens/notifications_screen.dart';
 import '../../features/onboarding/view/onboarding_view/onboarding_view.dart';
@@ -50,6 +51,9 @@ abstract class AppRouter {
   static const String createCommunity = '/create_community';
   static const String postDetails = '/post_details';
   static const String resourceDetails = '/resource_details';
+
+  //event
+  static const String eventDetails = '/event_details';
 
   //chat
   static const String dmScreen = '/dm';
@@ -189,9 +193,18 @@ abstract class AppRouter {
         ),
       ),
       GoRoute(
+        path: eventDetails,
+        pageBuilder: (context, state) {
+          return buildPage(
+            context: context,
+            state: state,
+            child: EventDetailsScreen(),
+          );
+        },
+      ),
+      GoRoute(
         path: postDetails,
         pageBuilder: (context, state) {
-          final args = state.extra as Map<String, dynamic>?;
           return buildPage(
             context: context,
             state: state,
@@ -202,7 +215,6 @@ abstract class AppRouter {
       GoRoute(
         path: resourceDetails,
         pageBuilder: (context, state) {
-          final args = state.extra as Map<String, dynamic>?;
           return buildPage(
             context: context,
             state: state,
@@ -231,7 +243,6 @@ abstract class AppRouter {
       GoRoute(
         path: dmScreen,
         pageBuilder: (context, state) {
-          final args = state.extra as Map<String, dynamic>?;
           return buildPage(
             context: context,
             state: state,
@@ -242,7 +253,6 @@ abstract class AppRouter {
       GoRoute(
         path: searchScreen,
         pageBuilder: (context, state) {
-          final args = state.extra as Map<String, dynamic>?;
           return buildPage(
             context: context,
             state: state,
@@ -253,7 +263,6 @@ abstract class AppRouter {
       GoRoute(
         path: notification,
         pageBuilder: (context, state) {
-          final args = state.extra as Map<String, dynamic>?;
           return buildPage(
             context: context,
             state: state,
@@ -275,7 +284,6 @@ abstract class AppRouter {
       GoRoute(
         path: followers,
         pageBuilder: (context, state) {
-          final args = state.extra as Map<String, dynamic>?;
           return buildPage(
             context: context,
             state: state,
@@ -286,7 +294,6 @@ abstract class AppRouter {
       GoRoute(
         path: followings,
         pageBuilder: (context, state) {
-          final args = state.extra as Map<String, dynamic>?;
           return buildPage(
             context: context,
             state: state,
@@ -297,7 +304,6 @@ abstract class AppRouter {
       GoRoute(
         path: createCommunity,
         pageBuilder: (context, state) {
-          final args = state.extra as Map<String, dynamic>?;
           return buildPage(
             context: context,
             state: state,
@@ -308,7 +314,6 @@ abstract class AppRouter {
       GoRoute(
         path: accountSettings,
         pageBuilder: (context, state) {
-          final args = state.extra as Map<String, dynamic>?;
           return buildPage(
             context: context,
             state: state,
@@ -319,7 +324,6 @@ abstract class AppRouter {
       GoRoute(
         path: community,
         pageBuilder: (context, state) {
-          final args = state.extra as Map<String, dynamic>?;
           return buildPage(
             context: context,
             state: state,

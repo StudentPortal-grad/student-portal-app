@@ -15,7 +15,16 @@ class EventItemView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          color: Colors.white, borderRadius: BorderRadius.circular(15.r)),
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(15.r),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.15),
+              blurRadius: 2,
+              blurStyle: BlurStyle.outer,
+            ),
+          ]),
+      margin: EdgeInsets.all(8.r),
       padding: EdgeInsets.all(15.r),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -30,12 +39,14 @@ class EventItemView extends StatelessWidget {
                 imagePath: AssetsApp.testVideoImage,
               ),
               10.widthBox,
-              Flexible(
-                  child: Text('Tech Career Fair 2025',
-                      style: Styles.font18w600
-                          .copyWith(fontWeight: FontWeight.w500),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis)),
+              Expanded(
+                child: Text('Tech Career Fair 2025',
+                    style:
+                        Styles.font18w600.copyWith(fontWeight: FontWeight.w500),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis),
+              ),
+              10.widthBox,
               CircleAvatar(
                 backgroundColor: ColorsManager.lightBabyBlue,
                 child: Icon(

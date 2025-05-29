@@ -16,9 +16,19 @@ class UpComingEventItemView extends StatelessWidget {
     return Stack(
       children: [
         Container(
-          width: 0.8.sw,
+          width: 0.75.sw,
           decoration: BoxDecoration(
-              color: Colors.white, borderRadius: BorderRadius.circular(15.r)),
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(15.r),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.15),
+                blurRadius: 2,
+                blurStyle: BlurStyle.outer,
+              ),
+            ]
+          ),
+          margin: EdgeInsets.all(5.r),
           padding: EdgeInsets.all(15.r),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
