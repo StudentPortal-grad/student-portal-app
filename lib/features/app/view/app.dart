@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../core/theming/colors.dart';
 import '../../../core/utils/app_router.dart';
+import '../../events/presentation/manager/events_bloc/events_bloc.dart';
 import '../manager/app_cubit/app_cubit.dart';
 import '../manager/auth_cubit/auth_cubit.dart';
 
@@ -13,8 +14,9 @@ class SPApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => AppCubit()),
-        BlocProvider(create: (context) => AuthCubit()), // Handles logout
+        BlocProvider<AppCubit>(create: (context) => AppCubit()),
+        BlocProvider<AuthCubit>(create: (context) => AuthCubit()), // Handles logout
+        BlocProvider<EventsBloc>(create: (_) => EventsBloc()..add(EventsRequested())),
       ],
       child: ScreenUtilInit(
         designSize: const Size(375, 812),
