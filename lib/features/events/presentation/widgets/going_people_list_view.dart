@@ -8,7 +8,10 @@ import '../../../../core/theming/text_styles.dart';
 import '../../../../core/widgets/custom_image_view.dart';
 
 class GoingPeopleListView extends StatelessWidget {
-  const GoingPeopleListView({super.key});
+  const GoingPeopleListView({super.key, this.stretch = false, this.text});
+
+  final bool stretch;
+  final String? text;
 
   @override
   Widget build(BuildContext context) {
@@ -56,18 +59,24 @@ class GoingPeopleListView extends StatelessWidget {
             ),
           ),
         ),
-
+        stretch ? const Spacer() : const SizedBox(width: 8),
+        text != null ? Padding(
+          padding: EdgeInsets.symmetric(horizontal: 8.w),
+          child: Text(text!, style: Styles.font13w400),
+        ) :
         // "Going" Button
         Padding(
-            padding: const EdgeInsets.only(left: 4),
-            child: CustomAppButton(
-              width: 60.w,
-              height: 24.h,
-              label: 'Going',
-              backgroundColor: Colors.white,
-              textStyle: Styles.font13w400.copyWith(fontWeight: FontWeight.w600,color: ColorsManager.mainColor),
-              onTap: () {},
-            ),),
+          padding: const EdgeInsets.only(left: 4),
+          child: CustomAppButton(
+            width: 60.w,
+            height: 24.h,
+            label: 'Going',
+            backgroundColor: Colors.white,
+            textStyle: Styles.font13w400.copyWith(
+                fontWeight: FontWeight.w600, color: ColorsManager.mainColor),
+            onTap: () {},
+          ),
+        ),
       ],
     );
   }
