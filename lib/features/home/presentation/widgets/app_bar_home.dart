@@ -18,6 +18,13 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
       child: Container(
         decoration: BoxDecoration(
           color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.2),
+              blurRadius: 7,
+              blurStyle: BlurStyle.outer,
+            ),
+          ],
           borderRadius: BorderRadiusDirectional.vertical(
             bottom: Radius.circular(35.r),
           ),
