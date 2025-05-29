@@ -8,6 +8,7 @@ import '../../../../core/network/api_service.dart';
 import '../../../../core/utils/secure_storage.dart';
 import '../../../../core/utils/service_locator.dart';
 import '../../domain/repositories/events_repository.dart';
+import '../dto/event_rsvp.dart';
 import '../models/event_model.dart';
 
 class EventsRepositoryImpl implements EventsRepository {
@@ -17,7 +18,7 @@ class EventsRepositoryImpl implements EventsRepository {
   EventsRepositoryImpl({required this.apiService});
 
   @override
-  Future<Either<Failure, List<Event>>> getAllEvents() async{
+  Future<Either<Failure, List<Event>>> getAllEvents() async {
     try {
       var data = await apiService.get(
         endpoint: ApiEndpoints.events,
@@ -41,14 +42,15 @@ class EventsRepositoryImpl implements EventsRepository {
   }
 
   @override
-  Future<Either<Failure, String>> joinEvent(String eventId) {
-    // TODO: implement joinEvent
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<Either<Failure, String>> leaveEvent(String eventId) {
-    // TODO: implement leaveEvent
-    throw UnimplementedError();
+  Future<Either<Failure, String>> updateEventRSVP(EventRsvpDTO eventRsvpDTO) async {
+    try {
+      var data = await apiService.post(
+        endpoint: ApiEndpoints.eventRSVP(eventRsvpDTO.eventId),
+        data: eventRsvpDTO.toJson(),
+      );
+      return Right((data['data']['message'] as String? ?? ""));
+    } on DioException catch (e) {
+      return Left(ServerFailure.fromDioError(e));
+    }
   }
 }
