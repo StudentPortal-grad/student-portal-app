@@ -19,7 +19,7 @@ class GoingPeopleListView extends StatelessWidget {
       children: [
         // Stacked Profile Pictures
         SizedBox(
-          width: 100.w,
+          width: 120.w,
           height: 24.h,
           child: Stack(
             alignment: Alignment.center,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:student_portal/core/helpers/app_size_boxes.dart';
 import 'package:student_portal/core/theming/colors.dart';
@@ -9,6 +10,7 @@ import 'package:student_portal/features/home_layout/ui/widgets/drawer.dart';
 import 'package:student_portal/features/home_layout/ui/widgets/nav_bar.dart';
 import '../../../core/utils/socket_service.dart';
 import '../../chats/presentation/pages/chats_screen.dart';
+import '../../events/presentation/manager/events_bloc/events_bloc.dart';
 import '../../events/presentation/pages/events_screen.dart';
 import '../../home/presentation/pages/home_screen.dart';
 import '../../home/presentation/widgets/app_bar_home.dart';
@@ -22,7 +24,6 @@ class HomeLayoutScreen extends StatefulWidget {
 }
 
 class _HomeLayoutScreenState extends State<HomeLayoutScreen> {
-
   @override
   void initState() {
     super.initState();
@@ -77,24 +78,33 @@ class _HomeLayoutScreenState extends State<HomeLayoutScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: (currentIndex != 4) ? HomeAppBar() : null, // disappear appbar in chat screen
-      backgroundColor: (currentIndex != 4) ? ColorsManager.backgroundColorLight2 : Colors.white,
-      body: widgetOptions[currentIndex],
-      drawer: AppDrawer(),
-      bottomNavigationBar: CustomNavBar(
-        isMenuOpen: isMenuOpen,
-        selectedItemColor: ColorsManager.mainColorLight,
-        floatingOnTap: () {
-          toggleShowPopMenu();
-          _showPopupMenu(context, Offset(0.66.sw, .735.sh));
-        },
-        unselectedItemColor: ColorsManager.mainColorDark,
-        onTap: _onItemTapped,
-        backgroundColor: Colors.white,
-        currentIndex: currentIndex,
-        itemPadding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 12.h),
-        items: _buildNavBarItems(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<EventsBloc>(
+            create: (_) => EventsBloc()..add(EventsRequested())),
+      ],
+      child: Scaffold(
+        appBar: (currentIndex != 4) ? HomeAppBar() : null,
+        // disappear appbar in chat screen
+        backgroundColor: (currentIndex != 4)
+            ? ColorsManager.backgroundColorLight2
+            : Colors.white,
+        body: widgetOptions[currentIndex],
+        drawer: AppDrawer(),
+        bottomNavigationBar: CustomNavBar(
+          isMenuOpen: isMenuOpen,
+          selectedItemColor: ColorsManager.mainColorLight,
+          floatingOnTap: () {
+            toggleShowPopMenu();
+            _showPopupMenu(context, Offset(0.66.sw, .735.sh));
+          },
+          unselectedItemColor: ColorsManager.mainColorDark,
+          onTap: _onItemTapped,
+          backgroundColor: Colors.white,
+          currentIndex: currentIndex,
+          itemPadding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 12.h),
+          items: _buildNavBarItems(),
+        ),
       ),
     );
   }
@@ -124,9 +134,17 @@ class _HomeLayoutScreenState extends State<HomeLayoutScreen> {
           value: "write_post",
           child: Row(
             children: [
-              CircleAvatar(radius: 15.r, backgroundColor: ColorsManager.whiteColor, child: Icon(Icons.edit, color: ColorsManager.mainColor,size: 18.r,)),
+              CircleAvatar(
+                  radius: 15.r,
+                  backgroundColor: ColorsManager.whiteColor,
+                  child: Icon(
+                    Icons.edit,
+                    color: ColorsManager.mainColor,
+                    size: 18.r,
+                  )),
               10.widthBox,
-              Text("Write a Post", style: Styles.font16w500.copyWith(color: Colors.white)),
+              Text("Write a Post",
+                  style: Styles.font16w500.copyWith(color: Colors.white)),
             ],
           ),
           onTap: () => AppRouter.router.push(AppRouter.addPost),
@@ -136,20 +154,35 @@ class _HomeLayoutScreenState extends State<HomeLayoutScreen> {
           onTap: () => AppRouter.router.push(AppRouter.createCommunity),
           child: Row(
             children: [
-              CircleAvatar(radius: 15.r, backgroundColor: ColorsManager.whiteColor, child: Icon(Icons.people_alt_rounded, color: ColorsManager.mainColor,size: 18.r,)),
+              CircleAvatar(
+                  radius: 15.r,
+                  backgroundColor: ColorsManager.whiteColor,
+                  child: Icon(
+                    Icons.people_alt_rounded,
+                    color: ColorsManager.mainColor,
+                    size: 18.r,
+                  )),
               10.widthBox,
-              Text("Create a Community", style: Styles.font16w500.copyWith(color: Colors.white)),
+              Text("Create a Community",
+                  style: Styles.font16w500.copyWith(color: Colors.white)),
             ],
           ),
-
         ),
         PopupMenuItem<String>(
           value: "upload_resource",
           child: Row(
             children: [
-              CircleAvatar(radius: 15.r, backgroundColor: ColorsManager.whiteColor, child: Icon(Icons.local_offer, color: ColorsManager.mainColor,size: 18.r,)),
+              CircleAvatar(
+                  radius: 15.r,
+                  backgroundColor: ColorsManager.whiteColor,
+                  child: Icon(
+                    Icons.local_offer,
+                    color: ColorsManager.mainColor,
+                    size: 18.r,
+                  )),
               10.widthBox,
-              Text("Upload a Resource", style: Styles.font16w500.copyWith(color: Colors.white)),
+              Text("Upload a Resource",
+                  style: Styles.font16w500.copyWith(color: Colors.white)),
             ],
           ),
           onTap: () => AppRouter.router.push(AppRouter.addResource),
