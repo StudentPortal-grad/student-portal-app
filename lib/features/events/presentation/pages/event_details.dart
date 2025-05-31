@@ -8,8 +8,8 @@ import 'package:student_portal/core/widgets/custom_image_view.dart';
 
 import '../../../../contestants.dart';
 import '../../../../core/theming/colors.dart';
+import '../widgets/event_going_people_card.dart';
 import '../widgets/event_info_card.dart';
-import '../widgets/going_people_list_view.dart';
 
 class EventDetailsScreen extends StatelessWidget {
   const EventDetailsScreen({super.key});
@@ -41,6 +41,7 @@ class EventDetailsScreen extends StatelessWidget {
                   20.heightBox,
                   _buildOrganizerCard(),
                   20.heightBox,
+                  EventGoingPeopleCard(),
                   20.heightBox,
                   CustomAppButton(
                     label: 'Book a Seat',
@@ -136,18 +137,6 @@ class EventDetailsScreen extends StatelessWidget {
           )
         ],
       ),
-    );
-  }
-
-  // ignore: unused_element
-  Widget _buildGoingPeople() {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(10.r),
-      ),
-      padding: EdgeInsets.all(15.sp),
-      child: GoingPeopleListView(text: 'Going'),
     );
   }
 }

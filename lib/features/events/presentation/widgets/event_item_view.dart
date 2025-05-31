@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:student_portal/core/helpers/app_size_boxes.dart';
+import 'package:student_portal/features/events/data/models/event_model.dart';
 
 import '../../../../core/theming/colors.dart';
 import '../../../../core/theming/text_styles.dart';
-import '../../../../core/utils/assets_app.dart';
 import '../../../../core/widgets/custom_image_view.dart';
 import 'going_people_list_view.dart';
 
 class EventItemView extends StatelessWidget {
-  const EventItemView({super.key});
+  const EventItemView({super.key, this.event});
+
+  final Event? event;
 
   @override
   Widget build(BuildContext context) {
@@ -36,30 +38,32 @@ class EventItemView extends StatelessWidget {
                 height: 45.h,
                 fit: BoxFit.fill,
                 radius: BorderRadius.circular(10.r),
-                imagePath: AssetsApp.testVideoImage,
+                // imagePath: AssetsApp.testVideoImage,
+                imagePath: event?.eventImage,
               ),
               10.widthBox,
               Expanded(
-                child: Text('Tech Career Fair 2025',
-                    style:
-                        Styles.font18w600.copyWith(fontWeight: FontWeight.w500),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis),
+                child: Text(
+                  event?.title ?? 'NULL',
+                  style: Styles.font18w600.copyWith(fontWeight: FontWeight.w500),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
               10.widthBox,
               CircleAvatar(
                 backgroundColor: ColorsManager.lightBabyBlue,
                 child: Icon(
                   Icons.bookmark,
-                  color: ColorsManager
-                      .mainColor, // if(not_selected)  ColorsManager.lightGreyColor
+                  color: ColorsManager.mainColor, // if(not_selected)  ColorsManager.lightGreyColor
                 ),
               )
             ],
           ),
           10.heightBox,
           Text(
-            'Join us for the Tech Career Fair on March 15, 2024, at the Downtown Convention Center!',
+            event?.description ??
+                'Join us for the Tech Career Fair on March 15, 2024, at the Downtown Convention Center!',
             style: Styles.font14w400,
           ),
           10.heightBox,

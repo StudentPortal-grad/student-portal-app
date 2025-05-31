@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 
@@ -23,6 +25,7 @@ class EventsRepositoryImpl implements EventsRepository {
       var data = await apiService.get(
         endpoint: ApiEndpoints.events,
       );
+      log("EVENTS:: $data");
       return Right(data['data'].map<Event>((e) => Event.fromJson(e)).toList());
     } on DioException catch (e) {
       return Left(ServerFailure.fromDioError(e));
@@ -35,6 +38,7 @@ class EventsRepositoryImpl implements EventsRepository {
       var data = await apiService.get(
         endpoint: ApiEndpoints.eventID(id),
       );
+      log("EVENT:: $data");
       return Right(Event.fromJson(data['data']['event']));
     } on DioException catch (e) {
       return Left(ServerFailure.fromDioError(e));
