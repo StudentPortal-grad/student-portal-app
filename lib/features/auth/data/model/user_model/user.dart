@@ -90,7 +90,7 @@ class User {
   /// Convert a JSON map into a `User` object
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
-      id: json['_id'],
+      id: json['id'],
       name: json['name'],
       username: json['username'],
       gender: json['gender'],

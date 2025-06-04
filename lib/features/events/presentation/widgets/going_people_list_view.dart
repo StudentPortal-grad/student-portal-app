@@ -52,15 +52,18 @@ class GoingPeopleListView extends StatelessWidget {
                     ),
                   );
                 }
-                return Positioned(
-                  left: index * 20.r,
-                  child: CustomImageView(
-                    height: 24.r,
-                    width: 24.r,
-                    imagePath: rsvpUsers[index].rsvpUser?.profilePicture,
-                    circle: true,
-                  ),
-                );
+                if (index < 4) {
+                  return Positioned(
+                    left: index * 20.r,
+                    child: CustomImageView(
+                      height: 24.r,
+                      width: 24.r,
+                      imagePath: rsvpUsers[index].rsvpUser?.profilePicture,
+                      circle: true,
+                    ),
+                  );
+                }
+                return SizedBox.shrink();
               },
             ),
           ),

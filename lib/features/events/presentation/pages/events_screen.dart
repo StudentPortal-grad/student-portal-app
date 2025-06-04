@@ -34,8 +34,11 @@ class _EventsScreenState extends State<EventsScreen>
           );
         }
         if (state is EventsError) {
-          return Center(
-            child: Text(state.error),
+          return CustomRefreshIndicator(
+            onRefresh: () async => context.read<EventsBloc>().add(EventsRequested()),
+            child: Center(
+              child: Text(state.error),
+            ),
           );
         }
         if (state is EventsLoaded) {

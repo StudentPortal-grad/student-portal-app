@@ -24,6 +24,9 @@ class EventsRepositoryImpl implements EventsRepository {
     try {
       var data = await apiService.get(
         endpoint: ApiEndpoints.events,
+        query: {
+          "rsvpStatus": "attending",
+        },
       );
       log("EVENTS:: $data");
       return Right(data['data'].map<Event>((e) => Event.fromJson(e)).toList());
@@ -37,6 +40,9 @@ class EventsRepositoryImpl implements EventsRepository {
     try {
       var data = await apiService.get(
         endpoint: ApiEndpoints.eventID(id),
+        query: {
+          "rsvpStatus": "attending",
+        },
       );
       log("EVENT:: $data");
       return Right(Event.fromJson(data['data']['event']));
@@ -46,12 +52,15 @@ class EventsRepositoryImpl implements EventsRepository {
   }
 
   @override
-  Future<Either<Failure, String>> updateEventRSVP(EventRsvpDTO eventRsvpDTO) async {
+  Future<Either<Failure, String>> updateEventRSVP(
+      EventRsvpDTO eventRsvpDTO) async {
     try {
+      log("EventRsvpDTO ${eventRsvpDTO.toJson()}");
       var data = await apiService.post(
         endpoint: ApiEndpoints.eventRSVP(eventRsvpDTO.eventId),
         data: eventRsvpDTO.toJson(),
       );
+      log("EventRsvpData $data");
       return Right((data['data']['message'] as String? ?? ""));
     } on DioException catch (e) {
       return Left(ServerFailure.fromDioError(e));

@@ -55,7 +55,7 @@ class EventsBodyView extends StatelessWidget {
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
             itemBuilder: (context, index) => InkWell(
-              onTap: () => AppRouter.router.push(AppRouter.eventDetails),
+              onTap: () => AppRouter.router.push(AppRouter.eventDetails,extra: {'eventId' : events[index].id}),
               child: EventItemView(event: events[index]),
             ),
             separatorBuilder: (context, index) => 10.heightBox,

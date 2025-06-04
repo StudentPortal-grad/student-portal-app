@@ -195,10 +195,11 @@ abstract class AppRouter {
       GoRoute(
         path: eventDetails,
         pageBuilder: (context, state) {
+          final args = state.extra as Map<String, dynamic>?;
           return buildPage(
             context: context,
             state: state,
-            child: EventDetailsScreen(),
+            child: EventDetailsScreen(eventId: args?['eventId'] ?? ''),
           );
         },
       ),

@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 import 'package:student_portal/core/helpers/app_size_boxes.dart';
 
+import '../../data/models/event_model.dart';
+
 class EventInfoCard extends StatelessWidget {
-  const EventInfoCard({super.key});
+  const EventInfoCard({super.key, this.event});
+
+  final Event? event;
 
   @override
   Widget build(BuildContext context) {
@@ -15,17 +20,17 @@ class EventInfoCard extends StatelessWidget {
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: const [
+        children: [
           InfoRow(
             icon: Icons.calendar_month_rounded,
-            title: '14 December, 2021',
-            subtitle: 'Tuesday, 4:00PM - 9:00PM',
+            title: formatDate(event?.startDate),
+            subtitle: formatDateTimeRange(event?.startDate, event?.endDate),
           ),
-          SizedBox(height: 16),
+          16.heightBox,
           InfoRow(
             icon: Icons.location_on,
-            title: 'Gala Convention Center',
-            subtitle: '36 Guild Street London, UK',
+            title: event?.location ?? '',
+            subtitle: 'onSide',
             subtitleColor: Colors.blue,
           ),
           SizedBox(height: 16),
@@ -38,6 +43,26 @@ class EventInfoCard extends StatelessWidget {
         ],
       ),
     );
+  }
+  String formatDate(DateTime? dateTime) {
+    if(dateTime == null) return 'Date not defined yet';
+    final DateFormat formatter = DateFormat('d MMMM, y');
+    return formatter.format(dateTime);
+  }
+
+  String formatDateTimeRange(DateTime? start, DateTime? end) {
+    if (start == null || end == null) {
+      return 'Time not defined yet';
+    }
+
+    final dayFormat = DateFormat('EEEE');        // e.g., Tuesday
+    final timeFormat = DateFormat('h:mma');      // e.g., 4:00PM
+
+    String day = dayFormat.format(start);
+    String startTime = timeFormat.format(start);
+    String endTime = timeFormat.format(end);
+
+    return '$day, $startTime - $endTime';
   }
 }
 
