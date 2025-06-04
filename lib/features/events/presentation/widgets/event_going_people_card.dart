@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:student_portal/core/helpers/app_size_boxes.dart';
 import 'package:student_portal/features/events/data/models/event_model.dart';
 
-import '../../../../contestants.dart';
 import '../../../../core/theming/colors.dart';
 import '../../../../core/theming/text_styles.dart';
 import '../../../../core/widgets/custom_app_button.dart';

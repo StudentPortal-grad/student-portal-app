@@ -1,7 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 
-import '../../../../../core/errors/data/model/error_model.dart';
 import '../../../../../core/utils/service_locator.dart';
 import '../../../data/models/event_model.dart';
 import '../../../domain/repositories/events_repository.dart';
