@@ -55,7 +55,7 @@ class EventItemView extends StatelessWidget {
                 backgroundColor: ColorsManager.lightBabyBlue,
                 child: Icon(
                   Icons.bookmark,
-                  color: ColorsManager.mainColor, // if(not_selected)  ColorsManager.lightGreyColor
+                  color: ColorsManager.lightGrayColor,   // ColorsManager.mainColor
                 ),
               )
             ],
@@ -67,7 +67,9 @@ class EventItemView extends StatelessWidget {
             style: Styles.font14w400,
           ),
           10.heightBox,
-          GoingPeopleListView(),
+          GoingPeopleListView(
+            rsvpUsers: event?.rsvps ?? [],
+          ),
           10.heightBox,
           Row(
             children: [

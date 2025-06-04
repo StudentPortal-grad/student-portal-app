@@ -19,6 +19,7 @@ class EventGoingPeopleCard extends StatelessWidget {
       ),
       padding: EdgeInsets.all(15.sp),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           SizedBox(
             width: 110.w,
@@ -61,27 +62,26 @@ class EventGoingPeopleCard extends StatelessWidget {
               ),
             ),
           ),
-          Spacer(),
           Padding(
-            padding: const EdgeInsets.only(left: 4),
-            child: CustomAppButton(
-              width: 80.w,
-              height: 24.h,
-              label: 'Interested',
-              backgroundColor: Colors.white,
-              textStyle: Styles.font13w400.copyWith(
-                  fontWeight: FontWeight.w600, color: ColorsManager.mainColor),
-              onTap: () {},
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 4),
+            padding: const EdgeInsets.only(left: 0),
             child: CustomAppButton(
               width: 60.w,
               height: 24.h,
               label: 'Going',
               backgroundColor: Colors.white,
               textStyle: Styles.font13w400.copyWith(fontWeight: FontWeight.w600, color: ColorsManager.mainColor),
+              onTap: () {},
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 8),
+            child: CustomAppButton(
+              width: 80.w,
+              height: 30.h,
+              borderRadius: 8.r,
+              label: 'Interested',
+              backgroundColor: ColorsManager.mainColor,
+              textStyle: Styles.font13w400.copyWith(fontWeight: FontWeight.w600, color: ColorsManager.whiteColor),
               onTap: () {},
             ),
           ),

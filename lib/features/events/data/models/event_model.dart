@@ -101,29 +101,50 @@ class Creator {
 }
 
 class Rsvp {
-  final String? userId;
+  final RsvpUser? rsvpUser;
   final String? status;
   final DateTime? updatedAt;
   final String? id;
 
   Rsvp({
-    this.userId,
+    this.rsvpUser,
     this.status,
     this.updatedAt,
     this.id,
   });
 
   factory Rsvp.fromJson(Map<String, dynamic> json) => Rsvp(
-    userId: json['userId'] as String?,
+    rsvpUser: RsvpUser.fromJson(json['userId']),
     status: json['status'] as String?,
     updatedAt: json['updatedAt'] != null ? DateTime.tryParse(json['updatedAt']) : null,
     id: json['_id'] as String?,
   );
 
   Map<String, dynamic> toJson() => {
-    'userId': userId,
+    'userId': rsvpUser,
     'status': status,
     'updatedAt': updatedAt?.toIso8601String(),
     '_id': id,
   };
+}
+
+class RsvpUser {
+  final String? id;
+  final String? name;
+  final String? profilePicture;
+
+  RsvpUser(
+      {required this.id, required this.name, required this.profilePicture});
+
+  factory RsvpUser.fromJson(Map<String, dynamic> json) => RsvpUser(
+        id: json['_id'] as String?,
+        name: json['name'] as String?,
+        profilePicture: json['profilePicture'] as String?,
+      );
+
+  Map<String, dynamic> toJson() => {
+        '_id': id,
+        'name': name,
+        'profilePicture': profilePicture,
+      };
 }
