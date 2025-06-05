@@ -9,7 +9,10 @@ import '../../../../core/widgets/custom_image_view.dart';
 import '../../../home/presentation/widgets/category_tag_view.dart';
 
 class SearchForTags extends StatefulWidget {
-  const SearchForTags({super.key});
+  const SearchForTags({super.key, this.tags = const {}, this.onChange});
+
+  final Set<String> tags;
+  final Function(Set<String>)? onChange;
 
   @override
   State<SearchForTags> createState() => _SearchForTagsState();
@@ -26,8 +29,6 @@ class _SearchForTagsState extends State<SearchForTags> {
   ];
   late TextEditingController _textEditingController;
 
-  Set<String> dummyTags = {};
-
   @override
   void initState() {
     super.initState();
@@ -37,7 +38,6 @@ class _SearchForTagsState extends State<SearchForTags> {
   @override
   void dispose() {
     super.dispose();
-    // _textEditingController.dispose();
   }
 
   @override
@@ -59,8 +59,9 @@ class _SearchForTagsState extends State<SearchForTags> {
           onSelected: (String selection) {
             debugPrint('SelectedOption: $selection');
             setState(() {
-              dummyTags.add(selection);
+              widget.tags.add(selection);
             });
+            widget.onChange?.call(widget.tags);
             _textEditingController.clear();
           },
           fieldViewBuilder:
@@ -83,14 +84,13 @@ class _SearchForTagsState extends State<SearchForTags> {
           spacing: 7.w,
           runSpacing: 7.h,
           children: List.generate(
-            dummyTags.length,
+            widget.tags.length,
             (index) => CategoryTagView(
               index: index,
-              title: dummyTags.toList()[index],
+              title: widget.tags.toList()[index],
               removeTap: (String p0) {
-                setState(() {
-                  dummyTags.remove(p0);
-                });
+                widget.onChange?.call(widget.tags);
+                setState(() => widget.tags.remove(p0));
               },
               textColor: ColorsManager.mainColorLight,
               backGround: Colors.white,

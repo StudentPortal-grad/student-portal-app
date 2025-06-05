@@ -20,8 +20,9 @@ class ApiService {
     FormData? formData,
     String? token,
     bool isAuth = false,
+    void Function(int, int)? onSendProgress,
   }) async {
-    if(!isAuth){
+    if (!isAuth) {
       token = (token ?? await getIt.get<SecureStorage>().readAccessToken());
     }
     _dio.options.headers = {'Authorization': 'Bearer $token'};
@@ -30,6 +31,7 @@ class ApiService {
 
     var response = await _dio.post(endpoint,
         data: data ?? formData,
+        onSendProgress: onSendProgress,
         options: Options(
           contentType: formData != null ? multiPart : jsonType,
         ));

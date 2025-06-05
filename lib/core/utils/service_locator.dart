@@ -3,10 +3,12 @@ import 'package:get_it/get_it.dart';
 import 'package:student_portal/core/utils/secure_storage.dart';
 import 'package:student_portal/features/auth/domain/repo/auth_repo.dart';
 import 'package:student_portal/features/events/data/repositories/events_repository_impl.dart';
+import 'package:student_portal/features/home/domain/repo/get_posts_repo.dart';
 import 'package:student_portal/features/profile/domain/repo/profile_repository.dart';
 
 import '../../features/auth/data/repo_impl/auth_repo_impl.dart';
 import '../../features/events/domain/repositories/events_repository.dart';
+import '../../features/home/data/repo_impl/get_posts_impl.dart';
 import '../../features/profile/data/reoi_impl/profile_repository_impl.dart';
 import '../network/api_endpoints.dart';
 import '../network/api_service.dart';
@@ -33,5 +35,7 @@ void setupServiceLocator() {
   getIt.registerSingleton<ProfileRepository>(ProfileRepositoryImpl(getIt.get<ApiService>()));
   // Register Events
   getIt.registerSingleton<EventsRepository>(EventsRepositoryImpl(apiService: getIt.get<ApiService>()));
+  // Register Posts
+  getIt.registerSingleton<PostRepository>(PostRepositoryImpl(apiService: getIt.get<ApiService>()));
 
 }

@@ -5,7 +5,7 @@ import '../../data/model/post_model/post.dart';
 import '../repo/get_posts_repo.dart';
 
 class GetPostsUc {
-  final GetPostsRepo getPostsRepo;
+  final PostRepository getPostsRepo;
 
   GetPostsUc({required this.getPostsRepo});
 

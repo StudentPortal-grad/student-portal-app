@@ -6,6 +6,7 @@ import 'package:student_portal/features/chats/presentation/pages/dm_screen.dart'
 import 'package:student_portal/features/chats/presentation/pages/search_peer_screen.dart';
 import 'package:student_portal/features/community/presentation/screens/community_screen.dart';
 import 'package:student_portal/features/community/presentation/screens/create_community_screen.dart';
+import 'package:student_portal/features/home/presentation/manager/create_post_bloc/create_post_bloc.dart';
 import 'package:student_portal/features/post/presentation/pages/add_post_screen.dart';
 import 'package:student_portal/features/post/presentation/pages/post_details_screen.dart';
 import 'package:student_portal/features/profile/presentation/screens/following_screen.dart';
@@ -181,7 +182,10 @@ abstract class AppRouter {
         pageBuilder: (context, state) => buildPage(
           context: context,
           state: state,
-          child: AddPostScreen(),
+          child: BlocProvider(
+            create: (context) => CreatePostBloc(),
+            child: AddPostScreen(),
+          ),
         ),
       ),
       GoRoute(

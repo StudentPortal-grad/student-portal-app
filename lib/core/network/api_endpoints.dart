@@ -27,4 +27,7 @@ abstract class ApiEndpoints {
   static const String events = "events";
   static String eventID(String id) => "events/$id";
   static String eventRSVP(String id) => "events/$id/rsvp";
+
+  // discussions and posts
+  static const String discussions = "discussions";
 }

@@ -15,13 +15,9 @@ class FileService {
   /// **Check and Request Storage Permissions**
   static Future<bool> _requestPermission() async {
     if (Platform.isAndroid) {
-      // For Android 13+ (SDK 33+), check READ_MEDIA permissions
-      if (await Permission.storage.isGranted ||
-          await Permission.photos.isGranted) {
-        return true;
-      }
+      if (await Permission.photos.isGranted) return true;
 
-      var status = await Permission.storage.request();
+      var status = await Permission.photos.request();
       return status.isGranted;
     }
 
@@ -60,6 +56,22 @@ class FileService {
       return File(result.files.single.path!);
     }
     return null; // No file selected
+  }
+
+  static Future<List<File?>>? pickImages() async {
+    if (!await _requestPermission()) {
+      log("Storage permission denied");
+      return [];
+    }
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+        type: FileType.image,
+        allowMultiple: true
+    );
+
+    if (result != null && result.files.isNotEmpty) {
+      return result.files.map((file) => File(file.path!)).toList();
+    }
+    return [];
   }
 
 
