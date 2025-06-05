@@ -290,8 +290,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
             if (state is CreatePostUploading) {
               percent = state.percent.toDouble().clamp(0.0, 1.0);
               label = "Uploading... ${(percent * 100).toStringAsFixed(0)}%";
-              content =
-                  CircularPercentWidget(percent: state.percent.toDouble());
+              content = CircularPercentWidget(percent: state.percent.toDouble());
             }
             return Column(
               children: [

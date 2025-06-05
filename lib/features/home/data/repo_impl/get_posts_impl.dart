@@ -42,9 +42,9 @@ class PostRepositoryImpl implements PostRepository {
           endpoint: ApiEndpoints.discussions,
           formData: await postDto.toFormData(),
           onSendProgress: (int sent, int total) {
-            if (total != 0) {
+            if (total > 0) {
               final percent = ((sent / total) * 100).toInt();
-              log('Creating a post percent :: $percent');
+              log('Creating a post percent :: $percent $sent $total');
               onProgress?.call(percent);
             }
           });

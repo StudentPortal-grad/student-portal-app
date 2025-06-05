@@ -17,7 +17,11 @@ extension Navigation on BuildContext {
         .pushNamedAndRemoveUntil(routeName, predicate, arguments: arguments);
   }
 
-  void pop() => Navigator.of(this).pop();
+  void pop() {
+    if(Navigator.of(this).canPop()) {
+      Navigator.of(this).pop();
+    }
+  }
 }
 
 GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
