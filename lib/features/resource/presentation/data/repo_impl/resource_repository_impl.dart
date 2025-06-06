@@ -7,6 +7,7 @@ import 'package:student_portal/core/errors/data/model/error_model.dart';
 import 'package:student_portal/core/network/api_service.dart';
 
 import 'package:student_portal/features/resource/presentation/data/dto/upload_resource.dart';
+import 'package:student_portal/features/resource/presentation/data/model/resource.dart';
 
 import '../../../../../core/errors/data/model/failures.dart';
 import '../../../../../core/network/api_endpoints.dart';
@@ -39,6 +40,17 @@ class ResourceRepositoryImpl implements ResourceRepository {
     } on DioException catch (e) {
       log('Dio Failure ${e.toString()}');
       return Left(ServerFailure.fromDioError(e)); // Handle Dio errors here
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<Resource>>> getResources() async{
+    try {
+      var data = await apiService.get(endpoint: ApiEndpoints.resources);
+      log("RESOURCES:: $data");
+      return Right(data['data']['resources'].map<Resource>((e) => Resource.fromJson(e)).toList());
+    } on DioException catch (e) {
+      return Left(ServerFailure.fromDioError(e));
     }
   }
 }
