@@ -30,4 +30,7 @@ abstract class ApiEndpoints {
 
   // discussions and posts
   static const String discussions = "discussions";
+
+  // resources
+  static const String resources = "resources";
 }

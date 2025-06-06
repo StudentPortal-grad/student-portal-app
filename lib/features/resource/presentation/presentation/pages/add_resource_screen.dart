@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:student_portal/core/helpers/app_dialog.dart';
 import 'package:student_portal/core/helpers/app_size_boxes.dart';
@@ -13,11 +14,16 @@ import 'package:student_portal/core/widgets/custom_appbar.dart';
 import 'package:student_portal/core/widgets/custom_image_view.dart';
 import 'package:student_portal/core/widgets/custom_text_field.dart';
 
+import '../../../../../core/helpers/custom_toast.dart';
 import '../../../../../core/helpers/extensions.dart';
+import '../../../../../core/widgets/circular_percent_widget.dart';
+import '../../../../../core/widgets/loading_screen.dart';
 import '../../../../post/presentation/widgets/file_attachment_item.dart';
 import '../../../../post/presentation/widgets/search_for_tags.dart';
 import '../../../../post/presentation/widgets/upload_button.dart';
 import '../../../../post/presentation/widgets/warning_dialog_body.dart';
+import '../../data/dto/upload_resource.dart';
+import '../manager/upload_resource_bloc/upload_resource_bloc.dart';
 import '../widgets/select_category.dart';
 import '../widgets/select_visibility.dart';
 
@@ -31,9 +37,6 @@ class AddResourcesScreen extends StatefulWidget {
 class _AddResourcesScreenState extends State<AddResourcesScreen> {
   late final TextEditingController titleController;
   late final TextEditingController contentController;
-  String? category;
-  String? visibility;
-  List<String> paths = [];
 
   @override
   void initState() {
@@ -46,126 +49,195 @@ class _AddResourcesScreenState extends State<AddResourcesScreen> {
   void dispose() {
     titleController.dispose();
     contentController.dispose();
-    paths.clear();
     super.dispose();
   }
 
-  noChanges() {
-    return titleController.text.isEmpty && contentController.text.isEmpty && paths.isEmpty;
+  noChanges({bool visibilityIsEmpty = false,
+    bool categoryIsEmpty = false,
+    bool filesIsEmpty = true}) {
+    return titleController.text.isEmpty &&
+        contentController.text.isEmpty &&
+        visibilityIsEmpty &&
+        categoryIsEmpty &&
+        filesIsEmpty;
   }
 
-  back() {
-    noChanges()
+  back({bool visibilityIsEmpty = false,
+    bool categoryIsEmpty = false,
+    bool filesIsEmpty = true}) {
+    noChanges(
+        categoryIsEmpty: categoryIsEmpty,
+        visibilityIsEmpty: visibilityIsEmpty,
+        filesIsEmpty: filesIsEmpty)
         ? AppRouter.router.pop()
         : AppDialogs.showDialog(
-            context,
-            alignment: AlignmentDirectional.bottomCenter,
-            body: WarningDialogBody(
-              iconWidget: WarningDialogBody.warmingIcon,
-              onTap: () {
-                pop();
-                pop();
-              },
-              buttonTitle: 'Discard',
-              mainButton: ColorsManager.mainColor,
-              title: 'Unsaved changes',
-              subTitle: 'Do you want to save or discard changes?',
-            ),
-          );
+      context,
+      alignment: AlignmentDirectional.bottomCenter,
+      body: WarningDialogBody(
+        iconWidget: WarningDialogBody.warmingIcon,
+        onTap: () {
+          pop();
+          pop();
+        },
+        buttonTitle: 'Discard',
+        mainButton: ColorsManager.mainColor,
+        title: 'Unsaved changes',
+        subTitle: 'Do you want to save or discard changes?',
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return PopScope(
-      canPop: false,
-      onPopInvokedWithResult: (didPop, result) {
-        if (didPop == false) back();
+    final bloc = context.read<UploadResourceBloc>();
+    return BlocListener<UploadResourceBloc, UploadResourceState>(
+      listener: (context, state) {
+        if (state is UploadResourceLoading) {
+          _showUploadDialog(context, bloc: context.read<UploadResourceBloc>());
+        }
+        if (state is UploadResourceFailed) {
+          pop();
+          CustomToast(context).showErrorToast(message: state.message);
+        }
+        if (state is UploadResourceLoaded) {
+          pop();
+          pop();
+          CustomToast(context).showSuccessToast(message: state.message);
+        }
       },
-      child: Scaffold(
-        backgroundColor: Colors.white,
-        appBar: CustomAppBar(
-          title: Text(
-            'Upload Resource',
-            style: Styles.font20w600,
-          ),
-          leadingOnTap: () => back(),
-          action: CustomImageView(
-            onTap: () {
-              // TODO: saving logic
-              AppRouter.router.pop();
+      child: PopScope(
+        canPop: false,
+        onPopInvokedWithResult: (didPop, result) {
+          if (didPop == false) {
+            back(
+              categoryIsEmpty: bloc.category?.isEmpty ?? true,
+              visibilityIsEmpty: bloc.visibility?.isEmpty ?? true,
+              filesIsEmpty: bloc.paths.isEmpty);
+          }
+        },
+        child: Scaffold(
+          backgroundColor: Colors.white,
+          appBar: CustomAppBar(
+            title: Text(
+              'Upload Resource',
+              style: Styles.font20w600,
+            ),
+            leadingOnTap: () {
+              return back(
+                  categoryIsEmpty: bloc.category?.isEmpty ?? true,
+                  visibilityIsEmpty: bloc.visibility?.isEmpty ?? true,
+                  filesIsEmpty: bloc.paths.isEmpty);
             },
-            imagePath: AssetsApp.checkIcon,
-            fit: BoxFit.fitWidth,
-            width: 26.r,
-            height: 26.r,
+            action: CustomImageView(
+              onTap: () {
+                if(titleController.text.isEmpty && contentController.text.isEmpty){
+                  CustomToast(context).showErrorToast(message: 'Please enter title and content');
+                  return;
+                }
+                bloc.add(UploadResourceRequest(ResourceDto(
+                    title: titleController.text,
+                    content: contentController.text,
+                    attachments: bloc.paths,
+                    tags: bloc.tags,
+                    visibility: bloc.visibility,
+                    category: bloc.category)));
+              },
+              imagePath: AssetsApp.checkIcon,
+              fit: BoxFit.fitWidth,
+              width: 26.r,
+              height: 26.r,
+            ),
           ),
-        ),
-        body: SingleChildScrollView(
-          padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 10.h),
-          child: Column(
-            spacing: 30.h,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              CustomTextField(
-                controller: titleController,
-                labelText: 'Title',
-                hintText: 'Title',
-              ),
-              SelectVisibility(value: visibility, onChange: (p0) => visibility = p0),
-              SelectCategory(value: category, onChange: (p0) => category = p0),
-              SearchForTags(),
-              CustomTextField(
-                labelIcon: InkWell(
-                  onTap: () {
-                    AppDialogs.showDialog(
-                      context,
-                      okText: 'Ok, I got it',
-                      onOkTap: () {},
-                      body: _buildFormattingGuideBody(),
+          body: SingleChildScrollView(
+            padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 10.h),
+            child: Column(
+              spacing: 30.h,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                CustomTextField(
+                  controller: titleController,
+                  labelText: 'Title',
+                  hintText: 'Title',
+                ),
+                SelectVisibility(value: bloc.visibility,
+                    onChange: (p0) => bloc.add(AddingResourceVisibility(p0))),
+                SelectCategory(value: bloc.category,
+                    onChange: (p0) => bloc.add(AddingResourceCategory(p0))),
+                BlocBuilder<UploadResourceBloc, UploadResourceState>(
+                  buildWhen: (previous, current) => current is ChooseTagsState,
+                  builder: (context, state) {
+                    final bloc = context.read<UploadResourceBloc>();
+                    return SearchForTags(
+                      tags: bloc.tags.toSet(),
+                      onChange: (Set<String> selectedTags) =>
+                          bloc.add(AddingResourceTags(selectedTags)),
                     );
                   },
-                  child: Tooltip(
-                    message: 'More Information',
-                    child: Icon(
-                      Icons.error_outline_rounded,
-                      color: ColorsManager.black41,
+                ),
+                CustomTextField(
+                  labelIcon: InkWell(
+                    onTap: () {
+                      AppDialogs.showDialog(
+                        context,
+                        okText: 'Ok, I got it',
+                        onOkTap: () {},
+                        body: _buildFormattingGuideBody(),
+                      );
+                    },
+                    child: Tooltip(
+                      message: 'More Information',
+                      child: Icon(
+                        Icons.error_outline_rounded,
+                        color: ColorsManager.black41,
+                      ),
                     ),
                   ),
+                  controller: contentController,
+                  labelText: 'Content',
+                  hintText: 'Write the content here',
+                  textInputType: TextInputType.multiline,
+                  maxLines: 5,
                 ),
-                controller: contentController,
-                labelText: 'Content',
-                hintText: 'Write the content here',
-                textInputType: TextInputType.multiline,
-                maxLines: 5,
-              ),
-              UploadButton(
-                onTap: () async {
-                  File? file = await FileService.pickFile();
-                  if (file?.path != null) {
-                    final String path = file!.path.trim();
-                    debugPrint("FILE PATH $path");
-                    paths.add(path);
-                    setState(() {});
-                  }
-                },
-              ),
-              ListView.separated(
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                itemBuilder: (context, index) {
-                  final String filePath = paths.toList()[index];
-                  return FileAttachmentItem(
-                    fileName: filePath,
-                    onDelete: () {
-                      paths.remove(filePath);
-                      setState(() {});
-                    },
-                  );
-                },
-                separatorBuilder: (context, index) => 5.heightBox,
-                itemCount: paths.length,
-              )
-            ],
+                UploadButton(
+                  onTap: () => bloc.add(UploadingResourceFiles()),
+                ),
+                BlocBuilder<UploadResourceBloc, UploadResourceState>(
+                  buildWhen: (previous, current) =>
+                  current is RemoveImagesState || current is UploadedImagesState,
+                  builder: (context, state) {
+                    final bloc = context.read<UploadResourceBloc>();
+                    return Wrap(
+                      spacing: 5.w,
+                      runSpacing: 5.h,
+                      children: List.generate(
+                        bloc.paths.length,
+                            (index) {
+                          final String filePath = bloc.paths.toList()[index];
+                          return FileAttachmentItem(
+                            fileName: filePath,
+                            onDelete: () =>
+                                bloc.add(RemoveResourceFiles(filePath)),
+                          );
+                        },
+                      ),
+                    );
+                    return ListView.separated(
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        final String filePath = bloc.paths.toList()[index];
+                        return FileAttachmentItem(
+                          fileName: filePath,
+                          onDelete: () => bloc.add(RemoveResourceFiles(filePath)),
+                        );
+                      },
+                      separatorBuilder: (context, index) => 5.heightBox,
+                      itemCount: bloc.paths.length,
+                    );
+                  },
+                )
+              ],
+            ),
           ),
         ),
       ),
@@ -206,6 +278,43 @@ class _AddResourcesScreenState extends State<AddResourcesScreen> {
           Text(title, style: Styles.font15w600),
           Text(example, style: Styles.font14w500),
         ],
+      ),
+    );
+  }
+
+  void _showUploadDialog(BuildContext context, {required UploadResourceBloc bloc}) {
+    AppDialogs.showDialog(
+      context,
+      body: BlocProvider.value(
+        value: bloc,
+        child: BlocBuilder<UploadResourceBloc, UploadResourceState>(
+          buildWhen: (previous, current) {
+            return current is UploadResourceLoading ||
+                current is UploadResourceProgressLoading;
+          },
+          builder: (context, state) {
+            double percent = 0;
+            String label = "Preparing to Upload...";
+            Widget content = const LoadingScreen(
+              baseColor: ColorsManager.mainColor,
+              highlightColor: ColorsManager.mainColorLight,
+            );
+            if (state is UploadResourceProgressLoading) {
+              percent = state.percent.toDouble().clamp(0.0, 1.0);
+              label = "Uploading... ${(percent * 100).toStringAsFixed(0)}%";
+              content = CircularPercentWidget(percent: state.percent.toDouble());
+            }
+            return Column(
+              children: [
+                20.heightBox,
+                content,
+                18.heightBox,
+                Text(label, style: Styles.font16w700),
+                25.heightBox,
+              ],
+            );
+          },
+        ),
       ),
     );
   }

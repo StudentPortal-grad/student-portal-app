@@ -29,6 +29,7 @@ import '../../features/notification/presentation/screens/notifications_screen.da
 import '../../features/onboarding/view/onboarding_view/onboarding_view.dart';
 import '../../features/onboarding/view/splash_view/splash_view.dart';
 import '../../features/profile/presentation/screens/followers_screen.dart';
+import '../../features/resource/presentation/presentation/manager/upload_resource_bloc/upload_resource_bloc.dart';
 import '../../features/resource/presentation/presentation/pages/resource_details_screen.dart';
 import '../helpers/custom_animated_transition_page.dart';
 
@@ -193,7 +194,10 @@ abstract class AppRouter {
         pageBuilder: (context, state) => buildPage(
           context: context,
           state: state,
-          child: AddResourcesScreen(),
+          child: BlocProvider(
+            create: (context) => UploadResourceBloc(),
+            child: AddResourcesScreen(),
+          ),
         ),
       ),
       GoRoute(

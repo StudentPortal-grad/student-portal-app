@@ -50,8 +50,8 @@ class _AddPostScreenState extends State<AddPostScreen> {
   noChanges({int? imagesLen, int? tagsLen}) {
     return titleController.text.isEmpty &&
         contentController.text.isEmpty &&
-        (imagesLen != null && imagesLen > 0) &&
-        (tagsLen != null && tagsLen > 0);
+        (imagesLen == null || imagesLen == 0) &&
+        (tagsLen == null || tagsLen == 0);
   }
 
   back({int? imagesLen, int? tagsLen}) {
