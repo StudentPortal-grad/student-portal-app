@@ -14,7 +14,7 @@ import '../../events/presentation/manager/events_bloc/events_bloc.dart';
 import '../../events/presentation/pages/events_screen.dart';
 import '../../home/presentation/pages/home_screen.dart';
 import '../../home/presentation/widgets/app_bar_home.dart';
-import '../../resource/presentation/pages/resources_screen.dart';
+import '../../resource/presentation/presentation/pages/resources_screen.dart';
 
 class HomeLayoutScreen extends StatefulWidget {
   const HomeLayoutScreen({super.key});
@@ -37,19 +37,19 @@ class _HomeLayoutScreenState extends State<HomeLayoutScreen> {
 
   void _listenToSocketEvents() {
     SocketService.socket.on('newMessage', (data) {
-      print('newMessage: $data');
+      debugPrint('newMessage: $data');
     });
 
     SocketService.socket.on('friendRequestReceived', (data) {
-      print('friendRequestReceived: $data');
+      debugPrint('friendRequestReceived: $data');
     });
 
     SocketService.socket.on('friendRequestAccepted', (data) {
-      print('friendRequestAccepted: $data');
+      debugPrint('friendRequestAccepted: $data');
     });
 
     SocketService.socket.on('friendRequestSent', (data) {
-      print('friendRequestSent: $data');
+      debugPrint('friendRequestSent: $data');
     });
   }
 

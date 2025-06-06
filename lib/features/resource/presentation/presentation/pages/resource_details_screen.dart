@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:student_portal/core/helpers/app_size_boxes.dart';
 
-import '../../../../core/theming/colors.dart';
-import '../../../../core/theming/text_styles.dart';
-import '../../../../core/widgets/custom_appbar.dart';
-import '../../../home/presentation/widgets/post_view.dart';
-import '../../../post/presentation/widgets/comment_bar.dart';
-import '../../../post/presentation/widgets/post_comments_view.dart';
+import '../../../../../core/theming/colors.dart';
+import '../../../../../core/theming/text_styles.dart';
+import '../../../../../core/widgets/custom_appbar.dart';
+import '../../../../home/presentation/widgets/post_view.dart';
+import '../../../../post/presentation/widgets/comment_bar.dart';
+import '../../../../post/presentation/widgets/post_comments_view.dart';
+
+
 
 class ResourceDetailsScreen extends StatefulWidget {
   const ResourceDetailsScreen({super.key});

@@ -1,9 +1,8 @@
 import 'dart:developer';
 import 'dart:io';
 
-import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:meta/meta.dart';
 import 'package:student_portal/features/home/domain/usecases/create_post_uc.dart';
 
 import '../../../../../core/helpers/file_service.dart';

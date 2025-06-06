@@ -12,14 +12,14 @@ import 'package:student_portal/core/utils/assets_app.dart';
 import 'package:student_portal/core/widgets/custom_appbar.dart';
 import 'package:student_portal/core/widgets/custom_image_view.dart';
 import 'package:student_portal/core/widgets/custom_text_field.dart';
-import 'package:student_portal/features/resource/presentation/widgets/select_visibility.dart';
 
-import '../../../../core/helpers/extensions.dart';
-import '../../../post/presentation/widgets/file_attachment_item.dart';
-import '../../../post/presentation/widgets/search_for_tags.dart';
-import '../../../post/presentation/widgets/upload_button.dart';
-import '../../../post/presentation/widgets/warning_dialog_body.dart';
+import '../../../../../core/helpers/extensions.dart';
+import '../../../../post/presentation/widgets/file_attachment_item.dart';
+import '../../../../post/presentation/widgets/search_for_tags.dart';
+import '../../../../post/presentation/widgets/upload_button.dart';
+import '../../../../post/presentation/widgets/warning_dialog_body.dart';
 import '../widgets/select_category.dart';
+import '../widgets/select_visibility.dart';
 
 class AddResourcesScreen extends StatefulWidget {
   const AddResourcesScreen({super.key});

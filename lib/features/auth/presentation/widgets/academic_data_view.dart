@@ -37,9 +37,10 @@ class AcademicDataView extends StatelessWidget {
                     children: [
                       CustomTextField(
                         validator: (value) {
-                          if (value == null || value.isEmpty) {
+                          if (value.isEmpty) {
                             return 'Please enter your University';
                           }
+                          return null;
                         },
                         textInputType: TextInputType.name,
                         hintText: "University",
@@ -49,9 +50,10 @@ class AcademicDataView extends StatelessWidget {
                       ),
                       CustomTextField(
                         validator: (value) {
-                          if (value == null || value.isEmpty) {
+                          if (value.isEmpty) {
                             return 'Please enter your Department';
                           }
+                          return null;
                         },
                         textInputType: TextInputType.name,
                         hintText: "Collage",
@@ -63,7 +65,7 @@ class AcademicDataView extends StatelessWidget {
                       CustomTextField(
                         validator: (value) {
                           if(bloc.position != 'Student') return null;
-                          if (value == null || value.isEmpty) {
+                          if (value.isEmpty) {
                             return 'Please enter a number';
                           }
                           final number = double.tryParse(value);
@@ -84,7 +86,7 @@ class AcademicDataView extends StatelessWidget {
                       CustomTextField(
                         validator: (value) {
                           if(bloc.position != 'Student') return null;
-                          if (value == null || value.isEmpty) {
+                          if (value.isEmpty) {
                             return 'Please enter a number';
                           }
                           final number = double.tryParse(value);

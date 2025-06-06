@@ -75,7 +75,6 @@ class EventDetailsScreen extends StatelessWidget {
                             20.heightBox,
                             BlocConsumer<BookSeatBloc, BookSeatState>(
                               listener: (context, state) {
-                                print('ssss STATE $state');
                                 if(state is BookSeatLoaded){
                                   BlocProvider.of<EventDetailsBloc>(context).add(EventsRequested(eventId: eventId,noLoading: true));
                                 }

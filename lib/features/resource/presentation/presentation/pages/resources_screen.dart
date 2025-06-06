@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:student_portal/core/helpers/app_size_boxes.dart';
 
-import '../../../../core/utils/app_router.dart';
-import '../../../home/presentation/widgets/post_view.dart';
+import '../../../../../core/utils/app_router.dart';
+import '../../../../home/presentation/widgets/post_view.dart';
 
 class ResourcesScreen extends StatelessWidget {
   const ResourcesScreen({super.key});

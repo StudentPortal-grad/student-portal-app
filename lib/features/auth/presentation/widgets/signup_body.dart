@@ -46,7 +46,7 @@ class SignupBody extends StatelessWidget {
                   labelText: 'Full Name',
                   textInputType: TextInputType.name,
                   validator: (value) {
-                    if (value == null || value.isEmpty) {
+                    if (value.isEmpty) {
                       return 'Please enter your name';
                     }
                     return null;

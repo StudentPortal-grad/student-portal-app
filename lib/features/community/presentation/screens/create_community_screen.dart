@@ -67,7 +67,7 @@ class _CreateCommunityScreenState extends State<CreateCommunityScreen> {
                 prefixIcon: Icon(Icons.people, color: ColorsManager.gray2),
                 hintText: 'Enter Community name',
                 validator: (value) {
-                  if (value == null || value.isEmpty) {
+                  if (value.isEmpty) {
                     return 'Please enter community name';
                   }
                   return null;

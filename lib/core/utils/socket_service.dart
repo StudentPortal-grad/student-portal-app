@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:socket_io_client/socket_io_client.dart';
 import 'package:student_portal/core/utils/secure_storage.dart';
 import 'package:student_portal/core/utils/service_locator.dart';
-import 'package:socket_io_client/socket_io_client.dart' as IO;
+import 'package:socket_io_client/socket_io_client.dart' as io;
 
 import '../../features/auth/data/model/token_model/token_model.dart';
 import '../network/api_endpoints.dart';
@@ -35,9 +35,9 @@ class SocketService {
       log("UserID: ${token?.id}");
       log("Host URL: ${ApiEndpoints.host}");
 
-      _socket = IO.io(
+      _socket = io.io(
         ApiEndpoints.host,
-        IO.OptionBuilder()
+        io.OptionBuilder()
             .setTransports(['websocket']) // Required for Flutter
             .disableAutoConnect() // connect manually
             .setExtraHeaders({

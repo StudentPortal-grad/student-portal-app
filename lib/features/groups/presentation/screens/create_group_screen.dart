@@ -68,7 +68,7 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
                 prefixIcon: Icon(Icons.people, color: ColorsManager.gray2),
                 hintText: 'Enter group name',
                 validator: (value) {
-                  if (value == null || value.isEmpty) {
+                  if (value.isEmpty) {
                     return 'Please enter group name';
                   }
                   return null;

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
-import 'package:meta/meta.dart';
 import 'package:student_portal/core/repo/user_repository.dart';
 import 'package:student_portal/features/profile/domain/use_case/get_user_profile_uc.dart';
 
