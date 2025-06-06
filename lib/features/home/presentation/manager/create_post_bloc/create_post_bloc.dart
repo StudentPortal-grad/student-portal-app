@@ -9,7 +9,7 @@ import 'package:student_portal/features/home/domain/usecases/create_post_uc.dart
 import '../../../../../core/helpers/file_service.dart';
 import '../../../../../core/utils/service_locator.dart';
 import '../../../data/dto/post_dto.dart' show PostDto;
-import '../../../domain/repo/get_posts_repo.dart';
+import '../../../domain/repo/posts_repository.dart';
 
 part 'create_post_event.dart';
 

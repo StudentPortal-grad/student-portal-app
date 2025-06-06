@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 import 'package:student_portal/core/helpers/app_size_boxes.dart';
 import 'package:student_portal/features/events/data/models/event_model.dart';
 
@@ -45,7 +46,8 @@ class EventItemView extends StatelessWidget {
               Expanded(
                 child: Text(
                   event?.title ?? 'NULL',
-                  style: Styles.font18w600.copyWith(fontWeight: FontWeight.w500),
+                  style:
+                      Styles.font18w600.copyWith(fontWeight: FontWeight.w500),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -55,7 +57,8 @@ class EventItemView extends StatelessWidget {
                 backgroundColor: ColorsManager.lightBabyBlue,
                 child: Icon(
                   Icons.bookmark,
-                  color: ColorsManager.lightGrayColor,   // ColorsManager.mainColor
+                  color:
+                      ColorsManager.lightGrayColor, // ColorsManager.mainColor
                 ),
               )
             ],
@@ -79,7 +82,8 @@ class EventItemView extends StatelessWidget {
                 color: ColorsManager.lightGrayColor,
               ),
               1.5.widthBox,
-              Text('Sat, 1 May 2025 • 11:00 AM', style: Styles.font13w400)
+              Text(formatDateTimeRange(event?.startDate, event?.endDate),
+                  style: Styles.font13w400)
             ],
           ),
           10.heightBox,
@@ -91,11 +95,32 @@ class EventItemView extends StatelessWidget {
                 color: ColorsManager.lightGrayColor,
               ),
               1.5.widthBox,
-              Text('36 Guild Street London, UK', style: Styles.font13w400)
+              Text(event?.location ?? "The Location not defined yet", style: Styles.font13w400)
             ],
           ),
         ],
       ),
     );
+  }
+
+  String formatDate(DateTime? dateTime) {
+    if (dateTime == null) return 'Date not defined yet';
+    final DateFormat formatter = DateFormat('d MMMM, y');
+    return formatter.format(dateTime);
+  }
+
+  String formatDateTimeRange(DateTime? start, DateTime? end) {
+    if (start == null || end == null) {
+      return 'Time not defined yet';
+    }
+
+    final dayFormat = DateFormat('EEEE'); // e.g., Tuesday
+    final timeFormat = DateFormat('h:mma'); // e.g., 4:00PM
+
+    String day = dayFormat.format(start);
+    String startTime = timeFormat.format(start);
+    String endTime = timeFormat.format(end);
+
+    return '$day, $startTime - $endTime';
   }
 }

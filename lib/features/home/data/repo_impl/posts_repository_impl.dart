@@ -7,7 +7,7 @@ import 'package:student_portal/core/network/api_endpoints.dart';
 import 'package:student_portal/core/network/api_service.dart';
 
 import '../../../../core/errors/data/model/failures.dart';
-import '../../domain/repo/get_posts_repo.dart';
+import '../../domain/repo/posts_repository.dart';
 import '../dto/post_dto.dart';
 import '../model/post_model/post.dart';
 

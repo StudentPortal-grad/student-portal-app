@@ -83,10 +83,11 @@ class EventDetailsScreen extends StatelessWidget {
                               builder: (bookContext, bookState) {
                                 final userId = UserRepository.user?.id;
                                 final alreadyBooked = state.event.rsvps?.any((Rsvp rsvp) {
-                                  if (rsvp.rsvpUser?.id == userId) {
-                                    return rsvp.status == EventState.attending.value;
-                                  }
-                                  return false;
+                                  return rsvp.rsvpUser?.id == userId;
+                                  // if (rsvp.rsvpUser?.id == userId) {
+                                  //   return rsvp.status == EventState.attending.value;
+                                  // }
+                                  // return false;
                                 }) ?? false;
                                 return CustomAppButton(
                                   loading: bookState is BookSeatLoading,
