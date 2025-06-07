@@ -6,8 +6,8 @@ import 'package:dio/dio.dart';
 import 'package:student_portal/core/errors/data/model/error_model.dart';
 import 'package:student_portal/core/network/api_service.dart';
 
-import 'package:student_portal/features/resource/presentation/data/dto/upload_resource.dart';
-import 'package:student_portal/features/resource/presentation/data/model/resource.dart';
+import 'package:student_portal/features/resource/data/dto/upload_resource.dart';
+import 'package:student_portal/features/resource/data/model/resource.dart';
 
 import '../../../../../core/errors/data/model/failures.dart';
 import '../../../../../core/network/api_endpoints.dart';

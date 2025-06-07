@@ -10,8 +10,8 @@ import '../../features/auth/data/repo_impl/auth_repo_impl.dart';
 import '../../features/events/domain/repositories/events_repository.dart';
 import '../../features/home/data/repo_impl/posts_repository_impl.dart';
 import '../../features/profile/data/reoi_impl/profile_repository_impl.dart';
-import '../../features/resource/presentation/data/repo_impl/resource_repository_impl.dart';
-import '../../features/resource/presentation/domain/repo/resource_repository.dart';
+import '../../features/resource/data/repo_impl/resource_repository_impl.dart';
+import '../../features/resource/domain/repo/resource_repository.dart';
 import '../network/api_endpoints.dart';
 import '../network/api_service.dart';
 

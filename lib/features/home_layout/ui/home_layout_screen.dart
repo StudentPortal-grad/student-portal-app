@@ -9,7 +9,7 @@ import 'package:student_portal/core/utils/assets_app.dart';
 import 'package:student_portal/features/home/presentation/manager/discussion_bloc/discussion_bloc.dart';
 import 'package:student_portal/features/home_layout/ui/widgets/drawer.dart';
 import 'package:student_portal/features/home_layout/ui/widgets/nav_bar.dart';
-import 'package:student_portal/features/resource/presentation/presentation/manager/get_resource_bloc/get_resource_bloc.dart';
+import 'package:student_portal/features/resource/presentation/manager/get_resource_bloc/get_resource_bloc.dart';
 import '../../../core/utils/socket_service.dart';
 import '../../chats/presentation/manager/chats_bloc/chats_bloc.dart';
 import '../../chats/presentation/pages/chats_screen.dart';
@@ -17,7 +17,7 @@ import '../../events/presentation/manager/events_bloc/events_bloc.dart';
 import '../../events/presentation/pages/events_screen.dart';
 import '../../home/presentation/pages/home_screen.dart';
 import '../../home/presentation/widgets/app_bar_home.dart';
-import '../../resource/presentation/presentation/pages/resources_screen.dart';
+import '../../resource/presentation/pages/resources_screen.dart';
 
 class HomeLayoutScreen extends StatefulWidget {
   const HomeLayoutScreen({super.key});

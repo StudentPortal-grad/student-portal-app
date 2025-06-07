@@ -1,4 +1,4 @@
-import '../../../../resource/presentation/data/model/resource.dart';
+import '../../../../resource/data/model/resource.dart';
 
 class Discussion {
   final String? id;

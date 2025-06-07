@@ -5,9 +5,9 @@ import 'package:student_portal/core/helpers/app_size_boxes.dart';
 import '../../../../../core/theming/colors.dart';
 import '../../../../../core/theming/text_styles.dart';
 import '../../../../../core/widgets/custom_appbar.dart';
-import '../../../../home/presentation/widgets/post_view.dart';
-import '../../../../home/presentation/widgets/comment_bar.dart';
-import '../../../../home/presentation/widgets/post_comments_view.dart';
+import '../../../home/presentation/widgets/comment_bar.dart';
+import '../../../home/presentation/widgets/post_comments_view.dart';
+import '../../../home/presentation/widgets/post_view.dart';
 
 
 

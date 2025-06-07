@@ -12,7 +12,7 @@ import 'package:student_portal/features/home/presentation/pages/post_details_scr
 import 'package:student_portal/features/profile/presentation/screens/following_screen.dart';
 import 'package:student_portal/features/profile/presentation/screens/profile_screen.dart';
 import 'package:student_portal/features/groups/presentation/screens/create_group_screen.dart';
-import 'package:student_portal/features/resource/presentation/presentation/pages/add_resource_screen.dart';
+import 'package:student_portal/features/resource/presentation/pages/add_resource_screen.dart';
 import 'package:student_portal/features/search/presentation/screens/search_screen.dart';
 import 'package:student_portal/features/settings/presentation/screens/account_settings_screen.dart';
 import '../../features/auth/presentation/manager/login_bloc/login_bloc.dart';
@@ -29,8 +29,8 @@ import '../../features/notification/presentation/screens/notifications_screen.da
 import '../../features/onboarding/view/onboarding_view/onboarding_view.dart';
 import '../../features/onboarding/view/splash_view/splash_view.dart';
 import '../../features/profile/presentation/screens/followers_screen.dart';
-import '../../features/resource/presentation/presentation/manager/upload_resource_bloc/upload_resource_bloc.dart';
-import '../../features/resource/presentation/presentation/pages/resource_details_screen.dart';
+import '../../features/resource/presentation/manager/upload_resource_bloc/upload_resource_bloc.dart';
+import '../../features/resource/presentation/pages/resource_details_screen.dart';
 import '../helpers/custom_animated_transition_page.dart';
 
 abstract class AppRouter {

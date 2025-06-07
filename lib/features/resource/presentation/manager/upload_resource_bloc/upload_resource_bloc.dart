@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:meta/meta.dart';
-import 'package:student_portal/features/resource/presentation/data/dto/upload_resource.dart';
+import 'package:student_portal/features/resource/data/dto/upload_resource.dart';
 
 import '../../../../../../core/helpers/file_service.dart';
 import '../../../../../../core/utils/service_locator.dart';

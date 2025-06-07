@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:student_portal/contestants.dart';
 import 'package:student_portal/core/helpers/app_size_boxes.dart';
-import 'package:student_portal/features/resource/presentation/data/model/resource.dart';
+import 'package:student_portal/features/resource/data/model/resource.dart';
 
 import '../../../../core/theming/colors.dart';
 import '../../../../core/theming/text_styles.dart';

@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:student_portal/core/helpers/app_size_boxes.dart';
 import 'package:student_portal/core/helpers/time_formatting_helper.dart';
-import 'package:student_portal/features/resource/presentation/presentation/widgets/resource_react_bar.dart';
+import 'package:student_portal/features/resource/presentation/widgets/resource_react_bar.dart';
 
 import '../../../../../core/theming/colors.dart';
 import '../../../../../core/theming/text_styles.dart';
 import '../../../../../core/widgets/app_text.dart';
-import '../../../../home/presentation/widgets/category_tag_view.dart';
+import '../../../home/presentation/widgets/category_tag_view.dart';
 import 'pdf_post_view.dart';
-import '../../../../home/presentation/widgets/user_post_view.dart';
+import '../../../home/presentation/widgets/user_post_view.dart';
 import '../../data/model/resource.dart';
 
 class ResourceItemView extends StatelessWidget {

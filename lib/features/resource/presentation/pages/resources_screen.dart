@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:student_portal/core/helpers/app_size_boxes.dart';
-import 'package:student_portal/features/resource/presentation/presentation/manager/get_resource_bloc/get_resource_bloc.dart';
+import 'package:student_portal/features/resource/presentation/manager/get_resource_bloc/get_resource_bloc.dart';
 
 import '../../../../../core/errors/data/model/error_model.dart';
 import '../../../../../core/errors/view/error_screen.dart';
