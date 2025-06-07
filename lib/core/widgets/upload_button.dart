@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:student_portal/core/helpers/app_size_boxes.dart';
 
-import '../../../../core/theming/colors.dart';
-import '../../../../core/theming/text_styles.dart';
-import '../../../../core/utils/assets_app.dart';
-import '../../../../core/widgets/custom_image_view.dart';
+import '../theming/colors.dart';
+import '../theming/text_styles.dart';
+import '../utils/assets_app.dart';
+import 'custom_image_view.dart';
 
 class UploadButton extends StatelessWidget {
   final VoidCallback onTap;

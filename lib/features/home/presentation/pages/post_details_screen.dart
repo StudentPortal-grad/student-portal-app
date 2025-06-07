@@ -45,7 +45,6 @@ class _PostDetailsScreenState extends State<PostDetailsScreen> {
         controller: scrollController,
         padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 16.h),
         child: PostView(
-          id: 0,
           detailsChildren: [
             CommentBar(),
             20.heightBox,

@@ -6,8 +6,8 @@ import '../../../../../core/theming/colors.dart';
 import '../../../../../core/theming/text_styles.dart';
 import '../../../../../core/widgets/custom_appbar.dart';
 import '../../../../home/presentation/widgets/post_view.dart';
-import '../../../../post/presentation/widgets/comment_bar.dart';
-import '../../../../post/presentation/widgets/post_comments_view.dart';
+import '../../../../home/presentation/widgets/comment_bar.dart';
+import '../../../../home/presentation/widgets/post_comments_view.dart';
 
 
 
@@ -48,7 +48,6 @@ class _ResourceDetailsScreenState extends State<ResourceDetailsScreen> {
         controller: scrollController,
         padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 16.h),
         child: PostView(
-          id: 0,
           detailsChildren: [
             CommentBar(),
             20.heightBox,

@@ -8,7 +8,7 @@ import '../../../../../core/theming/colors.dart';
 import '../../../../../core/theming/text_styles.dart';
 import '../../../../../core/widgets/app_text.dart';
 import '../../../../home/presentation/widgets/category_tag_view.dart';
-import '../../../../home/presentation/widgets/pdf_post_view.dart';
+import 'pdf_post_view.dart';
 import '../../../../home/presentation/widgets/user_post_view.dart';
 import '../../data/model/resource.dart';
 

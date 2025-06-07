@@ -6,6 +6,7 @@ import 'package:student_portal/core/theming/colors.dart';
 import 'package:student_portal/core/theming/text_styles.dart';
 import 'package:student_portal/core/utils/app_router.dart';
 import 'package:student_portal/core/utils/assets_app.dart';
+import 'package:student_portal/features/home/presentation/manager/discussion_bloc/discussion_bloc.dart';
 import 'package:student_portal/features/home_layout/ui/widgets/drawer.dart';
 import 'package:student_portal/features/home_layout/ui/widgets/nav_bar.dart';
 import 'package:student_portal/features/resource/presentation/presentation/manager/get_resource_bloc/get_resource_bloc.dart';
@@ -81,6 +82,7 @@ class _HomeLayoutScreenState extends State<HomeLayoutScreen> {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        BlocProvider<DiscussionBloc>(create: (_) => DiscussionBloc()..add(DiscussionRequested())),
         BlocProvider<EventsBloc>(create: (_) => EventsBloc()..add(EventsRequested())),
         BlocProvider<GetResourceBloc>(create: (_) => GetResourceBloc()..add(GetResourceEventRequested())),
       ],

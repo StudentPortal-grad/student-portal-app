@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -64,16 +63,12 @@ class _ResourceReactBarState extends State<ResourceReactBar> {
           Spacer(),
           GestureDetector(
             onTap: () {
-              try {
-                SharePlus.instance.share(
-                  ShareParams(
-                    title: 'Check out this article',
-                    uri: Uri.parse(widget.resource?.fileUrl ?? ''),
-                  ),
-                );
-              } on Exception catch (e) {
-                log("share_error $e");
-              }
+              final resource = widget.resource;
+              SharePlus.instance.share(
+                ShareParams(
+                  text: ("Student Portal - Check out this ${resource?.originalFileName} article:\n ${resource?.fileUrl}"),
+                ),
+              );
             },
             child: Row(
               children: [

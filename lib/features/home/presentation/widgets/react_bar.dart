@@ -59,7 +59,7 @@ class _ReactBarState extends State<ReactBar> {
             height: 16.h,
           ),
           4.widthBox,
-          Text('15', style: Styles.font14w500),
+          Text('0', style: Styles.font14w500),
           Spacer(),
           if (!widget.removeShare)
             GestureDetector(

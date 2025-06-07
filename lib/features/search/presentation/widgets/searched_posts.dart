@@ -16,7 +16,7 @@ class SearchedPosts extends StatelessWidget {
       separatorBuilder: (context, index) => 15.heightBox,
       itemBuilder: (context, index) => InkWell(
         onTap: () => AppRouter.router.push(AppRouter.postDetails),
-        child: PostView(id: index),
+        child: PostView(),
       ),
       itemCount: 5,
     );

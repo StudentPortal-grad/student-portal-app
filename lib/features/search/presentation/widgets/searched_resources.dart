@@ -16,7 +16,7 @@ class SearchedResources extends StatelessWidget {
       separatorBuilder: (context, index) => 15.heightBox,
       itemBuilder: (context, index) => InkWell(
         onTap: () => AppRouter.router.push(AppRouter.resourceDetails),
-        child: PostView(id: index),
+        child: PostView(),
       ),
       itemCount: 5,
     );

@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:student_portal/features/home/data/model/post_model/post.dart';
 import '../../../../core/helpers/extensions.dart';
 import '../../../../core/widgets/custom_image_view.dart';
 import '../pages/image_post_screen.dart';
 
 class PostListImagesView extends StatefulWidget {
-  const PostListImagesView({super.key});
+  const PostListImagesView({super.key, this.attachments = const []});
+
+  final List<Attachment> attachments;
 
   @override
   State<PostListImagesView> createState() => _PostListImagesViewState();
@@ -16,9 +19,10 @@ class _PostListImagesViewState extends State<PostListImagesView> {
 
   @override
   Widget build(BuildContext context) {
-    // if (true) {
-      return PostImageView(id: 1);//if list's length == 1
-    // }
+    if (widget.attachments.isEmpty) return const SizedBox.shrink();
+    if (widget.attachments.length == 1) {
+      return PostImageView(index: 0, attachment: widget.attachments[0]);
+    }
     return Stack(
       alignment: Alignment.topRight,
       children: [
@@ -34,8 +38,23 @@ class _PostListImagesViewState extends State<PostListImagesView> {
               });
             },
             scrollDirection: Axis.horizontal,
-            itemCount: 5,
-            itemBuilder: (context, index) => PostImageView(id: index),
+            itemCount: widget.attachments.length,
+            itemBuilder: (context, index) => GestureDetector(
+              onTap: (){
+                if (widget.attachments[index].type == 'image') {
+                  push(
+                    ImagePostView(
+                      id: index,
+                      attachment: widget.attachments[index],
+                    ),
+                  );
+                }
+              },
+              child: PostImageView(
+                index: index,
+                attachment: widget.attachments[index],
+              ),
+            ),
           ),
         ),
         Container(
@@ -48,7 +67,8 @@ class _PostListImagesViewState extends State<PostListImagesView> {
             borderRadius: BorderRadius.all(Radius.circular(13.r)),
           ),
           padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 5.h),
-          child: Text('$currentIndex/5', style: TextStyle(color: Colors.white)),
+          child: Text('$currentIndex/${widget.attachments.length}',
+              style: TextStyle(color: Colors.white)),
         )
       ],
     );
@@ -56,20 +76,21 @@ class _PostListImagesViewState extends State<PostListImagesView> {
 }
 
 class PostImageView extends StatelessWidget {
-  const PostImageView({super.key, required this.id});
+  const PostImageView(
+      {super.key, required this.attachment, required this.index});
 
-  final int id;
+  final Attachment attachment;
+  final int index;
 
   @override
   Widget build(BuildContext context) {
+    final uniqueTag = '${attachment.checksum ?? attachment.resource}_$index';
+
     return Hero(
-      tag: 'image$id',
+      tag: uniqueTag,
       child: CustomImageView(
         materialNeeded: true,
-        onTap: () => push(ImagePostView(id: id)),
-        imagePath: 'assets/images/dummy_image.png',
-        // imagePath:
-        //     'https://www.news10.com/wp-content/uploads/sites/64/2024/11/674205c2471ac7.00644903.jpeg?w=960&h=540&crop=1',
+        imagePath: attachment.resource,
         height: 200.h,
         width: 1.sw,
         fit: BoxFit.fitWidth,

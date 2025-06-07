@@ -4,25 +4,18 @@ import 'package:student_portal/core/helpers/app_size_boxes.dart';
 import 'package:student_portal/core/theming/colors.dart';
 import 'package:student_portal/core/theming/text_styles.dart';
 import 'package:student_portal/core/widgets/app_text.dart';
-import 'package:student_portal/features/home/presentation/widgets/category_tag_view.dart';
-import 'package:student_portal/features/home/presentation/widgets/pdf_post_view.dart';
+import 'package:student_portal/features/home/data/model/post_model/post.dart';
 import 'package:student_portal/features/home/presentation/widgets/post_list_images_view.dart';
 import 'package:student_portal/features/home/presentation/widgets/react_bar.dart';
 import 'package:student_portal/features/home/presentation/widgets/user_post_view.dart';
 
-class PostView extends StatelessWidget {
-  const PostView({super.key, required this.id, this.detailsChildren});
+import '../../../../core/helpers/time_formatting_helper.dart';
 
-  final int id;
+class PostView extends StatelessWidget {
+  const PostView({super.key, this.detailsChildren, this.discussion});
+
+  final Discussion? discussion;
   final List<Widget>? detailsChildren;
-  static List<String> dummyTags = [
-    'AI',
-    'Researchers',
-    'Flutter',
-    'Python',
-    'Deep Learning',
-    'Machine Learning'
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -44,21 +37,25 @@ class PostView extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          UserPostView(),
-          21.heightBox,
-          Wrap(
-            spacing: 7.w,
-            runSpacing: 7.h,
-            children: List.generate(
-              dummyTags.length,
-              (index) => CategoryTagView(
-                index: index,
-                title: dummyTags[index],
-              ),
-            ),
+          UserPostView(
+            uploader: discussion?.uploader,
+            createFromAgo: TimeHelper.instance.timeAgo(discussion?.createdAt),
           ),
-          20.heightBox,
-          Text('Research Methods AI', style: Styles.font14w700),
+          21.heightBox,
+          // Wrap(
+          //   spacing: 7.w,
+          //   runSpacing: 7.h,
+          //   children: List.generate(
+          //     discussion.tags.length,
+          //         (index) =>
+          //         CategoryTagView(
+          //           index: index,
+          //           title:  discussion.tags[index],
+          //         ),
+          //   ),
+          // ),
+          // 20.heightBox,
+          Text(discussion?.title ?? '', style: Styles.font14w700),
           10.heightBox,
           AppText(
             onHashTagTap: (p0) {
@@ -69,15 +66,11 @@ class PostView extends StatelessWidget {
               debugPrint('on Mention');
               debugPrint(p0);
             },
-            text:
-                'The world of @AI research is vast and exciting, and there are many different types of #AI research methods to choose from. Here are some of the most popular methods:',
-            style: Styles.font12w400
-                .copyWith(color: ColorsManager.grayColor, height: 1.9),
+            text: discussion?.content ?? '',
+            style: Styles.font12w400.copyWith(color: ColorsManager.grayColor, height: 1.9),
           ),
           30.heightBox,
-
-          (id == 0) ? PostListImagesView() : PdfPostView(),
-
+          PostListImagesView(attachments: discussion?.attachments ?? []),
           17.heightBox,
           // react bar
           ReactBar(),

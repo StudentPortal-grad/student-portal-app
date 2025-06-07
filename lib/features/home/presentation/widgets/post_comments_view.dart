@@ -4,8 +4,8 @@ import 'package:student_portal/core/helpers/app_size_boxes.dart';
 
 import '../../../../core/theming/colors.dart';
 import '../../../../core/widgets/app_text.dart';
-import '../../../home/presentation/widgets/react_bar.dart';
-import '../../../home/presentation/widgets/user_post_view.dart';
+import 'react_bar.dart';
+import 'user_post_view.dart';
 
 class PostCommentsView extends StatelessWidget {
   const PostCommentsView({super.key});
