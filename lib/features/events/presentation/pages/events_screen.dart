@@ -5,24 +5,16 @@ import 'package:student_portal/core/theming/colors.dart';
 import 'package:student_portal/core/widgets/loading_screen.dart';
 import 'package:student_portal/features/events/presentation/manager/events_bloc/events_bloc.dart';
 
+import '../../../../core/errors/data/model/error_model.dart';
+import '../../../../core/errors/view/error_screen.dart';
 import '../../../../core/widgets/custom_refresh_indicator.dart';
 import '../widgets/events_body_view.dart';
 
-class EventsScreen extends StatefulWidget {
+class EventsScreen extends StatelessWidget {
   const EventsScreen({super.key});
 
   @override
-  State<EventsScreen> createState() => _EventsScreenState();
-}
-
-class _EventsScreenState extends State<EventsScreen>
-    with AutomaticKeepAliveClientMixin {
-  @override
-  bool get wantKeepAlive => true;
-
-  @override
   Widget build(BuildContext context) {
-    super.build(context);
     return BlocBuilder<EventsBloc, EventsState>(
       builder: (context, state) {
         if (state is EventsLoading) {
@@ -34,11 +26,10 @@ class _EventsScreenState extends State<EventsScreen>
           );
         }
         if (state is EventsError) {
-          return CustomRefreshIndicator(
-            onRefresh: () async => context.read<EventsBloc>().add(EventsRequested()),
-            child: Center(
-              child: Text(state.error),
-            ),
+          return ErrorScreen(
+            failure: Failure(message: state.message),
+            onRetry: () async =>
+                context.read<EventsBloc>().add(EventsRequested()),
           );
         }
         if (state is EventsLoaded) {

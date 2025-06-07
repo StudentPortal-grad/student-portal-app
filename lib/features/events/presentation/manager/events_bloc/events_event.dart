@@ -4,3 +4,5 @@ part of 'events_bloc.dart';
 sealed class EventsEvent {}
 
 class EventsRequested extends EventsEvent {}
+
+class EventsLoadMoreRequested extends EventsEvent {}

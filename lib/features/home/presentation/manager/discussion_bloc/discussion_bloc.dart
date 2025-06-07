@@ -39,8 +39,7 @@ class DiscussionBloc extends Bloc<DiscussionEvent, DiscussionState> {
           (error) => emit(DiscussionFailed(error.message ?? 'Unknown Error')),
           (posts) {
         _posts.addAll(posts);
-        _hasMore = posts.isNotEmpty;
-        emit(DiscussionLoaded(List.from(_posts), hasMore: _hasMore));
+        emit(DiscussionLoaded(List.from(_posts)));
       },
     );
   }
@@ -50,6 +49,7 @@ class DiscussionBloc extends Bloc<DiscussionEvent, DiscussionState> {
       Emitter<DiscussionState> emit,
       ) async {
     if (_isLoadingMore || !_hasMore) return;
+    emit(DiscussionLoaded(List.from(_posts),hasMore: _hasMore));
 
     _isLoadingMore = true;
     _currentPage++;

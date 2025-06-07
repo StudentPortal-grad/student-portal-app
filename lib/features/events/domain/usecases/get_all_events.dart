@@ -9,7 +9,7 @@ class GetAllEventsUC {
 
   GetAllEventsUC(this.repository);
 
-  Future<Either<Failure,List<Event>>> call() async {
-    return await repository.getAllEvents();
+  Future<Either<Failure,List<Event>>> call({int page = 1}) async {
+    return await repository.getAllEvents(page: page);
   }
 } 

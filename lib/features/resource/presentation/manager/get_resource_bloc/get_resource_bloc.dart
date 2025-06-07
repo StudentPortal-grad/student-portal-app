@@ -37,8 +37,7 @@ class GetResourceBloc extends Bloc<GetResourceEvent, GetResourceState> {
           (failure) => emit(GetResourceFailed(failure.message ?? "Something went wrong")),
           (newResources) {
         _resources.addAll(newResources);
-        _hasMore = newResources.isNotEmpty;
-        emit(GetResourceLoaded(List.from(_resources), hasMore: _hasMore));
+        emit(GetResourceLoaded(List.from(_resources)));
       },
     );
   }
@@ -46,6 +45,7 @@ class GetResourceBloc extends Bloc<GetResourceEvent, GetResourceState> {
   Future<void> _onLoadMore(
       GetResourceEventLoadMore event, Emitter<GetResourceState> emit) async {
     if (_isLoadingMore || !_hasMore) return;
+    emit(GetResourceLoaded(List.from(_resources),hasMore: _hasMore));
 
     _isLoadingMore = true;
     _currentPage++;

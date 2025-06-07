@@ -5,16 +5,17 @@ sealed class EventsState {}
 
 final class EventsInitial extends EventsState {}
 
-final class EventsLoading extends EventsState {}
+class EventsLoading extends EventsState {}
 
-final class EventsLoaded extends EventsState {
+class EventsLoaded extends EventsState {
   final List<Event> events;
+  final bool hasMore;
 
-  EventsLoaded(this.events);
+  EventsLoaded(this.events, {this.hasMore = false});
 }
 
-final class EventsError extends EventsState {
-  final String error;
+class EventsError extends EventsState {
+  final String message;
 
-  EventsError(this.error);
+  EventsError(this.message);
 }

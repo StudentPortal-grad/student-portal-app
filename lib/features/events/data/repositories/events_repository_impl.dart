@@ -20,7 +20,7 @@ class EventsRepositoryImpl implements EventsRepository {
   EventsRepositoryImpl({required this.apiService});
 
   @override
-  Future<Either<Failure, List<Event>>> getAllEvents() async {
+  Future<Either<Failure, List<Event>>> getAllEvents({int page = 1}) async {
     try {
       var data = await apiService.get(
         endpoint: ApiEndpoints.events,
