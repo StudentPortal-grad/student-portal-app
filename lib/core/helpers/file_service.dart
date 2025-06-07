@@ -1,49 +1,16 @@
 import 'dart:developer';
 import 'dart:io';
 
-import 'package:device_info_plus/device_info_plus.dart';
 import 'package:file_picker/file_picker.dart';
 
-import 'package:permission_handler/permission_handler.dart';
+import 'package:student_portal/core/helpers/permission_manager.dart';
 
 class FileService {
-  /// **Check and Request Storage Permissions**
-  static Future<bool> _requestPermission() async {
-    if (!Platform.isAndroid) return true;
 
-    final androidInfo = await DeviceInfoPlugin().androidInfo;
-    final sdkInt = androidInfo.version.sdkInt;
-
-    if (sdkInt < 30) {
-      // Android 10 and below
-      final storage = await Permission.storage.request();
-      log('Storage permission: $storage');
-      if (storage.isGranted) return true;
-      if (storage.isPermanentlyDenied) await openAppSettings();
-      return false;
-    }
-
-    // Android 11 and above: Request scoped media access
-    final permissions = await Future.wait([
-      Permission.photos.request(),
-      Permission.videos.request(),
-      Permission.audio.request(),
-    ]);
-
-    log('Media permissions: ${permissions.map((p) => p).toList()}');
-
-    final granted = permissions.any((p) => p.isGranted);
-    if (granted) return true;
-
-    if (permissions.any((p) => p.isPermanentlyDenied)) {
-      await openAppSettings();
-    }
-    return false;
-  }
 
   /// Pick a file (PDF, DOCX, Images, Videos)
   static Future<File?> pickFile() async {
-    if (!await _requestPermission()) {
+    if (!await PermissionManager.requestPickPermission()) {
       log("Storage permission denied");
       return null;
     }
@@ -60,7 +27,7 @@ class FileService {
 
   /// Pick an image
   static Future<File?> pickImage() async {
-    if (!await _requestPermission()) {
+    if (!await PermissionManager.requestPickPermission()) {
       log("Storage permission denied");
       return null;
     }
@@ -75,7 +42,7 @@ class FileService {
   }
 
   static Future<List<File?>>? pickImages() async {
-    if (!await _requestPermission()) {
+    if (!await PermissionManager.requestPickPermission()) {
       log("Storage permission denied");
       return [];
     }
@@ -89,7 +56,7 @@ class FileService {
   }
 
   static Future<List<File>> pickFiles() async {
-    if (!await _requestPermission()) {
+    if (!await PermissionManager.requestPickPermission()) {
       log("Storage permission denied");
       return [];
     }
