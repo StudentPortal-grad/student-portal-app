@@ -9,5 +9,5 @@ abstract class ResourceRepository {
     required ResourceDto resourceDto,
     void Function(int percent)? onProgress,
   });
-  Future<Either<Failure,List<Resource>>> getResources();
+  Future<Either<Failure,List<Resource>>> getResources({int page = 1});
 }

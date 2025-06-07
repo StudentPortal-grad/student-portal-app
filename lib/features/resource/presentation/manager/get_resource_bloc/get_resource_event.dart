@@ -8,3 +8,5 @@ class GetResourceEventRequested extends GetResourceEvent {
 
   GetResourceEventRequested({this.noLoading = false});
 }
+
+class GetResourceEventLoadMore extends GetResourceEvent {}

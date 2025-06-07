@@ -20,7 +20,7 @@ class PostRepositoryImpl implements PostRepository {
   Future<Either<Failure, List<Discussion>>> getPosts({int page = 1}) async {
     try {
       final response = await apiService.get(endpoint: ApiEndpoints.discussions,query: {
-        'limit': '5',
+        'limit': 5,
         'page': page,
       });
       log('posts :: $response');

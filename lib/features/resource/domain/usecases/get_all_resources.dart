@@ -9,5 +9,5 @@ class GetAllResourcesUc {
 
   GetAllResourcesUc(this.repository);
 
-  Future<Either<Failure, List<Resource>>> call() => repository.getResources();
+  Future<Either<Failure, List<Resource>>> call({int page = 1}) => repository.getResources(page: page);
 }

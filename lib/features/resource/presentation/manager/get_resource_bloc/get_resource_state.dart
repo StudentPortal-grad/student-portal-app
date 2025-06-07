@@ -5,15 +5,16 @@ sealed class GetResourceState {}
 
 final class GetResourceInitial extends GetResourceState {}
 
-final class GetResourceLoading extends GetResourceState {}
+class GetResourceLoading extends GetResourceState {}
 
-final class GetResourceLoaded extends GetResourceState {
+class GetResourceLoaded extends GetResourceState {
   final List<Resource> resources;
+  final bool hasMore;
 
-  GetResourceLoaded(this.resources);
+  GetResourceLoaded(this.resources, {this.hasMore = true});
 }
 
-final class GetResourceFailed extends GetResourceState {
+class GetResourceFailed extends GetResourceState {
   final String message;
 
   GetResourceFailed(this.message);
