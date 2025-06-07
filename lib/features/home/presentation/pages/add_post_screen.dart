@@ -16,11 +16,11 @@ import 'package:student_portal/features/home/presentation/manager/create_post_bl
 
 import '../../../../core/helpers/extensions.dart';
 import '../../../../core/widgets/circular_percent_widget.dart';
-import '../../../home/data/dto/post_dto.dart';
+import '../../data/dto/post_dto.dart';
 import '../widgets/file_attachment_item.dart';
 import '../widgets/search_for_tags.dart';
-import '../widgets/upload_button.dart';
-import '../widgets/warning_dialog_body.dart';
+import '../../../../core/widgets/upload_button.dart';
+import '../../../../core/widgets/warning_dialog_body.dart';
 
 class AddPostScreen extends StatefulWidget {
   const AddPostScreen({super.key});
@@ -205,20 +205,6 @@ class _AddPostScreenState extends State<AddPostScreen> {
                             );
                           },
                         ),
-                      );
-                      return ListView.separated(
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        itemBuilder: (context, index) {
-                          final String filePath = bloc.paths.toList()[index];
-                          return FileAttachmentItem(
-                            fileName: filePath,
-                            onDelete: () =>
-                                bloc.add(RemovePostImages(filePath)),
-                          );
-                        },
-                        separatorBuilder: (context, index) => 5.heightBox,
-                        itemCount: bloc.paths.length,
                       );
                     },
                   ),

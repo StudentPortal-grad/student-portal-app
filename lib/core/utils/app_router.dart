@@ -7,8 +7,8 @@ import 'package:student_portal/features/chats/presentation/pages/search_peer_scr
 import 'package:student_portal/features/community/presentation/screens/community_screen.dart';
 import 'package:student_portal/features/community/presentation/screens/create_community_screen.dart';
 import 'package:student_portal/features/home/presentation/manager/create_post_bloc/create_post_bloc.dart';
-import 'package:student_portal/features/post/presentation/pages/add_post_screen.dart';
-import 'package:student_portal/features/post/presentation/pages/post_details_screen.dart';
+import 'package:student_portal/features/home/presentation/pages/add_post_screen.dart';
+import 'package:student_portal/features/home/presentation/pages/post_details_screen.dart';
 import 'package:student_portal/features/profile/presentation/screens/following_screen.dart';
 import 'package:student_portal/features/profile/presentation/screens/profile_screen.dart';
 import 'package:student_portal/features/groups/presentation/screens/create_group_screen.dart';

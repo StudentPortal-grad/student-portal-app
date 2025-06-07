@@ -1,11 +1,9 @@
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:student_portal/core/helpers/app_dialog.dart';
 import 'package:student_portal/core/helpers/app_size_boxes.dart';
-import 'package:student_portal/core/helpers/file_service.dart';
 import 'package:student_portal/core/theming/colors.dart';
 import 'package:student_portal/core/theming/text_styles.dart';
 import 'package:student_portal/core/utils/app_router.dart';
@@ -18,10 +16,10 @@ import '../../../../../core/helpers/custom_toast.dart';
 import '../../../../../core/helpers/extensions.dart';
 import '../../../../../core/widgets/circular_percent_widget.dart';
 import '../../../../../core/widgets/loading_screen.dart';
-import '../../../../post/presentation/widgets/file_attachment_item.dart';
-import '../../../../post/presentation/widgets/search_for_tags.dart';
-import '../../../../post/presentation/widgets/upload_button.dart';
-import '../../../../post/presentation/widgets/warning_dialog_body.dart';
+import '../../../../home/presentation/widgets/file_attachment_item.dart';
+import '../../../../home/presentation/widgets/search_for_tags.dart';
+import '../../../../../core/widgets/upload_button.dart';
+import '../../../../../core/widgets/warning_dialog_body.dart';
 import '../../data/dto/upload_resource.dart';
 import '../manager/upload_resource_bloc/upload_resource_bloc.dart';
 import '../widgets/select_category.dart';
@@ -220,19 +218,6 @@ class _AddResourcesScreenState extends State<AddResourcesScreen> {
                           );
                         },
                       ),
-                    );
-                    return ListView.separated(
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      itemBuilder: (context, index) {
-                        final String filePath = bloc.paths.toList()[index];
-                        return FileAttachmentItem(
-                          fileName: filePath,
-                          onDelete: () => bloc.add(RemoveResourceFiles(filePath)),
-                        );
-                      },
-                      separatorBuilder: (context, index) => 5.heightBox,
-                      itemCount: bloc.paths.length,
                     );
                   },
                 )

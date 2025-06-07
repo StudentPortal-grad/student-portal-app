@@ -1,17 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:widget_zoom/widget_zoom.dart';
 import '../../../../core/widgets/custom_image_view.dart';
+import '../../data/model/post_model/post.dart';
 
 class ImagePostView extends StatelessWidget {
   const ImagePostView({
     super.key,
     required this.id,
+    this.attachment,
   });
 
   final int id;
+  final Attachment? attachment;
 
   @override
   Widget build(BuildContext context) {
+    final uniqueTag = '${attachment?.checksum ?? attachment?.resource}_$id';
+
+    if (attachment == null) return const SizedBox.shrink();
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
@@ -23,22 +30,21 @@ class ImagePostView extends StatelessWidget {
           ),
           onPressed: () => Navigator.pop(context),
         ),
-        // title: const Text(
-        //   "Post",
-        //   style: TextStyle(color: Colors.white),
-        // ),
+        title: const Text(
+          "Post",
+          style: TextStyle(color: Colors.white),
+        ),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
             child: WidgetZoom(
-              heroAnimationTag: 'image$id',
+              heroAnimationTag: uniqueTag,
               zoomWidget: Center(
                 child: CustomImageView(
                   materialNeeded: true,
-                  imagePath: 'assets/images/dummy_image.png',
-                      // 'https://www.news10.com/wp-content/uploads/sites/64/2024/11/674205c2471ac7.00644903.jpeg?w=960&h=540&crop=1',
+                  imagePath: attachment?.resource,
                   fit: BoxFit.contain,
                 ),
               ),
@@ -46,9 +52,9 @@ class ImagePostView extends StatelessWidget {
           ),
           // Caption
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 25.w),
             child: Text(
-              'https://www.news10.com/wp-content/uploads/sites/64/2024/11/674205c2471ac7.00644903.jpeg?w=960&h=540&crop=1',
+              attachment?.originalFileName ?? '',
               style: const TextStyle(fontSize: 16, color: Colors.white),
             ),
           ),

@@ -9,6 +9,5 @@ class GetPostsUc {
 
   GetPostsUc({required this.getPostsRepo});
 
-  Future<Either<Failure, List<Post>>> call({required String email}) =>
-      getPostsRepo.getPosts();
+  Future<Either<Failure, List<Discussion>>> call() => getPostsRepo.getPosts();
 }
