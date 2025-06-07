@@ -17,11 +17,14 @@ class PostRepositoryImpl implements PostRepository {
   PostRepositoryImpl({required this.apiService});
 
   @override
-  Future<Either<Failure, List<Post>>> getPosts() async {
+  Future<Either<Failure, List<Discussion>>> getPosts() async {
     try {
-      final response = await apiService.get(endpoint: ApiEndpoints.discussions);
+      final response = await apiService.get(endpoint: ApiEndpoints.discussions,query: {
+        'limit': '10',
+        'page': '1'
+      });
       log('posts :: $response');
-      return Right([]);
+      return Right(response['data']['discussions'].map<Discussion>((e) => Discussion.fromJson(e)).toList());
     } on DioException catch (e) {
       log('Dio Failure ${e.toString()}');
       return Left(ServerFailure.fromDioError(e)); // Handle Dio errors here

@@ -5,7 +5,7 @@ import '../../../../core/errors/data/model/error_model.dart';
 import '../../data/dto/post_dto.dart';
 
 abstract class PostRepository {
-  Future<Either<Failure, List<Post>>> getPosts();
+  Future<Either<Failure, List<Discussion>>> getPosts();
 
   Future<Either<Failure, String>> createPost({
     required PostDto postDto,
