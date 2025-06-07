@@ -5,21 +5,22 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:student_portal/core/helpers/app_size_boxes.dart';
 
-import '../../../../core/theming/colors.dart';
-import '../../../../core/theming/text_styles.dart';
-import '../../../../core/utils/assets_app.dart';
-import '../../../../core/widgets/custom_image_view.dart';
+import '../../../../../core/theming/colors.dart';
+import '../../../../../core/theming/text_styles.dart';
+import '../../../../../core/utils/assets_app.dart';
+import '../../../../../core/widgets/custom_image_view.dart';
+import '../../data/model/resource.dart';
 
-class ReactBar extends StatefulWidget {
-  const ReactBar({super.key, this.removeShare = false});
+class ResourceReactBar extends StatefulWidget {
+  const ResourceReactBar({super.key, this.resource});
 
-  final bool removeShare;
+  final Resource? resource;
 
   @override
-  State<ReactBar> createState() => _ReactBarState();
+  State<ResourceReactBar> createState() => _ResourceReactBarState();
 }
 
-class _ReactBarState extends State<ReactBar> {
+class _ResourceReactBarState extends State<ResourceReactBar> {
   int react = 0;
 
   void _onItemTapped(int index) {
@@ -59,37 +60,33 @@ class _ReactBarState extends State<ReactBar> {
             height: 16.h,
           ),
           4.widthBox,
-          Text('15', style: Styles.font14w500),
+          Text((widget.resource?.comments?.length ?? 0).toString(), style: Styles.font14w500),
           Spacer(),
-          if (!widget.removeShare)
-            GestureDetector(
-              onTap: () {
-                try {
-                  SharePlus.instance.share(
-                    ShareParams(
-                      title: 'Check out this article',
-                      files: [
-
-                      ],
-                      // uri: Uri.tryParse('https://google.com'),
-                    ),
-                  );
-                } on Exception catch (e) {
-                  log("share_error $e");
-                }
-              },
-              child: Row(
-                children: [
-                  CustomImageView(
-                    imagePath: AssetsApp.shareIcon,
-                    width: 16.w,
-                    height: 16.h,
+          GestureDetector(
+            onTap: () {
+              try {
+                SharePlus.instance.share(
+                  ShareParams(
+                    title: 'Check out this article',
+                    uri: Uri.parse(widget.resource?.fileUrl ?? ''),
                   ),
-                  4.widthBox,
-                  Text('Share', style: Styles.font14w500),
-                ],
-              ),
+                );
+              } on Exception catch (e) {
+                log("share_error $e");
+              }
+            },
+            child: Row(
+              children: [
+                CustomImageView(
+                  imagePath: AssetsApp.shareIcon,
+                  width: 16.w,
+                  height: 16.h,
+                ),
+                4.widthBox,
+                Text('Share', style: Styles.font14w500),
+              ],
             ),
+          ),
         ],
       ),
     );
