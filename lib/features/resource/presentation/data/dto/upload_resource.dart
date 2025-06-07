@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:dio/dio.dart';
 import 'package:http_parser/http_parser.dart';
 
@@ -27,7 +25,7 @@ class ResourceDto {
       'visibility': visibility,
       'category': category,
       'tags': tags,
-      'attachments': attachments,
+      'fileUrl': attachments,
     };
   }
 
@@ -38,7 +36,7 @@ class ResourceDto {
       visibility: json['visibility'],
       category: json['category'],
       tags: json['tags'],
-      attachments: json['attachments'],
+      attachments: json['fileUrl'],
     );
   }
 
@@ -49,7 +47,7 @@ class ResourceDto {
     if (content != null) formDataMap['description'] = content;
 
     if (attachments != null && attachments!.isNotEmpty) {
-      formDataMap['attachments'] = await Future.wait(attachments!.map(
+      formDataMap['fileUrl'] = await Future.wait(attachments!.map(
         (path) => MultipartFile.fromFile(
           path,
           filename: path.split('/').last,
@@ -59,7 +57,7 @@ class ResourceDto {
     }
 
     if (tags != null && tags!.isNotEmpty) {
-      formDataMap['tags'] = jsonEncode(tags);
+      formDataMap['tags'] = (tags);
     }
     if (visibility != null) formDataMap['visibility'] = visibility;
     if (category != null) formDataMap['category'] = category;

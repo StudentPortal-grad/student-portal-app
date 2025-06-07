@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:dio/dio.dart';
 import 'package:http_parser/http_parser.dart';
 
@@ -42,7 +40,7 @@ class PostDto {
 
     if (images != null && images!.isNotEmpty) {
       formDataMap['attachments'] = await Future.wait(images!.map(
-            (path) => MultipartFile.fromFile(
+        (path) => MultipartFile.fromFile(
           path,
           filename: path.split('/').last,
           contentType: MediaType.parse('image/${path.split('.').last}'),
@@ -51,9 +49,8 @@ class PostDto {
     }
 
     if (tags != null && tags!.isNotEmpty) {
-      formDataMap['tags'] = jsonEncode(tags);
+      formDataMap['tags'] = (tags);
     }
     return FormData.fromMap(formDataMap);
   }
-
 }
