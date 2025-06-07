@@ -11,7 +11,8 @@ class TimeHelper {
   static TimeHelper get instance => _instance;
 
   // Function to convert DateTime to "time ago" format
-  String timeAgo(DateTime dateTime) {
+  String timeAgo(DateTime? dateTime) {
+    if(dateTime == null) return '';
     return timeago.format(dateTime, allowFromNow: true, locale: 'en'); // Example: "10m ago"
   }
 }
