@@ -11,6 +11,7 @@ import 'package:student_portal/features/home_layout/ui/widgets/drawer.dart';
 import 'package:student_portal/features/home_layout/ui/widgets/nav_bar.dart';
 import 'package:student_portal/features/resource/presentation/presentation/manager/get_resource_bloc/get_resource_bloc.dart';
 import '../../../core/utils/socket_service.dart';
+import '../../chats/presentation/manager/chats_bloc/chats_bloc.dart';
 import '../../chats/presentation/pages/chats_screen.dart';
 import '../../events/presentation/manager/events_bloc/events_bloc.dart';
 import '../../events/presentation/pages/events_screen.dart';
@@ -85,6 +86,7 @@ class _HomeLayoutScreenState extends State<HomeLayoutScreen> {
         BlocProvider<DiscussionBloc>(create: (_) => DiscussionBloc()..add(DiscussionRequested())),
         BlocProvider<EventsBloc>(create: (_) => EventsBloc()..add(EventsRequested())),
         BlocProvider<GetResourceBloc>(create: (_) => GetResourceBloc()..add(GetResourceEventRequested())),
+        BlocProvider<ChatsBloc>(create: (context) => ChatsBloc()..add(StartListeningToConversations())),
       ],
       child: Scaffold(
         appBar: (currentIndex != 4) ? HomeAppBar() : null,

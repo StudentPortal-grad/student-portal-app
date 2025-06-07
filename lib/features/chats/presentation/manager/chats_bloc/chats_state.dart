@@ -10,3 +10,11 @@ final class ChatsStreamUpdated extends ChatsState {
 
   ChatsStreamUpdated(this.conversations);
 }
+
+final class ChatsLoading extends ChatsState {}
+
+final class ChatsError extends ChatsState {
+  final String message;
+
+  ChatsError(this.message);
+}

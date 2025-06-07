@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:student_portal/core/errors/data/model/error_model.dart';
+import 'package:student_portal/core/errors/view/error_screen.dart';
 import 'package:student_portal/core/helpers/app_size_boxes.dart';
 import 'package:student_portal/core/helpers/app_text_view.dart';
 import 'package:student_portal/core/repo/user_repository.dart';
@@ -38,13 +40,16 @@ class EventDetailsScreen extends StatelessWidget {
           child: BlocBuilder<EventDetailsBloc, EventDetailsState>(
               builder: (context, state) {
             if (state is EventDetailsFailure) {
-              return Center(child: Text(state.failureMessage));
+              return ErrorScreen(
+                failure: Failure(message: state.failureMessage),
+                onRetry: () async => BlocProvider.of<EventDetailsBloc>(context).add(EventsRequested(eventId: eventId)),
+              );
             }
             if (state is EventDetailsLoading) {
               return LoadingScreen(showAppBar: true);
             } else if (state is EventDetailsLoaded) {
               return CustomRefreshIndicator(
-                onRefresh: () async => BlocProvider.of<EventDetailsBloc>(context).add(EventsRequested(eventId: eventId,noLoading: true)),
+                onRefresh: () async => BlocProvider.of<EventDetailsBloc>(context).add(EventsRequested(eventId: eventId)),
                 child: CustomScrollView(
                   slivers: [
                     sliverAppBar(state.event.eventImage ?? ''),

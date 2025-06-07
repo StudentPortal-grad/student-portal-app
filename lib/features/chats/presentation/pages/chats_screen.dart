@@ -1,10 +1,11 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:student_portal/core/errors/data/model/error_model.dart';
 import 'package:student_portal/core/helpers/app_size_boxes.dart';
 import 'package:student_portal/core/utils/app_router.dart';
 import 'package:student_portal/core/widgets/custom_circular_progress_indicator.dart';
+import '../../../../core/errors/view/error_screen.dart';
 import '../../../../core/theming/colors.dart';
 import '../../../../core/theming/text_styles.dart';
 import '../../../../core/utils/assets_app.dart';
@@ -21,37 +22,44 @@ class ChatsScreen extends StatelessWidget {
     return SafeArea(
       child: Padding(
         padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 28.w),
-        child: BlocProvider(
-          create: (context) => ChatsBloc()..add(StartListeningToConversations()),
-          child: BlocBuilder<ChatsBloc, ChatsState>(
-            builder: (context, state) {
-              if (state is ChatsStreamUpdated) {
-                return Column(
-                  children: [
-                    _buildMessagesAppBar(),
-                    20.heightBox,
-                    Expanded(
-                      child: Align(
-                        alignment: Alignment.topCenter,
-                        child: ListView.separated(
-                          shrinkWrap: true,
-                          itemBuilder: (context, index) => UserChatView(
-                              user: state.conversations[index].participants?[0]
-                                      .userId ??
-                                  User(),
-                              lastMessage:
-                                  state.conversations[index].lastMessage),
-                          separatorBuilder: (context, index) => Divider(),
-                          itemCount: state.conversations.length,
-                        ),
+        child: BlocBuilder<ChatsBloc, ChatsState>(
+          builder: (context, state) {
+            if (state is ChatsStreamUpdated) {
+              return Column(
+                children: [
+                  _buildMessagesAppBar(),
+                  20.heightBox,
+                  Expanded(
+                    child: Align(
+                      alignment: Alignment.topCenter,
+                      child: ListView.separated(
+                        shrinkWrap: true,
+                        itemBuilder: (context, index) => UserChatView(
+                            user: state.conversations[index].participants?[0]
+                                    .userId ??
+                                User(),
+                            lastMessage:
+                                state.conversations[index].lastMessage),
+                        separatorBuilder: (context, index) => Divider(),
+                        itemCount: state.conversations.length,
                       ),
                     ),
-                  ],
-                );
-              }
+                  ),
+                ],
+              );
+            }
+            if (state is ChatsLoading) {
               return const Center(child: CustomLoadingIndicator());
-            },
-          ),
+            }
+            if (state is ChatsError) {
+              return ErrorScreen(
+                failure: Failure(message: state.message),
+                onRetry: () async => BlocProvider.of<ChatsBloc>(context)
+                    .add(StartListeningToConversations()),
+              );
+            }
+            return SizedBox.shrink();
+          },
         ),
       ),
     );

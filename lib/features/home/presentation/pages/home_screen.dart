@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:student_portal/core/helpers/app_size_boxes.dart';
+import '../../../../core/errors/data/model/error_model.dart';
+import '../../../../core/errors/view/error_screen.dart';
 import '../../../../core/theming/colors.dart';
 import '../../../../core/widgets/custom_refresh_indicator.dart';
 import '../../../../core/widgets/loading_screen.dart';
@@ -25,12 +27,10 @@ class HomeScreen extends StatelessWidget {
           );
         }
         if (state is DiscussionFailed) {
-          return CustomRefreshIndicator(
-            onRefresh: () async =>
-                context.read<DiscussionBloc>().add(DiscussionRequested()),
-            child: Center(
-              child: Text(state.message),
-            ),
+          return ErrorScreen(
+            failure: Failure(message: state.message),
+            onRetry: () async => BlocProvider.of<DiscussionBloc>(context)
+                .add(DiscussionRequested()),
           );
         }
         if (state is DiscussionLoaded) {

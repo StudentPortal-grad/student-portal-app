@@ -8,6 +8,7 @@ import 'package:student_portal/core/utils/assets_app.dart';
 import 'package:student_portal/core/widgets/custom_image_view.dart';
 
 import '../../widgets/custom_app_button.dart';
+import '../../widgets/custom_appbar.dart';
 
 class ErrorScreen extends StatelessWidget {
   const ErrorScreen({
@@ -32,6 +33,9 @@ class ErrorScreen extends StatelessWidget {
         }
       },
       child: Scaffold(
+        appBar: CustomAppBar(
+          backgroundColor: Colors.transparent
+        ),
         backgroundColor: ColorsManager.backgroundColorLight,
         body: SafeArea(
           child: Center(
@@ -52,7 +56,7 @@ class ErrorScreen extends StatelessWidget {
                 10.heightBox,
                 Text(
                   failure?.details ??
-                      "The connection to server is failed,\nPlease Try Again.",
+                      "The connection to server is failed,\nPlease Try Again Later.",
                   textAlign: TextAlign.center,
                   style: Styles.font16w500.copyWith(color: Colors.black),
                 ),
@@ -60,7 +64,7 @@ class ErrorScreen extends StatelessWidget {
                 if (onRetry != null)
                   CustomAppButton(
                     label: "Retry",
-                    onTap: onRetry?.call(),
+                    onTap: () => onRetry?.call(),
                     width: 180.w,
                   ),
               ],

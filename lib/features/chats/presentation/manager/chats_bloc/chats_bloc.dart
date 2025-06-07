@@ -15,9 +15,11 @@ part 'chats_event.dart';
 part 'chats_state.dart';
 
 class ChatsBloc extends Bloc<ChatsEvent, ChatsState> {
-  final GetChatsUc getConversationUc = GetChatsUc(messagingRepo: MessagingImpl(getIt.get<ApiService>()));
-  final List<Conversation> _conversations = [];
+  final GetChatsUc getConversationUc = GetChatsUc(
+    messagingRepo: MessagingImpl(getIt.get<ApiService>()),
+  );
 
+  final List<Conversation> _conversations = [];
   StreamSubscription? _subscription;
 
   ChatsBloc() : super(ChatsInitial()) {
@@ -26,19 +28,36 @@ class ChatsBloc extends Bloc<ChatsEvent, ChatsState> {
   }
 
   void _onStartListening(
-      StartListeningToConversations event, Emitter<ChatsState> emit) {
+      StartListeningToConversations event,
+      Emitter<ChatsState> emit,
+      ) async {
     log('Starting to listen to conversations');
-    _subscription = getConversationUc.call().listen(
-      (conversations) {
-        add(NewConversationReceived(conversations));
-      },
-    );
+    emit(ChatsLoading());
+
+    await _subscription?.cancel(); // Cancel any previous stream
+    try {
+      _subscription = getConversationUc.call().listen(
+            (conversations) {
+          add(NewConversationReceived(conversations));
+        },
+        onError: (error, stackTrace) {
+          log('ChatsBloc error: $error');
+          emit(ChatsError(error.toString()));
+        },
+      );
+    } catch (e) {
+      log('ChatsBloc caught exception: $e');
+      emit(ChatsError(e.toString()));
+    }
   }
 
-  void _onNewConversation(NewConversationReceived event,
-      Emitter<ChatsState> emit) {
-    _conversations.clear();
-    _conversations.addAll(event.conversation);
+  void _onNewConversation(
+      NewConversationReceived event,
+      Emitter<ChatsState> emit,
+      ) {
+    _conversations
+      ..clear()
+      ..addAll(event.conversation);
     emit(ChatsStreamUpdated(List.from(_conversations)));
   }
 
