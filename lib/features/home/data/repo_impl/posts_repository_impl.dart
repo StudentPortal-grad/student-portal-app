@@ -17,11 +17,11 @@ class PostRepositoryImpl implements PostRepository {
   PostRepositoryImpl({required this.apiService});
 
   @override
-  Future<Either<Failure, List<Discussion>>> getPosts() async {
+  Future<Either<Failure, List<Discussion>>> getPosts({int page = 1}) async {
     try {
       final response = await apiService.get(endpoint: ApiEndpoints.discussions,query: {
-        'limit': '10',
-        'page': '1'
+        'limit': '5',
+        'page': page,
       });
       log('posts :: $response');
       return Right(response['data']['discussions'].map<Discussion>((e) => Discussion.fromJson(e)).toList());

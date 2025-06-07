@@ -5,15 +5,16 @@ sealed class DiscussionState {}
 
 final class DiscussionInitial extends DiscussionState {}
 
-final class DiscussionLoading extends DiscussionState {}
+class DiscussionLoading extends DiscussionState {}
 
-final class DiscussionLoaded extends DiscussionState {
-  final List<Discussion> discussions;
+class DiscussionLoaded extends DiscussionState {
+  final List<Discussion> posts;
+  final bool hasMore;
 
-  DiscussionLoaded(this.discussions);
+  DiscussionLoaded(this.posts, {this.hasMore = true});
 }
 
-final class DiscussionFailed extends DiscussionState {
+class DiscussionFailed extends DiscussionState {
   final String message;
 
   DiscussionFailed(this.message);
