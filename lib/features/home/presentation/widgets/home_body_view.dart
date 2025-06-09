@@ -69,6 +69,7 @@ class _HomeBodyViewState extends State<HomeBodyView> {
                 (state is DiscussionLoaded) ? state.posts : widget.discussions;
 
             return ListView.separated(
+              shrinkWrap: true,
               controller: _scrollController,
               physics: const BouncingScrollPhysics(),
               padding: EdgeInsets.symmetric(horizontal: 28.w, vertical: 15.h),
