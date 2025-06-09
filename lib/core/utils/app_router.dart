@@ -24,6 +24,7 @@ import '../../features/auth/presentation/screens/otp_screen.dart';
 import '../../features/auth/presentation/screens/set_new_password.dart';
 import '../../features/auth/presentation/screens/signup_view.dart';
 import '../../features/events/presentation/pages/event_details.dart';
+import '../../features/home/data/model/post_model/post.dart';
 import '../../features/home_layout/ui/home_layout_screen.dart';
 import '../../features/notification/presentation/screens/notifications_screen.dart';
 import '../../features/onboarding/view/onboarding_view/onboarding_view.dart';
@@ -214,10 +215,11 @@ abstract class AppRouter {
       GoRoute(
         path: postDetails,
         pageBuilder: (context, state) {
+          final args = state.extra as Map<String, dynamic>?;
           return buildPage(
             context: context,
             state: state,
-            child: PostDetailsScreen(),
+            child: PostDetailsScreen(discussion: args?['post'] as Discussion),
           );
         },
       ),

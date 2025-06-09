@@ -15,6 +15,7 @@ class PostCommentsView extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
+        5.heightBox,
         buildCommentView(showDivider: true),
         buildCommentView(),
       ],

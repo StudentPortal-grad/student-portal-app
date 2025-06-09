@@ -75,9 +75,7 @@ class _HomeBodyViewState extends State<HomeBodyView> {
               separatorBuilder: (context, index) => 15.heightBox,
               itemBuilder: (context, index) {
                 if (index < discussions.length) {
-                  return InkWell(
-                    child: PostView(discussion: discussions[index]),
-                  );
+                  return PostView(discussion: discussions[index]);
                 } else {
                   return Padding(
                     padding: EdgeInsets.symmetric(vertical: 20.h),

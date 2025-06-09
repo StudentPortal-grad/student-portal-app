@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:student_portal/core/helpers/app_size_boxes.dart';
 import 'package:student_portal/core/theming/colors.dart';
 import 'package:student_portal/core/theming/text_styles.dart';
+import 'package:student_portal/features/home/data/model/post_model/post.dart';
 import 'package:student_portal/features/home/presentation/widgets/post_view.dart';
 
 import '../../../../core/widgets/custom_appbar.dart';
@@ -10,7 +11,9 @@ import '../widgets/comment_bar.dart';
 import '../widgets/post_comments_view.dart';
 
 class PostDetailsScreen extends StatefulWidget {
-  const PostDetailsScreen({super.key});
+  const PostDetailsScreen({super.key, this.discussion});
+
+  final Discussion? discussion;
 
   @override
   State<PostDetailsScreen> createState() => _PostDetailsScreenState();
@@ -45,15 +48,16 @@ class _PostDetailsScreenState extends State<PostDetailsScreen> {
         controller: scrollController,
         padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 16.h),
         child: PostView(
+          discussion: widget.discussion,
           detailsChildren: [
+            5.heightBox,
             CommentBar(),
-            20.heightBox,
-            ...List.generate(2, (index) => PostCommentsView()),
+            5.heightBox,
+            ...List.generate(widget.discussion?.replies?.length ?? 0,
+                (index) => PostCommentsView()),
           ],
         ),
       ),
     );
   }
 }
-
-

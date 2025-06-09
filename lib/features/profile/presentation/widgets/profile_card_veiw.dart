@@ -62,13 +62,14 @@ class ProfileCardView extends StatelessWidget {
                 circle: true,
               ),
               10.heightBox,
-              (user?.name ?? '').make(
+              (user?.name ?? "Portal Student User").make(
                   style: Styles.font22w700
                       .copyWith(color: ColorsManager.textColor)),
               5.heightBox,
-              "@${user?.username?? ''}".make(
-                  style: Styles.font14w400
-                      .copyWith(color: ColorsManager.grayColor)),
+              if (user?.username != null)
+                "@${user?.username!}".make(
+                    style: Styles.font14w400
+                        .copyWith(color: ColorsManager.grayColor)),
               25.heightBox,
               // to show posts, followers, following and title
               ProfileDetails(

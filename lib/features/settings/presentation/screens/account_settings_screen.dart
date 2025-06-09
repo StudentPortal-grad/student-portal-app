@@ -10,6 +10,7 @@ import 'package:student_portal/features/settings/presentation/screens/profile_da
 import 'package:student_portal/features/settings/presentation/widgets/logout_button.dart';
 
 import '../../../../core/helpers/extensions.dart';
+import '../../../../core/repo/user_repository.dart';
 import '../../../../core/theming/text_styles.dart';
 import 'academic_data.dart';
 import 'change_password_screen.dart';
@@ -35,7 +36,7 @@ class AccountSettingsScreen extends StatelessWidget {
         child: Column(
           children: [
             5.heightBox,
-            UserRowView(),
+            UserRowView(user: UserRepository.user),
             30.heightBox,
             // profile
             Container(

@@ -2,25 +2,31 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:student_portal/core/helpers/app_size_boxes.dart';
 import 'package:student_portal/core/helpers/app_text_view.dart';
-import 'package:student_portal/core/repo/user_repository.dart';
 
+import '../../features/auth/data/model/user_model/user.dart';
 import '../theming/colors.dart';
 import '../theming/text_styles.dart';
 import 'custom_image_view.dart';
 
 class UserRowView extends StatelessWidget {
-  const UserRowView({super.key, this.onUnfollowTap, this.showRemoveIcon,  this.imageSize});
+  const UserRowView(
+      {super.key,
+      this.onUnfollowTap,
+      this.showRemoveIcon,
+      this.imageSize,
+      this.user});
 
   final Function(String id)? onUnfollowTap;
   final bool? showRemoveIcon;
   final double? imageSize;
+  final User? user;
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
         CustomImageView(
-          imagePath: UserRepository.user?.profilePicture,
+          imagePath: user?.profilePicture,
           width: imageSize ?? 48.r,
           height: imageSize ?? 48.r,
           circle: true,
@@ -29,12 +35,15 @@ class UserRowView extends StatelessWidget {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            "Mina Zarif".make(
+            Text(user?.name ?? "Portal Student User",
                 style: Styles.font15w600
                     .copyWith(fontSize: 16.sp, color: ColorsManager.textColor)),
-            "@Mimo".make(
+            if (user?.username != null)
+              Text(
+                '@${user?.username}',
                 style: Styles.font14w400.copyWith(
-                    fontWeight: FontWeight.w400, color: ColorsManager.black53)),
+                    fontWeight: FontWeight.w400, color: ColorsManager.black53),
+              ),
           ],
         ),
         Spacer(),

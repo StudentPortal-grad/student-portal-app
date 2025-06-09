@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:student_portal/core/helpers/app_size_boxes.dart';
 import 'package:student_portal/core/theming/colors.dart';
 import 'package:student_portal/core/theming/text_styles.dart';
+import 'package:student_portal/core/utils/app_router.dart';
 import 'package:student_portal/core/widgets/app_text.dart';
 import 'package:student_portal/features/home/data/model/post_model/post.dart';
 import 'package:student_portal/features/home/presentation/widgets/post_list_images_view.dart';
@@ -41,37 +42,36 @@ class PostView extends StatelessWidget {
             uploader: discussion?.uploader,
             createFromAgo: TimeHelper.instance.timeAgo(discussion?.createdAt),
           ),
-          21.heightBox,
-          // Wrap(
-          //   spacing: 7.w,
-          //   runSpacing: 7.h,
-          //   children: List.generate(
-          //     discussion.tags.length,
-          //         (index) =>
-          //         CategoryTagView(
-          //           index: index,
-          //           title:  discussion.tags[index],
-          //         ),
-          //   ),
-          // ),
-          // 20.heightBox,
-          Text(discussion?.title ?? '', style: Styles.font14w700),
-          10.heightBox,
-          AppText(
-            onHashTagTap: (p0) {
-              debugPrint('HASH TAG');
-              debugPrint(p0);
+          InkWell(
+            onTap: () {
+              AppRouter.router.push(AppRouter.postDetails,extra: {
+                'post': discussion,
+              });
             },
-            onMentionTap: (p0) {
-              debugPrint('on Mention');
-              debugPrint(p0);
-            },
-            text: discussion?.content ?? '',
-            style: Styles.font12w400.copyWith(color: ColorsManager.grayColor, height: 1.9),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                21.heightBox,
+                Text(discussion?.title ?? '', style: Styles.font14w700),
+                10.heightBox,
+                AppText(
+                  onHashTagTap: (p0) {
+                    debugPrint('HASH TAG');
+                    debugPrint(p0);
+                  },
+                  onMentionTap: (p0) {
+                    debugPrint('on Mention');
+                    debugPrint(p0);
+                  },
+                  text: discussion?.content ?? '',
+                  style: Styles.font12w400.copyWith(color: ColorsManager.grayColor, height: 1.9),
+                ),
+                15.heightBox,
+              ],
+            ),
           ),
-          30.heightBox,
           PostListImagesView(attachments: discussion?.attachments ?? []),
-          17.heightBox,
+          15.heightBox,
           // react bar
           ReactBar(),
           if (detailsChildren != null) ...[
@@ -83,3 +83,18 @@ class PostView extends StatelessWidget {
     );
   }
 }
+// tags layout
+
+// Wrap(
+//   spacing: 7.w,
+//   runSpacing: 7.h,
+//   children: List.generate(
+//     discussion.tags.length,
+//         (index) =>
+//         CategoryTagView(
+//           index: index,
+//           title:  discussion.tags[index],
+//         ),
+//   ),
+// ),
+// 20.heightBox,

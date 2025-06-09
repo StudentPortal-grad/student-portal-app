@@ -26,7 +26,7 @@ class AppDrawer extends StatelessWidget {
         children: [
           _buildDrawerTitle(),
           30.heightBox,
-          UserRowView(imageSize: 58.r),
+          UserRowView(imageSize: 58.r,user: UserRepository.user),
           30.heightBox,
           Container(
             padding: EdgeInsets.all(12.r),
