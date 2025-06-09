@@ -65,7 +65,7 @@ class AuthRepoImpl implements AuthRepository {
       );
       log('login success');
       log(data.toString());
-      secureStorage.writeSecureData(
+      await secureStorage.writeSecureData(
         id: data['data']['user']['_id'],
         accessToken: data['data']['token'],
       );
@@ -158,7 +158,7 @@ class AuthRepoImpl implements AuthRepository {
         isAuth: true,
       );
       log("Verify Success");
-      secureStorage.writeSecureData(
+      await secureStorage.writeSecureData(
         id: data['data']['user']['_id'],
         accessToken: data['data']['token'],
       );
@@ -181,7 +181,7 @@ class AuthRepoImpl implements AuthRepository {
       );
       String? resetToken = data['data']['resetToken'];
       if (resetToken != null) {
-        secureStorage.writeResetTokenData(resetToken: resetToken);
+        await secureStorage.writeResetTokenData(resetToken: resetToken);
       }
       return const Right('Success');
     } on DioException catch (e) {
@@ -191,11 +191,11 @@ class AuthRepoImpl implements AuthRepository {
   }
 
   @override
-  Future<Either<Failure, String>> logout() async{
+  Future<Either<Failure, String>> logout() async {
     try {
       var data = await apiService.post(endpoint: ApiEndpoints.logout);
       UserRepository.removeUser();
-      getIt<SecureStorage>().deleteSecureData();
+      await getIt<SecureStorage>().deleteSecureData();
       return Right(data['message']);
     } on DioException catch (e) {
       log((e.toString()));
