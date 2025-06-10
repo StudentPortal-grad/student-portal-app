@@ -42,6 +42,13 @@ class _ReactBarState extends State<ReactBar> {
     downVotes = 0;
     myReact = widget.currentVote;
   }
+  @override
+  void didUpdateWidget(covariant ReactBar oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    upVotes = widget.votes ?? 0;
+    downVotes = 0;
+    myReact = widget.currentVote;
+  }
 
   void _onItemTapped(int vote) {
     setState(() {

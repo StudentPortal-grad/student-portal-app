@@ -16,3 +16,9 @@ class VoteDiscussionEvent extends DiscussionEvent {
 
   VoteDiscussionEvent({required this.voteDto});
 }
+
+class UpdateDiscussionInListEvent extends DiscussionEvent {
+  final Discussion updatedPost;
+
+  UpdateDiscussionInListEvent(this.updatedPost);
+}

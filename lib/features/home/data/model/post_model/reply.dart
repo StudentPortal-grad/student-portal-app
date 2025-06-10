@@ -32,7 +32,7 @@ class Reply {
   Map<String, dynamic> toJson() {
     return {
       'content': content,
-      'creator': creator,
+      'creator': creator?.toJson(),
       'attachments': attachments?.map((e) => e.toJson()).toList(),
       '_id': id,
       'createdAt': createdAt?.toIso8601String(),

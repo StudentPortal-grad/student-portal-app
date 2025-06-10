@@ -17,13 +17,14 @@ class DiscussionBloc extends Bloc<DiscussionEvent, DiscussionState> {
     on<DiscussionRequested>(_getDiscussions);
     on<DiscussionLoadMoreRequested>(_loadMoreDiscussions);
     on<VoteDiscussionEvent>(_voteDiscussion);
+    on<UpdateDiscussionInListEvent>(_updateDiscussionInList);
   }
 
   final GetPostsUc getPostsUc =
       GetPostsUc(getPostsRepo: getIt<PostRepository>());
   final VotePostUc votePostUc = VotePostUc(getIt<PostRepository>());
 
-  final List<Discussion> _posts = [];
+  List<Discussion> _posts = [];
   int _currentPage = 1;
   bool _hasMore = true;
   bool _isLoadingMore = false;
@@ -83,5 +84,13 @@ class DiscussionBloc extends Bloc<DiscussionEvent, DiscussionState> {
       (error) => emit(DiscussionFailed(error.message ?? 'Unknown Error')),
       (message) => emit(DiscussionLoaded(List.from(_posts), hasMore: _hasMore)),
     );
+  }
+
+  Future<void> _updateDiscussionInList(
+      UpdateDiscussionInListEvent event, Emitter<DiscussionState> emit) async {
+      final updatedList = _posts.map((post) {
+        return post.id == event.updatedPost.id ? event.updatedPost : post;
+      }).toList();
+      emit(DiscussionLoaded(updatedList));
   }
 }

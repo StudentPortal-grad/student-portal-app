@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -69,7 +71,9 @@ class _HomeBodyViewState extends State<HomeBodyView> {
           builder: (context, state) {
             final discussions =
                 (state is DiscussionLoaded) ? state.posts : widget.discussions;
-
+            if (discussions.isEmpty) {
+              return Center(child: Text('No Discussions'));
+            }
             return ListView.separated(
               shrinkWrap: true,
               controller: _scrollController,
@@ -79,10 +83,21 @@ class _HomeBodyViewState extends State<HomeBodyView> {
               itemBuilder: (context, index) {
                 if (index < discussions.length) {
                   return GestureDetector(
-                    onTap: () {
-                      AppRouter.router.push(AppRouter.postDetails, extra: {
-                        'post': discussions[index],
-                      });
+                    onTap: () async {
+                      final updatedPost =
+                          await AppRouter.router.push<Discussion>(
+                        AppRouter.postDetails,
+                        extra: {'post': discussions[index]},
+                      );
+                      if (updatedPost != null) {
+                        log('updatedPost: ${updatedPost.toJson()}');
+                        final bloc = context.mounted
+                            ? context.read<DiscussionBloc>()
+                            : AppRouter.context?.read<DiscussionBloc>();
+                        if (bloc != null) {
+                          bloc.add(UpdateDiscussionInListEvent(updatedPost));
+                        }
+                      }
                     },
                     child: PostView(
                       onVoteTap: (p0) {

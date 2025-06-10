@@ -5,7 +5,9 @@ import '../../../../resource/data/model/resource.dart';
 import 'attachment.dart';
 import 'creator.dart';
 
-class Discussion {
+import 'package:equatable/equatable.dart';
+
+class Discussion extends Equatable {
   final String? id;
   final String? title;
   final String? content;
@@ -21,7 +23,7 @@ class Discussion {
   final int? currentVote;
   final int? v;
 
-  Discussion({
+  const Discussion({
     this.id,
     this.title,
     this.content,
@@ -43,17 +45,21 @@ class Discussion {
       id: json['_id'],
       title: json['title'],
       content: json['content'],
-      creator: json['creator'] != null ? Creator.fromJson(json['creator']) : null,
+      creator:
+          json['creator'] != null ? Creator.fromJson(json['creator']) : null,
       attachments: (json['attachments'] as List?)
           ?.map((e) => Attachment.fromJson(e))
           .toList(),
       status: json['status'],
-      replies: (json['replies'] as List?)?.map((e) => Reply.fromJson(e)).toList(),
+      replies:
+          (json['replies'] as List?)?.map((e) => Reply.fromJson(e)).toList(),
       votes: (json['votes'] as List?)?.map((e) => Vote.fromJson(e)).toList(),
       downVotesCount: json['downvotesCount'],
       upVotesCount: json['upvotesCount'],
-      createdAt: json['createdAt'] != null ? DateTime.parse(json['createdAt']) : null,
-      updatedAt: json['updatedAt'] != null ? DateTime.parse(json['updatedAt']) : null,
+      createdAt:
+          json['createdAt'] != null ? DateTime.parse(json['createdAt']) : null,
+      updatedAt:
+          json['updatedAt'] != null ? DateTime.parse(json['updatedAt']) : null,
       currentVote: json['currentVote'],
       v: json['__v'],
     );
@@ -78,9 +84,62 @@ class Discussion {
     };
   }
 
+  Discussion copyWith({
+    String? id,
+    String? title,
+    String? content,
+    Creator? creator,
+    List<Attachment>? attachments,
+    String? status,
+    List<Reply>? replies,
+    List<Vote>? votes,
+    int? upVotesCount,
+    int? downVotesCount,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    int? currentVote,
+    int? v,
+  }) {
+    return Discussion(
+      id: id ?? this.id,
+      title: title ?? this.title,
+      content: content ?? this.content,
+      creator: creator ?? this.creator,
+      attachments: attachments ?? this.attachments,
+      status: status ?? this.status,
+      replies: replies ?? this.replies,
+      votes: votes ?? this.votes,
+      upVotesCount: upVotesCount ?? this.upVotesCount,
+      downVotesCount: downVotesCount ?? this.downVotesCount,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      currentVote: currentVote ?? this.currentVote,
+      v: v ?? this.v,
+    );
+  }
+
   Uploader get uploader => Uploader(
         profilePicture: creator?.profilePicture,
         name: creator?.name,
         id: creator?.id,
       );
+
+  @override
+  List<Object?> get props => [
+        id,
+        title,
+        content,
+        creator,
+        attachments,
+        status,
+        replies,
+        votes,
+        upVotesCount,
+        downVotesCount,
+        createdAt,
+        updatedAt,
+        currentVote,
+        uploader,
+        v,
+      ];
 }

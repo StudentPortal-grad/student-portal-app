@@ -53,12 +53,56 @@ class DiscussionDetailsBloc
     );
   }
 
-  Future<void> _voteDiscussion(
-      VoteDiscussionEventRequest event, Emitter<DiscussionDetailsState> emit) async {
+  Future<void> _voteDiscussion(VoteDiscussionEventRequest event,
+      Emitter<DiscussionDetailsState> emit) async {
     final result = await votePostUc.call(voteDto: event.voteDto);
     result.fold(
       (error) => emit(VoteErrorState(error.message ?? 'Unknown Error')),
-      (message) => emit(VoteSuccessState()),
+      (message) {
+        final String? previousVote = _stringVote(discussion.currentVote);
+        final String newVote = event.voteDto.voteType;
+
+        int newUp = discussion.upVotesCount ?? 0;
+        int newDown = discussion.downVotesCount ?? 0;
+
+        if (previousVote == newVote) {
+          // UnVoting
+          if (newVote == 'upvote') newUp--;
+          if (newVote == 'downvote') newDown--;
+
+          discussion = discussion.copyWith(
+            currentVote: null,
+            upVotesCount: newUp,
+            downVotesCount: newDown,
+          );
+        } else {
+          // Switching or casting new vote
+          if (previousVote == 'upvote') newUp--;
+          if (previousVote == 'downvote') newDown--;
+
+          if (newVote == 'upvote') newUp++;
+          if (newVote == 'downvote') newDown++;
+
+          discussion = discussion.copyWith(
+            currentVote: _intVote(newVote),
+            upVotesCount: newUp,
+            downVotesCount: newDown,
+          );
+        }
+        emit(VoteSuccessState());
+      },
     );
+  }
+
+  String? _stringVote(int? vote) {
+    if (vote == 1) return 'upvote';
+    if (vote == -1) return 'downvote';
+    return null;
+  }
+
+  int? _intVote(String vote) {
+    if (vote == 'upvote') return 1;
+    if (vote == 'downvote') return -1;
+    return null;
   }
 }
