@@ -8,6 +8,7 @@ import '../../../../core/theming/colors.dart';
 import '../../../../core/utils/app_router.dart';
 import '../../../../core/widgets/custom_refresh_indicator.dart';
 import '../../../../core/widgets/loading_screen.dart';
+import '../../data/dto/vote_dto.dart';
 import '../../data/model/post_model/post.dart';
 import '../manager/discussion_bloc/discussion_bloc.dart';
 
@@ -78,12 +79,23 @@ class _HomeBodyViewState extends State<HomeBodyView> {
               itemBuilder: (context, index) {
                 if (index < discussions.length) {
                   return GestureDetector(
-                      onTap: () {
-                        AppRouter.router.push(AppRouter.postDetails, extra: {
-                          'post': discussions[index],
-                        });
+                    onTap: () {
+                      AppRouter.router.push(AppRouter.postDetails, extra: {
+                        'post': discussions[index],
+                      });
+                    },
+                    child: PostView(
+                      onVoteTap: (p0) {
+                        context.read<DiscussionBloc>().add(
+                              VoteDiscussionEvent(
+                                  voteDto: VoteDto(
+                                      postId: discussions[index].id ?? '',
+                                      voteType: p0)),
+                            );
                       },
-                      child: PostView(discussion: discussions[index]));
+                      discussion: discussions[index],
+                    ),
+                  );
                 } else {
                   return Padding(
                     padding: EdgeInsets.symmetric(vertical: 20.h),

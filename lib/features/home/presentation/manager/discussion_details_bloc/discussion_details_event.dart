@@ -15,8 +15,8 @@ class CommentDiscussionEvent extends DiscussionDetailsEvent {
   CommentDiscussionEvent({required this.replyDto});
 }
 
-class VoteDiscussionEvent extends DiscussionDetailsEvent {
+class VoteDiscussionEventRequest extends DiscussionDetailsEvent {
   final VoteDto voteDto;
 
-  VoteDiscussionEvent({required this.voteDto});
+  VoteDiscussionEventRequest({required this.voteDto});
 }

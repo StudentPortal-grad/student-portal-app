@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:student_portal/core/helpers/app_size_boxes.dart';
@@ -12,10 +14,11 @@ import 'package:student_portal/features/home/presentation/widgets/user_post_view
 import '../../../../core/helpers/time_formatting_helper.dart';
 
 class PostView extends StatelessWidget {
-  const PostView({super.key, this.detailsChildren, this.discussion});
+  const PostView({super.key, this.detailsChildren, this.discussion, this.onVoteTap});
 
   final Discussion? discussion;
   final List<Widget>? detailsChildren;
+  final Function(String)? onVoteTap;
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +73,8 @@ class PostView extends StatelessWidget {
             votes: discussion?.votes?.length ?? 0,
             comments: discussion?.replies?.length ?? 0,
             onVoteTap: (p0) {
-              print('onVoteTap $p0');
+              log('onVoteTap $p0');
+              onVoteTap?.call(p0);
             },
           ),
           if (detailsChildren != null) ...[

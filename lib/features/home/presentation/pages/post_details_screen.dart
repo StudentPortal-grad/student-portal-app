@@ -8,6 +8,7 @@ import 'package:student_portal/core/widgets/custom_refresh_indicator.dart';
 import 'package:student_portal/features/home/presentation/widgets/post_view.dart';
 
 import '../../../../core/widgets/custom_appbar.dart';
+import '../../data/dto/vote_dto.dart';
 import '../manager/discussion_details_bloc/discussion_details_bloc.dart';
 import '../widgets/comment_bar.dart';
 import '../widgets/post_comments_view.dart';
@@ -59,6 +60,7 @@ class _PostDetailsScreenState extends State<PostDetailsScreen> {
               physics: AlwaysScrollableScrollPhysics(),
               padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 16.h),
               child: PostView(
+                onVoteTap: (p0) => bloc.add(VoteDiscussionEventRequest(voteDto: VoteDto(postId: bloc.discussion.id ?? '', voteType: p0)),),
                 discussion: bloc.discussion,
                 detailsChildren: [
                   5.heightBox,

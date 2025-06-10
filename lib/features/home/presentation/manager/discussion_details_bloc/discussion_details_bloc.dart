@@ -19,7 +19,7 @@ class DiscussionDetailsBloc
   DiscussionDetailsBloc(this.discussion) : super(DiscussionDetailsInitial()) {
     on<DiscussionDetailsEventRequest>(_getDiscussion);
     on<CommentDiscussionEvent>(_commentDiscussion);
-    on<VoteDiscussionEvent>(_voteDiscussion);
+    on<VoteDiscussionEventRequest>(_voteDiscussion);
   }
 
   // usecases
@@ -54,7 +54,7 @@ class DiscussionDetailsBloc
   }
 
   Future<void> _voteDiscussion(
-      VoteDiscussionEvent event, Emitter<DiscussionDetailsState> emit) async {
+      VoteDiscussionEventRequest event, Emitter<DiscussionDetailsState> emit) async {
     final result = await votePostUc.call(voteDto: event.voteDto);
     result.fold(
       (error) => emit(VoteErrorState(error.message ?? 'Unknown Error')),

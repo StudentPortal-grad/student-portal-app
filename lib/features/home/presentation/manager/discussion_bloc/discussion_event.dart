@@ -10,3 +10,9 @@ class DiscussionRequested extends DiscussionEvent {
 }
 
 class DiscussionLoadMoreRequested extends DiscussionEvent {}
+
+class VoteDiscussionEvent extends DiscussionEvent {
+  final VoteDto voteDto;
+
+  VoteDiscussionEvent({required this.voteDto});
+}

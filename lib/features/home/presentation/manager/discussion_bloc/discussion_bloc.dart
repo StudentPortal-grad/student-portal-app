@@ -2,9 +2,11 @@ import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:student_portal/core/utils/service_locator.dart';
 
+import '../../../data/dto/vote_dto.dart';
 import '../../../data/model/post_model/post.dart';
 import '../../../domain/repo/posts_repository.dart';
 import '../../../domain/usecases/get_posts_uc.dart';
+import '../../../domain/usecases/vote_post_uc.dart';
 
 part 'discussion_event.dart';
 
@@ -14,10 +16,12 @@ class DiscussionBloc extends Bloc<DiscussionEvent, DiscussionState> {
   DiscussionBloc() : super(DiscussionInitial()) {
     on<DiscussionRequested>(_getDiscussions);
     on<DiscussionLoadMoreRequested>(_loadMoreDiscussions);
+    on<VoteDiscussionEvent>(_voteDiscussion);
   }
 
   final GetPostsUc getPostsUc =
-  GetPostsUc(getPostsRepo: getIt<PostRepository>());
+      GetPostsUc(getPostsRepo: getIt<PostRepository>());
+  final VotePostUc votePostUc = VotePostUc(getIt<PostRepository>());
 
   final List<Discussion> _posts = [];
   int _currentPage = 1;
@@ -25,9 +29,9 @@ class DiscussionBloc extends Bloc<DiscussionEvent, DiscussionState> {
   bool _isLoadingMore = false;
 
   Future<void> _getDiscussions(
-      DiscussionRequested event,
-      Emitter<DiscussionState> emit,
-      ) async {
+    DiscussionRequested event,
+    Emitter<DiscussionState> emit,
+  ) async {
     _currentPage = 1;
     _hasMore = true;
     _posts.clear();
@@ -36,8 +40,8 @@ class DiscussionBloc extends Bloc<DiscussionEvent, DiscussionState> {
 
     final response = await getPostsUc.call(page: _currentPage);
     response.fold(
-          (error) => emit(DiscussionFailed(error.message ?? 'Unknown Error')),
-          (posts) {
+      (error) => emit(DiscussionFailed(error.message ?? 'Unknown Error')),
+      (posts) {
         _posts.addAll(posts);
         emit(DiscussionLoaded(List.from(_posts)));
       },
@@ -45,22 +49,22 @@ class DiscussionBloc extends Bloc<DiscussionEvent, DiscussionState> {
   }
 
   Future<void> _loadMoreDiscussions(
-      DiscussionLoadMoreRequested event,
-      Emitter<DiscussionState> emit,
-      ) async {
+    DiscussionLoadMoreRequested event,
+    Emitter<DiscussionState> emit,
+  ) async {
     if (_isLoadingMore || !_hasMore) return;
-    emit(DiscussionLoaded(List.from(_posts),hasMore: _hasMore));
+    emit(DiscussionLoaded(List.from(_posts), hasMore: _hasMore));
 
     _isLoadingMore = true;
     _currentPage++;
 
     final response = await getPostsUc.call(page: _currentPage);
     response.fold(
-          (error) {
+      (error) {
         _currentPage--; // rollback on failure
         emit(DiscussionFailed(error.message ?? 'Pagination Failed'));
       },
-          (posts) {
+      (posts) {
         if (posts.isEmpty) {
           _hasMore = false;
         } else {
@@ -70,5 +74,14 @@ class DiscussionBloc extends Bloc<DiscussionEvent, DiscussionState> {
       },
     );
     _isLoadingMore = false;
+  }
+
+  Future<void> _voteDiscussion(
+      VoteDiscussionEvent event, Emitter<DiscussionState> emit) async {
+    final result = await votePostUc.call(voteDto: event.voteDto);
+    result.fold(
+      (error) => emit(DiscussionFailed(error.message ?? 'Unknown Error')),
+      (message) => emit(DiscussionLoaded(List.from(_posts), hasMore: _hasMore)),
+    );
   }
 }
