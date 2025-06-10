@@ -17,11 +17,13 @@ class ErrorScreen extends StatelessWidget {
     this.onRetry,
     this.dismissible,
     this.onDismiss,
+    this.showArrowBack = false,
   });
 
   final Failure? failure;
   final Function()? onRetry, onDismiss;
   final bool? dismissible;
+  final bool showArrowBack;
 
   @override
   Widget build(BuildContext context) {
@@ -33,9 +35,7 @@ class ErrorScreen extends StatelessWidget {
         }
       },
       child: Scaffold(
-        appBar: CustomAppBar(
-          backgroundColor: Colors.transparent
-        ),
+        appBar: showArrowBack ? CustomAppBar(backgroundColor: Colors.transparent) : null,
         backgroundColor: ColorsManager.backgroundColorLight,
         body: SafeArea(
           child: Center(

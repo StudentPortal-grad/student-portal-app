@@ -29,17 +29,35 @@ class ReactBar extends StatefulWidget {
 }
 
 class _ReactBarState extends State<ReactBar> {
-  int react = 0;
+  int upVotes = 0;
+  int downVotes = 0;
+  int myReact = 0;
 
   @override
   void initState() {
-    react = widget.votes ?? 0;
     super.initState();
+    upVotes = widget.votes ?? 0;
+    downVotes = 0;
+    myReact = 0;
   }
 
   void _onItemTapped(int vote) {
     setState(() {
-      react = vote;
+      if (myReact == vote) {
+        // Undo current reaction
+        if (vote == 1) upVotes--;
+        if (vote == -1) downVotes--;
+        myReact = 0;
+      } else {
+        // Switch reactions
+        if (myReact == 1) upVotes--;
+        if (myReact == -1) downVotes--;
+
+        if (vote == 1) upVotes++;
+        if (vote == -1) downVotes++;
+
+        myReact = vote;
+      }
     });
   }
 
@@ -51,24 +69,24 @@ class _ReactBarState extends State<ReactBar> {
         children: [
           CustomImageView(
             onTap: () {
-              _onItemTapped((react == 1) ? 0 : 1);
-              widget.onVoteTap?.call((react > 0) ? 'upvote' : 'downvote');
+              _onItemTapped((myReact == 1) ? 0 : 1);
+              widget.onVoteTap?.call('upvote');
             },
             imagePath: AssetsApp.arrowUpIcon,
-            color: react == 1 ? ColorsManager.mainColorDark : null,
+            color: myReact == 1 ? ColorsManager.mainColorDark : null,
             width: 16.w,
             height: 16.h,
           ),
           4.widthBox,
-          Text(react.toString(), style: Styles.font14w500),
+          Text(upVotes.toString(), style: Styles.font14w500),
           4.widthBox,
           CustomImageView(
             onTap: () {
-              _onItemTapped((react == -1) ? 0 : -1);
-              widget.onVoteTap?.call((react < 0) ? 'downvote' : 'upvote');
+              _onItemTapped((myReact == -1) ? 0 : -1);
+              widget.onVoteTap?.call('downvote');
             },
             imagePath: AssetsApp.arrowDownIcon,
-            color: react == -1 ? ColorsManager.orangeColor : null,
+            color: myReact == -1 ? ColorsManager.orangeColor : null,
             width: 16.w,
             height: 16.h,
           ),

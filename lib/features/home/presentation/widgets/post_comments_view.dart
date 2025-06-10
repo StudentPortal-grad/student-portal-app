@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:student_portal/core/helpers/app_size_boxes.dart';
-import 'package:student_portal/features/home/data/model/post_model/post.dart';
+import 'package:student_portal/features/home/data/model/post_model/reply.dart';
 import 'package:student_portal/features/resource/data/model/resource.dart';
 
 import '../../../../contestants.dart';

@@ -70,7 +70,7 @@ class PostView extends StatelessWidget {
             votes: discussion?.votes?.length ?? 0,
             comments: discussion?.replies?.length ?? 0,
             onVoteTap: (p0) {
-              print(p0);
+              print('onVoteTap $p0');
             },
           ),
           if (detailsChildren != null) ...[
