@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:student_portal/features/home/data/model/post_model/post.dart';
 import '../../../../core/helpers/extensions.dart';
 import '../../../../core/widgets/custom_image_view.dart';
+import '../../data/model/post_model/attachment.dart';
 import '../pages/image_post_screen.dart';
 
 class PostListImagesView extends StatefulWidget {

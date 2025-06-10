@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:student_portal/contestants.dart';
 import 'package:student_portal/core/helpers/app_size_boxes.dart';
 import 'package:student_portal/core/helpers/custom_toast.dart';
+import 'package:student_portal/core/repo/user_repository.dart';
 import 'package:student_portal/core/widgets/custom_circular_progress_indicator.dart';
 
 import '../../../../core/theming/colors.dart';
@@ -68,7 +68,7 @@ class _CommentBarState extends State<CommentBar> {
       child: Row(
         children: [
           CustomImageView(
-            imagePath: kUserImage,
+            imagePath: UserRepository.user?.profilePicture,
             circle: true,
             height: 38.r,
             width: 38.r,

@@ -9,6 +9,7 @@ import 'package:student_portal/features/home/presentation/widgets/post_view.dart
 
 import '../../../../core/widgets/custom_appbar.dart';
 import '../../data/dto/vote_dto.dart';
+import '../../data/model/post_model/reply.dart';
 import '../manager/discussion_details_bloc/discussion_details_bloc.dart';
 import '../widgets/comment_bar.dart';
 import '../widgets/post_comments_view.dart';
@@ -26,6 +27,8 @@ class _PostDetailsScreenState extends State<PostDetailsScreen> {
   @override
   void initState() {
     scrollController = ScrollController();
+    final bloc = context.read<DiscussionDetailsBloc>();
+    bloc.add(DiscussionDetailsEventRequest(bloc.discussion.id ?? ''));
     super.initState();
   }
 
@@ -65,9 +68,8 @@ class _PostDetailsScreenState extends State<PostDetailsScreen> {
                 detailsChildren: [
                   5.heightBox,
                   CommentBar(),
-                  5.heightBox,
-                  ...List.generate(bloc.discussion.replies?.length ?? 0,
-                      (index) => PostCommentsView(reply: bloc.discussion.replies?[index])),
+                  10.heightBox,
+                  ..._buildCommentsView(isLoading: state is DiscussionDetailsLoading,replies: bloc.discussion.replies ?? []),
                 ],
               ),
             ),
@@ -75,5 +77,11 @@ class _PostDetailsScreenState extends State<PostDetailsScreen> {
         },
       ),
     );
+  }
+  List<Widget> _buildCommentsView({bool isLoading = false,List<Reply> replies = const []}){
+    if (isLoading) {
+      return List.generate(3, (index) => PostCommentsView.buildShimmerComment());
+    }
+    return List.generate(replies.length, (index) => PostCommentsView(reply: replies[index]));
   }
 }
