@@ -9,6 +9,8 @@ import '../../data/dto/vote_dto.dart';
 abstract class PostRepository {
   Future<Either<Failure, List<Discussion>>> getPosts({int page = 1});
 
+  Future<Either<Failure, Discussion>> getPostId({required String postId});
+
   Future<Either<Failure, String>> createPost({
     required PostDto postDto,
     void Function(int percent)? onProgress,

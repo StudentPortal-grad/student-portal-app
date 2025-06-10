@@ -37,6 +37,19 @@ class PostRepositoryImpl implements PostRepository {
   }
 
   @override
+  Future<Either<Failure, Discussion>> getPostId({required String postId}) async {
+    try{
+      final response = await apiService.get(endpoint: ApiEndpoints.discussionID(postId));
+      log('post :: $response');
+      return Right(Discussion.fromJson(response['data']));
+    } on DioException catch (e) {
+      log('Dio Failure ${e.toString()}');
+      return Left(ServerFailure.fromDioError(e)); // Handle Dio errors here
+    }
+  }
+
+
+  @override
   Future<Either<Failure, String>> createPost({
     required PostDto postDto,
     void Function(int percent)? onProgress,
