@@ -1,8 +1,9 @@
-import '../../../../chats/data/model/attachment.dart';
+import 'attachment.dart';
+import 'creator.dart';
 
 class Reply {
   final String? content;
-  final String? creator;
+  final Creator? creator;
   final List<Attachment>? attachments;
   final String? id;
   final DateTime? createdAt;
@@ -18,12 +19,13 @@ class Reply {
   factory Reply.fromJson(Map<String, dynamic> json) {
     return Reply(
       content: json['content'],
-      creator: json['creator'],
+      creator: json['creator'] != null && json['creator'] is Map<String, dynamic> ? Creator.fromJson(json['creator']) : null,
       attachments: (json['attachments'] as List?)
           ?.map((e) => Attachment.fromJson(e))
           .toList(),
       id: json['_id'],
-      createdAt: json['createdAt'] != null ? DateTime.parse(json['createdAt']) : null,
+      createdAt:
+          json['createdAt'] != null ? DateTime.parse(json['createdAt']) : null,
     );
   }
 

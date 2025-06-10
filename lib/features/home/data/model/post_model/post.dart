@@ -2,6 +2,8 @@ import 'package:student_portal/features/home/data/model/post_model/reply.dart';
 import 'package:student_portal/features/home/data/model/post_model/vote.dart';
 
 import '../../../../resource/data/model/resource.dart';
+import 'attachment.dart';
+import 'creator.dart';
 
 class Discussion {
   final String? id;
@@ -77,72 +79,4 @@ class Discussion {
         name: creator?.name,
         id: creator?.id,
       );
-}
-
-class Creator {
-  final String? id;
-  final String? name;
-  final String? profilePicture;
-
-  Creator({
-    this.id,
-    this.name,
-    this.profilePicture,
-  });
-
-  factory Creator.fromJson(Map<String, dynamic> json) {
-    return Creator(
-      id: json['_id'],
-      name: json['name'],
-      profilePicture: json['profilePicture'],
-    );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      '_id': id,
-      'name': name,
-      'profilePicture': profilePicture,
-    };
-  }
-}
-
-class Attachment {
-  final String? type;
-  final String? resource;
-  final String? mimeType;
-  final String? originalFileName;
-  final int? fileSize;
-  final String? checksum;
-
-  Attachment({
-    this.type,
-    this.resource,
-    this.mimeType,
-    this.originalFileName,
-    this.fileSize,
-    this.checksum,
-  });
-
-  factory Attachment.fromJson(Map<String, dynamic> json) {
-    return Attachment(
-      type: json['type'],
-      resource: json['resource'],
-      mimeType: json['mimeType'],
-      originalFileName: json['originalFileName'],
-      fileSize: json['fileSize'],
-      checksum: json['checksum'],
-    );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'type': type,
-      'resource': resource,
-      'mimeType': mimeType,
-      'originalFileName': originalFileName,
-      'fileSize': fileSize,
-      'checksum': checksum,
-    };
-  }
 }
