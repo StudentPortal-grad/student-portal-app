@@ -5,6 +5,8 @@ import 'package:dio/dio.dart';
 import 'package:student_portal/core/errors/data/model/error_model.dart';
 import 'package:student_portal/core/network/api_endpoints.dart';
 import 'package:student_portal/core/network/api_service.dart';
+import 'package:student_portal/features/home/data/dto/reply_dto.dart';
+import 'package:student_portal/features/home/data/dto/vote_dto.dart';
 
 import '../../../../core/errors/data/model/failures.dart';
 import '../../domain/repo/posts_repository.dart';
@@ -52,6 +54,53 @@ class PostRepositoryImpl implements PostRepository {
             }
           });
       log('Creating post :: $response');
+      return Right(response['message'] ?? 'Success');
+    } on DioException catch (e) {
+      log('Dio Failure ${e.toString()}');
+      return Left(ServerFailure.fromDioError(e)); // Handle Dio errors here
+    }
+  }
+
+  @override
+  Future<Either<Failure, String>> deletePost({required String postId}) async {
+    try {
+      log('Deleting a post ::: $postId');
+      final response =
+          await apiService.delete(endpoint: ApiEndpoints.discussionID(postId));
+      log('Deleting a post :: $response');
+      return Right(response['message'] ?? 'Success');
+    } on DioException catch (e) {
+      log('Dio Failure ${e.toString()}');
+      return Left(ServerFailure.fromDioError(e)); // Handle Dio errors here
+    }
+  }
+
+  @override
+  Future<Either<Failure, Discussion>> reply(
+      {required ReplyDto replyDto}) async {
+    try {
+      log('Replying a post ::: ${replyDto.toJson()}');
+      final response = await apiService.post(
+        endpoint: ApiEndpoints.discussionReply(replyDto.id),
+        data: replyDto.toJson(),
+      );
+      log('Replying a post :: $response');
+      return Right(Discussion.fromJson(response['data']));
+    } on DioException catch (e) {
+      log('Dio Failure ${e.toString()}');
+      return Left(ServerFailure.fromDioError(e)); // Handle Dio errors here
+    }
+  }
+
+  @override
+  Future<Either<Failure, String>> vote({required VoteDto voteDto}) async {
+    try {
+      log('Voting a post ::: ${voteDto.toJson()}');
+      final response = await apiService.post(
+        endpoint: ApiEndpoints.discussionVote(voteDto.postId),
+        data: voteDto.toJson(),
+      );
+      log('Voting a post :: $response');
       return Right(response['message'] ?? 'Success');
     } on DioException catch (e) {
       log('Dio Failure ${e.toString()}');

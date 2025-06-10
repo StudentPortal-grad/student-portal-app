@@ -30,6 +30,9 @@ abstract class ApiEndpoints {
 
   // discussions and posts
   static const String discussions = "discussions";
+  static String discussionID(String id) => "discussions/$id";
+  static String discussionVote(String id) => "discussions/$id/vote";
+  static String discussionReply(String id) => "discussions/$id/reply";
 
   // resources
   static const String resources = "resources";
