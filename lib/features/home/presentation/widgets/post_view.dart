@@ -70,8 +70,9 @@ class PostView extends StatelessWidget {
           15.heightBox,
           // react bar
           ReactBar(
-            votes: discussion?.votes?.length ?? 0,
+            votes: discussion?.upVotesCount ?? 0,
             comments: discussion?.replies?.length ?? 0,
+            currentVote: discussion?.currentVote ?? 0,
             onVoteTap: (p0) {
               log('onVoteTap $p0');
               onVoteTap?.call(p0);

@@ -18,6 +18,7 @@ class Discussion {
   final int? downVotesCount;
   final DateTime? createdAt;
   final DateTime? updatedAt;
+  final int? currentVote;
   final int? v;
 
   Discussion({
@@ -33,6 +34,7 @@ class Discussion {
     this.downVotesCount,
     this.createdAt,
     this.updatedAt,
+    this.currentVote,
     this.v,
   });
 
@@ -52,6 +54,7 @@ class Discussion {
       upVotesCount: json['upvotesCount'],
       createdAt: json['createdAt'] != null ? DateTime.parse(json['createdAt']) : null,
       updatedAt: json['updatedAt'] != null ? DateTime.parse(json['updatedAt']) : null,
+      currentVote: json['currentVote'],
       v: json['__v'],
     );
   }
@@ -65,9 +68,10 @@ class Discussion {
       'attachments': attachments?.map((e) => e.toJson()).toList(),
       'status': status,
       'replies': replies?.map((e) => e.toJson()).toList(),
-      'votes': votes,
+      'votes': votes?.map((e) => e.toJson()).toList(),
       'upvotesCount': upVotesCount,
       'downvotesCount': downVotesCount,
+      'currentVote': currentVote,
       'createdAt': createdAt?.toIso8601String(),
       'updatedAt': updatedAt?.toIso8601String(),
       '__v': v,

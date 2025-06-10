@@ -21,10 +21,9 @@ class PostRepositoryImpl implements PostRepository {
   @override
   Future<Either<Failure, List<Discussion>>> getPosts({int page = 1}) async {
     try {
-      final response = await apiService.get(endpoint: ApiEndpoints.discussions,query: {
-        'limit': 5,
-        'page': page,
-      });
+      final response = await apiService.get(
+          endpoint: ApiEndpoints.discussions,
+          query: {'limit': 5, 'page': page, 'currVoteSpecified': true});
       log('posts :: $response');
       return Right(response['data']['discussions'].map<Discussion>((e) => Discussion.fromJson(e)).toList());
     } on DioException catch (e) {
@@ -39,7 +38,9 @@ class PostRepositoryImpl implements PostRepository {
   @override
   Future<Either<Failure, Discussion>> getPostId({required String postId}) async {
     try{
-      final response = await apiService.get(endpoint: ApiEndpoints.discussionID(postId));
+      final response = await apiService.get(
+          endpoint: ApiEndpoints.discussionID(postId),
+          query: {'currVoteSpecified': true});
       log('post :: $response');
       return Right(Discussion.fromJson(response['data']));
     } on DioException catch (e) {

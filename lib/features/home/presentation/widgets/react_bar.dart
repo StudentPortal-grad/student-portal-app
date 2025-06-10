@@ -17,11 +17,13 @@ class ReactBar extends StatefulWidget {
     this.comments,
     this.votes,
     this.onVoteTap,
+    this.currentVote = 0,
   });
 
   final bool removeShare;
   final int? comments;
   final int? votes;
+  final int currentVote;
   final Function(String)? onVoteTap;
 
   @override
@@ -38,7 +40,7 @@ class _ReactBarState extends State<ReactBar> {
     super.initState();
     upVotes = widget.votes ?? 0;
     downVotes = 0;
-    myReact = 0;
+    myReact = widget.currentVote;
   }
 
   void _onItemTapped(int vote) {
