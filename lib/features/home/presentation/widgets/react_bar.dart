@@ -68,6 +68,7 @@ class _ReactBarState extends State<ReactBar> {
       child: Row(
         children: [
           CustomImageView(
+            margin: EdgeInsets.all(3.5.r),
             onTap: () {
               _onItemTapped((myReact == 1) ? 0 : 1);
               widget.onVoteTap?.call('upvote');
@@ -81,6 +82,7 @@ class _ReactBarState extends State<ReactBar> {
           Text(upVotes.toString(), style: Styles.font14w500),
           4.widthBox,
           CustomImageView(
+            margin: EdgeInsets.all(3.5.r),
             onTap: () {
               _onItemTapped((myReact == -1) ? 0 : -1);
               widget.onVoteTap?.call('downvote');
