@@ -49,10 +49,7 @@ class DiscussionDetailsBloc
     final result = await commentPostUc.call(replyDto: event.replyDto);
     result.fold(
       (error) => emit(AddCommentErrorState(error.message ?? 'Unknown Error')),
-      (discussion) {
-        this.discussion = discussion;
-        emit(DiscussionDetailsLoaded(discussion));
-      },
+      (message) => emit(AddCommentSuccessState(message)),
     );
   }
 
@@ -61,7 +58,7 @@ class DiscussionDetailsBloc
     final result = await votePostUc.call(voteDto: event.voteDto);
     result.fold(
       (error) => emit(VoteErrorState(error.message ?? 'Unknown Error')),
-      (message) => emit(DiscussionDetailsLoaded(discussion)),
+      (message) => emit(VoteSuccessState()),
     );
   }
 }

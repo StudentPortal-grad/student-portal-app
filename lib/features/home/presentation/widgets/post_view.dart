@@ -66,7 +66,13 @@ class PostView extends StatelessWidget {
           PostListImagesView(attachments: discussion?.attachments ?? []),
           15.heightBox,
           // react bar
-          ReactBar(),
+          ReactBar(
+            votes: discussion?.votes?.length ?? 0,
+            comments: discussion?.replies?.length ?? 0,
+            onVoteTap: (p0) {
+              print(p0);
+            },
+          ),
           if (detailsChildren != null) ...[
             17.heightBox,
             ...detailsChildren!,

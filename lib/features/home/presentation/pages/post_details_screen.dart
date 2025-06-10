@@ -44,7 +44,12 @@ class _PostDetailsScreenState extends State<PostDetailsScreen> {
         backgroundColor: ColorsManager.whiteColor,
         title: Text('Post', style: Styles.font20w600),
       ),
-      body: BlocBuilder<DiscussionDetailsBloc, DiscussionDetailsState>(
+      body: BlocConsumer<DiscussionDetailsBloc, DiscussionDetailsState>(
+        listener: (context, state) {
+          if(state is AddCommentSuccessState){
+            context.read<DiscussionDetailsBloc>().add(DiscussionDetailsEventRequest(context.read<DiscussionDetailsBloc>().discussion.id ?? ''));
+          }
+        },
         builder: (context, state) {
           final bloc = context.read<DiscussionDetailsBloc>();
           return CustomRefreshIndicator(
@@ -60,7 +65,7 @@ class _PostDetailsScreenState extends State<PostDetailsScreen> {
                   CommentBar(),
                   5.heightBox,
                   ...List.generate(bloc.discussion.replies?.length ?? 0,
-                      (index) => PostCommentsView()),
+                      (index) => PostCommentsView(reply: bloc.discussion.replies?[index])),
                 ],
               ),
             ),

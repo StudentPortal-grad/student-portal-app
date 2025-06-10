@@ -11,9 +11,18 @@ import '../../../../core/utils/assets_app.dart';
 import '../../../../core/widgets/custom_image_view.dart';
 
 class ReactBar extends StatefulWidget {
-  const ReactBar({super.key, this.removeShare = false});
+  const ReactBar({
+    super.key,
+    this.removeShare = false,
+    this.comments,
+    this.votes,
+    this.onVoteTap,
+  });
 
   final bool removeShare;
+  final int? comments;
+  final int? votes;
+  final Function(String)? onVoteTap;
 
   @override
   State<ReactBar> createState() => _ReactBarState();
@@ -22,9 +31,15 @@ class ReactBar extends StatefulWidget {
 class _ReactBarState extends State<ReactBar> {
   int react = 0;
 
-  void _onItemTapped(int index) {
+  @override
+  void initState() {
+    react = widget.votes ?? 0;
+    super.initState();
+  }
+
+  void _onItemTapped(int vote) {
     setState(() {
-      react = index;
+      react = vote;
     });
   }
 
@@ -35,7 +50,10 @@ class _ReactBarState extends State<ReactBar> {
       child: Row(
         children: [
           CustomImageView(
-            onTap: () => _onItemTapped((react == 1) ? 0 : 1),
+            onTap: () {
+              _onItemTapped((react == 1) ? 0 : 1);
+              widget.onVoteTap?.call((react > 0) ? 'upvote' : 'downvote');
+            },
             imagePath: AssetsApp.arrowUpIcon,
             color: react == 1 ? ColorsManager.mainColorDark : null,
             width: 16.w,
@@ -45,7 +63,10 @@ class _ReactBarState extends State<ReactBar> {
           Text(react.toString(), style: Styles.font14w500),
           4.widthBox,
           CustomImageView(
-            onTap: () => _onItemTapped((react == -1) ? 0 : -1),
+            onTap: () {
+              _onItemTapped((react == -1) ? 0 : -1);
+              widget.onVoteTap?.call((react < 0) ? 'downvote' : 'upvote');
+            },
             imagePath: AssetsApp.arrowDownIcon,
             color: react == -1 ? ColorsManager.orangeColor : null,
             width: 16.w,
@@ -59,7 +80,7 @@ class _ReactBarState extends State<ReactBar> {
             height: 16.h,
           ),
           4.widthBox,
-          Text('0', style: Styles.font14w500),
+          Text(widget.comments?.toString() ?? '0', style: Styles.font14w500),
           Spacer(),
           if (!widget.removeShare)
             GestureDetector(
@@ -68,9 +89,7 @@ class _ReactBarState extends State<ReactBar> {
                   SharePlus.instance.share(
                     ShareParams(
                       title: 'Check out this article',
-                      files: [
-
-                      ],
+                      files: [],
                       // uri: Uri.tryParse('https://google.com'),
                     ),
                   );

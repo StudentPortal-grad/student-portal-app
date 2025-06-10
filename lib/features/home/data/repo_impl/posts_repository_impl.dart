@@ -89,7 +89,7 @@ class PostRepositoryImpl implements PostRepository {
   }
 
   @override
-  Future<Either<Failure, Discussion>> reply(
+  Future<Either<Failure, String>> reply(
       {required ReplyDto replyDto}) async {
     try {
       log('Replying a post ::: ${replyDto.toJson()}');
@@ -98,7 +98,7 @@ class PostRepositoryImpl implements PostRepository {
         data: replyDto.toJson(),
       );
       log('Replying a post :: $response');
-      return Right(Discussion.fromJson(response['data']));
+      return Right(response['message'] ?? 'Success');
     } on DioException catch (e) {
       log('Dio Failure ${e.toString()}');
       return Left(ServerFailure.fromDioError(e)); // Handle Dio errors here

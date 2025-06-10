@@ -21,11 +21,19 @@ final class DiscussionDetailsError extends DiscussionDetailsState {
 
 final class AddCommentLoadingState extends DiscussionDetailsState {}
 
+final class AddCommentSuccessState extends DiscussionDetailsState {
+  final String message;
+
+  AddCommentSuccessState(this.message);
+}
+
 final class AddCommentErrorState extends DiscussionDetailsState {
   final String message;
 
   AddCommentErrorState(this.message);
 }
+
+final class VoteSuccessState extends DiscussionDetailsState {}
 
 final class VoteErrorState extends DiscussionDetailsState {
   final String message;

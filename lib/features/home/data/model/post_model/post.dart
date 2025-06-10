@@ -7,7 +7,7 @@ class Discussion {
   final Creator? creator;
   final List<Attachment>? attachments;
   final String? status;
-  final List<dynamic>? replies;
+  final List<Reply>? replies;
   final List<dynamic>? votes;
   final DateTime? createdAt;
   final DateTime? updatedAt;
@@ -37,7 +37,7 @@ class Discussion {
           ?.map((e) => Attachment.fromJson(e))
           .toList(),
       status: json['status'],
-      replies: json['replies'],
+      replies: (json['replies'] as List?)?.map((e) => Reply.fromJson(e)).toList(),
       votes: json['votes'],
       createdAt: json['createdAt'] != null ? DateTime.parse(json['createdAt']) : null,
       updatedAt: json['updatedAt'] != null ? DateTime.parse(json['updatedAt']) : null,
@@ -53,7 +53,7 @@ class Discussion {
       'creator': creator?.toJson(),
       'attachments': attachments?.map((e) => e.toJson()).toList(),
       'status': status,
-      'replies': replies,
+      'replies': replies?.map((e) => e.toJson()).toList(),
       'votes': votes,
       'createdAt': createdAt?.toIso8601String(),
       'updatedAt': updatedAt?.toIso8601String(),
@@ -132,6 +132,44 @@ class Attachment {
       'originalFileName': originalFileName,
       'fileSize': fileSize,
       'checksum': checksum,
+    };
+  }
+}
+
+class Reply{
+  final String? content;
+  final String? creator;
+  final List<Attachment>? attachments;
+  final String? id;
+  final DateTime? createdAt;
+
+  Reply({
+    this.content,
+    this.creator,
+    this.attachments,
+    this.id,
+    this.createdAt,
+  });
+
+  factory Reply.fromJson(Map<String, dynamic> json) {
+    return Reply(
+      content: json['content'],
+      creator: json['creator'],
+      attachments: (json['attachments'] as List?)
+          ?.map((e) => Attachment.fromJson(e))
+          .toList(),
+      id: json['_id'],
+      createdAt: json['createdAt'] != null ? DateTime.parse(json['createdAt']) : null,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'content': content,
+      'creator': creator,
+      'attachments': attachments?.map((e) => e.toJson()).toList(),
+      '_id': id,
+      'createdAt': createdAt?.toIso8601String(),
     };
   }
 }
