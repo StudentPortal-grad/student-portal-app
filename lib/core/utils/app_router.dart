@@ -7,6 +7,7 @@ import 'package:student_portal/features/chats/presentation/pages/search_peer_scr
 import 'package:student_portal/features/community/presentation/screens/community_screen.dart';
 import 'package:student_portal/features/community/presentation/screens/create_community_screen.dart';
 import 'package:student_portal/features/home/presentation/manager/create_post_bloc/create_post_bloc.dart';
+import 'package:student_portal/features/home/presentation/manager/discussion_details_bloc/discussion_details_bloc.dart';
 import 'package:student_portal/features/home/presentation/pages/add_post_screen.dart';
 import 'package:student_portal/features/home/presentation/pages/post_details_screen.dart';
 import 'package:student_portal/features/profile/presentation/screens/following_screen.dart';
@@ -219,7 +220,10 @@ abstract class AppRouter {
           return buildPage(
             context: context,
             state: state,
-            child: PostDetailsScreen(discussion: args?['post'] as Discussion),
+            child: BlocProvider(
+              create: (context) => DiscussionDetailsBloc(args?['post'] as Discussion),
+              child: PostDetailsScreen(),
+            ),
           );
         },
       ),

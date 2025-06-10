@@ -5,6 +5,7 @@ import 'package:student_portal/core/helpers/app_size_boxes.dart';
 import 'package:student_portal/features/home/presentation/widgets/post_view.dart';
 
 import '../../../../core/theming/colors.dart';
+import '../../../../core/utils/app_router.dart';
 import '../../../../core/widgets/custom_refresh_indicator.dart';
 import '../../../../core/widgets/loading_screen.dart';
 import '../../data/model/post_model/post.dart';
@@ -76,7 +77,13 @@ class _HomeBodyViewState extends State<HomeBodyView> {
               separatorBuilder: (context, index) => 15.heightBox,
               itemBuilder: (context, index) {
                 if (index < discussions.length) {
-                  return PostView(discussion: discussions[index]);
+                  return GestureDetector(
+                      onTap: () {
+                        AppRouter.router.push(AppRouter.postDetails, extra: {
+                          'post': discussions[index],
+                        });
+                      },
+                      child: PostView(discussion: discussions[index]));
                 } else {
                   return Padding(
                     padding: EdgeInsets.symmetric(vertical: 20.h),

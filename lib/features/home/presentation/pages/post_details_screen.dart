@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:student_portal/core/helpers/app_size_boxes.dart';
 import 'package:student_portal/core/theming/colors.dart';
 import 'package:student_portal/core/theming/text_styles.dart';
-import 'package:student_portal/features/home/data/model/post_model/post.dart';
+import 'package:student_portal/core/widgets/custom_refresh_indicator.dart';
 import 'package:student_portal/features/home/presentation/widgets/post_view.dart';
 
 import '../../../../core/widgets/custom_appbar.dart';
+import '../manager/discussion_details_bloc/discussion_details_bloc.dart';
 import '../widgets/comment_bar.dart';
 import '../widgets/post_comments_view.dart';
 
 class PostDetailsScreen extends StatefulWidget {
-  const PostDetailsScreen({super.key, this.discussion});
-
-  final Discussion? discussion;
+  const PostDetailsScreen({super.key});
 
   @override
   State<PostDetailsScreen> createState() => _PostDetailsScreenState();
@@ -44,19 +44,28 @@ class _PostDetailsScreenState extends State<PostDetailsScreen> {
         backgroundColor: ColorsManager.whiteColor,
         title: Text('Post', style: Styles.font20w600),
       ),
-      body: SingleChildScrollView(
-        controller: scrollController,
-        padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 16.h),
-        child: PostView(
-          discussion: widget.discussion,
-          detailsChildren: [
-            5.heightBox,
-            CommentBar(),
-            5.heightBox,
-            ...List.generate(widget.discussion?.replies?.length ?? 0,
-                (index) => PostCommentsView()),
-          ],
-        ),
+      body: BlocBuilder<DiscussionDetailsBloc, DiscussionDetailsState>(
+        builder: (context, state) {
+          final bloc = context.read<DiscussionDetailsBloc>();
+          return CustomRefreshIndicator(
+            onRefresh: () async => bloc.add(DiscussionDetailsEventRequest(bloc.discussion.id ?? '')),
+            child: SingleChildScrollView(
+              controller: scrollController,
+              physics: AlwaysScrollableScrollPhysics(),
+              padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 16.h),
+              child: PostView(
+                discussion: bloc.discussion,
+                detailsChildren: [
+                  5.heightBox,
+                  CommentBar(),
+                  5.heightBox,
+                  ...List.generate(bloc.discussion.replies?.length ?? 0,
+                      (index) => PostCommentsView()),
+                ],
+              ),
+            ),
+          );
+        },
       ),
     );
   }
