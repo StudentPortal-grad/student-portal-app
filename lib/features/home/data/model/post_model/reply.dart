@@ -29,6 +29,19 @@ class Reply {
     );
   }
 
+  factory Reply.fromResourceJson(Map<String, dynamic> json) {
+    return Reply(
+      content: json['content'],
+      creator: json['userId'] != null && json['userId'] is Map<String, dynamic> ? Creator.fromJson(json['userId']) : null,
+      attachments: (json['attachments'] as List?)
+          ?.map((e) => Attachment.fromJson(e))
+          .toList(),
+      id: json['_id'],
+      createdAt:
+      json['createdAt'] != null ? DateTime.parse(json['createdAt']) : null,
+    );
+  }
+
   Map<String, dynamic> toJson() {
     return {
       'content': content,

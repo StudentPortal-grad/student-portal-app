@@ -48,8 +48,12 @@ class ResourceRepositoryImpl implements ResourceRepository {
   @override
   Future<Either<Failure, List<Resource>>> getResources({int page = 1}) async{
     try {
-      var data = await apiService.get(
-          endpoint: ApiEndpoints.resources, query: {'page': page, 'limit': 5});
+      var data = await apiService.get(endpoint: ApiEndpoints.resources, query: {
+        'page': page,
+        'limit': 5,
+        'currVoteSpecified': true,
+        'populateCommentUser': true
+      });
       log("RESOURCES:: $data");
       return Right(data['data']['resources'].map<Resource>((e) => Resource.fromJson(e)).toList());
     } on DioException catch (e) {
@@ -76,7 +80,7 @@ class ResourceRepositoryImpl implements ResourceRepository {
     try {
       final response = await apiService.get(
         endpoint: ApiEndpoints.resourcesID(resourceId),
-        query: {'currVoteSpecified': true},
+        query: {'currVoteSpecified': true,'populateCommentUser' : true},
       );
       log('Resource :: $response');
       return Right(Resource.fromJson(response['data']['resource']));

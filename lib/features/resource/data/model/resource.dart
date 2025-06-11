@@ -72,7 +72,7 @@ class Resource extends Equatable {
             : null,
         ratings: json["ratings"],
         comments:
-            (json["comments"] as List?)?.map((e) => Reply.fromJson(e)).toList(),
+            (json["comments"] as List?)?.map((e) => Reply.fromResourceJson(e)).toList(),
         createdAt: json["createdAt"] != null
             ? DateTime.tryParse(json["createdAt"])
             : null,
