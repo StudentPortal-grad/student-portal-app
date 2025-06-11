@@ -5,12 +5,19 @@ sealed class ResourceDetailsEvent {}
 
 class GetResourceEvent extends ResourceDetailsEvent {
   final String resourceId;
+  final bool noLoading;
 
-  GetResourceEvent({required this.resourceId});
+  GetResourceEvent({required this.resourceId, this.noLoading = false});
 }
 
 class CommentResourceEvent extends ResourceDetailsEvent {
   final ReplyDto replyDto;
 
   CommentResourceEvent({required this.replyDto});
+}
+
+class VoteDiscussionEventRequest extends ResourceDetailsEvent {
+  final VoteDto voteDto;
+
+  VoteDiscussionEventRequest({required this.voteDto});
 }

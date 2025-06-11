@@ -237,10 +237,8 @@ abstract class AppRouter {
             context: context,
             state: state,
             child: BlocProvider(
-              create: (context) => ResourceDetailsBloc(args?['resource'] as Resource?)..add(GetResourceEvent(resourceId: args?['resource'].id ?? '')),
-              child: ResourceDetailsScreen(
-                resource: args?['resource'] as Resource?,
-              ),
+              create: (context) => ResourceDetailsBloc(args?['resource'] as Resource)..add(GetResourceEvent(resourceId: args?['resource'].id ?? '')),
+              child: ResourceDetailsScreen(),
             ),
           );
         },

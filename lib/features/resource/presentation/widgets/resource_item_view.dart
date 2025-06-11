@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:student_portal/core/helpers/app_size_boxes.dart';
@@ -13,10 +15,11 @@ import '../../../home/presentation/widgets/user_post_view.dart';
 import '../../data/model/resource.dart';
 
 class ResourceItemView extends StatelessWidget {
-  const ResourceItemView({super.key, this.detailsChildren, this.resource});
+  const ResourceItemView({super.key, this.detailsChildren, this.resource, this.onVoteTap});
 
   final Resource? resource;
   final List<Widget>? detailsChildren;
+  final Function(String)? onVoteTap;
 
   @override
   Widget build(BuildContext context) {
@@ -38,20 +41,25 @@ class ResourceItemView extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          UserPostView(uploader: resource?.uploader, createFromAgo: TimeHelper.instance.timeAgo(resource?.createdAt)),
-          21.heightBox,
-          Wrap(
-            spacing: 7.w,
-            runSpacing: 7.h,
-            children: List.generate(
-              resource?.tags?.length ?? 0,
-              (index) => CategoryTagView(
-                index: index,
-                title: resource?.tags?[index] ?? '',
+          UserPostView(
+            uploader: resource?.uploader,
+            createFromAgo: TimeHelper.instance.timeAgo(resource?.createdAt),
+          ),
+         if (resource?.tags?.isNotEmpty ?? false) ...[
+            21.heightBox,
+            Wrap(
+              spacing: 7.w,
+              runSpacing: 7.h,
+              children: List.generate(
+                resource?.tags?.length ?? 0,
+                (index) => CategoryTagView(
+                  index: index,
+                  title: resource?.tags?[index] ?? '',
+                ),
               ),
             ),
-          ),
-          20.heightBox,
+            20.heightBox,
+          ],
           Text(resource?.title ?? '', style: Styles.font14w700),
           10.heightBox,
           AppText(
@@ -67,17 +75,29 @@ class ResourceItemView extends StatelessWidget {
             style: Styles.font12w400.copyWith(color: ColorsManager.grayColor, height: 1.9),
           ),
           20.heightBox,
-
           if (resource?.fileUrl != null && resource?.originalFileName != null)
-            PdfPostView(
-              title: resource?.originalFileName ?? '',
-              url: resource?.fileUrl ?? '',
-              size: resource?.fileSize,
+            ListView.separated(
+              itemBuilder: (context, index) => PdfPostView(
+                title: resource?.originalFileName ?? '',
+                url: resource?.fileUrl ?? '',
+                size: resource?.fileSize,
+              ),
+              separatorBuilder: (context, index) => 10.heightBox,
+              shrinkWrap: true,
+              itemCount: 1,
+              physics: NeverScrollableScrollPhysics(),
             ),
-
           17.heightBox,
           // react bar
-          ResourceReactBar(resource: resource),
+          ResourceReactBar(
+            currentVote: resource?.currentVote ?? 0,
+            votes: resource?.upVotesCount ?? 0,
+            comments: resource?.comments?.length ?? 0,
+            onVoteTap: (p0) {
+              log('onVoteTap $p0');
+              onVoteTap?.call(p0);
+            },
+          ),
           if (detailsChildren != null) ...[
             17.heightBox,
             ...detailsChildren!,

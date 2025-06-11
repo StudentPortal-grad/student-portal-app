@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -82,7 +84,18 @@ class _ResourcesBodyViewState extends State<ResourcesBodyView> {
                 if (index < resources.length) {
                   return InkWell(
                     onTap: () async {
-                      await AppRouter.router.push(AppRouter.resourceDetails, extra: {'resource': resources[index]});
+                      final updatedPost = await AppRouter.router.push<Resource>(
+                          AppRouter.resourceDetails,
+                          extra: {'resource': resources[index]});
+                      if (updatedPost != null) {
+                        log('updatedPost: ${updatedPost.toJson()}');
+                        final bloc = context.mounted
+                            ? context.read<GetResourceBloc>()
+                            : AppRouter.context?.read<GetResourceBloc>();
+                        if (bloc != null) {
+                          // bloc.add(UpdateDiscussionInListEvent(updatedPost));
+                        }
+                      }
                     },
                     child: ResourceItemView(resource: resources[index]),
                   );

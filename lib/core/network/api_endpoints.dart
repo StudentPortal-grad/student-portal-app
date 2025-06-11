@@ -38,5 +38,5 @@ abstract class ApiEndpoints {
   static const String resources = "resources";
   static String resourcesID(String id) => "resources/$id";
   static String resourcesVote(String id) => "resources/$id/vote";
-  static String resourcesReply(String id) => "resources/$id/reply";
+  static String resourcesReply(String id) => "resources/$id/comment";
 }

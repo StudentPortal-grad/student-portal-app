@@ -79,7 +79,7 @@ class ResourceRepositoryImpl implements ResourceRepository {
         query: {'currVoteSpecified': true},
       );
       log('Resource :: $response');
-      return Right(Resource.fromJson(response['data']));
+      return Right(Resource.fromJson(response['data']['resource']));
     } on DioException catch (e) {
       log('Dio Failure ${e.toString()}');
       return Left(ServerFailure.fromDioError(e)); // Handle Dio errors here
@@ -106,11 +106,12 @@ class ResourceRepositoryImpl implements ResourceRepository {
   Future<Either<Failure, String>> vote({required VoteDto voteDto}) async {
     try {
       log('Voting a resource ::: ${voteDto.toJson()}');
+      log(ApiEndpoints.resourcesVote(voteDto.postId));
       final response = await apiService.post(
-        endpoint: ApiEndpoints.discussionVote(voteDto.postId),
+        endpoint: ApiEndpoints.resourcesVote(voteDto.postId),
         data: voteDto.toJson(),
       );
-      log('Voting a resource :: $response');
+      log('Voting a resource response :: $response');
       return Right(response['message'] ?? 'Success');
     } on DioException catch (e) {
       log('Dio Failure ${e.toString()}');
