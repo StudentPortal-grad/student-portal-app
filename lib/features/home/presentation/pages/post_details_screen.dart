@@ -76,7 +76,6 @@ class _PostDetailsScreenState extends State<PostDetailsScreen> {
             }
             if (state is DiscussionDetailsError) {
               return ErrorScreen(
-                  showArrowBack: true,
                   onRetry: () => bloc.add(DiscussionDetailsEventRequest(postId: bloc.discussion.id ?? '')),
                   failure: Failure(message: state.message));
             }

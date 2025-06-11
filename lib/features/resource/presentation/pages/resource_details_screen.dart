@@ -76,7 +76,6 @@ class _ResourceDetailsScreenState extends State<ResourceDetailsScreen> {
             }
             if (state is ResourceDetailsErrorState) {
               return ErrorScreen(
-                  showArrowBack: true,
                   onRetry: () => bloc.add(GetResourceEvent(resourceId: bloc.resource.id ?? '')),
                   failure: Failure(message: state.message));
             }
