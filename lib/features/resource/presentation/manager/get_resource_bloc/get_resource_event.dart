@@ -10,3 +10,15 @@ class GetResourceEventRequested extends GetResourceEvent {
 }
 
 class GetResourceEventLoadMore extends GetResourceEvent {}
+
+class VoteResourceEvent extends GetResourceEvent {
+  final VoteDto voteDto;
+
+  VoteResourceEvent({required this.voteDto});
+}
+
+class UpdateResourceInListEvent extends GetResourceEvent {
+  final Resource updatedResource;
+
+  UpdateResourceInListEvent(this.updatedResource);
+}

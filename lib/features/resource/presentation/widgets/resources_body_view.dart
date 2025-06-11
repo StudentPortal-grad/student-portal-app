@@ -10,6 +10,7 @@ import '../../../../core/theming/colors.dart';
 import '../../../../core/utils/app_router.dart';
 import '../../../../core/widgets/custom_refresh_indicator.dart';
 import '../../../../core/widgets/loading_screen.dart';
+import '../../../home/data/dto/vote_dto.dart';
 import '../../data/model/resource.dart';
 import '../manager/get_resource_bloc/get_resource_bloc.dart';
 
@@ -93,11 +94,22 @@ class _ResourcesBodyViewState extends State<ResourcesBodyView> {
                             ? context.read<GetResourceBloc>()
                             : AppRouter.context?.read<GetResourceBloc>();
                         if (bloc != null) {
-                          // bloc.add(UpdateDiscussionInListEvent(updatedPost));
+                          bloc.add(UpdateResourceInListEvent(updatedPost));
                         }
                       }
                     },
-                    child: ResourceItemView(resource: resources[index]),
+                    child: ResourceItemView(
+                      onVoteTap: (p0) {
+                        context.read<GetResourceBloc>().add(
+                          VoteResourceEvent(
+                                voteDto: VoteDto(
+                                    postId: resources[index].id ?? '',
+                                    voteType: p0),
+                              ),
+                            );
+                      },
+                      resource: resources[index],
+                    ),
                   );
                 } else {
                   return Padding(

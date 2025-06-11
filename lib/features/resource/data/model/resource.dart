@@ -79,8 +79,8 @@ class Resource extends Equatable {
         updatedAt: json["updatedAt"] != null
             ? DateTime.tryParse(json["updatedAt"])
             : null,
-        upVotesCount: json["upVotesCount"],
-        downVotesCount: json["downVotesCount"],
+        upVotesCount: json["upvotesCount"],
+        downVotesCount: json["downvotesCount"],
         currentVote: json["currentVote"],
         v: json["__v"],
       );
