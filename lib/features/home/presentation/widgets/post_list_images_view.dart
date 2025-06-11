@@ -21,7 +21,19 @@ class _PostListImagesViewState extends State<PostListImagesView> {
   Widget build(BuildContext context) {
     if (widget.attachments.isEmpty) return const SizedBox.shrink();
     if (widget.attachments.length == 1) {
-      return PostImageView(index: 0, attachment: widget.attachments[0]);
+      return GestureDetector(
+        onTap: () {
+          if (widget.attachments[0].type == 'image') {
+            push(
+              ImagePostView(
+                id: 0,
+                attachment: widget.attachments[0],
+              ),
+            );
+          }
+        },
+        child: PostImageView(index: 0, attachment: widget.attachments[0]),
+      );
     }
     return Stack(
       alignment: Alignment.topRight,
@@ -40,7 +52,7 @@ class _PostListImagesViewState extends State<PostListImagesView> {
             scrollDirection: Axis.horizontal,
             itemCount: widget.attachments.length,
             itemBuilder: (context, index) => GestureDetector(
-              onTap: (){
+              onTap: () {
                 if (widget.attachments[index].type == 'image') {
                   push(
                     ImagePostView(

@@ -221,7 +221,7 @@ abstract class AppRouter {
             context: context,
             state: state,
             child: BlocProvider(
-              create: (context) => DiscussionDetailsBloc(args?['post'] as Discussion)..add(DiscussionDetailsEventRequest(args?['post'].id ?? '')),
+              create: (context) => DiscussionDetailsBloc(args?['post'] as Discussion)..add(DiscussionDetailsEventRequest(postId: args?['post'].id ?? '')),
               child: PostDetailsScreen(),
             ),
           );

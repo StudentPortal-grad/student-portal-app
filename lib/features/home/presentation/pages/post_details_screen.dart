@@ -7,7 +7,6 @@ import 'package:student_portal/core/theming/colors.dart';
 import 'package:student_portal/core/theming/text_styles.dart';
 import 'package:student_portal/core/utils/app_router.dart';
 import 'package:student_portal/core/widgets/custom_refresh_indicator.dart';
-import 'package:student_portal/core/widgets/loading_screen.dart';
 import 'package:student_portal/features/home/presentation/widgets/post_view.dart';
 
 import '../../../../core/errors/data/model/error_model.dart';
@@ -17,6 +16,7 @@ import '../../data/model/post_model/post.dart';
 import '../../data/model/post_model/reply.dart';
 import '../manager/discussion_details_bloc/discussion_details_bloc.dart';
 import '../widgets/comment_bar.dart';
+import '../widgets/discussion_shimmer.dart';
 import '../widgets/post_comments_view.dart';
 
 class PostDetailsScreen extends StatefulWidget {
@@ -66,23 +66,23 @@ class _PostDetailsScreenState extends State<PostDetailsScreen> {
         body: BlocConsumer<DiscussionDetailsBloc, DiscussionDetailsState>(
           listener: (context, state) {
             if (state is AddCommentSuccessState) {
-              context.read<DiscussionDetailsBloc>().add(DiscussionDetailsEventRequest(context.read<DiscussionDetailsBloc>().discussion.id ?? ''));
+              context.read<DiscussionDetailsBloc>().add(DiscussionDetailsEventRequest(postId:  context.read<DiscussionDetailsBloc>().discussion.id ?? '',noLoading: true));
             }
           },
           builder: (context, state) {
             final bloc = context.read<DiscussionDetailsBloc>();
             if (state is DiscussionDetailsLoading) {
-              return LoadingScreen();
+              return DiscussionShimmer();
             }
             if (state is DiscussionDetailsError) {
               return ErrorScreen(
                   showArrowBack: true,
-                  onRetry: () => bloc.add(DiscussionDetailsEventRequest(bloc.discussion.id ?? '')),
+                  onRetry: () => bloc.add(DiscussionDetailsEventRequest(postId: bloc.discussion.id ?? '')),
                   failure: Failure(message: state.message));
             }
+
             return CustomRefreshIndicator(
-              onRefresh: () async => bloc
-                  .add(DiscussionDetailsEventRequest(bloc.discussion.id ?? '')),
+              onRefresh: () async => bloc.add(DiscussionDetailsEventRequest(postId: bloc.discussion.id ?? '', noLoading: true)),
               child: SingleChildScrollView(
                 controller: scrollController,
                 physics: AlwaysScrollableScrollPhysics(),

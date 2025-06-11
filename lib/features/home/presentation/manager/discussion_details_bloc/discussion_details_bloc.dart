@@ -32,7 +32,7 @@ class DiscussionDetailsBloc
 
   Future<void> _getDiscussion(DiscussionDetailsEventRequest event,
       Emitter<DiscussionDetailsState> emit) async {
-    emit(DiscussionDetailsLoading());
+    if(!event.noLoading) emit(DiscussionDetailsLoading());
     final result = await getPostDetailsUC.call(postId: event.postId);
     result.fold(
       (error) => emit(DiscussionDetailsError(error.message ?? 'Unknown Error')),

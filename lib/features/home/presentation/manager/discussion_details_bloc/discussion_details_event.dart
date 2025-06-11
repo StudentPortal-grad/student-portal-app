@@ -5,8 +5,9 @@ sealed class DiscussionDetailsEvent {}
 
 class DiscussionDetailsEventRequest extends DiscussionDetailsEvent {
   final String postId;
+  final bool noLoading;
 
-  DiscussionDetailsEventRequest(this.postId);
+  DiscussionDetailsEventRequest({required this.postId, this.noLoading = false});
 }
 
 class CommentDiscussionEvent extends DiscussionDetailsEvent {
