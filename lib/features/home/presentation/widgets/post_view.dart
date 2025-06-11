@@ -24,13 +24,11 @@ class PostView extends StatefulWidget {
       this.detailsChildren,
       this.discussion,
       this.onVoteTap,
-      this.onTap,
       this.navToDetails = false});
 
   final Discussion? discussion;
   final List<Widget>? detailsChildren;
   final Function(String)? onVoteTap;
-  final Function()? onTap;
   final bool navToDetails;
 
   @override

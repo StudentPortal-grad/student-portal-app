@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -7,7 +5,6 @@ import 'package:student_portal/core/helpers/app_size_boxes.dart';
 import 'package:student_portal/features/resource/presentation/widgets/resource_item_view.dart';
 
 import '../../../../core/theming/colors.dart';
-import '../../../../core/utils/app_router.dart';
 import '../../../../core/widgets/custom_refresh_indicator.dart';
 import '../../../../core/widgets/loading_screen.dart';
 import '../../../home/data/dto/vote_dto.dart';
@@ -83,33 +80,18 @@ class _ResourcesBodyViewState extends State<ResourcesBodyView> {
                   : resources.length,
               itemBuilder: (context, index) {
                 if (index < resources.length) {
-                  return InkWell(
-                    onTap: () async {
-                      final updatedPost = await AppRouter.router.push<Resource>(
-                          AppRouter.resourceDetails,
-                          extra: {'resource': resources[index]});
-                      if (updatedPost != null) {
-                        log('updatedPost: ${updatedPost.toJson()}');
-                        final bloc = context.mounted
-                            ? context.read<GetResourceBloc>()
-                            : AppRouter.context?.read<GetResourceBloc>();
-                        if (bloc != null) {
-                          bloc.add(UpdateResourceInListEvent(updatedPost));
-                        }
-                      }
+                  return ResourceItemView(
+                    navToDetails: true,
+                    onVoteTap: (p0) {
+                      context.read<GetResourceBloc>().add(
+                        VoteResourceEvent(
+                              voteDto: VoteDto(
+                                  postId: resources[index].id ?? '',
+                                  voteType: p0),
+                            ),
+                          );
                     },
-                    child: ResourceItemView(
-                      onVoteTap: (p0) {
-                        context.read<GetResourceBloc>().add(
-                          VoteResourceEvent(
-                                voteDto: VoteDto(
-                                    postId: resources[index].id ?? '',
-                                    voteType: p0),
-                              ),
-                            );
-                      },
-                      resource: resources[index],
-                    ),
+                    resource: resources[index],
                   );
                 } else {
                   return Padding(
