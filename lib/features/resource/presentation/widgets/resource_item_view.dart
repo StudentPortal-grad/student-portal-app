@@ -68,11 +68,12 @@ class ResourceItemView extends StatelessWidget {
           ),
           20.heightBox,
 
-          PdfPostView(
-            title: resource?.originalFileName ?? '',
-            url: resource?.fileUrl ?? '',
-            size: resource?.fileSize,
-          ),
+          if (resource?.fileUrl != null && resource?.originalFileName != null)
+            PdfPostView(
+              title: resource?.originalFileName ?? '',
+              url: resource?.fileUrl ?? '',
+              size: resource?.fileSize,
+            ),
 
           17.heightBox,
           // react bar

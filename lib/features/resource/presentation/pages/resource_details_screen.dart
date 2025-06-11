@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:student_portal/core/helpers/app_size_boxes.dart';
+import 'package:student_portal/features/resource/presentation/widgets/resource_item_view.dart';
 
 import '../../../../../core/theming/colors.dart';
 import '../../../../../core/theming/text_styles.dart';
 import '../../../../../core/widgets/custom_appbar.dart';
-import '../../../home/presentation/widgets/comment_bar.dart';
-import '../../../home/presentation/widgets/post_comments_view.dart';
-import '../../../home/presentation/widgets/post_view.dart';
-
-
+import '../../data/model/resource.dart';
+import '../widgets/resource_comment_bar.dart';
 
 class ResourceDetailsScreen extends StatefulWidget {
-  const ResourceDetailsScreen({super.key});
+  const ResourceDetailsScreen({super.key, this.resource});
+
+  final Resource? resource;
 
   @override
   State<ResourceDetailsScreen> createState() => _ResourceDetailsScreenState();
@@ -33,7 +33,6 @@ class _ResourceDetailsScreenState extends State<ResourceDetailsScreen> {
     super.dispose();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,11 +46,12 @@ class _ResourceDetailsScreenState extends State<ResourceDetailsScreen> {
       body: SingleChildScrollView(
         controller: scrollController,
         padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 16.h),
-        child: PostView(
+        child: ResourceItemView(
+          resource: widget.resource,
           detailsChildren: [
-            CommentBar(),
+            ResourceCommentBar(),
             20.heightBox,
-            ...List.generate(2, (index) => PostCommentsView()),
+            // ...List.generate(2, (index) => PostCommentsView()),
           ],
         ),
       ),

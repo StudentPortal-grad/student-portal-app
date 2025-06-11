@@ -5,6 +5,7 @@ import 'package:student_portal/core/helpers/app_size_boxes.dart';
 import 'package:student_portal/features/resource/presentation/widgets/resource_item_view.dart';
 
 import '../../../../core/theming/colors.dart';
+import '../../../../core/utils/app_router.dart';
 import '../../../../core/widgets/custom_refresh_indicator.dart';
 import '../../../../core/widgets/loading_screen.dart';
 import '../../data/model/resource.dart';
@@ -80,6 +81,9 @@ class _ResourcesBodyViewState extends State<ResourcesBodyView> {
               itemBuilder: (context, index) {
                 if (index < resources.length) {
                   return InkWell(
+                    onTap: () async {
+                      await AppRouter.router.push(AppRouter.resourceDetails, extra: {'resource': resources[index]});
+                    },
                     child: ResourceItemView(resource: resources[index]),
                   );
                 } else {

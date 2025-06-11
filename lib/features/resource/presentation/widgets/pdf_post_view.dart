@@ -17,50 +17,55 @@ class PdfPostView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        if (url != null && url!.isNotEmpty) {
-          UrlLauncher.website(url ?? '');
-        }
-      },
-      child: Container(
-          decoration: BoxDecoration(
-            color: ColorsManager.lightBabyBlue,
-            borderRadius: BorderRadius.all(Radius.circular(16.r)),
+    return Container(
+        decoration: BoxDecoration(
+          color: ColorsManager.lightBabyBlue,
+          borderRadius: BorderRadius.all(Radius.circular(16.r)),
+        ),
+        padding: EdgeInsets.all(14.r),
+        child: Row(
+          children: [
+            CircleAvatar(
+              radius: 15.r,
+              backgroundColor: ColorsManager.babyBlue,
+              child: CustomImageView(
+                imagePath: AssetsApp.fileIcon,
+                height: 16.r,
+                width: 16.r,
+              ),
+            ),
+            14.widthBox,
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title ?? 'File name',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: Styles.font14w500,
+                  ),
+                  if (size != null)
+                    Text(formatBytesToReadableUnit(size ?? 0), style: Styles.font14w400),
+                ],
+              ),
+            ),
+            4.widthBox,
+          InkWell(
+            onTap: () {
+              if (url != null && url!.isNotEmpty) {
+                UrlLauncher.website(url ?? '');
+              }
+            },
+            child: Padding(
+              padding: EdgeInsets.all(3.r),
+              child: Icon(Icons.download_rounded,
+                  color: ColorsManager.mainColor),
+            ),
           ),
-          padding: EdgeInsets.all(14.r),
-          child: Row(
-            children: [
-              CircleAvatar(
-                radius: 15.r,
-                backgroundColor: ColorsManager.babyBlue,
-                child: CustomImageView(
-                  imagePath: AssetsApp.fileIcon,
-                  height: 16.r,
-                  width: 16.r,
-                ),
-              ),
-              14.widthBox,
-              Expanded(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      title ?? 'File name',
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: Styles.font14w500,
-                    ),
-                    if (size != null)
-                      Text(formatBytesToReadableUnit(size ?? 0), style: Styles.font14w400),
-                  ],
-                ),
-              ),
-              4.widthBox,
-              Icon(Icons.download_rounded, color: ColorsManager.mainColor),
-            ],
-          )),
+        ],
+      ),
     );
   }
 
