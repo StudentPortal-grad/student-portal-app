@@ -24,7 +24,7 @@ class DiscussionBloc extends Bloc<DiscussionEvent, DiscussionState> {
       GetPostsUc(getPostsRepo: getIt<PostRepository>());
   final VotePostUc votePostUc = VotePostUc(getIt<PostRepository>());
 
-  List<Discussion> _posts = [];
+  final List<Discussion> _posts = [];
   int _currentPage = 1;
   bool _hasMore = true;
   bool _isLoadingMore = false;
