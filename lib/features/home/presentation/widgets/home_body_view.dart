@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -7,7 +5,6 @@ import 'package:student_portal/core/helpers/app_size_boxes.dart';
 import 'package:student_portal/features/home/presentation/widgets/post_view.dart';
 
 import '../../../../core/theming/colors.dart';
-import '../../../../core/utils/app_router.dart';
 import '../../../../core/widgets/custom_refresh_indicator.dart';
 import '../../../../core/widgets/loading_screen.dart';
 import '../../data/dto/vote_dto.dart';
@@ -83,23 +80,8 @@ class _HomeBodyViewState extends State<HomeBodyView> {
               itemBuilder: (context, index) {
                 if (index < discussions.length) {
                   return GestureDetector(
-                    onTap: () async {
-                      final updatedPost =
-                          await AppRouter.router.push<Discussion>(
-                        AppRouter.postDetails,
-                        extra: {'post': discussions[index]},
-                      );
-                      if (updatedPost != null) {
-                        log('updatedPost: ${updatedPost.toJson()}');
-                        final bloc = context.mounted
-                            ? context.read<DiscussionBloc>()
-                            : AppRouter.context?.read<DiscussionBloc>();
-                        if (bloc != null) {
-                          bloc.add(UpdateDiscussionInListEvent(updatedPost));
-                        }
-                      }
-                    },
                     child: PostView(
+                      navToDetails: true,
                       onVoteTap: (p0) {
                         context.read<DiscussionBloc>().add(
                               VoteDiscussionEvent(
