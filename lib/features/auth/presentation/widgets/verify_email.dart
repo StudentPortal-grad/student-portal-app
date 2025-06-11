@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:student_portal/core/helpers/app_size_boxes.dart';
-import 'package:student_portal/core/repo/user_repository.dart';
 import 'package:student_portal/features/auth/presentation/manager/signup_bloc/signup_bloc.dart';
 import 'package:student_portal/features/auth/presentation/manager/signup_bloc/signup_event.dart';
 import '../../../../../../core/theming/colors.dart';

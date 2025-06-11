@@ -2,7 +2,6 @@ import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:student_portal/core/errors/data/model/error_model.dart';
-import 'package:student_portal/core/utils/app_router.dart';
 
 import '../../../repo/user_repository.dart';
 
