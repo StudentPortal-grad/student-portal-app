@@ -77,7 +77,7 @@ class GetResourceBloc extends Bloc<GetResourceEvent, GetResourceState> {
     final result = await voteResourceUc.call(voteDto: event.voteDto);
     result.fold(
           (error) => emit(GetResourceFailed(error.message ?? 'Unknown Error')),
-          (message) => emit(GetResourceLoaded(List.from(_resources), hasMore: _hasMore)),
+          (message) {},
     );
   }
   Future<void> _updateResourceInList(

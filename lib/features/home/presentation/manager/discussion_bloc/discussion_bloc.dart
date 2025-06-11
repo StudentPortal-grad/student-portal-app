@@ -82,7 +82,7 @@ class DiscussionBloc extends Bloc<DiscussionEvent, DiscussionState> {
     final result = await votePostUc.call(voteDto: event.voteDto);
     result.fold(
       (error) => emit(DiscussionFailed(error.message ?? 'Unknown Error')),
-      (message) => emit(DiscussionLoaded(List.from(_posts), hasMore: _hasMore)),
+      (message) {},
     );
   }
 
