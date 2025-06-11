@@ -112,8 +112,8 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
   Future<void> _onResendCodeRequested(
       ResendCodeRequested event, Emitter<SignupState> emit) async {
     emit(ResendOtpLoading());
+    emailController.text = event.email;
     var data = await resendValidationUC.call(email: event.email);
-
     data.fold(
       (error) => emit(ResendCodeFailure(error: error)),
       (response) => emit(ResendCodeSuccess()),

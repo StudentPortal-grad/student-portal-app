@@ -19,14 +19,16 @@ class LoginView extends StatelessWidget {
           listener: (context, state) {
             if(state is LogInFailure){
               CustomToast(context).showErrorToast(message: state.error);
+              if (state.code == 'EMAIL_NOT_VERIFIED') {
+                AppRouter.router.go(AppRouter.signupView, extra: {
+                  'emailNotVerified': true,
+                  'email': context.read<LoginBloc>().emailController.text
+                });
+              }
             }
             if(state is LogInSuccess){
               CustomToast(context).showSuccessToast(message: 'Login Successfully');
               AppRouter.clearAndNavigate(AppRouter.homeView);
-              // if(UserRepository.user?.emailVerified == true){
-              //   AppRouter.clearAndNavigate(AppRouter.homeView);
-              // }
-              // AppRouter.router.go(AppRouter.signupView, extra: {'emailNotVerified': true});
             }
           },
           builder: (context, state) {

@@ -108,7 +108,7 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
                       ),
                       3.heightBox,
                       Text(
-                        UserRepository.user?.email ?? bloc.emailController.text,
+                        bloc.emailController.text,
                         style: Styles.font16w500.copyWith(
                           fontWeight: FontWeight.w400,
                         ),

@@ -10,6 +10,7 @@ class ServerFailure extends Failure {
   const ServerFailure({
     super.message,
     super.success,
+    super.code,
   });
 
   factory ServerFailure.fromDioError(DioException dioError) {
@@ -43,7 +44,6 @@ class ServerFailure extends Failure {
       {required int? statusCode, required dynamic response}) {
     log("Error Response: ${response.toString()}");
     isTokenExpired(response['error']['code']);
-    emailNotActive(response['error']['code']);
     if (statusCode == 400 ||
         statusCode == 401 ||
         statusCode == 403 ||
@@ -52,7 +52,8 @@ class ServerFailure extends Failure {
         statusCode == 409 ||
         statusCode == 300) {
       return ServerFailure(
-          message: response['message'] ?? 'Something went wrong!');
+          message: response['message'] ?? 'Something went wrong!',
+      code: response['error']['code']);
     } else {
       return const ServerFailure(
         message: 'Oops, Unexpected error occurred, Please try again later',
@@ -65,17 +66,6 @@ class ServerFailure extends Failure {
       if (errorCode == 'TOKEN_EXPIRED' || errorCode == 'INVALID_TOKEN') {
         log('Token has expired.');
         UserRepository.invalidToken();
-      }
-    } on Exception catch (e) {
-      log(e.toString());
-    }
-  }
-
-  static emailNotActive(String errorCode) {
-    try {
-      if (errorCode == 'EMAIL_NOT_VERIFIED') {
-        AppRouter.router
-            .go(AppRouter.signupView, extra: {'emailNotVerified': true});
       }
     } on Exception catch (e) {
       log(e.toString());

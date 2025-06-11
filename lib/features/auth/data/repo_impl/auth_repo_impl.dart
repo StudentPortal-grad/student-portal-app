@@ -58,6 +58,7 @@ class AuthRepoImpl implements AuthRepository {
     log('login');
     log(loginRequest.toJson().toString());
     try {
+
       var data = await apiService.post(
         isAuth: true,
         endpoint: ApiEndpoints.login,
@@ -72,8 +73,8 @@ class AuthRepoImpl implements AuthRepository {
       User user = User.fromJson(data['data']['user']);
       UserRepository.setUser(user);
       return Right(true);
-    } on DioException catch (e) {
-      log('login error: ${e.response?.data}');
+    } on DioException catch (e, stackTrace) {
+      log('login error: ${e.response?.data} $stackTrace');
       return Left(ServerFailure.fromDioError(e));
     }
   }

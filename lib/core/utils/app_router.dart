@@ -109,10 +109,10 @@ abstract class AppRouter {
             child: withBlocProvider(
               create: (context) {
                 final bloc = SignupBloc();
-                // If email is not verified, trigger ResendCodeRequested
                 if (args != null && args['emailNotVerified'] == true) {
-                  bloc.add(ResendCodeRequested(
-                      email: UserRepository.user?.email ?? ""));
+                  bloc.emailController.text = args['email'];
+                  bloc.add(ResendCodeRequested(email: args['email'] ?? UserRepository.user?.email ?? ""));
+                  return bloc;
                 }
                 return bloc;
               },

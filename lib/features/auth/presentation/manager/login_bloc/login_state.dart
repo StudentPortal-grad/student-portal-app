@@ -20,11 +20,12 @@ class LogInSuccess extends LoginState {
 
 class LogInFailure extends LoginState {
   final String error;
+  final String? code;
 
-  LogInFailure({required this.error});
+  LogInFailure({required this.error, this.code});
 
   @override
-  List<Object?> get props => [error];
+  List<Object?> get props => [error, code];
 }
 
 class LoginValidationState extends LoginState {
