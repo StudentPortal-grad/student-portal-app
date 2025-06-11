@@ -12,16 +12,16 @@ import '../../../../core/widgets/custom_text_field.dart';
 import '../../data/dto/reply_dto.dart';
 import '../manager/discussion_details_bloc/discussion_details_bloc.dart';
 
-class CommentBar extends StatefulWidget {
-  const CommentBar({super.key, this.initComment});
+class CommentPostBar extends StatefulWidget {
+  const CommentPostBar({super.key, this.initComment});
 
   final String? initComment;
 
   @override
-  State<CommentBar> createState() => _CommentBarState();
+  State<CommentPostBar> createState() => _CommentPostBarState();
 }
 
-class _CommentBarState extends State<CommentBar> {
+class _CommentPostBarState extends State<CommentPostBar> {
   late final TextEditingController commentController;
   bool isEmpty = true;
 

@@ -96,7 +96,7 @@ class _PostDetailsScreenState extends State<PostDetailsScreen> {
                   discussion: bloc.discussion,
                   detailsChildren: [
                     5.heightBox,
-                    CommentBar(),
+                    CommentPostBar(),
                     10.heightBox,
                     ..._buildCommentsView(
                         isLoading: state is DiscussionDetailsLoading,
