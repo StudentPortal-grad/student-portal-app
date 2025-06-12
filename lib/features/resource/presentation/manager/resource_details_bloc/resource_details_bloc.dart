@@ -3,6 +3,7 @@ import 'package:meta/meta.dart';
 import 'package:student_portal/features/home/data/dto/reply_dto.dart';
 import 'package:student_portal/features/resource/domain/repo/resource_repository.dart';
 import 'package:student_portal/features/resource/domain/usecases/comment_resource_uc.dart';
+import 'package:student_portal/features/resource/domain/usecases/delete_comment_uc.dart';
 
 import '../../../../../core/utils/service_locator.dart';
 import '../../../../home/data/dto/vote_dto.dart';
@@ -20,15 +21,14 @@ class ResourceDetailsBloc
     on<GetResourceEvent>(_getResourceDetails);
     on<CommentResourceEvent>(_commentResource);
     on<VoteDiscussionEventRequest>(_voteResource);
+    on<DeleteCommentResourceEvent>(_deleteComment);
   }
 
   // usecases
-  final GetResourceDetailsUC getResourceUc =
-      GetResourceDetailsUC(getIt<ResourceRepository>());
-  final CommentResourceUc commentPostUc =
-      CommentResourceUc(getIt<ResourceRepository>());
+  final GetResourceDetailsUC getResourceUc = GetResourceDetailsUC(getIt<ResourceRepository>());
+  final CommentResourceUc commentPostUc = CommentResourceUc(getIt<ResourceRepository>());
   final VoteResourceUc voteResourceUc = VoteResourceUc(getIt<ResourceRepository>());
-
+  final DeleteResourceCommentUc deleteCommentUc = DeleteResourceCommentUc(getIt<ResourceRepository>());
   Resource resource;
 
   Future<void> _getResourceDetails(
@@ -52,6 +52,18 @@ class ResourceDetailsBloc
       (error) => emit(AddCommentErrorState(error.message ?? 'Unknown Error')),
       (message) => emit(AddCommentSuccessState(message)),
     );
+  }
+
+  Future<void> _deleteComment(DeleteCommentResourceEvent event,
+      Emitter<ResourceDetailsState> emit) async {
+    final result = await deleteCommentUc.call(
+        replyId: event.replyId, postId: event.resourceId);
+    result.fold((error) {
+      emit(AddCommentErrorState(error.message ?? 'Unknown Error'));
+    }, (message) {
+      resource.comments?.removeWhere((reply) => reply.id == event.replyId);
+      emit(ResourceDetailsLoadedState(resource, message: message));
+    });
   }
 
   Future<void> _voteResource(VoteDiscussionEventRequest event,

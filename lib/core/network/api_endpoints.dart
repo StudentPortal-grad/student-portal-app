@@ -33,11 +33,13 @@ abstract class ApiEndpoints {
   static String discussionID(String id) => "discussions/$id";
   static String discussionVote(String id) => "discussions/$id/vote";
   static String discussionReply(String id) => "discussions/$id/reply";
-  static String replyDelete(String id) => "replies/$id";
+  static String postReplyDelete(String id) => "replies/$id";
 
   // resources
   static const String resources = "resources";
   static String resourcesID(String id) => "resources/$id";
   static String resourcesVote(String id) => "resources/$id/vote";
   static String resourcesReply(String id) => "resources/$id/comment";
+  static String resourcesCommentDelete(String id) => "comments/$id";
+  // resources/68472038791f08c82c4e575e/comments/68488548b0ab12f2abdc366a
 }

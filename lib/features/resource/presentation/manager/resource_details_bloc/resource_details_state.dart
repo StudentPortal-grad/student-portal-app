@@ -9,8 +9,9 @@ final class ResourceDetailsLoadingState extends ResourceDetailsState {}
 
 final class ResourceDetailsLoadedState extends ResourceDetailsState {
   final Resource discussion;
+  final String? message;
 
-  ResourceDetailsLoadedState(this.discussion);
+  ResourceDetailsLoadedState(this.discussion, {this.message});
 }
 
 final class ResourceDetailsErrorState extends ResourceDetailsState {

@@ -110,7 +110,7 @@ class PostRepositoryImpl implements PostRepository {
   Future<Either<Failure, String>>deleteReply({required String replyId,required String postId})async{
     try {
       log('Deleting a replyId ::: $replyId');
-      final response = await apiService.delete(endpoint: '${ApiEndpoints.discussionID(postId)}/${ApiEndpoints.replyDelete(replyId)}');
+      final response = await apiService.delete(endpoint: '${ApiEndpoints.discussionID(postId)}/${ApiEndpoints.postReplyDelete(replyId)}');
       log('Deleting a replyId :: $response');
       return Right(response['message'] ?? 'Success');
     } on DioException catch (e) {

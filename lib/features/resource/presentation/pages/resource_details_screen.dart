@@ -10,10 +10,10 @@ import '../../../../../core/theming/text_styles.dart';
 import '../../../../../core/widgets/custom_appbar.dart';
 import '../../../../core/errors/data/model/error_model.dart';
 import '../../../../core/errors/view/error_screen.dart';
+import '../../../../core/helpers/custom_toast.dart';
 import '../../../../core/utils/app_router.dart';
 import '../../../../core/widgets/custom_refresh_indicator.dart';
 import '../../../home/data/dto/vote_dto.dart';
-import '../../../home/data/model/post_model/reply.dart';
 import '../../../home/presentation/widgets/discussion_shimmer.dart';
 import '../../../home/presentation/widgets/post_comments_view.dart';
 import '../../data/model/resource.dart';
@@ -68,6 +68,11 @@ class _ResourceDetailsScreenState extends State<ResourceDetailsScreen> {
             if (state is AddCommentSuccessState) {
               context.read<ResourceDetailsBloc>().add(GetResourceEvent(resourceId:  context.read<ResourceDetailsBloc>().resource.id ?? '', noLoading: true));
             }
+            if(state is ResourceDetailsLoadedState) {
+              if (state.message?.isNotEmpty ?? false) {
+                CustomToast(context).showSuccessToast(message: state.message, durationInMillis: 3000);
+              }
+            }
           },
           builder: (context, state) {
             final bloc = context.read<ResourceDetailsBloc>();
@@ -94,7 +99,18 @@ class _ResourceDetailsScreenState extends State<ResourceDetailsScreen> {
                   detailsChildren: [
                     ResourceCommentBar(),
                     20.heightBox,
-                    ..._buildCommentsView(replies: bloc.resource.comments ?? []),
+                    ...List.generate(
+                      bloc.resource.comments?.length ?? 0,
+                      (index) => PostCommentsView(
+                        reply: bloc.resource.comments?[index],
+                        onSelect: (p0) {
+                          final reply = bloc.resource.comments?[index];
+                          if(p0 == 'delete') {
+                            bloc.add(DeleteCommentResourceEvent(replyId: reply?.id ?? '' , resourceId: bloc.resource.id ?? ''));
+                          }
+                        },
+                      ),
+                    )
                   ],
                 ),
               ),
@@ -103,14 +119,5 @@ class _ResourceDetailsScreenState extends State<ResourceDetailsScreen> {
         ),
       ),
     );
-  }
-  List<Widget> _buildCommentsView(
-      {bool isLoading = false, List<Reply> replies = const []}) {
-    if (isLoading) {
-      return List.generate(
-          3, (index) => PostCommentsView.buildShimmerComment());
-    }
-    return List.generate(
-        replies.length, (index) => PostCommentsView(reply: replies[index]));
   }
 }

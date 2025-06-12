@@ -21,3 +21,10 @@ class VoteDiscussionEventRequest extends ResourceDetailsEvent {
 
   VoteDiscussionEventRequest({required this.voteDto});
 }
+
+class DeleteCommentResourceEvent extends ResourceDetailsEvent {
+  final String replyId;
+  final String resourceId;
+
+  DeleteCommentResourceEvent({required this.replyId, required this.resourceId});
+}

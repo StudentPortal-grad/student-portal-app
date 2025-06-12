@@ -122,4 +122,17 @@ class ResourceRepositoryImpl implements ResourceRepository {
       return Left(ServerFailure.fromDioError(e)); // Handle Dio errors here
     }
   }
+
+  @override
+  Future<Either<Failure, String>> deleteReply({required String replyId, required String resourceId}) async{
+    try {
+      log('Deleting a resourceId ::: $replyId');
+      final response = await apiService.delete(endpoint: '${ApiEndpoints.resourcesID(resourceId)}/${ApiEndpoints.resourcesCommentDelete(replyId)}');
+      log('Deleting a resourceId :: $response');
+      return Right(response['message'] ?? 'Success');
+    } on DioException catch (e) {
+      log('Dio Failure ${e.toString()}');
+      return Left(ServerFailure.fromDioError(e));
+    }
+  }
 }
