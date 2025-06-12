@@ -80,6 +80,9 @@ class _PostViewState extends State<PostView> {
                   currentVote: updatedPost.currentVote ?? 0,
                 ),
               );
+            } else {
+              final bloc = context.read<DiscussionBloc>();
+              bloc.add(DiscussionRequested(noLoading: false));
             }
           }
         },

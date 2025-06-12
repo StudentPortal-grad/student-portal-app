@@ -78,24 +78,22 @@ class _HomeBodyViewState extends State<HomeBodyView> {
               separatorBuilder: (context, index) => 15.heightBox,
               itemBuilder: (context, index) {
                 if (index < discussions.length) {
-                  return GestureDetector(
-                    child: PostView(
-                      onSelect: (p0) {
-                        if(p0 == 'delete'){
-                          context.read<DiscussionBloc>().add(DeleteDiscussionEvent(discussions[index].id ?? ''),);
-                        }
-                      },
-                      navToDetails: true,
-                      onVoteTap: (p0) {
-                        context.read<DiscussionBloc>().add(
-                              VoteDiscussionEvent(
-                                  voteDto: VoteDto(
-                                      postId: discussions[index].id ?? '',
-                                      voteType: p0)),
-                            );
-                      },
-                      discussion: discussions[index],
-                    ),
+                  return PostView(
+                    onSelect: (p0) {
+                      if(p0 == 'delete'){
+                        context.read<DiscussionBloc>().add(DeleteDiscussionEvent(discussions[index].id ?? ''),);
+                      }
+                    },
+                    navToDetails: true,
+                    onVoteTap: (p0) {
+                      context.read<DiscussionBloc>().add(
+                            VoteDiscussionEvent(
+                                voteDto: VoteDto(
+                                    postId: discussions[index].id ?? '',
+                                    voteType: p0)),
+                          );
+                    },
+                    discussion: discussions[index],
                   );
                 } else {
                   return Padding(

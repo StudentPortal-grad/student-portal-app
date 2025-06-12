@@ -20,6 +20,12 @@ final class DiscussionDetailsError extends DiscussionDetailsState {
   DiscussionDetailsError(this.message);
 }
 
+final class DiscussionDeleted extends DiscussionDetailsState {
+  final String message;
+
+  DiscussionDeleted(this.message);
+}
+
 final class AddCommentLoadingState extends DiscussionDetailsState {}
 
 final class AddCommentSuccessState extends DiscussionDetailsState {

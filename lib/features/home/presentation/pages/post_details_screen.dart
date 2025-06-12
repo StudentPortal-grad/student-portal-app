@@ -75,6 +75,10 @@ class _PostDetailsScreenState extends State<PostDetailsScreen> {
                 CustomToast(context).showSuccessToast(message: state.message, durationInMillis: 3000);
               }
             }
+            if (state is DiscussionDeleted) {
+              CustomToast(context).showSuccessToast(message: state.message, durationInMillis: 3000);
+              AppRouter.router.pop();
+            }
           },
           builder: (context, state) {
             final bloc = context.read<DiscussionDetailsBloc>();
@@ -96,10 +100,13 @@ class _PostDetailsScreenState extends State<PostDetailsScreen> {
                 physics: AlwaysScrollableScrollPhysics(),
                 padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 16.h),
                 child: PostView(
+                  onSelect: (p0) {
+                    if (p0 == 'delete') {
+                      bloc.add(DeleteDiscussionEvent(discussionId: bloc.discussion.id ?? ''));
+                    }
+                  },
                   onVoteTap: (p0) => bloc.add(
-                    VoteDiscussionEventRequest(
-                        voteDto: VoteDto(
-                            postId: bloc.discussion.id ?? '', voteType: p0)),
+                    VoteDiscussionEventRequest(voteDto: VoteDto(postId: bloc.discussion.id ?? '', voteType: p0)),
                   ),
                   discussion: bloc.discussion,
                   detailsChildren: [
