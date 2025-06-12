@@ -33,6 +33,7 @@ abstract class ApiEndpoints {
   static String discussionID(String id) => "discussions/$id";
   static String discussionVote(String id) => "discussions/$id/vote";
   static String discussionReply(String id) => "discussions/$id/reply";
+  static String replyDelete(String id) => "replies/$id";
 
   // resources
   static const String resources = "resources";
