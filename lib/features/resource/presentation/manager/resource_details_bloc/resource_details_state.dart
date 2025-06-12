@@ -14,6 +14,11 @@ final class ResourceDetailsLoadedState extends ResourceDetailsState {
   ResourceDetailsLoadedState(this.discussion, {this.message});
 }
 
+final class ResourceDetailsDeletedState extends ResourceDetailsState {
+  final String? message;
+
+  ResourceDetailsDeletedState({this.message});
+}
 final class ResourceDetailsErrorState extends ResourceDetailsState {
   final String message;
 

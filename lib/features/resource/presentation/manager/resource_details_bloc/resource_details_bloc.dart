@@ -8,6 +8,7 @@ import 'package:student_portal/features/resource/domain/usecases/delete_comment_
 import '../../../../../core/utils/service_locator.dart';
 import '../../../../home/data/dto/vote_dto.dart';
 import '../../../data/model/resource.dart';
+import '../../../domain/usecases/delete_resource_uc.dart';
 import '../../../domain/usecases/get_resource_details_uc.dart';
 import '../../../domain/usecases/vote_resource_uc.dart';
 
@@ -22,6 +23,7 @@ class ResourceDetailsBloc
     on<CommentResourceEvent>(_commentResource);
     on<VoteDiscussionEventRequest>(_voteResource);
     on<DeleteCommentResourceEvent>(_deleteComment);
+    on<DeleteResourceEvent> (_deleteResource);
   }
 
   // usecases
@@ -29,6 +31,8 @@ class ResourceDetailsBloc
   final CommentResourceUc commentPostUc = CommentResourceUc(getIt<ResourceRepository>());
   final VoteResourceUc voteResourceUc = VoteResourceUc(getIt<ResourceRepository>());
   final DeleteResourceCommentUc deleteCommentUc = DeleteResourceCommentUc(getIt<ResourceRepository>());
+  final DeleteResourceUc deleteResourceUc = DeleteResourceUc(getIt<ResourceRepository>());
+
   Resource resource;
 
   Future<void> _getResourceDetails(
@@ -64,6 +68,15 @@ class ResourceDetailsBloc
       resource.comments?.removeWhere((reply) => reply.id == event.replyId);
       emit(ResourceDetailsLoadedState(resource, message: message));
     });
+  }
+
+  Future<void> _deleteResource(
+      DeleteResourceEvent event, Emitter<ResourceDetailsState> emit) async {
+    final results = await deleteResourceUc.call(resourceId: event.resourceId);
+    results.fold(
+      (error) => emit(ResourceDetailsLoadedState(resource, message: error.message ?? 'Unknown Error')),
+      (message) => emit(ResourceDetailsDeletedState(message: message)),
+    );
   }
 
   Future<void> _voteResource(VoteDiscussionEventRequest event,

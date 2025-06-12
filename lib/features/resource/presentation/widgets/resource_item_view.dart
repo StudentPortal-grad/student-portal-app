@@ -76,6 +76,9 @@ class _ResourceItemViewState extends State<ResourceItemView> {
                   upVotes: updatedPost.upVotesCount ?? 0,
                   downVotes: updatedPost.downVotesCount ?? 0,
                   currentVote: updatedPost.currentVote ?? 0));
+            } else {
+              final bloc = context.read<GetResourceBloc>();
+              bloc.add(GetResourceEventRequested(noLoading: false));
             }
           }
         },

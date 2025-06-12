@@ -28,3 +28,10 @@ class DeleteCommentResourceEvent extends ResourceDetailsEvent {
 
   DeleteCommentResourceEvent({required this.replyId, required this.resourceId});
 }
+
+
+class DeleteResourceEvent extends ResourceDetailsEvent {
+  final String resourceId;
+
+  DeleteResourceEvent({required this.resourceId});
+}

@@ -73,6 +73,10 @@ class _ResourceDetailsScreenState extends State<ResourceDetailsScreen> {
                 CustomToast(context).showSuccessToast(message: state.message, durationInMillis: 3000);
               }
             }
+            if (state is ResourceDetailsDeletedState) {
+              CustomToast(context).showSuccessToast(message: state.message, durationInMillis: 3000);
+              AppRouter.router.pop();
+            }
           },
           builder: (context, state) {
             final bloc = context.read<ResourceDetailsBloc>();
@@ -91,6 +95,11 @@ class _ResourceDetailsScreenState extends State<ResourceDetailsScreen> {
                 controller: scrollController,
                 padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 16.h),
                 child: ResourceItemView(
+                  onSelect: (p0) {
+                    if (p0 == 'delete') {
+                      bloc.add(DeleteResourceEvent(resourceId: bloc.resource.id ?? ''));
+                    }
+                  },
                   resource: bloc.resource,
                   onVoteTap: (p0) {
                     bloc.add(VoteDiscussionEventRequest(
