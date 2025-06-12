@@ -2,17 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:student_portal/contestants.dart';
 import 'package:student_portal/core/helpers/app_size_boxes.dart';
+import 'package:student_portal/core/repo/user_repository.dart';
 import 'package:student_portal/features/resource/data/model/resource.dart';
 
 import '../../../../core/theming/colors.dart';
 import '../../../../core/theming/text_styles.dart';
 import '../../../../core/widgets/custom_image_view.dart';
+import '../../../../core/widgets/more_options_buttons.dart';
 
 class UserPostView extends StatelessWidget {
-  const UserPostView({super.key, this.uploader, this.createFromAgo});
+  const UserPostView({super.key, this.uploader, this.createFromAgo, this.onSelect});
 
   final Uploader? uploader;
   final String? createFromAgo;
+  final Function(String?)? onSelect;
 
   @override
   Widget build(BuildContext context) {
@@ -37,12 +40,21 @@ class UserPostView extends StatelessWidget {
           ],
         ),
         Spacer(),
-        IconButton(
-          onPressed: () {
-            // todo: open more options
-          },
-          icon: Icon(Icons.more_vert, color: ColorsManager.black41),
-        )
+        MoreOptionsButton(
+          onSelect: onSelect,
+          items: [
+            if (uploader?.id == UserRepository.user?.id)
+              PopupMenuItem(
+                value: 'delete',
+                child: Text('Delete'),
+              )
+            else
+              PopupMenuItem(
+                value: 'report',
+                child: Text('Report'),
+              )
+          ],
+        ),
       ],
     );
   }

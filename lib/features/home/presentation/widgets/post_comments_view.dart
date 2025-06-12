@@ -9,8 +9,9 @@ import '../../../../core/widgets/app_text.dart';
 import 'user_post_view.dart';
 
 class PostCommentsView extends StatelessWidget {
-  const PostCommentsView({super.key, this.reply});
+  const PostCommentsView({super.key, this.reply, this.onSelect});
 
+  final Function(String?)? onSelect;
   final Reply? reply;
 
   @override
@@ -29,6 +30,7 @@ class PostCommentsView extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         UserPostView(
+          onSelect: onSelect,
           uploader: reply?.creator?.uploader,
           createFromAgo: TimeHelper.instance.timeAgo(reply?.createdAt),
         ),
@@ -62,16 +64,16 @@ class PostCommentsView extends StatelessWidget {
     );
   }
 
- static Widget buildShimmerComment() {
+  static Widget buildShimmerComment() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         12.widthBox,
         Row(
           children: [
-        Shimmer.fromColors(
-          baseColor: Colors.grey[300]!,
-          highlightColor: Colors.grey[100]!,
+            Shimmer.fromColors(
+              baseColor: Colors.grey[300]!,
+              highlightColor: Colors.grey[100]!,
               child: CircleAvatar(
                 radius: 20.r,
                 backgroundColor: ColorsManager.lightGrayColor,

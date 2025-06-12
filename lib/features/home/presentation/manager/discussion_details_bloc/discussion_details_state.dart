@@ -9,8 +9,9 @@ final class DiscussionDetailsLoading extends DiscussionDetailsState {}
 
 final class DiscussionDetailsLoaded extends DiscussionDetailsState {
   final Discussion discussion;
+  final String? message;
 
-  DiscussionDetailsLoaded(this.discussion);
+  DiscussionDetailsLoaded(this.discussion,{this.message});
 }
 
 final class DiscussionDetailsError extends DiscussionDetailsState {

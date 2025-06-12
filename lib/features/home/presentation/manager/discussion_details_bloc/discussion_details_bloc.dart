@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:student_portal/features/home/data/dto/vote_dto.dart';
+import 'package:student_portal/features/home/domain/usecases/delete_comment_uc.dart';
 import 'package:student_portal/features/home/domain/usecases/vote_post_uc.dart';
 
 import '../../../../../core/utils/service_locator.dart';
@@ -20,13 +21,14 @@ class DiscussionDetailsBloc
     on<DiscussionDetailsEventRequest>(_getDiscussion);
     on<CommentDiscussionEvent>(_commentDiscussion);
     on<VoteDiscussionEventRequest>(_voteDiscussion);
+    on<DeleteCommentDiscussionEvent>(_deleteComment);
   }
 
   // usecases
-  final GetPostDetailsUC getPostDetailsUC =
-      GetPostDetailsUC(getIt<PostRepository>());
+  final GetPostDetailsUC getPostDetailsUC = GetPostDetailsUC(getIt<PostRepository>());
   final CommentPostUc commentPostUc = CommentPostUc(getIt<PostRepository>());
   final VotePostUc votePostUc = VotePostUc(getIt<PostRepository>());
+  final DeleteCommentUc deleteCommentUc = DeleteCommentUc(getIt<PostRepository>());
 
   Discussion discussion;
 
@@ -51,6 +53,18 @@ class DiscussionDetailsBloc
       (error) => emit(AddCommentErrorState(error.message ?? 'Unknown Error')),
       (message) => emit(AddCommentSuccessState(message)),
     );
+  }
+
+  Future<void> _deleteComment(DeleteCommentDiscussionEvent event,
+      Emitter<DiscussionDetailsState> emit) async {
+    final result = await deleteCommentUc.call(
+        replyId: event.replyId, postId: event.postId);
+    result.fold((error) {
+      emit(AddCommentErrorState(error.message ?? 'Unknown Error'));
+    }, (message) {
+      discussion.replies?.removeWhere((reply) => reply.id == event.replyId);
+      emit(DiscussionDetailsLoaded(discussion,message: message));
+    });
   }
 
   Future<void> _voteDiscussion(VoteDiscussionEventRequest event,

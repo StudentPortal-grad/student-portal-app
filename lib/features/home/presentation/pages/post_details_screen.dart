@@ -10,10 +10,10 @@ import 'package:student_portal/core/widgets/custom_refresh_indicator.dart';
 import 'package:student_portal/features/home/presentation/widgets/post_view.dart';
 
 import '../../../../core/errors/data/model/error_model.dart';
+import '../../../../core/helpers/custom_toast.dart';
 import '../../../../core/widgets/custom_appbar.dart';
 import '../../data/dto/vote_dto.dart';
 import '../../data/model/post_model/post.dart';
-import '../../data/model/post_model/reply.dart';
 import '../manager/discussion_details_bloc/discussion_details_bloc.dart';
 import '../widgets/comment_bar.dart';
 import '../widgets/discussion_shimmer.dart';
@@ -47,7 +47,8 @@ class _PostDetailsScreenState extends State<PostDetailsScreen> {
       canPop: false,
       onPopInvokedWithResult: (didPop, result) {
         if (!didPop) {
-          final Discussion discussion = context.read<DiscussionDetailsBloc>().discussion;
+          final Discussion discussion =
+              context.read<DiscussionDetailsBloc>().discussion;
           AppRouter.router.pop(discussion);
         }
       },
@@ -57,7 +58,8 @@ class _PostDetailsScreenState extends State<PostDetailsScreen> {
         appBar: CustomAppBar(
           centerTitle: false,
           leadingOnTap: () {
-            final Discussion discussion = context.read<DiscussionDetailsBloc>().discussion;
+            final Discussion discussion =
+                context.read<DiscussionDetailsBloc>().discussion;
             AppRouter.router.pop(discussion);
           },
           backgroundColor: ColorsManager.whiteColor,
@@ -66,7 +68,12 @@ class _PostDetailsScreenState extends State<PostDetailsScreen> {
         body: BlocConsumer<DiscussionDetailsBloc, DiscussionDetailsState>(
           listener: (context, state) {
             if (state is AddCommentSuccessState) {
-              context.read<DiscussionDetailsBloc>().add(DiscussionDetailsEventRequest(postId:  context.read<DiscussionDetailsBloc>().discussion.id ?? '',noLoading: true));
+              context.read<DiscussionDetailsBloc>().add(DiscussionDetailsEventRequest(postId: context.read<DiscussionDetailsBloc>().discussion.id ?? '', noLoading: true));
+            }
+            if (state is DiscussionDetailsLoaded) {
+              if (state.message?.isNotEmpty ?? false) {
+                CustomToast(context).showSuccessToast(message: state.message, durationInMillis: 3000);
+              }
             }
           },
           builder: (context, state) {
@@ -76,12 +83,14 @@ class _PostDetailsScreenState extends State<PostDetailsScreen> {
             }
             if (state is DiscussionDetailsError) {
               return ErrorScreen(
-                  onRetry: () => bloc.add(DiscussionDetailsEventRequest(postId: bloc.discussion.id ?? '')),
+                  onRetry: () => bloc.add(DiscussionDetailsEventRequest(
+                      postId: bloc.discussion.id ?? '')),
                   failure: Failure(message: state.message));
             }
 
             return CustomRefreshIndicator(
-              onRefresh: () async => bloc.add(DiscussionDetailsEventRequest(postId: bloc.discussion.id ?? '', noLoading: true)),
+              onRefresh: () async => bloc.add(DiscussionDetailsEventRequest(
+                  postId: bloc.discussion.id ?? '', noLoading: true)),
               child: SingleChildScrollView(
                 controller: scrollController,
                 physics: AlwaysScrollableScrollPhysics(),
@@ -97,9 +106,18 @@ class _PostDetailsScreenState extends State<PostDetailsScreen> {
                     5.heightBox,
                     CommentPostBar(),
                     10.heightBox,
-                    ..._buildCommentsView(
-                        isLoading: state is DiscussionDetailsLoading,
-                        replies: bloc.discussion.replies ?? []),
+                    ...List.generate(
+                      bloc.discussion.replies?.length ?? 0,
+                      (index) => PostCommentsView(
+                        onSelect: (p0) {
+                          final reply = bloc.discussion.replies?[index];
+                          if(p0 == 'delete') {
+                            bloc.add(DeleteCommentDiscussionEvent(replyId: reply?.id ?? '' , postId: bloc.discussion.id ?? ''));
+                          }
+                        },
+                        reply: bloc.discussion.replies?[index],
+                      ),
+                    )
                   ],
                 ),
               ),
@@ -108,15 +126,5 @@ class _PostDetailsScreenState extends State<PostDetailsScreen> {
         ),
       ),
     );
-  }
-
-  List<Widget> _buildCommentsView(
-      {bool isLoading = false, List<Reply> replies = const []}) {
-    if (isLoading) {
-      return List.generate(
-          3, (index) => PostCommentsView.buildShimmerComment());
-    }
-    return List.generate(
-        replies.length, (index) => PostCommentsView(reply: replies[index]));
   }
 }

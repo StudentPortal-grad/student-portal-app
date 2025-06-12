@@ -16,6 +16,14 @@ class CommentDiscussionEvent extends DiscussionDetailsEvent {
   CommentDiscussionEvent({required this.replyDto});
 }
 
+class DeleteCommentDiscussionEvent extends DiscussionDetailsEvent {
+  final String replyId;
+  final String postId;
+
+  DeleteCommentDiscussionEvent({required this.replyId, required this.postId});
+}
+
+
 class VoteDiscussionEventRequest extends DiscussionDetailsEvent {
   final VoteDto voteDto;
 
