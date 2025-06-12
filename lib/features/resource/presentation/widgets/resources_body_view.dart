@@ -81,6 +81,11 @@ class _ResourcesBodyViewState extends State<ResourcesBodyView> {
               itemBuilder: (context, index) {
                 if (index < resources.length) {
                   return ResourceItemView(
+                    onSelect: (p0) {
+                      if(p0 == 'delete') {
+                        context.read<GetResourceBloc>().add(DeleteResourceEvent(resourceId: resources[index].id ?? ''));
+                      }
+                    },
                     navToDetails: true,
                     onVoteTap: (p0) {
                       context.read<GetResourceBloc>().add(

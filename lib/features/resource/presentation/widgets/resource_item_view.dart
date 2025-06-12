@@ -19,12 +19,20 @@ import '../../../home/presentation/widgets/user_post_view.dart';
 import '../../data/model/resource.dart';
 
 class ResourceItemView extends StatefulWidget {
-  const ResourceItemView({super.key, this.detailsChildren, this.resource, this.onVoteTap,this.navToDetails = false});
+  const ResourceItemView({
+    super.key,
+    this.detailsChildren,
+    this.resource,
+    this.onVoteTap,
+    this.navToDetails = false,
+    this.onSelect,
+  });
 
   final Resource? resource;
   final List<Widget>? detailsChildren;
   final Function(String)? onVoteTap;
   final bool navToDetails;
+  final Function(String?)? onSelect;
 
   @override
   State<ResourceItemView> createState() => _ResourceItemViewState();
@@ -90,6 +98,7 @@ class _ResourceItemViewState extends State<ResourceItemView> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               UserPostView(
+                onSelect: widget.onSelect,
                 uploader: widget.resource?.uploader,
                 createFromAgo: TimeHelper.instance.timeAgo(widget.resource?.createdAt),
               ),

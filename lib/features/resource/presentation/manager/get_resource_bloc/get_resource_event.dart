@@ -22,3 +22,9 @@ class UpdateResourceInListEvent extends GetResourceEvent {
 
   UpdateResourceInListEvent(this.updatedResource);
 }
+
+class DeleteResourceEvent extends GetResourceEvent {
+  final String resourceId;
+
+  DeleteResourceEvent({required this.resourceId});
+}

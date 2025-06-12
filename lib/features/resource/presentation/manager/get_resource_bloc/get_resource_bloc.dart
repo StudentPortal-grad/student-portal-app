@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
+import 'package:student_portal/features/resource/domain/usecases/delete_resource_uc.dart';
 import 'package:student_portal/features/resource/domain/usecases/vote_resource_uc.dart';
 
 import '../../../../../../core/utils/service_locator.dart';
@@ -18,10 +19,12 @@ class GetResourceBloc extends Bloc<GetResourceEvent, GetResourceState> {
     on<GetResourceEventLoadMore>(_onLoadMore);
     on<VoteResourceEvent>(_voteResource);
     on<UpdateResourceInListEvent>(_updateResourceInList);
+    on<DeleteResourceEvent>(_deleteResource);
   }
 
   final GetAllResourcesUc getAllResourcesUc = GetAllResourcesUc(getIt<ResourceRepository>());
   final VoteResourceUc voteResourceUc  = VoteResourceUc(getIt<ResourceRepository>());
+  final DeleteResourceUc deleteResourceUc = DeleteResourceUc(getIt<ResourceRepository>());
 
   final List<Resource> _resources = [];
   int _currentPage = 1;
@@ -86,5 +89,16 @@ class GetResourceBloc extends Bloc<GetResourceEvent, GetResourceState> {
       return resource.id == event.updatedResource.id ? event.updatedResource : resource;
     }).toList();
     emit(GetResourceLoaded(updatedList));
+  }
+
+  Future<void> _deleteResource(DeleteResourceEvent event, Emitter<GetResourceState> emit) async {
+    final result = await deleteResourceUc.call(resourceId: event.resourceId);
+    result.fold(
+          (error) => emit(GetResourceLoaded(_resources,message: error.message ?? 'Unknown Error')),
+          (message) {
+            _resources.removeWhere((resource) => resource.id == event.resourceId);
+            emit(GetResourceLoaded(_resources,message: message));
+          },
+    );
   }
 }

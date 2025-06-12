@@ -10,8 +10,9 @@ class GetResourceLoading extends GetResourceState {}
 class GetResourceLoaded extends GetResourceState {
   final List<Resource> resources;
   final bool hasMore;
+  final String? message;
 
-  GetResourceLoaded(this.resources, {this.hasMore = true});
+  GetResourceLoaded(this.resources, {this.message, this.hasMore = true});
 }
 
 class GetResourceFailed extends GetResourceState {
