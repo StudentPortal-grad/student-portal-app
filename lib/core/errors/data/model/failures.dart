@@ -63,9 +63,10 @@ class ServerFailure extends Failure {
   static isTokenExpired(String errorCode) {
     try {
       if (errorCode == 'TOKEN_EXPIRED' || errorCode == 'INVALID_TOKEN') {
-        log('Token has expired.');
+        log('Token has expired::: $errorCode');
         UserRepository.invalidToken();
       }
+      return;
     } on Exception catch (e) {
       log(e.toString());
     }
