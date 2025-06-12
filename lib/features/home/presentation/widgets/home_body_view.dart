@@ -66,8 +66,7 @@ class _HomeBodyViewState extends State<HomeBodyView> {
       child: SafeArea(
         child: BlocBuilder<DiscussionBloc, DiscussionState>(
           builder: (context, state) {
-            final discussions =
-                (state is DiscussionLoaded) ? state.posts : widget.discussions;
+            final discussions = (state is DiscussionLoaded) ? state.posts : widget.discussions;
             if (discussions.isEmpty) {
               return Center(child: Text('No Discussions'));
             }
@@ -81,6 +80,11 @@ class _HomeBodyViewState extends State<HomeBodyView> {
                 if (index < discussions.length) {
                   return GestureDetector(
                     child: PostView(
+                      onSelect: (p0) {
+                        if(p0 == 'delete'){
+                          context.read<DiscussionBloc>().add(DeleteDiscussionEvent(discussions[index].id ?? ''),);
+                        }
+                      },
                       navToDetails: true,
                       onVoteTap: (p0) {
                         context.read<DiscussionBloc>().add(

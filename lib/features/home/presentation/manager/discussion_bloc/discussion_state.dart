@@ -10,8 +10,9 @@ class DiscussionLoading extends DiscussionState {}
 class DiscussionLoaded extends DiscussionState {
   final List<Discussion> posts;
   final bool hasMore;
+  final String? message;
 
-  DiscussionLoaded(this.posts, {this.hasMore = true});
+  DiscussionLoaded(this.posts, {this.message, this.hasMore = true});
 }
 
 class DiscussionFailed extends DiscussionState {

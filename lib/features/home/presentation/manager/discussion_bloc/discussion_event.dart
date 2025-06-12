@@ -22,3 +22,9 @@ class UpdateDiscussionInListEvent extends DiscussionEvent {
 
   UpdateDiscussionInListEvent(this.updatedPost);
 }
+
+class DeleteDiscussionEvent extends DiscussionEvent {
+  final String discussionId;
+
+  DeleteDiscussionEvent(this.discussionId);
+}

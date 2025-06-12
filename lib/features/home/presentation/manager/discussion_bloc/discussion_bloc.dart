@@ -5,6 +5,7 @@ import 'package:student_portal/core/utils/service_locator.dart';
 import '../../../data/dto/vote_dto.dart';
 import '../../../data/model/post_model/post.dart';
 import '../../../domain/repo/posts_repository.dart';
+import '../../../domain/usecases/delete_post_uc.dart';
 import '../../../domain/usecases/get_posts_uc.dart';
 import '../../../domain/usecases/vote_post_uc.dart';
 
@@ -18,11 +19,12 @@ class DiscussionBloc extends Bloc<DiscussionEvent, DiscussionState> {
     on<DiscussionLoadMoreRequested>(_loadMoreDiscussions);
     on<VoteDiscussionEvent>(_voteDiscussion);
     on<UpdateDiscussionInListEvent>(_updateDiscussionInList);
+    on<DeleteDiscussionEvent>(_deleteComment);
   }
 
-  final GetPostsUc getPostsUc =
-      GetPostsUc(getPostsRepo: getIt<PostRepository>());
+  final GetPostsUc getPostsUc = GetPostsUc(getPostsRepo: getIt<PostRepository>());
   final VotePostUc votePostUc = VotePostUc(getIt<PostRepository>());
+  final DeletePostUc deletePostUc = DeletePostUc(getIt<PostRepository>());
 
   final List<Discussion> _posts = [];
   int _currentPage = 1;
@@ -45,6 +47,17 @@ class DiscussionBloc extends Bloc<DiscussionEvent, DiscussionState> {
       (posts) {
         _posts.addAll(posts);
         emit(DiscussionLoaded(List.from(_posts)));
+      },
+    );
+  }
+
+  Future<void> _deleteComment(DeleteDiscussionEvent event, Emitter<DiscussionState> emit) async {
+    final result = await deletePostUc.call(postId: event.discussionId);
+    result.fold(
+      (error) => emit(DiscussionLoaded(_posts, message: error.message ?? 'Unknown Error')),
+      (message) {
+        _posts.removeWhere((post) => post.id == event.discussionId);
+        emit(DiscussionLoaded(_posts, message: message));
       },
     );
   }

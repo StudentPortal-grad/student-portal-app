@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:student_portal/core/helpers/custom_toast.dart';
 import '../../../../core/errors/data/model/error_model.dart';
 import '../../../../core/errors/view/error_screen.dart';
 import '../../../../core/theming/colors.dart';
@@ -12,7 +13,17 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<DiscussionBloc, DiscussionState>(
+    return BlocConsumer<DiscussionBloc, DiscussionState>(
+      listener: (context, state) {
+        if (state is DiscussionFailed) {
+          CustomToast(context).showErrorToast(message: state.message);
+        }
+        if (state is DiscussionLoaded) {
+          if (state.message?.isNotEmpty ?? false) {
+            CustomToast(context).showSuccessToast(message: state.message);
+          }
+        }
+      },
       builder: (context, state) {
         if (state is DiscussionLoading) {
           return Center(

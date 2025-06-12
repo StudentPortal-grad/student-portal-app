@@ -19,17 +19,20 @@ import '../manager/react_bar_bloc/react_bar_bloc.dart';
 import '../manager/react_bar_bloc/react_bar_event.dart';
 
 class PostView extends StatefulWidget {
-  const PostView(
-      {super.key,
-      this.detailsChildren,
-      this.discussion,
-      this.onVoteTap,
-      this.navToDetails = false});
+  const PostView({
+    super.key,
+    this.detailsChildren,
+    this.discussion,
+    this.onVoteTap,
+    this.navToDetails = false,
+    this.onSelect,
+  });
 
   final Discussion? discussion;
   final List<Widget>? detailsChildren;
   final Function(String)? onVoteTap;
   final bool navToDetails;
+  final Function(String?)? onSelect;
 
   @override
   State<PostView> createState() => _PostViewState();
@@ -99,6 +102,7 @@ class _PostViewState extends State<PostView> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               UserPostView(
+                onSelect: widget.onSelect,
                 uploader: widget.discussion?.uploader,
                 createFromAgo: TimeHelper.instance.timeAgo(widget.discussion?.createdAt),
               ),
