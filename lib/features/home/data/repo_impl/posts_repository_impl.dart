@@ -107,6 +107,19 @@ class PostRepositoryImpl implements PostRepository {
   }
 
   @override
+  Future<Either<Failure, String>>deleteReply({required String replyId,required String postId})async{
+    try {
+      log('Deleting a replyId ::: $replyId');
+      final response = await apiService.delete(endpoint: '${ApiEndpoints.discussionID(postId)}/${ApiEndpoints.replyDelete(replyId)}');
+      log('Deleting a replyId :: $response');
+      return Right(response['message'] ?? 'Success');
+    } on DioException catch (e) {
+      log('Dio Failure ${e.toString()}');
+      return Left(ServerFailure.fromDioError(e));
+    }
+  }
+
+  @override
   Future<Either<Failure, String>> vote({required VoteDto voteDto}) async {
     try {
       log('Voting a post ::: ${voteDto.toJson()}');
@@ -121,4 +134,5 @@ class PostRepositoryImpl implements PostRepository {
       return Left(ServerFailure.fromDioError(e)); // Handle Dio errors here
     }
   }
+
 }

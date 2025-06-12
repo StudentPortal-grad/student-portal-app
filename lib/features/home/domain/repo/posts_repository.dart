@@ -21,4 +21,6 @@ abstract class PostRepository {
   Future<Either<Failure, String>> vote({required VoteDto voteDto});
 
   Future<Either<Failure, String>> reply({required ReplyDto replyDto});
+
+  Future<Either<Failure, String>> deleteReply({required String replyId,required String postId});
 }
