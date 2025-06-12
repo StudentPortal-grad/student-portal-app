@@ -67,18 +67,18 @@ class DiscussionDetailsBloc
 
         if (previousVote == newVote) {
           // UnVoting
-          if (newVote == 'upvote') newUp--;
-          if (newVote == 'downvote') newDown--;
+          if (newVote == 'upvote' && newUp > 0) newUp--;
+          if (newVote == 'downvote' && newDown > 0) newDown--;
 
           discussion = discussion.copyWith(
-            currentVote: null,
+            currentVote: discussion.currentVote,
             upVotesCount: newUp,
             downVotesCount: newDown,
           );
         } else {
           // Switching or casting new vote
-          if (previousVote == 'upvote') newUp--;
-          if (previousVote == 'downvote') newDown--;
+          if (previousVote == 'upvote' && newUp > 0) newUp--;
+          if (previousVote == 'downvote' && newDown > 0) newDown--;
 
           if (newVote == 'upvote') newUp++;
           if (newVote == 'downvote') newDown++;
