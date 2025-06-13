@@ -18,8 +18,11 @@ class MessagingImpl implements MessagingRepo {
 
   MessagingImpl(this.apiService);
 
-  final StreamController<List<Conversation>> _liveMessagesController =
-      StreamController.broadcast();
+  final StreamController<List<Conversation>> _liveMessagesController = StreamController.broadcast();
+
+  final StreamController<Message> _newMessageController = StreamController.broadcast();
+
+  final StreamController<Failure> _socketErrorController = StreamController.broadcast();
 
   @override
   void getConversations() {
@@ -34,6 +37,7 @@ class MessagingImpl implements MessagingRepo {
         _liveMessagesController.add(conversation);
       } catch (e, stack) {
         log('Failed to parse socket message: $e\n$stack');
+        _socketErrorController.add(Failure(message: 'Failed to parse conversations.'));
       }
     });
   }
@@ -44,7 +48,10 @@ class MessagingImpl implements MessagingRepo {
   @override
   void disposeSocketListener() {
     SocketService.socket.off(SocketEvents.getConversations);
+    SocketService.socket.off(SocketEvents.newMessage);
     _liveMessagesController.close();
+    _newMessageController.close();
+    _socketErrorController.close();
   }
 
   @override
@@ -59,4 +66,27 @@ class MessagingImpl implements MessagingRepo {
       return Left(ServerFailure.fromDioError(e));
     }
   }
+
+  @override
+  void sendMessage(Map<String, dynamic> messagePayload) {
+    log("Sending message: $messagePayload");
+    SocketService.emit(SocketEvents.sendMessage, message: messagePayload);
+  }
+
+  @override
+  void listenToIncomingMessages() {
+    SocketService.listen(SocketEvents.newMessage, (data) {
+      try {
+        log("newMessage :: $data");
+        final message = Message.fromJson(data as Map<String, dynamic>);
+        _newMessageController.add(message);
+      } catch (e, stack) {
+        log('Failed to parse newMessage: $e\n$stack');
+        _socketErrorController.add(Failure(message: 'Failed to parse new Message'));
+      }
+    });
+  }
+
+  @override
+  Stream<Message> get incomingMessages => _newMessageController.stream;
 }

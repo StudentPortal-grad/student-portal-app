@@ -110,4 +110,6 @@ class SocketService {
 class SocketEvents {
   static const String getConversations = 'getConversations';
   static const String conversations = 'conversations';
+  static const String sendMessage = 'sendMessage';
+  static const String newMessage = 'newMessage';
 }

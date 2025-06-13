@@ -21,6 +21,7 @@ class ConversationBloc extends Bloc<ConversationEvent, ConversationState> {
   // usecases
   final GetConversationUc getConversationUc = GetConversationUc(messagingRepo: MessagingImpl(getIt.get<ApiService>()));
   final SendMessageUc sendMessageUc = SendMessageUc(messagingRepo: MessagingImpl(getIt.get<ApiService>()));
+
   List<Message> chats = [];
 
   // methods
