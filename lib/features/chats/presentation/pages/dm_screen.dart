@@ -6,6 +6,7 @@ import 'package:student_portal/contestants.dart';
 import 'package:student_portal/core/errors/data/model/error_model.dart';
 import 'package:student_portal/core/errors/view/error_screen.dart';
 import 'package:student_portal/core/helpers/app_size_boxes.dart';
+import 'package:student_portal/core/repo/user_repository.dart';
 import 'package:student_portal/core/theming/colors.dart';
 import 'package:student_portal/core/widgets/custom_appbar.dart';
 import 'package:student_portal/features/chats/data/dto/message_dto.dart';
@@ -13,6 +14,7 @@ import 'package:student_portal/features/chats/presentation/manager/conversation_
 import '../../../../core/theming/text_styles.dart';
 import '../../../../core/widgets/custom_image_view.dart';
 import '../../../auth/data/model/user_model/user.dart';
+import '../../data/model/message.dart';
 import '../widgets/message_field.dart';
 import '../widgets/message_view.dart';
 
@@ -82,7 +84,24 @@ class DmScreen extends StatelessWidget {
               15.heightBox,
               MessageField(
                 onSendTap: (value) {
-                  bloc.add(SendMessageEvent(MessageDto(conversationId: conversationId, content: value)));
+                  final me = UserRepository.user;
+                  final Message message = Message(
+                    content: value,
+                    createdAt: DateTime.now(),
+                    uploading: true,
+                    conversationId: conversationId,
+                    sender: Sender(
+                      id: me?.id ?? '',
+                      name: me?.name ?? '',
+                      profilePicture: me?.profilePicture ?? '',
+                    ),
+                  );
+                  bloc.add(
+                    SendMessageEvent(
+                        message: message,
+                        messageDto: MessageDto(conversationId: conversationId, content: value),
+                    ),
+                  );
                 },
               ),
             ],

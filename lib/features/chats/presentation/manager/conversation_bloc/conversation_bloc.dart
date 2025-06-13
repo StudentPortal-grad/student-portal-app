@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
@@ -49,18 +50,32 @@ class ConversationBloc extends Bloc<ConversationEvent, ConversationState> {
   void _startListeningToNewMessages() {
     if (_newMessageSubscription != null) return; // Already listening
     _newMessageSubscription = listenToNewMessageUseCase.call().listen((message) {
+      log('New message received: $message');
       add(NewMessageReceivedEvent(message));
     });
   }
 
-  Future<void> _onNewMessageReceived(
-      NewMessageReceivedEvent event, Emitter<ConversationState> emit) async {
-    chats.insert(0, event.message);
-    print('object ${event.message.toJson()}');
+  Future<void> _onNewMessageReceived(NewMessageReceivedEvent event, Emitter<ConversationState> emit) async {
+    final index = chats.indexWhere((m) =>
+    m.uploading == true &&
+        m.conversationId == event.message.conversationId &&
+        m.sender?.id == event.message.sender?.id &&
+        m.content == event.message.content);
+
+    if (index != -1) {
+      chats[index] = event.message;
+    } else {
+      chats.insert(0, event.message);
+    }
+
     emit(ConversationLoaded(chats: chats));
   }
 
   Future<void> _onSendMessageEvent(SendMessageEvent event, Emitter<ConversationState> emit) async {
+    // Insert the temp "sending" message immediately
+    chats.insert(0, event.message);
+    emit(ConversationLoaded(chats: List.from(chats)));
+
     sendMessageUc.call(event.messageDto.toJson());
   }
 

@@ -13,6 +13,7 @@ class Message {
     this.updatedAt,
     this.status = "sent",
     this.reply,
+    this.uploading = false,
   });
 
   factory Message.fromJson(Map<String, dynamic> json) {
@@ -42,6 +43,7 @@ class Message {
   final DateTime? updatedAt;
   final String? status;
   final Message? reply;
+  final bool uploading;
 
   Map<String, dynamic> toJson() {
     return {

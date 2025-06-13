@@ -11,8 +11,9 @@ final class GetConversationEvent extends ConversationEvent {
 
 final class SendMessageEvent extends ConversationEvent {
   final MessageDto messageDto;
+  final Message message;
 
-  SendMessageEvent(this.messageDto);
+  SendMessageEvent({required this.messageDto,required this.message});
 }
 
 final class NewMessageReceivedEvent extends ConversationEvent {

@@ -82,7 +82,18 @@ class MessageItemView extends StatelessWidget {
               text: (message.formattedTime()),
               style: Styles.font12w400.copyWith(color: Color(0xff9E9F9F)),
             ),
+            if (message.uploading && self) ...[
+              6.widthBox,
+              SizedBox(
+                width: 10,
+                height: 10,
+                child: CircularProgressIndicator(
+                  color: ColorsManager.mainColor,
+                  strokeWidth: 2,
+                ),
+              ),
           ],
+        ],
         )
       ],
     );
