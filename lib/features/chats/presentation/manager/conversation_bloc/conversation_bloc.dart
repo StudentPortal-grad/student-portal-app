@@ -1,10 +1,13 @@
+import 'dart:async';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:student_portal/features/chats/data/model/message.dart';
-import 'package:student_portal/features/chats/data/repo_impl/messaging_impl.dart';
+import 'package:student_portal/features/chats/domain/repo/messaging_repo.dart';
+import 'package:student_portal/features/chats/domain/usecases/listen_new_message_uc.dart';
 
-import '../../../../../core/network/api_service.dart';
 import '../../../../../core/utils/service_locator.dart';
+import '../../../data/dto/message_dto.dart';
 import '../../../domain/usecases/get_conversation_uc.dart';
 import '../../../domain/usecases/send_message_uc.dart';
 
@@ -16,11 +19,15 @@ class ConversationBloc extends Bloc<ConversationEvent, ConversationState> {
   ConversationBloc() : super(ConversationInitial()) {
     on<GetConversationEvent>(_onGetConversationEvent);
     on<SendMessageEvent>(_onSendMessageEvent);
+    on<NewMessageReceivedEvent>(_onNewMessageReceived);
   }
 
   // usecases
-  final GetConversationUc getConversationUc = GetConversationUc(messagingRepo: MessagingImpl(getIt.get<ApiService>()));
-  final SendMessageUc sendMessageUc = SendMessageUc(messagingRepo: MessagingImpl(getIt.get<ApiService>()));
+  final GetConversationUc getConversationUc = GetConversationUc(messagingRepo: getIt.get<MessagingRepo>());
+  final SendMessageUc sendMessageUc = SendMessageUc(messagingRepo: getIt.get<MessagingRepo>());
+  final ListenToNewMessageUseCase listenToNewMessageUseCase = ListenToNewMessageUseCase(getIt.get<MessagingRepo>());
+
+  StreamSubscription<Message>? _newMessageSubscription;
 
   List<Message> chats = [];
 
@@ -31,12 +38,35 @@ class ConversationBloc extends Bloc<ConversationEvent, ConversationState> {
     result.fold(
       (error) => emit(ConversationFailed(error.message ?? 'Something went wrong')),
       (messages) {
-        chats = messages;
+        chats.clear();
+        chats.addAll(messages);
+        _startListeningToNewMessages();
         emit(ConversationLoaded(chats: messages));
       },
     );
   }
 
-  Future<void> _onSendMessageEvent(
-      SendMessageEvent event, Emitter<ConversationState> emit) async {}
+  void _startListeningToNewMessages() {
+    if (_newMessageSubscription != null) return; // Already listening
+    _newMessageSubscription = listenToNewMessageUseCase.call().listen((message) {
+      add(NewMessageReceivedEvent(message));
+    });
+  }
+
+  Future<void> _onNewMessageReceived(
+      NewMessageReceivedEvent event, Emitter<ConversationState> emit) async {
+    chats.insert(0, event.message);
+    print('object ${event.message.toJson()}');
+    emit(ConversationLoaded(chats: chats));
+  }
+
+  Future<void> _onSendMessageEvent(SendMessageEvent event, Emitter<ConversationState> emit) async {
+    sendMessageUc.call(event.messageDto.toJson());
+  }
+
+  @override
+  Future<void> close() {
+    _newMessageSubscription?.cancel();
+    return super.close();
+  }
 }

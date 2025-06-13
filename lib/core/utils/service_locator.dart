@@ -2,6 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:student_portal/core/utils/secure_storage.dart';
 import 'package:student_portal/features/auth/domain/repo/auth_repo.dart';
+import 'package:student_portal/features/chats/data/repo_impl/messaging_impl.dart';
+import 'package:student_portal/features/chats/domain/repo/messaging_repo.dart';
 import 'package:student_portal/features/events/data/repositories/events_repository_impl.dart';
 import 'package:student_portal/features/home/domain/repo/posts_repository.dart';
 import 'package:student_portal/features/profile/domain/repo/profile_repository.dart';
@@ -41,4 +43,6 @@ void setupServiceLocator() {
   getIt.registerSingleton<PostRepository>(PostRepositoryImpl(apiService: getIt.get<ApiService>()));
   // Register Resources
   getIt.registerSingleton<ResourceRepository>(ResourceRepositoryImpl(getIt.get<ApiService>()));
+  // Register Messages
+  getIt.registerSingleton<MessagingRepo>(MessagingImpl(getIt.get<ApiService>()));
 }

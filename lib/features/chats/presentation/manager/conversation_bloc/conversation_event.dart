@@ -9,4 +9,14 @@ final class GetConversationEvent extends ConversationEvent {
   GetConversationEvent({required this.conversationId});
 }
 
-final class SendMessageEvent extends ConversationEvent {}
+final class SendMessageEvent extends ConversationEvent {
+  final MessageDto messageDto;
+
+  SendMessageEvent(this.messageDto);
+}
+
+final class NewMessageReceivedEvent extends ConversationEvent {
+  final Message message;
+
+  NewMessageReceivedEvent(this.message);
+}

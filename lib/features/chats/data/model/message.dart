@@ -19,8 +19,12 @@ class Message {
     return Message(
       id: json['_id'] as String?,
       conversationId: json['conversationId'] as String,
-      content: json['content'] as String,
-      sender: json['sender'] != null ? Sender.fromJson(json['sender']) : null,
+      content: json['content'] as String?,
+      sender: json['sender'] != null
+          ? Sender.fromJson(json['sender'])
+          : json['senderId'] != null && json['senderId'] is Map<String, dynamic>
+              ? Sender.fromJson(json['senderId'])
+              : null,
       attachments: (json['attachments'] as List<dynamic>?)?.map((e) => Attachment.fromJson(e as Map<String, dynamic>)).toList(),
       createdAt: DateTime.tryParse(json['createdAt'] ?? '') ?? DateTime.now(),
       updatedAt: DateTime.tryParse(json['updatedAt'] ?? '') ?? DateTime.now(),

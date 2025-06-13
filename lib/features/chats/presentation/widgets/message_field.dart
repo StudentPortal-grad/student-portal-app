@@ -12,9 +12,10 @@ import '../../../../core/theming/text_styles.dart';
 import '../../../../core/widgets/custom_image_view.dart';
 
 class MessageField extends StatefulWidget {
-  const MessageField({super.key, required this.controller});
+  const MessageField({super.key, this.controller, this.onSendTap});
 
-  final TextEditingController controller;
+  final TextEditingController? controller;
+  final Function(String)? onSendTap;
 
   @override
   State<MessageField> createState() => _MessageFieldState();
@@ -32,11 +33,11 @@ class _MessageFieldState extends State<MessageField> {
   @override
   void initState() {
     _focusNode = FocusNode();
-    _controller = widget.controller;
+    _controller = widget.controller ?? TextEditingController();
     _controller.addListener(() {
       setState(() {
         isTyping = _controller.text.isNotEmpty;
-        isEmpty = _controller.text.isEmpty;
+        isEmpty = _controller.text.trim().isEmpty;
       });
     });
 
@@ -123,7 +124,12 @@ class _MessageFieldState extends State<MessageField> {
                     : IconButton(
                         onPressed: () {
                           log('Message: ${_controller.text}');
-                          // TODO: Implement send message logic
+                          widget.onSendTap?.call(_controller.text);
+                          _controller.clear();
+                          setState(() {
+                            isTyping = false;
+                            isEmpty = true;
+                          });
                         },
                         icon: Icon(Icons.send_rounded,
                             color: ColorsManager.mainColor),

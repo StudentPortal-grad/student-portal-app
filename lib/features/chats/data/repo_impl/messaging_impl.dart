@@ -75,14 +75,27 @@ class MessagingImpl implements MessagingRepo {
 
   @override
   void listenToIncomingMessages() {
-    SocketService.listen(SocketEvents.newMessage, (data) {
+
+    SocketService.listen(SocketEvents.messageSent, (data) {
       try {
-        log("newMessage :: $data");
+        log("My message Sent :: $data");
         final message = Message.fromJson(data as Map<String, dynamic>);
         _newMessageController.add(message);
       } catch (e, stack) {
+        log('Failed to parse messageSent: $e\n$stack');
+        _socketErrorController.add(Failure(message: 'Failed to parse messageSent event.'));
+      }
+    });
+
+    SocketService.listen(SocketEvents.newMessage, (data) {
+      try {
+        log("New message :: $data");
+        final messageData = data['message'] as Map<String, dynamic> ;
+        final message = Message.fromJson(messageData);
+        _newMessageController.add(message);
+      } catch (e, stack) {
         log('Failed to parse newMessage: $e\n$stack');
-        _socketErrorController.add(Failure(message: 'Failed to parse new Message'));
+        _socketErrorController.add(Failure(message: 'Failed to parse newMessage.'));
       }
     });
   }
