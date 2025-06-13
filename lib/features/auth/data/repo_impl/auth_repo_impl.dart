@@ -47,7 +47,7 @@ class AuthRepoImpl implements AuthRepository {
         endpoint: ApiEndpoints.forgetPassword,
         data: {"email": email},
       );
-      return Right(data['data']['message']);
+      return Right(data['data']['message'] ?? 'Email sent successfully');
     } on DioException catch (e) {
       return Left(ServerFailure.fromDioError(e));
     }
@@ -197,7 +197,7 @@ class AuthRepoImpl implements AuthRepository {
       var data = await apiService.post(endpoint: ApiEndpoints.logout);
       UserRepository.removeUser();
       await getIt<SecureStorage>().deleteSecureData();
-      return Right(data['message']);
+      return Right(data['message'] ?? 'Logged out successfully');
     } on DioException catch (e) {
       log((e.toString()));
       return Left(ServerFailure.fromDioError(e));
