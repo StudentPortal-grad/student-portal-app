@@ -156,7 +156,7 @@ class _HomeLayoutScreenState extends State<HomeLayoutScreen> {
         ),
         PopupMenuItem<String>(
           value: "create_community",
-          onTap: () => AppRouter.router.push(AppRouter.createCommunity),
+          onTap: () => AppRouter.router.push(AppRouter.createGroup),
           child: Row(
             children: [
               CircleAvatar(
@@ -168,8 +168,7 @@ class _HomeLayoutScreenState extends State<HomeLayoutScreen> {
                     size: 18.r,
                   )),
               10.widthBox,
-              Text("Create a Community",
-                  style: Styles.font16w500.copyWith(color: Colors.white)),
+              Text("Create a Group", style: Styles.font16w500.copyWith(color: Colors.white)),
             ],
           ),
         ),
