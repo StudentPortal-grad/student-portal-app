@@ -88,27 +88,35 @@ class _HomeLayoutScreenState extends State<HomeLayoutScreen> {
         BlocProvider<GetResourceBloc>(create: (_) => GetResourceBloc()..add(GetResourceEventRequested())),
         BlocProvider<ChatsBloc>(create: (context) => ChatsBloc()..add(StartListeningToConversations())),
       ],
-      child: Scaffold(
-        appBar: (currentIndex != 4) ? HomeAppBar() : null,
-        // disappear appbar in chat screen
-        backgroundColor: (currentIndex != 4)
-            ? ColorsManager.backgroundColorLight2
-            : Colors.white,
-        body: widgetOptions[currentIndex],
-        drawer: AppDrawer(),
-        bottomNavigationBar: CustomNavBar(
-          isMenuOpen: isMenuOpen,
-          selectedItemColor: ColorsManager.mainColorLight,
-          floatingOnTap: () {
-            toggleShowPopMenu();
-            _showPopupMenu(context, Offset(0.66.sw, .735.sh));
-          },
-          unselectedItemColor: ColorsManager.mainColorDark,
-          onTap: _onItemTapped,
-          backgroundColor: Colors.white,
-          currentIndex: currentIndex,
-          itemPadding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 12.h),
-          items: _buildNavBarItems(),
+      child: PopScope(
+        canPop: false,
+        onPopInvokedWithResult: (didPop, result) {
+          if(!didPop){
+            _onItemTapped(0);
+          }
+        },
+        child: Scaffold(
+          appBar: (currentIndex != 4) ? HomeAppBar() : null,
+          // disappear appbar in chat screen
+          backgroundColor: (currentIndex != 4)
+              ? ColorsManager.backgroundColorLight2
+              : Colors.white,
+          body: widgetOptions[currentIndex],
+          drawer: AppDrawer(),
+          bottomNavigationBar: CustomNavBar(
+            isMenuOpen: isMenuOpen,
+            selectedItemColor: ColorsManager.mainColorLight,
+            floatingOnTap: () {
+              toggleShowPopMenu();
+              _showPopupMenu(context, Offset(0.66.sw, .735.sh));
+            },
+            unselectedItemColor: ColorsManager.mainColorDark,
+            onTap: _onItemTapped,
+            backgroundColor: Colors.white,
+            currentIndex: currentIndex,
+            itemPadding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 12.h),
+            items: _buildNavBarItems(),
+          ),
         ),
       ),
     );
