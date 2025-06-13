@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:student_portal/core/repo/user_repository.dart';
+import 'package:student_portal/features/chats/presentation/manager/conversation_bloc/conversation_bloc.dart';
 import 'package:student_portal/features/chats/presentation/pages/dm_screen.dart';
 import 'package:student_portal/features/chats/presentation/pages/search_peer_screen.dart';
 import 'package:student_portal/features/community/presentation/screens/community_screen.dart';
@@ -17,6 +18,7 @@ import 'package:student_portal/features/resource/presentation/manager/resource_d
 import 'package:student_portal/features/resource/presentation/pages/add_resource_screen.dart';
 import 'package:student_portal/features/search/presentation/screens/search_screen.dart';
 import 'package:student_portal/features/settings/presentation/screens/account_settings_screen.dart';
+import '../../features/auth/data/model/user_model/user.dart';
 import '../../features/auth/presentation/manager/login_bloc/login_bloc.dart';
 import '../../features/auth/presentation/manager/signup_bloc/signup_bloc.dart';
 import '../../features/auth/presentation/manager/signup_bloc/signup_event.dart';
@@ -264,10 +266,15 @@ abstract class AppRouter {
       GoRoute(
         path: dmScreen,
         pageBuilder: (context, state) {
+          final args = state.extra as Map<String, dynamic>?;
+          final conversationId = args?['conversationId'] as String;
           return buildPage(
             context: context,
             state: state,
-            child: DmScreen(),
+            child: BlocProvider(
+              create: (context) => ConversationBloc()..add(GetConversationEvent(conversationId: conversationId)),
+              child: DmScreen(user: args?['user'] as User?),
+            ),
           );
         },
       ),

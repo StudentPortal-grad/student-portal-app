@@ -11,18 +11,29 @@ import '../../../auth/data/model/user_model/user.dart';
 import '../../data/model/message.dart';
 
 class UserChatView extends StatelessWidget {
-  const UserChatView(
-      {super.key, this.pinned = false, this.lastMessage, this.user});
+  const UserChatView({
+    super.key,
+    this.pinned = false,
+    this.lastMessage,
+    this.user,
+    required this.conversationId,
+    this.type,
+  });
 
   final bool pinned;
   final Message? lastMessage;
   final User? user;
+  final String conversationId;
+  final String? type;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        AppRouter.router.push(AppRouter.dmScreen);
+        AppRouter.router.push(AppRouter.dmScreen, extra: {
+          'conversationId': conversationId,
+          'user': user,
+        });
       },
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -55,24 +66,37 @@ class UserChatView extends StatelessWidget {
                     )
                 ],
               ),
-              Row(
-                children: [
-                  Text(
-                    lastMessage?.content ?? '',
-                    style: Styles.font12w400.copyWith(
-                        fontSize: 14.sp, color: ColorsManager.lightGrayColor),
-                  ),
-                ],
+              Text(
+                lastMessage?.content ?? '',
+                style: Styles.font12w400.copyWith(
+                    fontSize: 14.sp, color: ColorsManager.lightGrayColor),
               ),
             ],
           ),
           Spacer(),
-          Text(
-            lastMessage?.formattedTime() ?? '',
-            style: Styles.font12w400.copyWith(
-              fontSize: 10.sp,
-              color: ColorsManager.lightGrayColor,
-            ),
+          Column(
+            children: [
+              Text(
+                lastMessage?.formattedTime() ?? '',
+                style: Styles.font12w400.copyWith(
+                  fontSize: 10.sp,
+                  color: ColorsManager.lightGrayColor,
+                ),
+              ),
+              8.heightBox,
+             if(type == 'GroupDM')   Tooltip(
+               message: 'Group Chat',
+               child: CircleAvatar(
+                    radius: 15.r,
+                    backgroundColor: ColorsManager.whiteColor,
+                    child: Icon(
+                      Icons.people_alt_rounded,
+                      color: ColorsManager.mainColorLight,
+                      size: 18.r,
+                    ),
+                  ),
+                ),
+            ],
           ),
         ],
       ),

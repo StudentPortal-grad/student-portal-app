@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:student_portal/core/helpers/app_size_boxes.dart';
 import 'package:student_portal/core/theming/colors.dart';
 
+import '../../../../core/repo/user_repository.dart';
 import '../../../../core/theming/text_styles.dart';
 import '../../../../core/widgets/custom_image_view.dart';
 import '../../../../core/widgets/app_text.dart';
@@ -15,15 +16,15 @@ class MessageItemView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final self = message.senderId == '0'; //UserRepository.user?.id
+    final self = message.sender?.id == UserRepository.user?.id;
+
     return Column(
-      crossAxisAlignment:
-          self ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+      crossAxisAlignment: self ? CrossAxisAlignment.end : CrossAxisAlignment.start,
       children: [
         Container(
           padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
           decoration: BoxDecoration(
-            color: ColorsManager.lightBabyBlue,
+            color: self ? ColorsManager.lightBabyBlue :ColorsManager.lightBlue,
             borderRadius: self
                 ? BorderRadius.only(
                     topLeft: Radius.circular(10.r),
@@ -76,6 +77,7 @@ class MessageItemView extends StatelessWidget {
     );
   }
 
+// ignore: unused_element
   Widget _buildReply({String? userName, required model.Message reply}) {
     return IntrinsicHeight(
       child: Row(

@@ -25,6 +25,9 @@ class ChatsScreen extends StatelessWidget {
         child: BlocBuilder<ChatsBloc, ChatsState>(
           builder: (context, state) {
             if (state is ChatsStreamUpdated) {
+              if (state.conversations.isEmpty) {
+                return const Center(child: Text("No Conversations"));
+              }
               return Column(
                 children: [
                   _buildMessagesAppBar(),
@@ -35,11 +38,10 @@ class ChatsScreen extends StatelessWidget {
                       child: ListView.separated(
                         shrinkWrap: true,
                         itemBuilder: (context, index) => UserChatView(
-                            user: state.conversations[index].participants?[0]
-                                    .userId ??
-                                User(),
-                            lastMessage:
-                                state.conversations[index].lastMessage),
+                            type: state.conversations[index].type,
+                            conversationId: state.conversations[index].id ?? '',
+                            user: state.conversations[index].participants?[0].userId ?? User(),
+                            lastMessage: state.conversations[index].lastMessage),
                         separatorBuilder: (context, index) => Divider(),
                         itemCount: state.conversations.length,
                       ),

@@ -22,6 +22,7 @@ abstract class ApiEndpoints {
 
   // Messaging Endpoints
   static const String conversations = "conversations";
+  static String conversationID(String id) => "messages/conversation/$id";
 
   // Events Endpoints
   static const String events = "events";
@@ -41,5 +42,4 @@ abstract class ApiEndpoints {
   static String resourcesVote(String id) => "resources/$id/vote";
   static String resourcesReply(String id) => "resources/$id/comment";
   static String resourcesCommentDelete(String id) => "comments/$id";
-  // resources/68472038791f08c82c4e575e/comments/68488548b0ab12f2abdc366a
 }
