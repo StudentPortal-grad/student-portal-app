@@ -43,6 +43,15 @@ class ServerFailure extends Failure {
       {required int? statusCode, required dynamic response}) {
     log("Error Response: ${response.toString()}");
     isTokenExpired(response['error']['code']);
+
+
+    final primaryMessage = response['message'];
+    final detailMessage = (response['error']?['details'] is List && response['error']['details'].isNotEmpty)
+        ? response['error']['details'][0]['message']
+        : null;
+
+    final finalMessage = detailMessage ?? primaryMessage ?? 'Oops, Unexpected error occurred, Please try again later';
+
     if (statusCode == 400 ||
         statusCode == 401 ||
         statusCode == 403 ||
@@ -50,9 +59,8 @@ class ServerFailure extends Failure {
         statusCode == 500 ||
         statusCode == 409 ||
         statusCode == 300) {
-      return ServerFailure(
-          message: response['message'] ?? 'Something went wrong!',
-      code: response['error']['code']);
+
+      return ServerFailure(message: finalMessage, code: response['error']['code']);
     } else {
       return const ServerFailure(
         message: 'Oops, Unexpected error occurred, Please try again later',
