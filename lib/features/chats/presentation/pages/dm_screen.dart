@@ -17,10 +17,11 @@ import '../widgets/message_field.dart';
 import '../widgets/message_view.dart';
 
 class DmScreen extends StatelessWidget {
-  const DmScreen({super.key, this.user, this.conversationId});
+  const DmScreen({super.key, this.user, this.conversationId, this.type});
 
   final User? user;
   final String? conversationId;
+  final String? type;
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +73,7 @@ class DmScreen extends StatelessWidget {
                   padding: EdgeInsets.symmetric(horizontal: 18.w),
                   reverse: true,
                   shrinkWrap: true,
-                  itemBuilder: (context, index) => MessageItemView(message: bloc.chats[index]),
+                  itemBuilder: (context, index) => MessageItemView(message: bloc.chats[index],type: type),
                   separatorBuilder: (BuildContext context, int index) =>
                   12.heightBox,
                   itemCount: bloc.chats.length,

@@ -266,15 +266,21 @@ abstract class AppRouter {
       GoRoute(
         path: dmScreen,
         pageBuilder: (context, state) {
-          final args = state.extra as Map<String, dynamic>?;
-          final conversationId = args?['conversationId'] as String;
-          final user = args?['user'] as User?;
+          final args = state.extra;
+          String conversationId = '';
+          User? user;
+          String? type;
+          if (args is Map<String, dynamic>) {
+            conversationId = args['conversationId'] as String? ?? '';
+            user = args['user'] as User?;
+            type = args['type'] as String?;
+          }
           return buildPage(
             context: context,
             state: state,
             child: BlocProvider(
-              create: (context) => ConversationBloc()..add(GetConversationEvent(conversationId: conversationId)),
-              child: DmScreen(user: user, conversationId: conversationId),
+              create: (context) => ConversationBloc()..add(GetConversationEvent(conversationId: conversationId ?? "")),
+              child: DmScreen(user: user, conversationId: conversationId,type: type),
             ),
           );
         },

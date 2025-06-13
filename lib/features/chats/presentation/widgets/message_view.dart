@@ -5,26 +5,37 @@ import 'package:student_portal/core/theming/colors.dart';
 
 import '../../../../core/repo/user_repository.dart';
 import '../../../../core/theming/text_styles.dart';
+import '../../../../core/utils/get_color_from_id.dart';
 import '../../../../core/widgets/custom_image_view.dart';
 import '../../../../core/widgets/app_text.dart';
 import '../../data/model/message.dart' as model;
 
 class MessageItemView extends StatelessWidget {
-  const MessageItemView({super.key, required this.message});
+  const MessageItemView({super.key, required this.message, this.type});
 
+  final String? type;
   final model.Message message;
 
   @override
   Widget build(BuildContext context) {
     final self = message.sender?.id == UserRepository.user?.id;
-
     return Column(
       crossAxisAlignment: self ? CrossAxisAlignment.end : CrossAxisAlignment.start,
       children: [
+        if (!self && type == 'GroupDM')
+          Padding(
+            padding: EdgeInsets.only(bottom: 4.h),
+            child: Text(
+              message.sender?.name ?? '',
+              style: Styles.font15w500.copyWith(
+                color: getColorFromId(message.sender?.id ?? ''),
+              ),
+            ),
+          ),
         Container(
           padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
           decoration: BoxDecoration(
-            color: self ? ColorsManager.lightBabyBlue :ColorsManager.lightBlue,
+            color: self ? ColorsManager.lightBabyBlue : ColorsManager.lightBlue,
             borderRadius: self
                 ? BorderRadius.only(
                     topLeft: Radius.circular(10.r),

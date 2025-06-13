@@ -33,6 +33,7 @@ class UserChatView extends StatelessWidget {
         AppRouter.router.push(AppRouter.dmScreen, extra: {
           'conversationId': conversationId,
           'user': user,
+          'type': type,
         });
       },
       child: Row(
