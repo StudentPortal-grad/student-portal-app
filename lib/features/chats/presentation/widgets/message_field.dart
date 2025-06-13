@@ -152,7 +152,7 @@ class _MessageFieldState extends State<MessageField> {
       ],
     );
   }
-
+// ignore: unused_element
   Widget _buildAudionButton() {
     return GestureDetector(
       onLongPressStart: (_) async {

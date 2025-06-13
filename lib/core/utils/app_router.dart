@@ -279,7 +279,7 @@ abstract class AppRouter {
             context: context,
             state: state,
             child: BlocProvider(
-              create: (context) => ConversationBloc()..add(GetConversationEvent(conversationId: conversationId ?? "")),
+              create: (context) => ConversationBloc()..add(GetConversationEvent(conversationId: conversationId)),
               child: DmScreen(user: user, conversationId: conversationId,type: type),
             ),
           );

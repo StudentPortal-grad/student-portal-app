@@ -87,7 +87,7 @@ class _ResourceCommentBarState extends State<ResourceCommentBar> {
                             bloc.add(
                               CommentResourceEvent(
                                 replyDto: ReplyDto(
-                                  id: bloc.resource?.id ?? '',
+                                  id: bloc.resource.id ?? '',
                                   content: commentController.text,
                                 ),
                               ),
