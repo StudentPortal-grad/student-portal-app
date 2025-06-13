@@ -92,7 +92,9 @@ class _HomeLayoutScreenState extends State<HomeLayoutScreen> {
         canPop: false,
         onPopInvokedWithResult: (didPop, result) {
           if(!didPop){
-            _onItemTapped(0);
+            if(currentIndex != 0){
+              _onItemTapped(0);
+            }
           }
         },
         child: Scaffold(
