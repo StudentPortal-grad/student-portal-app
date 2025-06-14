@@ -16,10 +16,12 @@ class MemberItemView extends StatelessWidget {
     this.showRemoveIcon = true,
     this.suffix,
     this.showIsMemberSelected = false,
+    this.onTap
   });
 
   final UserSibling userSibling;
   final Function(String id)? onRemoveTap;
+  final Function()? onTap;
   final bool showRemoveIcon;
   final bool showIsMemberSelected;
   final Widget? suffix;
@@ -27,7 +29,7 @@ class MemberItemView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: onTap,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [

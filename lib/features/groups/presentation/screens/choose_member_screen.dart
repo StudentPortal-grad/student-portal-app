@@ -38,24 +38,26 @@ class ChooseMemberScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               20.heightBox,
-              SizedBox(
-                height: 30.h,
-                child: ListView.separated(
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, index) => CategoryTagView(
-                    index: index,
-                    title: bloc.selectedUsers.toList()[index].name ?? '',
-                    removeTap: (p0) {
-
-                    },
-                    backGround: ColorsManager.babyBlue,
-                    textColor: ColorsManager.mainColor,
-                    borderColor: ColorsManager.mainColorLight,
-                  ),
-                  shrinkWrap: true,
-                  separatorBuilder: (context, index) => 10.widthBox,
-                  itemCount: bloc.selectedUsers.length,
-                ),
+              BlocBuilder<CreateGroupBloc, CreateGroupState>(
+                builder: (context, state) {
+                  return SizedBox(
+                    height: 30.h,
+                    child: ListView.separated(
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (context, index) => CategoryTagView(
+                        index: index,
+                        title: bloc.selectedUsers.toList()[index].name ?? '',
+                        removeTap: (p0) => bloc.add(AddOrRemoveUsers(bloc.selectedUsers.toList()[index],isAdding: false)),
+                        backGround: ColorsManager.babyBlue,
+                        textColor: ColorsManager.mainColor,
+                        borderColor: ColorsManager.mainColorLight,
+                      ),
+                      shrinkWrap: true,
+                      separatorBuilder: (context, index) => 10.widthBox,
+                      itemCount: bloc.selectedUsers.length,
+                    ),
+                  );
+                },
               ),
               20.heightBox,
               CustomTextField(
@@ -66,6 +68,9 @@ class ChooseMemberScreen extends StatelessWidget {
               20.heightBox,
               Expanded(
                 child: BlocBuilder<CreateGroupBloc, CreateGroupState>(
+                  buildWhen: (previous, current) => (current is GetSiblingsUserLoaded ||
+                        current is GetSiblingsUserFailed ||
+                        current is GetSiblingsUserLoading),
                   builder: (context, state) {
                     if (state is GetSiblingsUserLoading) {
                       return LoadingScreen();
@@ -83,6 +88,7 @@ class ChooseMemberScreen extends StatelessWidget {
                           itemCount: state.siblingsUser.length,
                           separatorBuilder: (context, index) => 15.heightBox,
                           itemBuilder: (context, index) => MemberItemView(
+                            onTap: () => bloc.add(AddOrRemoveUsers(state.siblingsUser[index],isAdding: true)),
                             userSibling: state.siblingsUser[index],
                             showRemoveIcon: false,
                             showIsMemberSelected: false,

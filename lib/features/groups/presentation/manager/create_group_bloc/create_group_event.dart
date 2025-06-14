@@ -7,8 +7,9 @@ class GetUsersSiblings extends CreateGroupEvent {}
 
 class AddOrRemoveUsers extends CreateGroupEvent {
   final UserSibling userSibling;
+  final bool isAdding;
 
-  AddOrRemoveUsers(this.userSibling);
+  AddOrRemoveUsers(this.userSibling, {this.isAdding = true});
 }
 
 class UploadGroupImage extends CreateGroupEvent {

@@ -13,6 +13,7 @@ part 'create_group_state.dart';
 class CreateGroupBloc extends Bloc<CreateGroupEvent, CreateGroupState> {
   CreateGroupBloc() : super(CreateGroupInitial()) {
     on<GetUsersSiblings>(_getUsersSiblings);
+    on<AddOrRemoveUsers>(_addOrRemoveUsers);
   }
 
   final GetUsersSiblingsUc _getUsersSiblingsUc = GetUsersSiblingsUc(getIt<GroupRepository>());
@@ -25,5 +26,14 @@ class CreateGroupBloc extends Bloc<CreateGroupEvent, CreateGroupState> {
       (error) => emit(GetSiblingsUserFailed(error.message ?? 'Something went wrong')),
       (users) => emit(GetSiblingsUserLoaded(users)),
     );
+  }
+
+  Future<void> _addOrRemoveUsers(AddOrRemoveUsers event, Emitter<CreateGroupState> emit) async {
+    if (event.isAdding) {
+      selectedUsers.add(event.userSibling);
+    } else {
+      selectedUsers.remove(event.userSibling);
+    }
+    emit(AddOrRemoveUsersState(selectedUsers.toList()));
   }
 }

@@ -12,8 +12,6 @@ import '../../../../core/widgets/custom_appbar.dart';
 import '../../../../core/widgets/custom_text_field.dart';
 import '../../../../core/theming/colors.dart';
 import '../../../../core/theming/text_styles.dart';
-import '../../../auth/data/model/user_model/user.dart';
-import '../../data/models/user_sibling.dart';
 import '../manager/create_group_bloc/create_group_bloc.dart';
 import '../widgets/member_item_view.dart';
 import 'choose_member_screen.dart';
@@ -26,19 +24,24 @@ class CreateGroupScreen extends StatefulWidget {
 }
 
 class _CreateGroupScreenState extends State<CreateGroupScreen> {
+  late final CreateGroupBloc bloc;
   final _formKey = GlobalKey<FormState>();
-  final _groupNameController = TextEditingController();
+  late final TextEditingController _groupNameController;
   String? groupImage;
-  List<User> members = [
-    User(id: '', name: 'test'),
-  ];
+
+  @override
+  void initState() {
+    bloc = context.read<CreateGroupBloc>();
+    _groupNameController = TextEditingController();
+    super.initState();
+  }
 
   @override
   void dispose() {
     _groupNameController.dispose();
-    members.clear();
     super.dispose();
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -79,17 +82,15 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
               ),
               35.heightBox,
               Row(
-                // alignment: AlignmentDirectional.centerStart,
                 children: [
                   Text(
                     "Members",
                     style:
-                        Styles.font20w600.copyWith(fontWeight: FontWeight.w400),
+                    Styles.font20w600.copyWith(fontWeight: FontWeight.w400),
                   ),
                   Spacer(),
                   IconButton(
                     onPressed: () async {
-                      final bloc = context.read<CreateGroupBloc>();
                       bloc.add(GetUsersSiblings());
                       push(ChooseMemberScreen(bloc: bloc));
                     },
@@ -101,18 +102,20 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
                 ],
               ),
               15.heightBox,
-              SizedBox(
-                height: 350.h,
-                child: ListView.separated(
-                  itemBuilder: (context, index) => MemberItemView(
-                    userSibling: UserSibling(name: "Mina"),
-                    onRemoveTap: (id) {
-                      log(id);
-                    },
-                  ),
-                  separatorBuilder: (context, index) => 15.heightBox,
-                  itemCount: 15,
-                ),
+              BlocBuilder<CreateGroupBloc, CreateGroupState>(
+                builder: (context, state) {
+                  return SizedBox(
+                    height: 350.h,
+                    child: ListView.separated(
+                      itemBuilder: (context, index) => MemberItemView(
+                            userSibling: bloc.selectedUsers.toList()[index],
+                            onRemoveTap: (id) => bloc.add(AddOrRemoveUsers(bloc.selectedUsers.toList()[index],isAdding: false)),
+                          ),
+                      separatorBuilder: (context, index) => 15.heightBox,
+                      itemCount: bloc.selectedUsers.length,
+                    ),
+                  );
+                },
               ),
             ],
           ),

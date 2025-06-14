@@ -18,3 +18,9 @@ final class GetSiblingsUserFailed extends CreateGroupState {
 
   GetSiblingsUserFailed(this.message);
 }
+
+final class AddOrRemoveUsersState extends CreateGroupState {
+  final List<UserSibling> selectedUsers;
+
+  AddOrRemoveUsersState(this.selectedUsers);
+}
