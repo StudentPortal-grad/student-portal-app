@@ -3,7 +3,12 @@ part of 'create_group_bloc.dart';
 @immutable
 sealed class CreateGroupEvent {}
 
-class GetUsersSiblings extends CreateGroupEvent {}
+class GetUsersSiblings extends CreateGroupEvent {
+  final String? query;
+  final bool noLoading;
+
+  GetUsersSiblings({this.query, this.noLoading = false});
+}
 
 class AddOrRemoveUsers extends CreateGroupEvent {
   final UserSibling userSibling;

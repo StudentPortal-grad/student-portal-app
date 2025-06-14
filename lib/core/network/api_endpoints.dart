@@ -20,7 +20,7 @@ abstract class ApiEndpoints {
   static String getUserProfile(String userId) => "users/$userId";
   static const String changePassword = "users/me/password";
   static const String usersSiblings = "users/siblings";
-  static const String createGroup = "conversations";
+
 
   // Messaging Endpoints
   static const String conversations = "conversations";
@@ -44,4 +44,7 @@ abstract class ApiEndpoints {
   static String resourcesVote(String id) => "resources/$id/vote";
   static String resourcesReply(String id) => "resources/$id/comment";
   static String resourcesCommentDelete(String id) => "comments/$id";
+
+  // search
+  static const String searchPeers = "search/peers";
 }

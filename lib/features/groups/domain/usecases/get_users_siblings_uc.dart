@@ -9,5 +9,5 @@ class GetUsersSiblingsUc {
 
   GetUsersSiblingsUc(this._groupRepository);
 
-  Future<Either<Failure, List<UserSibling>>> getUsersSiblings() => _groupRepository.getUsersSiblings();
+  Future<Either<Failure, List<UserSibling>>> getUsersSiblings({String? query}) => _groupRepository.getUsersSiblings(query: query);
 }

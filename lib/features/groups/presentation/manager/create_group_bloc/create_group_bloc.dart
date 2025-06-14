@@ -30,8 +30,8 @@ class CreateGroupBloc extends Bloc<CreateGroupEvent, CreateGroupState> {
   String? groupImagePath;
 
   Future<void> _getUsersSiblings(GetUsersSiblings event, Emitter<CreateGroupState> emit) async {
-    emit(GetSiblingsUserLoading());
-    final result = await _getUsersSiblingsUc.getUsersSiblings();
+    if (!event.noLoading) emit(GetSiblingsUserLoading());
+    final result = await _getUsersSiblingsUc.getUsersSiblings(query: event.query);
     result.fold(
       (error) => emit(GetSiblingsUserFailed(error.message ?? 'Something went wrong')),
       (users) => emit(GetSiblingsUserLoaded(users)),

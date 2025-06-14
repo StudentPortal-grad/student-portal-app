@@ -18,14 +18,16 @@ class GroupRepositoryImpl implements GroupRepository {
   GroupRepositoryImpl(this.apiService);
 
   @override
-  Future<Either<Failure, List<UserSibling>>> getUsersSiblings() async {
+  Future<Either<Failure, List<UserSibling>>> getUsersSiblings({String? query}) async {
     try {
       final response = await apiService.get(
-        endpoint: ApiEndpoints.usersSiblings,
-        query: {},
+        endpoint: ApiEndpoints.searchPeers,
+        query: {
+          if(query != null) 'query': query
+        },
       );
       log('Sibling Users:: $response');
-      return Right(response['data']?.map<UserSibling>((e) => UserSibling.fromJson(e)).toList() ?? []);
+      return Right(response['data']['peers']?.map<UserSibling>((e) => UserSibling.fromJson(e)).toList() ?? []);
     } on DioException catch (e) {
       log('Dio Failure ${e.toString()}');
       return Left(ServerFailure.fromDioError(e)); // Handle Dio errors here
@@ -35,7 +37,7 @@ class GroupRepositoryImpl implements GroupRepository {
   Future<Either<Failure, String>> createGroup(CreateGroupDto createGroupDto) async {
     try {
       final response = await apiService.post(
-        endpoint: ApiEndpoints.createGroup,
+        endpoint: ApiEndpoints.conversations,
         formData: await createGroupDto.toFormData(),
       );
       log('Group Created:: $response');
