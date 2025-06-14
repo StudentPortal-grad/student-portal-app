@@ -4,6 +4,8 @@ import 'message.dart';
 class Conversation {
   final String? id;
   final String? type;
+  final String? name;
+  final String? groupImage;
   final List<Participant>? participants;
   final String? createdBy;
   final String? createdAt;
@@ -22,12 +24,16 @@ class Conversation {
     this.lastMessage,
     this.metadata,
     this.settings,
+    this.name,
+    this.groupImage,
   });
 
   factory Conversation.fromJson(Map<String, dynamic> json) {
     return Conversation(
       id: json['_id'],
       type: json['type'],
+      name: json['name'],
+      groupImage: json['groupImage'],
       participants: (json['participants'] as List?)
               ?.map((p) => Participant.fromJson(p as Map<String, dynamic>)).toList() ?? [],
       createdBy: json['createdBy'],
