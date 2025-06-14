@@ -27,6 +27,7 @@ import '../../features/auth/presentation/screens/login_view.dart';
 import '../../features/auth/presentation/screens/otp_screen.dart';
 import '../../features/auth/presentation/screens/set_new_password.dart';
 import '../../features/auth/presentation/screens/signup_view.dart';
+import '../../features/chats/presentation/manager/search_people_bloc/search_people_bloc.dart';
 import '../../features/events/presentation/pages/event_details.dart';
 import '../../features/groups/presentation/manager/create_group_bloc/create_group_bloc.dart';
 import '../../features/home/data/model/post_model/post.dart';
@@ -264,7 +265,10 @@ abstract class AppRouter {
           useSlideTransition: false,
           context: context,
           state: state,
-          child: const SearchPeerScreen(),
+          child: BlocProvider(
+            create: (context) => SearchPeopleBloc()..add(SearchPeopleEventStarted()),
+            child: SearchPeerScreen(),
+          ),
         ),
       ),
       GoRoute(
