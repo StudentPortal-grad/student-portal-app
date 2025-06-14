@@ -26,3 +26,17 @@ final class AddOrRemoveUsersState extends CreateGroupState {
 }
 
 final class UploadGroupImageState extends CreateGroupState {}
+
+final class CreatingGroupLoadingState extends CreateGroupState {}
+
+final class CreatingGroupLoadedState extends CreateGroupState {
+  final String message;
+
+  CreatingGroupLoadedState(this.message);
+}
+
+final class CreatingGroupFailedState extends CreateGroupState {
+  final String message;
+
+  CreatingGroupFailedState(this.message);
+}

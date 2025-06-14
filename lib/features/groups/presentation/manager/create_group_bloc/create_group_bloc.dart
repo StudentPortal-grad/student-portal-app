@@ -3,10 +3,12 @@ import 'dart:developer';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:student_portal/features/groups/data/models/user_sibling.dart';
+import 'package:student_portal/features/groups/domain/usecases/create_group_uc.dart';
 import 'package:student_portal/features/groups/domain/usecases/get_users_siblings_uc.dart';
 
 import '../../../../../core/helpers/file_service.dart';
 import '../../../../../core/utils/service_locator.dart';
+import '../../../data/dto/create_group_dto.dart';
 import '../../../domain/repo/group_repository.dart';
 
 part 'create_group_event.dart';
@@ -18,9 +20,12 @@ class CreateGroupBloc extends Bloc<CreateGroupEvent, CreateGroupState> {
     on<GetUsersSiblings>(_getUsersSiblings);
     on<AddOrRemoveUsers>(_addOrRemoveUsers);
     on<UploadGroupImage>(_uploadGroupImage);
+    on<CreateGroupRequestEvent>(_createGroup);
   }
-
+  // usecases
   final GetUsersSiblingsUc _getUsersSiblingsUc = GetUsersSiblingsUc(getIt<GroupRepository>());
+  final CreateGroupUc _createGroupUc = CreateGroupUc(getIt<GroupRepository>());
+
   Set<UserSibling> selectedUsers = {};
   String? groupImagePath;
 
@@ -53,5 +58,14 @@ class CreateGroupBloc extends Bloc<CreateGroupEvent, CreateGroupState> {
       log(e.toString());
     }
     emit(UploadGroupImageState());
+  }
+
+  Future<void> _createGroup(CreateGroupRequestEvent event, Emitter<CreateGroupState> emit) async {
+    emit(CreatingGroupLoadingState());
+    final result = await _createGroupUc.createGroup(event.createGroupDto);
+    result.fold(
+      (error) => emit(CreatingGroupFailedState(error.message ?? 'Something went wrong')),
+      (message) => emit(CreatingGroupLoadedState(message)),
+    );
   }
 }

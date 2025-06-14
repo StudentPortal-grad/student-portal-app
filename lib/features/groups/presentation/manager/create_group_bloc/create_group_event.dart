@@ -18,4 +18,8 @@ class UploadGroupImage extends CreateGroupEvent {
   UploadGroupImage({this.removeImage = false});
 }
 
-class CreateGroup extends CreateGroupEvent {}
+class CreateGroupRequestEvent extends CreateGroupEvent {
+  final CreateGroupDto createGroupDto;
+
+  CreateGroupRequestEvent(this.createGroupDto);
+}

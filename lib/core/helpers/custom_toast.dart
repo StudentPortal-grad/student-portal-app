@@ -141,3 +141,29 @@ class CustomToastBody {
     );
   }
 }
+
+extension CustomToastExtension on BuildContext {
+  CustomToast get customToast => CustomToast(this);
+
+  void showSuccessToast({
+    String? message,
+    int durationInMillis = 3000,
+    ToastGravity gravity = ToastGravity.BOTTOM,
+  }) =>
+      customToast.showSuccessToast(
+        message: message,
+        durationInMillis: durationInMillis,
+        gravity: gravity,
+      );
+
+  void showErrorToast({
+    String? message,
+    int durationInMillis = 3000,
+    ToastGravity gravity = ToastGravity.BOTTOM,
+  }) =>
+      customToast.showErrorToast(
+        message: message,
+        durationInMillis: durationInMillis,
+        gravity: gravity,
+      );
+}
