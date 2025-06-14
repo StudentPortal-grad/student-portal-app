@@ -39,7 +39,7 @@ class GroupRepositoryImpl implements GroupRepository {
         formData: await createGroupDto.toFormData(),
       );
       log('Group Created:: $response');
-      return const Right('Group Created Successfully');
+      return Right(response['message'] ?? 'Group Created Successfully');
     } on DioException catch (e) {
       log('Dio Failure ${e.toString()}');
       return Left(ServerFailure.fromDioError(e)); // Handle Dio errors here
