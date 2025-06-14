@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:student_portal/core/errors/view/error_screen.dart';
 import 'package:student_portal/core/repo/user_repository.dart';
 import 'package:student_portal/core/theming/colors.dart';
+import 'package:student_portal/core/widgets/custom_refresh_indicator.dart';
+import 'package:student_portal/core/widgets/loading_screen.dart';
 import '../../../../core/theming/text_styles.dart';
-import '../../../../core/widgets/custom_circular_progress_indicator.dart';
 import '../manager/profile_bloc/profile_bloc.dart';
 import '../widgets/about_profile_user_view.dart';
 import '../widgets/profile_card_veiw.dart';
@@ -32,7 +34,7 @@ class _ProfileScreenState extends State<ProfileScreen>
     _tabController = TabController(length: 3, vsync: this);
     _scrollController = ScrollController();
 
-    _profileBloc = ProfileBloc();
+    _profileBloc = context.read<ProfileBloc>();
     final userId = widget.userId ?? UserRepository.user?.id;
     _profileBloc.add(
       userId == null || userId == UserRepository.user?.id
@@ -66,49 +68,69 @@ class _ProfileScreenState extends State<ProfileScreen>
         child: BlocBuilder<ProfileBloc, ProfileState>(
           builder: (context, state) {
             if (state is ProfileLoadingState) {
-              return const Center(child: CustomLoadingIndicator());
+              return LoadingScreen();
+            }
+            if(state is ProfileFailureState) {
+              return ErrorScreen(
+                showArrowBack: true,
+                onRetry: () {
+                  _profileBloc.add(
+                      widget.userId == null || widget.userId == UserRepository.user?.id
+                          ? GetMyProfileEvent(refresh: false)
+                          : GetUserProfileEvent(userId: widget.userId ?? ''));
+                },
+              );
             }
 
             if (state is ProfileSuccessState) {
-              return SingleChildScrollView(
-                controller: _scrollController,
-                child: Column(
-                  children: [
-                    ProfileCardView(onPostsTap: _onPostTap, user: state.user),
-                    TabBar(
-                      controller: _tabController,
-                      splashFactory: NoSplash.splashFactory,
-                      dividerColor: Colors.transparent,
-                      labelStyle: Styles.font14w400,
-                      indicator: UnderlineTabIndicator(
-                        borderSide: BorderSide(
-                            color: ColorsManager.mainColor, width: 2.5.w),
-                        borderRadius: BorderRadius.circular(7.r),
-                      ),
-                      labelColor: ColorsManager.mainColor,
-                      tabs: const [
-                        Tab(text: 'ABOUT'),
-                        Tab(text: 'POST'),
-                        Tab(text: 'RESOURCES'),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 0.75.sh,
-                      child: TabBarView(
+              return CustomRefreshIndicator(
+                onRefresh: () async {
+                  _profileBloc.add(
+                      widget.userId == null || widget.userId == UserRepository.user?.id
+                          ? GetMyProfileEvent(refresh: false)
+                          : GetUserProfileEvent(userId: widget.userId ?? ''));
+                },
+                child: SingleChildScrollView(
+                  physics: AlwaysScrollableScrollPhysics(),
+                  controller: _scrollController,
+                  child: Column(
+                    children: [
+                      ProfileCardView(onPostsTap: _onPostTap, user: state.user),
+                      TabBar(
                         controller: _tabController,
-                        children: [
-                          AboutProfileUserView(userProfile: state.user.profile),
-                          const ProfilePostsView(),
-                          const ProfileResourcesView(),
+                        splashFactory: NoSplash.splashFactory,
+                        dividerColor: Colors.transparent,
+                        labelStyle: Styles.font14w400,
+                        indicator: UnderlineTabIndicator(
+                          borderSide: BorderSide(
+                              color: ColorsManager.mainColor, width: 2.5.w),
+                          borderRadius: BorderRadius.circular(7.r),
+                        ),
+                        labelColor: ColorsManager.mainColor,
+                        tabs: const [
+                          Tab(text: 'ABOUT'),
+                          Tab(text: 'POST'),
+                          Tab(text: 'RESOURCES'),
                         ],
                       ),
-                    ),
-                  ],
+                      SizedBox(
+                        height: 0.75.sh,
+                        child: TabBarView(
+                          controller: _tabController,
+                          children: [
+                            AboutProfileUserView(userProfile: state.user.profile),
+                            const ProfilePostsView(),
+                            const ProfileResourcesView(),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               );
             }
 
-            return const Center(child: Text("Failed to load profile"));
+            return SizedBox.shrink();
           },
         ),
       ),

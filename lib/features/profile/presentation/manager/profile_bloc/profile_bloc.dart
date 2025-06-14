@@ -82,11 +82,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
 
   Future<void> _getMyProfile(
       GetMyProfileEvent event, Emitter<ProfileState> emit) async {
-    if (!event.refresh && UserRepository.user != null) {
-      emit(ProfileSuccessState(UserRepository.user!));
-      return;
-    }
-    emit(ProfileLoadingState());
+    if(!event.refresh) emit(ProfileLoadingState());
     var data = await getMyProfileUs.call();
     data.fold(
       (error) => emit(ProfileFailureState(error)),

@@ -35,6 +35,7 @@ import '../../features/home_layout/ui/home_layout_screen.dart';
 import '../../features/notification/presentation/screens/notifications_screen.dart';
 import '../../features/onboarding/view/onboarding_view/onboarding_view.dart';
 import '../../features/onboarding/view/splash_view/splash_view.dart';
+import '../../features/profile/presentation/manager/profile_bloc/profile_bloc.dart';
 import '../../features/profile/presentation/screens/followers_screen.dart';
 import '../../features/resource/data/model/resource.dart';
 import '../../features/resource/presentation/manager/upload_resource_bloc/upload_resource_bloc.dart';
@@ -320,7 +321,9 @@ abstract class AppRouter {
           return buildPage(
             context: context,
             state: state,
-            child: ProfileScreen(userId: args?['userId'] as String?),
+            child: BlocProvider(
+                create: (context) => ProfileBloc(),
+                child: ProfileScreen(userId: args?['userId'] as String?)),
           );
         },
       ),

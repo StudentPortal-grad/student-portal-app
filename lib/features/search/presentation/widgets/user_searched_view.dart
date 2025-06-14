@@ -18,38 +18,46 @@ class UserSearchedView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        CustomImageView(
-          imagePath: user?.profilePicture,
-          placeHolder: kUserPlaceHolder,
-          width: 48.r,
-          height: 48.r,
-          circle: true,
-        ),
-        12.widthBox,
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            (user?.name ?? '').make(style: Styles.font18w600),
-            (user?.userName ?? '').make(
-                style: Styles.font16w500.copyWith(
-                    fontWeight: FontWeight.w400, color: ColorsManager.black53)),
-          ],
-        ),
-        if (showDmButton) ...[
-          Spacer(),
-          IconButton(
-            onPressed: () {
-              // open a conversation
-            },
-            icon: CustomImageView(
-              imagePath: AssetsApp.chatIcon,
-              color: ColorsManager.mainColorLight,
-            ),
-          )
-        ]
-      ],
+    return InkWell(
+      onTap: () {
+        // AppRouter.router.push(
+        //   AppRouter.profile,
+        //   extra: {'userId': user?.id},
+        // );
+      },
+      child: Row(
+        children: [
+          CustomImageView(
+            imagePath: user?.profilePicture,
+            placeHolder: kUserPlaceHolder,
+            width: 48.r,
+            height: 48.r,
+            circle: true,
+          ),
+          12.widthBox,
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              (user?.name ?? '').make(style: Styles.font18w600),
+              (user?.userName ?? '').make(
+                  style: Styles.font16w500.copyWith(
+                      fontWeight: FontWeight.w400, color: ColorsManager.black53)),
+            ],
+          ),
+          if (showDmButton) ...[
+            Spacer(),
+            IconButton(
+              onPressed: () {
+                // open a conversation
+              },
+              icon: CustomImageView(
+                imagePath: AssetsApp.chatIcon,
+                color: ColorsManager.mainColorLight,
+              ),
+            )
+          ]
+        ],
+      ),
     );
   }
 }

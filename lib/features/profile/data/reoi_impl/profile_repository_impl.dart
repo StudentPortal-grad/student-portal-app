@@ -21,13 +21,15 @@ class ProfileRepositoryImpl implements ProfileRepository {
   @override
   Future<Either<Failure, User>> getMyProfile() async {
     try {
+      log('Getting my profile');
       var data = await apiService.get(
         endpoint: ApiEndpoints.myProfile);
-      log(data.toString());
+      log("Response::: ${data.toString()}");
       User user = User.fromJson(data['data']['user']);
       UserRepository.setUser(user);
       return Right(user);
     } on DioException catch (e) {
+      log("MyProfile Error::: ${e.toString()}");
       return Left(ServerFailure.fromDioError(e));
     }
   }
@@ -35,11 +37,12 @@ class ProfileRepositoryImpl implements ProfileRepository {
   @override
   Future<Either<Failure, User>> getUserProfile({required String userId}) async {
     try {
-      var data =
-          await apiService.get(endpoint: ApiEndpoints.getUserProfile(userId));
-      log(data.toString());
+      log('Getting user profile $userId');
+      var data = await apiService.get(endpoint: ApiEndpoints.getUserProfile(userId));
+      log("Profile ::: ${data.toString()}");
       return Right(User.fromJson(data['data']['user']));
     } on DioException catch (e) {
+      log("Profile Error ::: ${e.toString()}");
       return Left(ServerFailure.fromDioError(e));
     }
   }
