@@ -15,7 +15,7 @@ class SearchedPeople extends StatelessWidget {
       shrinkWrap: true,
       physics: AlwaysScrollableScrollPhysics(),
       padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 15.h),
-      itemBuilder: (context, index) => UserSearchedView(user: users[index],),
+      itemBuilder: (context, index) => UserSearchedView(user: users[index],showDmButton: true),
       separatorBuilder: (context, index) => 15.heightBox,
       itemCount: users.length,
     );

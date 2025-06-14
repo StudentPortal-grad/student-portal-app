@@ -8,7 +8,6 @@ import 'package:student_portal/core/helpers/app_size_boxes.dart';
 import 'package:student_portal/core/widgets/custom_refresh_indicator.dart';
 import 'package:student_portal/core/widgets/loading_screen.dart';
 
-import '../../../../core/theming/colors.dart';
 import '../../../../core/theming/text_styles.dart';
 import '../../../../core/utils/assets_app.dart';
 import '../../../../core/utils/debouncer.dart';
@@ -50,12 +49,12 @@ class _SearchPeerScreenState extends State<SearchPeerScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        backgroundColor: ColorsManager.backgroundColor,
         title: Text(
           'Search',
           style: Styles.font20w600,
         ),
       ),
+      backgroundColor: Colors.white,
       body: Padding(
         padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 24.w),
         child: Column(
