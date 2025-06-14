@@ -55,7 +55,7 @@ class CreateGroupDto {
     }
 
     for (final id in usersId) {
-      formData.fields.add(MapEntry('usersId', id));
+      formData.fields.add(MapEntry('participants', id));
     }
 
     return formData;

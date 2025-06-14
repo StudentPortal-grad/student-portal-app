@@ -20,7 +20,7 @@ abstract class ApiEndpoints {
   static String getUserProfile(String userId) => "users/$userId";
   static const String changePassword = "users/me/password";
   static const String usersSiblings = "users/siblings";
-  static const String createGroup = "users/createGroup";
+  static const String createGroup = "conversations";
 
   // Messaging Endpoints
   static const String conversations = "conversations";
