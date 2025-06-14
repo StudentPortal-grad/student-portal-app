@@ -39,8 +39,8 @@ class ChooseMemberScreen extends StatelessWidget {
                   title: 'Mina',
                   removeTap: (p0) {},
                   backGround: ColorsManager.babyBlue,
-                  textColor: Color(0xff1849A9),
-                  borderColor: Color(0xff84CAFF),
+                  textColor: ColorsManager.mainColor,
+                  borderColor: ColorsManager.mainColorLight,
                 ),
                 shrinkWrap: true,
                 separatorBuilder: (context, index) => 10.widthBox,
@@ -50,8 +50,7 @@ class ChooseMemberScreen extends StatelessWidget {
             20.heightBox,
             CustomTextField(
               controller: TextEditingController(),
-              prefixIcon: CustomImageView(
-                  imagePath: AssetsApp.search2Icon, fit: BoxFit.none),
+              prefixIcon: CustomImageView(imagePath: AssetsApp.search2Icon, fit: BoxFit.none),
               hintText: 'Search',
             ),
             20.heightBox,
@@ -62,7 +61,7 @@ class ChooseMemberScreen extends StatelessWidget {
                 itemBuilder: (context, index) => MemberItemView(
                   user: User(name: 'Mina'),
                   showRemoveIcon: false,
-                  showIsMemberSelected: true,
+                  showIsMemberSelected: false,
                 ),
               ),
             ),

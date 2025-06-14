@@ -32,7 +32,7 @@ class CategoryTagView extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16),
           side: borderColor != null
-              ? BorderSide(color: borderColor!, width: 2)
+              ? BorderSide(color: borderColor!, width: 1.4.r)
               : BorderSide.none,
         ),
       ),

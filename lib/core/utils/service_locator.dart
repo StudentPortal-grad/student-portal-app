@@ -10,6 +10,8 @@ import 'package:student_portal/features/profile/domain/repo/profile_repository.d
 
 import '../../features/auth/data/repo_impl/auth_repo_impl.dart';
 import '../../features/events/domain/repositories/events_repository.dart';
+import '../../features/groups/data/repo_impl/group_repository_impl.dart';
+import '../../features/groups/domain/repo/group_repository.dart';
 import '../../features/home/data/repo_impl/posts_repository_impl.dart';
 import '../../features/profile/data/reoi_impl/profile_repository_impl.dart';
 import '../../features/resource/data/repo_impl/resource_repository_impl.dart';
@@ -45,4 +47,6 @@ void setupServiceLocator() {
   getIt.registerSingleton<ResourceRepository>(ResourceRepositoryImpl(getIt.get<ApiService>()));
   // Register Messages
   getIt.registerSingleton<MessagingRepo>(MessagingImpl(getIt.get<ApiService>()));
+  // Register Group
+  getIt.registerSingleton<GroupRepository>(GroupRepositoryImpl(getIt.get<ApiService>()));
 }
