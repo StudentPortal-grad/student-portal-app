@@ -24,3 +24,5 @@ final class AddOrRemoveUsersState extends CreateGroupState {
 
   AddOrRemoveUsersState(this.selectedUsers);
 }
+
+final class UploadGroupImageState extends CreateGroupState {}

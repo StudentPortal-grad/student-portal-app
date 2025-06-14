@@ -13,9 +13,9 @@ class AddOrRemoveUsers extends CreateGroupEvent {
 }
 
 class UploadGroupImage extends CreateGroupEvent {
-  final String imagePath;
+  final bool removeImage;
 
-  UploadGroupImage(this.imagePath);
+  UploadGroupImage({this.removeImage = false});
 }
 
 class CreateGroup extends CreateGroupEvent {}
