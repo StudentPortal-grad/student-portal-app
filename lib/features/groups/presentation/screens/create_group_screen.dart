@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:student_portal/core/helpers/app_size_boxes.dart';
 import 'package:student_portal/core/helpers/extensions.dart';
@@ -12,6 +13,8 @@ import '../../../../core/widgets/custom_text_field.dart';
 import '../../../../core/theming/colors.dart';
 import '../../../../core/theming/text_styles.dart';
 import '../../../auth/data/model/user_model/user.dart';
+import '../../data/models/user_sibling.dart';
+import '../manager/create_group_bloc/create_group_bloc.dart';
 import '../widgets/member_item_view.dart';
 import 'choose_member_screen.dart';
 
@@ -86,7 +89,9 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
                   Spacer(),
                   IconButton(
                     onPressed: () async {
-                      members = await push(ChooseMemberScreen());
+                      final bloc = context.read<CreateGroupBloc>();
+                      bloc.add(GetUsersSiblings());
+                      push(ChooseMemberScreen(bloc: bloc));
                     },
                     icon: Icon(
                       Icons.add,
@@ -100,7 +105,7 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
                 height: 350.h,
                 child: ListView.separated(
                   itemBuilder: (context, index) => MemberItemView(
-                    user: User(name: "Mina"),
+                    userSibling: UserSibling(name: "Mina"),
                     onRemoveTap: (id) {
                       log(id);
                     },

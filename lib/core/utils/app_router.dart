@@ -28,6 +28,7 @@ import '../../features/auth/presentation/screens/otp_screen.dart';
 import '../../features/auth/presentation/screens/set_new_password.dart';
 import '../../features/auth/presentation/screens/signup_view.dart';
 import '../../features/events/presentation/pages/event_details.dart';
+import '../../features/groups/presentation/manager/create_group_bloc/create_group_bloc.dart';
 import '../../features/home/data/model/post_model/post.dart';
 import '../../features/home_layout/ui/home_layout_screen.dart';
 import '../../features/notification/presentation/screens/notifications_screen.dart';
@@ -251,7 +252,10 @@ abstract class AppRouter {
           useSlideTransition: true,
           context: context,
           state: state,
-          child: const CreateGroupScreen(),
+          child: BlocProvider(
+            create: (context) => CreateGroupBloc(),
+            child: CreateGroupScreen(),
+          ),
         ),
       ),
       GoRoute(

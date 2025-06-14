@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:student_portal/core/helpers/app_size_boxes.dart';
+import 'package:student_portal/features/groups/data/models/user_sibling.dart';
 
 import '../../../../contestants.dart';
 import '../../../../core/theming/colors.dart';
 import '../../../../core/theming/text_styles.dart';
 import '../../../../core/widgets/custom_image_view.dart';
-import '../../../auth/data/model/user_model/user.dart';
 
 class MemberItemView extends StatelessWidget {
   const MemberItemView({
     super.key,
-    required this.user,
+    required this.userSibling,
     this.onRemoveTap,
     this.showRemoveIcon = true,
     this.suffix,
     this.showIsMemberSelected = false,
   });
 
-  final User user;
+  final UserSibling userSibling;
   final Function(String id)? onRemoveTap;
   final bool showRemoveIcon;
   final bool showIsMemberSelected;
@@ -34,14 +34,15 @@ class MemberItemView extends StatelessWidget {
           CustomImageView(
             height: 56.r,
             width: 56.r,
-            imagePath: kUserImage,
+            imagePath: userSibling.profilePicture,
+            placeHolder: kUserPlaceHolder,
             circle: true,
-            fit: BoxFit.contain,
+            fit: BoxFit.cover,
           ),
           10.widthBox,
           Expanded(
             child: Text(
-              user.name ?? '',
+              userSibling.name ?? '',
               style: Styles.font18w600.copyWith(fontWeight: FontWeight.w500),
               overflow: TextOverflow.ellipsis,
             ),
@@ -49,7 +50,7 @@ class MemberItemView extends StatelessWidget {
           Visibility(
             visible: showRemoveIcon,
             child: IconButton(
-              onPressed: () => onRemoveTap?.call(user.id ?? ''),
+              onPressed: () => onRemoveTap?.call(userSibling.id ?? ''),
               icon: const Icon(Icons.remove, color: Colors.red),
             ),
           ),

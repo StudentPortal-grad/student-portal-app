@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:student_portal/core/helpers/app_size_boxes.dart';
+import 'package:student_portal/features/groups/data/models/user_sibling.dart';
 
-import '../../../../core/helpers/extensions.dart';
 import '../../../../core/helpers/file_service.dart';
 import '../../../../core/theming/colors.dart';
 import '../../../../core/theming/text_styles.dart';
@@ -11,7 +11,6 @@ import '../../../../core/widgets/custom_appbar.dart';
 import '../../../../core/widgets/custom_image_view.dart';
 import '../../../../core/widgets/custom_text_field.dart';
 import '../../../auth/data/model/user_model/user.dart';
-import '../../../groups/presentation/screens/choose_member_screen.dart';
 import '../../../groups/presentation/widgets/member_item_view.dart';
 
 class CreateCommunityScreen extends StatefulWidget {
@@ -85,9 +84,9 @@ class _CreateCommunityScreenState extends State<CreateCommunityScreen> {
                   Spacer(),
                   IconButton(
                     onPressed: () async {
-                      members = await push(ChooseMemberScreen(
-                        title: 'Choose Members',
-                      ));
+                      // members = await push(ChooseMemberScreen(
+                      //   title: 'Choose Members',
+                      // ));
                     },
                     icon: Icon(
                       Icons.add,
@@ -101,7 +100,7 @@ class _CreateCommunityScreenState extends State<CreateCommunityScreen> {
                 height: 350.h,
                 child: ListView.separated(
                   itemBuilder: (context, index) => MemberItemView(
-                    user: User(name: "Mina"),
+                    userSibling: UserSibling(name: "Mina"),
                     onRemoveTap: (id) {
                       debugPrint(id);
                     },
