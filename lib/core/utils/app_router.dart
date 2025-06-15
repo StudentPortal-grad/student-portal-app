@@ -18,7 +18,6 @@ import 'package:student_portal/features/resource/presentation/manager/resource_d
 import 'package:student_portal/features/resource/presentation/pages/add_resource_screen.dart';
 import 'package:student_portal/features/search/presentation/screens/search_screen.dart';
 import 'package:student_portal/features/settings/presentation/screens/account_settings_screen.dart';
-import '../../features/auth/data/model/user_model/user.dart';
 import '../../features/auth/presentation/manager/login_bloc/login_bloc.dart';
 import '../../features/auth/presentation/manager/signup_bloc/signup_bloc.dart';
 import '../../features/auth/presentation/manager/signup_bloc/signup_event.dart';
@@ -27,6 +26,7 @@ import '../../features/auth/presentation/screens/login_view.dart';
 import '../../features/auth/presentation/screens/otp_screen.dart';
 import '../../features/auth/presentation/screens/set_new_password.dart';
 import '../../features/auth/presentation/screens/signup_view.dart';
+import '../../features/chats/data/model/conversation.dart';
 import '../../features/chats/presentation/manager/search_people_bloc/search_people_bloc.dart';
 import '../../features/events/presentation/pages/event_details.dart';
 import '../../features/groups/presentation/manager/create_group_bloc/create_group_bloc.dart';
@@ -276,20 +276,16 @@ abstract class AppRouter {
         path: dmScreen,
         pageBuilder: (context, state) {
           final args = state.extra;
-          String conversationId = '';
-          User? user;
-          String? type;
+          Conversation? conversation;
           if (args is Map<String, dynamic>) {
-            conversationId = args['conversationId'] as String? ?? '';
-            user = args['user'] as User?;
-            type = args['type'] as String?;
+            conversation = args['conversation'] as Conversation?;
           }
           return buildPage(
             context: context,
             state: state,
             child: BlocProvider(
-              create: (context) => ConversationBloc()..add(GetConversationEvent(conversationId: conversationId)),
-              child: DmScreen(user: user, conversationId: conversationId,type: type),
+              create: (context) => ConversationBloc()..add(GetConversationEvent(conversationId: conversation?.id ?? '')),
+              child: DmScreen(conversation: conversation),
             ),
           );
         },

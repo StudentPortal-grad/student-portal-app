@@ -50,7 +50,7 @@ class ConversationBloc extends Bloc<ConversationEvent, ConversationState> {
   void _startListeningToNewMessages() {
     if (_newMessageSubscription != null) return; // Already listening
     _newMessageSubscription = listenToNewMessageUseCase.call().listen((message) {
-      log('New message received: $message');
+      log('New message received: ${message.toJson()}');
       add(NewMessageReceivedEvent(message));
     });
   }

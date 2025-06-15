@@ -26,11 +26,7 @@ class UserChatView extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        AppRouter.router.push(AppRouter.dmScreen, extra: {
-          'conversationId': conversation.id,
-          'user': conversation.participants?[0].userId,
-          'type': conversation.type,
-        });
+        AppRouter.router.push(AppRouter.dmScreen, extra: {'conversation': conversation});
       },
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -41,7 +37,7 @@ class UserChatView extends StatelessWidget {
             imagePath: conversation.groupImage?.isNotEmpty ?? false
                 ? conversation.groupImage!
                 : conversation.participants?[0].userId?.profilePicture ?? '',
-            placeHolder:  kUserPlaceHolder,
+            placeHolder: kUserPlaceHolder,
             circle: true,
             fit: BoxFit.cover,
           ),
@@ -55,8 +51,7 @@ class UserChatView extends StatelessWidget {
                     conversation.name?.isNotEmpty ?? false
                         ? conversation.name!
                         : conversation.participants?[0].userId?.name ?? '',
-                    style:
-                        Styles.font18w600.copyWith(fontWeight: FontWeight.w500),
+                    style: Styles.font18w600.copyWith(fontWeight: FontWeight.w500),
                   ),
                   8.widthBox,
                   if (pinned)
@@ -67,10 +62,13 @@ class UserChatView extends StatelessWidget {
                     )
                 ],
               ),
-              Text(
-                conversation.lastMessage?.content ?? '',
-                style: Styles.font12w400.copyWith(
-                    fontSize: 14.sp, color: ColorsManager.lightGrayColor),
+              SizedBox(
+                width: 0.5.sw,
+                child: Text(
+                  conversation.lastMessage?.content ?? '',
+                  maxLines: 1,
+                  style: Styles.font12w400.copyWith(fontSize: 14.sp, color: ColorsManager.lightGrayColor),
+                ),
               ),
             ],
           ),
@@ -85,22 +83,40 @@ class UserChatView extends StatelessWidget {
                 ),
               ),
               8.heightBox,
-             if(conversation.type == 'GroupDM')   Tooltip(
-               message: 'Group Chat',
-               child: CircleAvatar(
-                    radius: 15.r,
-                    backgroundColor: ColorsManager.whiteColor,
-                    child: Icon(
-                      Icons.people_alt_rounded,
-                      color: ColorsManager.mainColorLight,
-                      size: 18.r,
-                    ),
-                  ),
-                ),
+              _buildPinnedIcon(),
             ],
           ),
         ],
       ),
     );
+  }
+  Widget _buildPinnedIcon() {
+    if (conversation.type == 'GroupDM') {
+      return Tooltip(
+        message: 'Group Chat',
+        child: CircleAvatar(
+          radius: 15.r,
+          backgroundColor: ColorsManager.whiteColor,
+          child: Icon(
+            Icons.people_alt_rounded,
+            color: ColorsManager.mainColorLight,
+            size: 18.r,
+          ),
+        ),
+      );
+    }
+    // else if (conversation.type == 'CHATBOT')
+    //  return Tooltip(
+    //     message: 'AI Chat',
+    //     child: CircleAvatar(
+    //       radius: 15.r,
+    //       backgroundColor: ColorsManager.whiteColor,
+    //       child: CustomImageView(
+    //         // imagePath: AssetsApp.aiIcon,
+    //         color: ColorsManager.mainColorLight,
+    //       ),
+    //     ),
+    //   );
+    return SizedBox.shrink();
   }
 }

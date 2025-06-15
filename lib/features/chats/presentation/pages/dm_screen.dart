@@ -13,17 +13,15 @@ import 'package:student_portal/features/chats/data/dto/message_dto.dart';
 import 'package:student_portal/features/chats/presentation/manager/conversation_bloc/conversation_bloc.dart';
 import '../../../../core/theming/text_styles.dart';
 import '../../../../core/widgets/custom_image_view.dart';
-import '../../../auth/data/model/user_model/user.dart';
+import '../../data/model/conversation.dart';
 import '../../data/model/message.dart';
 import '../widgets/message_field.dart';
 import '../widgets/message_view.dart';
 
 class DmScreen extends StatelessWidget {
-  const DmScreen({super.key, this.user, this.conversationId, this.type});
+  const DmScreen({super.key, this.conversation});
 
-  final User? user;
-  final String? conversationId;
-  final String? type;
+  final Conversation? conversation;
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +34,9 @@ class DmScreen extends StatelessWidget {
         title: Row(
           children: [
             CustomImageView(
-              imagePath: user?.profilePicture ?? '',
+              imagePath: conversation?.groupImage?.isNotEmpty ?? false
+                  ? conversation?.groupImage!
+                  : conversation?.participants?[0].userId?.profilePicture ?? '',
               placeHolder: kUserPlaceHolder,
               width: 48.r,
               height: 48.r,
@@ -46,14 +46,20 @@ class DmScreen extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(user?.name ?? '', style: Styles.font20w600),
+                Text((conversation?.name?.isNotEmpty ?? false
+                      ? conversation?.name!
+                      : conversation?.participants?[0].userId?.name) ?? '',
+                  style: Styles.font20w600,
+                ),
                 // Text('Online', style: Styles.font14w400.copyWith(color: Colors.green)),
               ],
             ),
           ],
         ),
-        action: IconButton(onPressed: () {},
-            icon: Icon(Icons.more_vert_rounded, color: Colors.black)),
+        action: IconButton(
+          onPressed: () {},
+          icon: Icon(Icons.more_vert_rounded, color: Colors.black),
+        ),
       ),
       body: BlocConsumer<ConversationBloc, ConversationState>(
         listener: (context, state) {},
@@ -75,7 +81,7 @@ class DmScreen extends StatelessWidget {
                   padding: EdgeInsets.symmetric(horizontal: 18.w),
                   reverse: true,
                   shrinkWrap: true,
-                  itemBuilder: (context, index) => MessageItemView(message: bloc.chats[index],type: type),
+                  itemBuilder: (context, index) => MessageItemView(message: bloc.chats[index],type: conversation?.type),
                   separatorBuilder: (BuildContext context, int index) =>
                   12.heightBox,
                   itemCount: bloc.chats.length,
@@ -89,7 +95,7 @@ class DmScreen extends StatelessWidget {
                     content: value,
                     createdAt: DateTime.now(),
                     uploading: true,
-                    conversationId: conversationId,
+                    conversationId: conversation?.id,
                     sender: Sender(
                       id: me?.id ?? '',
                       name: me?.name ?? '',
@@ -99,7 +105,7 @@ class DmScreen extends StatelessWidget {
                   bloc.add(
                     SendMessageEvent(
                         message: message,
-                        messageDto: MessageDto(conversationId: conversationId, content: value),
+                        messageDto: MessageDto(conversationId: conversation?.id, content: value),
                     ),
                   );
                 },
