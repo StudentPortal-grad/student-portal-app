@@ -16,6 +16,7 @@ import 'package:student_portal/features/profile/presentation/screens/profile_scr
 import 'package:student_portal/features/groups/presentation/screens/create_group_screen.dart';
 import 'package:student_portal/features/resource/presentation/manager/resource_details_bloc/resource_details_bloc.dart';
 import 'package:student_portal/features/resource/presentation/pages/add_resource_screen.dart';
+import 'package:student_portal/features/search/presentation/manager/global_search_bloc/global_search_bloc.dart';
 import 'package:student_portal/features/search/presentation/screens/search_screen.dart';
 import 'package:student_portal/features/settings/presentation/screens/account_settings_screen.dart';
 import '../../features/auth/presentation/manager/login_bloc/login_bloc.dart';
@@ -296,7 +297,10 @@ abstract class AppRouter {
           return buildPage(
             context: context,
             state: state,
-            child: SearchScreen(),
+            child: BlocProvider(
+              create: (context) => GlobalSearchBloc(),
+              child: SearchScreen(),
+            ),
           );
         },
       ),

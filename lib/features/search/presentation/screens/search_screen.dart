@@ -1,18 +1,22 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:student_portal/core/errors/view/error_screen.dart';
 import 'package:student_portal/core/helpers/app_size_boxes.dart';
 import 'package:student_portal/core/theming/colors.dart';
 import 'package:student_portal/core/theming/text_styles.dart';
+import 'package:student_portal/core/utils/debouncer.dart';
 import 'package:student_portal/core/widgets/custom_appbar.dart';
 import 'package:student_portal/core/widgets/custom_text_field.dart';
+import 'package:student_portal/core/widgets/loading_screen.dart';
+import 'package:student_portal/features/search/presentation/manager/global_search_bloc/global_search_bloc.dart';
 
+import '../../../../core/errors/data/model/error_model.dart';
 import '../../../../core/utils/assets_app.dart';
 import '../../../../core/widgets/custom_image_view.dart';
-import '../widgets/searched_communities.dart';
-import '../widgets/searched_events.dart';
-import '../widgets/searched_people.dart';
-import '../widgets/searched_posts.dart';
-import '../widgets/searched_resources.dart';
+import '../widgets/search_body_view.dart';
 import 'not_found_search_view.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -28,27 +32,34 @@ class _SearchScreenState extends State<SearchScreen>
     with TickerProviderStateMixin {
   late final TextEditingController _controller;
   late final TabController _tabController;
-  bool isEmpty = true;
+  late final Debouncer _debouncer;
+  late final GlobalSearchBloc bloc;
+
 
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 5, vsync: this);
+    _tabController = TabController(length: 4, vsync: this);
     _controller = TextEditingController(text: widget.searchText);
+     bloc = context.read<GlobalSearchBloc>();
+    _debouncer = Debouncer(delay: const Duration(milliseconds: 400));
   }
 
   @override
   void dispose() {
     _tabController.dispose();
     _controller.dispose();
+    _debouncer.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
+      backgroundColor: ColorsManager.backgroundColorLight,
       appBar: CustomAppBar(
-        backgroundColor: ColorsManager.backgroundColor,
+        backgroundColor: ColorsManager.backgroundColorLight,
         title: Text(
           'Search',
           style: Styles.font20w600,
@@ -65,16 +76,50 @@ class _SearchScreenState extends State<SearchScreen>
                 fit: BoxFit.none,
               ),
               hintText: 'Search...',
-              onFieldSubmitted: (p0) {
-                setState(() {
-                  isEmpty = p0.isEmpty;
+              onChanged: (value) {
+                _debouncer.run(() {
+                  log('Searching $value');
+                  bloc.add(
+                    SearchEventRequest(
+                      query: value.isNotEmpty ? value : null,
+                      noLoading: true,
+                    ),
+                  );
                 });
+              },
+              onFieldSubmitted: (value) {
+                bloc.add(
+                  SearchEventRequest(
+                    query: value.isNotEmpty ? value : null,
+                    noLoading: true,
+                  ),
+                );
               },
             ),
             20.heightBox,
-            isEmpty
-                ? Expanded(child: NotFoundView())
-                : Expanded(child: SearchBodyView(tabController: _tabController)),
+            Expanded(
+              child: BlocBuilder<GlobalSearchBloc,GlobalSearchState>(
+                builder: (context, state) {
+                  if(state is GlobalSearchLoading){
+                    return LoadingScreen();
+                  }
+                  if (state is GlobalSearchFailed) {
+                    return ErrorScreen(failure: Failure(message: state.message));
+                  }
+                  if(state is GlobalSearchLoaded) {
+                    if ((state.globalSearch.discussions?.isEmpty ?? false) &&
+                        (state.globalSearch.events?.isEmpty ?? false) &&
+                        (state.globalSearch.resources?.isEmpty ?? false) &&
+                        (state.globalSearch.users?.isEmpty ?? false)) {
+                      return const NotFoundView();
+                    }
+                    return SearchBodyView(tabController: _tabController,globalSearch: state.globalSearch,);
+                  }
+                  return const NotFoundView();
+                },
+              ),
+            ),
+
           ],
         ),
       ),
@@ -82,48 +127,3 @@ class _SearchScreenState extends State<SearchScreen>
   }
 }
 
-class SearchBodyView extends StatelessWidget {
-  const SearchBodyView({super.key, required this.tabController});
-
-  final TabController tabController;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        TabBar(
-          controller: tabController,
-          splashFactory: NoSplash.splashFactory,
-          isScrollable: true,
-          dividerColor: Colors.transparent,
-          tabAlignment: TabAlignment.start,
-          labelStyle: Styles.font16w500,
-          indicator: UnderlineTabIndicator(
-              borderSide:
-                  BorderSide(color: ColorsManager.mainColor, width: 3.w),
-              borderRadius: BorderRadius.circular(7.r)),
-          labelColor: ColorsManager.mainColor,
-          tabs: [
-            Tab(text: 'Posts'),
-            Tab(text: 'Resources'),
-            Tab(text: 'Events'),
-            Tab(text: 'Communities'),
-            Tab(text: 'People'),
-          ],
-        ),
-        Expanded(
-          child: TabBarView(
-            controller: tabController,
-            children: [
-              SearchedPosts(),
-              SearchedResources(),
-              SearchedEvents(),
-              SearchedCommunities(),
-              SearchedPeople(),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-}
