@@ -43,7 +43,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         AppRegex.checkPasswordStrength(passwordController.text);
     bool isSecure = strengthCriteria.every((criteria) => criteria);
     bool isValid = (AppRegex.validateEmail(emailController.text) == null);
-    emit(LoginValidationState(
-        isPasswordSecure: isSecure, isEmailValid: isValid));
+    if (state is! LogInLoading) {
+      emit(LoginValidationState(isPasswordSecure: isSecure, isEmailValid: isValid));
+    }
   }
 }

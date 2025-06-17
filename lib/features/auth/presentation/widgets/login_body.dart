@@ -86,6 +86,9 @@ class LoginBody extends StatelessWidget {
                       loading: state is LogInLoading,
                       activeButton: isValid,
                       onTap: () {
+                        if(!isValid) {
+                          return;
+                        }
                         bloc.add(LoginRequested(
                           email: bloc.emailController.text,
                           password: bloc.passwordController.text,
