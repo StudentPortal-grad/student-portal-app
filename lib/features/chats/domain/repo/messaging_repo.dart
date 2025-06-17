@@ -13,7 +13,7 @@ abstract class MessagingRepo {
 
   Future<Either<Failure, List<Message>>> getConversationMessages({required String id});
 
-  void sendMessage(Map<String, dynamic> messagePayload);
+  void sendMessage(Map<String, dynamic> messagePayload, {bool isConversionExisted = true});
 
   void listenToIncomingMessages();
 

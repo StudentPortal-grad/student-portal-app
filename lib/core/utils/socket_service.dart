@@ -113,4 +113,5 @@ class SocketEvents {
   static const String sendMessage = 'sendMessage';
   static const String newMessage = 'newMessage';
   static const String messageSent = 'messageSent';
+  static const String conversationStarted = 'conversationStarted';
 }

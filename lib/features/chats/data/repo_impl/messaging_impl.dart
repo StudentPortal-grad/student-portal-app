@@ -68,8 +68,15 @@ class MessagingImpl implements MessagingRepo {
   }
 
   @override
-  void sendMessage(Map<String, dynamic> messagePayload) {
+  void sendMessage(Map<String, dynamic> messagePayload, {bool isConversionExisted = true}) {
     log("Sending message: $messagePayload");
+    log("Is conversion existed: $isConversionExisted");
+
+    if (!isConversionExisted) {
+      SocketService.emit(SocketEvents.conversationStarted, message: messagePayload);
+      return;
+    }
+
     SocketService.emit(SocketEvents.sendMessage, message: messagePayload);
   }
 
