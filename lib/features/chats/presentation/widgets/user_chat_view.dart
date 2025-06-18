@@ -36,7 +36,7 @@ class UserChatView extends StatelessWidget {
             width: 56.r,
             imagePath: conversation.groupImage?.isNotEmpty ?? false
                 ? conversation.groupImage!
-                : conversation.participants?[0].userId?.profilePicture ?? '',
+                : conversation.getOtherParticipant?.userId?.profilePicture ?? '',
             placeHolder: kUserPlaceHolder,
             circle: true,
             fit: BoxFit.cover,
@@ -50,7 +50,7 @@ class UserChatView extends StatelessWidget {
                   Text(
                     conversation.name?.isNotEmpty ?? false
                         ? conversation.name!
-                        : conversation.participants?[0].userId?.name ?? '',
+                        : conversation.getOtherParticipant?.userId?.name ?? '',
                     style: Styles.font18w600.copyWith(fontWeight: FontWeight.w500),
                   ),
                   8.widthBox,

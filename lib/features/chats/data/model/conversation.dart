@@ -1,4 +1,5 @@
 import 'package:student_portal/features/chats/data/model/participant.dart';
+import '../../../../core/repo/user_repository.dart';
 import 'message.dart';
 
 class Conversation {
@@ -39,12 +40,21 @@ class Conversation {
       createdBy: json['createdBy'],
       createdAt: json['createdAt'],
       updatedAt: json['updatedAt'],
-      lastMessage: json['lastMessage'] != null
+      lastMessage: json['lastMessage'] != null && json['lastMessage'] is Map
           ? Message.fromJson(json['lastMessage'])
           : null,
       metadata: ConversationMetadata.fromJson(json['metadata'] ?? {}),
       settings: ConversationSettings.fromJson(json['settings'] ?? {}),
     );
+  }
+
+  Participant? get getOtherParticipant {
+    final currentUserId = UserRepository.user?.id;
+    final others = participants
+        ?.where((p) => p.userId?.id != currentUserId)
+        .toList();
+
+    return (others != null && others.isNotEmpty) ? others.first : null;
   }
 }
 

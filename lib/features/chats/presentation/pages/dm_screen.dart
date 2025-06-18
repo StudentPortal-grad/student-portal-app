@@ -13,15 +13,13 @@ import 'package:student_portal/features/chats/data/dto/message_dto.dart';
 import 'package:student_portal/features/chats/presentation/manager/conversation_bloc/conversation_bloc.dart';
 import '../../../../core/theming/text_styles.dart';
 import '../../../../core/widgets/custom_image_view.dart';
-import '../../data/model/conversation.dart';
 import '../../data/model/message.dart';
 import '../widgets/message_field.dart';
 import '../widgets/message_view.dart';
 
 class DmScreen extends StatelessWidget {
-  const DmScreen({super.key, this.conversation});
+  const DmScreen({super.key});
 
-  final Conversation? conversation;
 
   @override
   Widget build(BuildContext context) {
@@ -31,30 +29,37 @@ class DmScreen extends StatelessWidget {
       appBar: CustomAppBar(
         toolbarHeight: kToolbarHeight * 1.2,
         backgroundColor: ColorsManager.backgroundColorLight,
-        title: Row(
-          children: [
-            CustomImageView(
-              imagePath: conversation?.groupImage?.isNotEmpty ?? false
-                  ? conversation?.groupImage!
-                  : conversation?.participants?[0].userId?.profilePicture ?? '',
-              placeHolder: kUserPlaceHolder,
-              width: 48.r,
-              height: 48.r,
-              circle: true,
-            ),
-            10.widthBox,
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+        title: BlocBuilder<ConversationBloc, ConversationState>(
+          builder: (context, state) {
+            final bloc = context.read<ConversationBloc>();
+            return Row(
               children: [
-                Text((conversation?.name?.isNotEmpty ?? false
-                      ? conversation?.name!
-                      : conversation?.participants?[0].userId?.name) ?? '',
-                  style: Styles.font20w600,
+                CustomImageView(
+                  imagePath: bloc.conversation?.groupImage?.isNotEmpty ?? false
+                      ? bloc.conversation?.groupImage!
+                      : bloc.conversation?.getOtherParticipant?.userId?.profilePicture ?? '',
+                  placeHolder: kUserPlaceHolder,
+                  width: 48.r,
+                  height: 48.r,
+                  circle: true,
                 ),
-                // Text('Online', style: Styles.font14w400.copyWith(color: Colors.green)),
+                10.widthBox,
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      (bloc.conversation?.name?.isNotEmpty ?? false
+                              ? bloc.conversation?.name!
+                              : bloc.conversation?.getOtherParticipant?.userId?.name) ??
+                          '',
+                      style: Styles.font20w600,
+                    ),
+                    // Text('Online', style: Styles.font14w400.copyWith(color: Colors.green)),
+                  ],
+                ),
               ],
-            ),
-          ],
+            );
+          },
         ),
         action: IconButton(
           onPressed: () {},
@@ -81,7 +86,7 @@ class DmScreen extends StatelessWidget {
                   padding: EdgeInsets.symmetric(horizontal: 18.w),
                   reverse: true,
                   shrinkWrap: true,
-                  itemBuilder: (context, index) => MessageItemView(message: bloc.chats[index],type: conversation?.type),
+                  itemBuilder: (context, index) => MessageItemView(message: bloc.chats[index],type: bloc.conversation?.type),
                   separatorBuilder: (BuildContext context, int index) =>
                   12.heightBox,
                   itemCount: bloc.chats.length,
@@ -95,7 +100,7 @@ class DmScreen extends StatelessWidget {
                     content: value,
                     createdAt: DateTime.now(),
                     uploading: true,
-                    conversationId: conversation?.id,
+                    conversationId: bloc.conversation?.id,
                     sender: Sender(
                       id: me?.id ?? '',
                       name: me?.name ?? '',
@@ -105,7 +110,7 @@ class DmScreen extends StatelessWidget {
                   bloc.add(
                     SendMessageEvent(
                         message: message,
-                        messageDto: MessageDto(conversationId: conversation?.id, content: value),
+                        messageDto: MessageDto(conversationId: bloc.conversation?.id, content: value),
                     ),
                   );
                 },

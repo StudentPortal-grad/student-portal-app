@@ -278,15 +278,17 @@ abstract class AppRouter {
         pageBuilder: (context, state) {
           final args = state.extra;
           Conversation? conversation;
+          String? userId;
           if (args is Map<String, dynamic>) {
             conversation = args['conversation'] as Conversation?;
+            userId = args ['userId'] as String?;
           }
           return buildPage(
             context: context,
             state: state,
             child: BlocProvider(
-              create: (context) => ConversationBloc()..add(GetConversationEvent(conversationId: conversation?.id ?? '')),
-              child: DmScreen(conversation: conversation),
+              create: (context) => ConversationBloc(conversation: conversation)..add(GetConversationEvent(conversationId: conversation?.id ?? userId ?? '')),
+              child: DmScreen(),
             ),
           );
         },

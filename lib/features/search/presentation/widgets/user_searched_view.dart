@@ -8,6 +8,7 @@ import 'package:student_portal/features/groups/data/models/user_sibling.dart';
 import '../../../../contestants.dart';
 import '../../../../core/theming/colors.dart';
 import '../../../../core/theming/text_styles.dart';
+import '../../../../core/utils/app_router.dart';
 import '../../../../core/widgets/custom_image_view.dart';
 
 class UserSearchedView extends StatelessWidget {
@@ -46,15 +47,11 @@ class UserSearchedView extends StatelessWidget {
           ),
           if (showDmButton) ...[
             Spacer(),
-            IconButton(
-              onPressed: () {
-                // open a conversation
-              },
-              icon: CustomImageView(
-                imagePath: AssetsApp.chatIcon,
-                color: ColorsManager.mainColorLight,
-              ),
-            )
+            CustomImageView(
+              onTap: () => AppRouter.router.push(AppRouter.dmScreen, extra: {'userId': user?.id}),
+              imagePath: AssetsApp.chatIcon,
+              color: ColorsManager.mainColorLight,
+            ),
           ]
         ],
       ),

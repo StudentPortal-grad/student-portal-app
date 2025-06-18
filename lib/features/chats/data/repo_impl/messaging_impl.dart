@@ -4,6 +4,7 @@ import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 
 import 'package:student_portal/core/errors/data/model/error_model.dart';
+import 'package:student_portal/features/chats/data/model/conversation_messages.dart';
 
 import '../../../../core/errors/data/model/failures.dart';
 import '../../../../core/network/api_endpoints.dart';
@@ -55,28 +56,21 @@ class MessagingImpl implements MessagingRepo {
   }
 
   @override
-  Future<Either<Failure, List<Message>>> getConversationMessages({required String id}) async {
+  Future<Either<Failure, ConversationMessages>> getConversationMessages({required String id}) async {
     try {
       var data = await apiService.get(
         endpoint: ApiEndpoints.conversationID(id),
       );
       log("MESSAGES:: $data");
-      return Right((data['data'] as List).map<Message>((e) => Message.fromJson(e)).toList());
+      return Right(ConversationMessages.fromJson(data));
     } on DioException catch (e) {
       return Left(ServerFailure.fromDioError(e));
     }
   }
 
   @override
-  void sendMessage(Map<String, dynamic> messagePayload, {bool isConversionExisted = true}) {
+  void sendMessage(Map<String, dynamic> messagePayload,) {
     log("Sending message: $messagePayload");
-    log("Is conversion existed: $isConversionExisted");
-
-    if (!isConversionExisted) {
-      SocketService.emit(SocketEvents.conversationStarted, message: messagePayload);
-      return;
-    }
-
     SocketService.emit(SocketEvents.sendMessage, message: messagePayload);
   }
 

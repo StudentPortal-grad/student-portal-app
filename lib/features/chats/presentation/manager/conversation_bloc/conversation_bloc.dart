@@ -9,6 +9,7 @@ import 'package:student_portal/features/chats/domain/usecases/listen_new_message
 
 import '../../../../../core/utils/service_locator.dart';
 import '../../../data/dto/message_dto.dart';
+import '../../../data/model/conversation.dart';
 import '../../../domain/usecases/get_conversation_uc.dart';
 import '../../../domain/usecases/send_message_uc.dart';
 
@@ -17,7 +18,7 @@ part 'conversation_event.dart';
 part 'conversation_state.dart';
 
 class ConversationBloc extends Bloc<ConversationEvent, ConversationState> {
-  ConversationBloc() : super(ConversationInitial()) {
+  ConversationBloc({this.conversation}) : super(ConversationInitial()) {
     on<GetConversationEvent>(_onGetConversationEvent);
     on<SendMessageEvent>(_onSendMessageEvent);
     on<NewMessageReceivedEvent>(_onNewMessageReceived);
@@ -31,6 +32,7 @@ class ConversationBloc extends Bloc<ConversationEvent, ConversationState> {
   StreamSubscription<Message>? _newMessageSubscription;
 
   List<Message> chats = [];
+  Conversation? conversation;
 
   // methods
   Future<void> _onGetConversationEvent(GetConversationEvent event, Emitter<ConversationState> emit) async {
@@ -38,11 +40,12 @@ class ConversationBloc extends Bloc<ConversationEvent, ConversationState> {
     final result = await getConversationUc.call(id: event.conversationId);
     result.fold(
       (error) => emit(ConversationFailed(error.message ?? 'Something went wrong')),
-      (messages) {
+      (model) {
         chats.clear();
-        chats.addAll(messages);
+        chats.addAll(model.messages ?? []);
+        conversation = conversation ?? model.conversation;
         _startListeningToNewMessages();
-        emit(ConversationLoaded(chats: messages));
+        emit(ConversationLoaded(chats: chats));
       },
     );
   }
