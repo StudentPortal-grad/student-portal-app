@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:student_portal/core/helpers/app_size_boxes.dart';
 import 'package:student_portal/core/helpers/app_text_view.dart';
+import 'package:student_portal/core/repo/user_repository.dart';
 import 'package:student_portal/core/utils/app_router.dart';
 import 'package:student_portal/features/profile/presentation/widgets/profile_details.dart';
 
@@ -10,6 +11,7 @@ import '../../../../core/theming/text_styles.dart';
 import '../../../../core/utils/assets_app.dart';
 import '../../../../core/widgets/custom_appbar.dart';
 import '../../../../core/widgets/custom_image_view.dart';
+import '../../../../core/widgets/more_options_buttons.dart';
 import '../../../auth/data/model/user_model/user.dart';
 
 class ProfileCardView extends StatelessWidget {
@@ -43,8 +45,32 @@ class ProfileCardView extends StatelessWidget {
         CustomAppBar(
           backgroundColor: Colors.transparent,
           leadingIconColor: Colors.white,
-          action: Icon(Icons.more_vert_rounded, color: Colors.white),
-          actionOnTap: () {},
+          action: (user?.id == UserRepository.user?.id)
+              ? null
+              : MoreOptionsButton(
+                  color: Colors.white,
+                  onSelect: (value) {},
+                  items: [
+                    user?.isFollowed == true
+                        ? PopupMenuItem(
+                            value: 'UnFollow',
+                            child: Text('UnFollow'),
+                          )
+                        : PopupMenuItem(
+                            value: 'Follow',
+                            child: Text('Follow'),
+                          ),
+                    user?.isBlocked == true
+                        ? PopupMenuItem(
+                            value: 'UnBlock',
+                            child: Text('UnBlock'),
+                          )
+                        : PopupMenuItem(
+                            value: 'Block',
+                            child: Text('Block'),
+                          ),
+                  ],
+                ),
         ),
 
         // profile body
