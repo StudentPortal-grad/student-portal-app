@@ -23,7 +23,6 @@ class MessagingImpl implements MessagingRepo {
 
   final StreamController<Message> _newMessageController = StreamController.broadcast();
 
-  final StreamController<Failure> _socketErrorController = StreamController.broadcast();
 
   @override
   void getConversations() {
@@ -38,7 +37,6 @@ class MessagingImpl implements MessagingRepo {
         _liveMessagesController.add(conversation);
       } catch (e, stack) {
         log('Failed to parse socket message: $e\n$stack');
-        _socketErrorController.add(Failure(message: 'Failed to parse conversations.'));
       }
     });
   }
@@ -52,7 +50,6 @@ class MessagingImpl implements MessagingRepo {
     SocketService.socket.off(SocketEvents.newMessage);
     _liveMessagesController.close();
     _newMessageController.close();
-    _socketErrorController.close();
   }
 
   @override
@@ -84,7 +81,6 @@ class MessagingImpl implements MessagingRepo {
         _newMessageController.add(message);
       } catch (e, stack) {
         log('Failed to parse messageSent: $e\n$stack');
-        _socketErrorController.add(Failure(message: 'Failed to parse messageSent event.'));
       }
     });
 
@@ -96,7 +92,6 @@ class MessagingImpl implements MessagingRepo {
         _newMessageController.add(message);
       } catch (e, stack) {
         log('Failed to parse newMessage: $e\n$stack');
-        _socketErrorController.add(Failure(message: 'Failed to parse newMessage.'));
       }
     });
   }

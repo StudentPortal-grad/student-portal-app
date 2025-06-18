@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:developer';
 
 import 'package:socket_io_client/socket_io_client.dart';
@@ -6,6 +7,7 @@ import 'package:student_portal/core/utils/service_locator.dart';
 import 'package:socket_io_client/socket_io_client.dart' as io;
 
 import '../../features/auth/data/model/token_model/token_model.dart';
+import '../errors/data/model/socket_failure.dart';
 import '../network/api_endpoints.dart';
 import '../repo/user_repository.dart';
 
@@ -24,59 +26,72 @@ class SocketService {
     return _socket!;
   }
 
-  static Future<void> init() async {
+  static Future<void> init({Duration timeout = const Duration(seconds: 10)}) async {
     if (_isInitialized && _socket != null && _socket!.connected) {
       _socket!.disconnect();
     }
 
+    final completer = Completer<void>();
+
     try {
       final TokenModel? token = await getIt<SecureStorage>().readSecureData();
-      log('Initializing socket with token: ${token?.accessToken}');
-      log("UserID: ${token?.id}");
-      log("Host URL: ${ApiEndpoints.host}");
 
       _socket = io.io(
         ApiEndpoints.host,
         io.OptionBuilder()
-            .setTransports(['websocket']) // Required for Flutter
-            .disableAutoConnect() // connect manually
-            .setExtraHeaders({
-              'x-auth-token': token?.accessToken,
-            })
+            .setTransports(['websocket'])
+            .disableAutoConnect()
+            .setExtraHeaders({'x-auth-token': token?.accessToken})
             .build(),
       );
 
+      _setupEventHandlers(completer);
+
       _socket!.connect();
-      _setupEventHandlers();
+
+      await completer.future.timeout(timeout, onTimeout: () {
+        _socket?.disconnect();
+        throw SocketFailure(message: 'Socket connection timed out');
+      });
+
       _isInitialized = true;
     } catch (e) {
-      log('Socket initialization error: $e');
-      rethrow;
+      throw SocketFailure.fromError(e);
     }
   }
 
-  static void _setupEventHandlers() {
-    log('Setting up event handlers for socket');
-    _socket!.onConnect((_) => log('Socket connected'));
-    _socket!.onConnectError((error) {
-      log('Connection error: $error');
-      if (error.toString().contains('Invalid token') || 
-          error.toString().contains('Authentication error') ||
-          error.toString().contains('Token expired')) {
-        _handleTokenError();
+  static void _setupEventHandlers(Completer? completer) {
+    _socket!.onConnect((_) {
+      log('Socket connected');
+      if (completer != null && !completer.isCompleted) {
+        completer.complete();
       }
     });
-    _socket!.onDisconnect((_) => log('Socket disconnected'));
+
+    _socket!.onConnectError((error) {
+      log('Socket connect error: $error');
+      if (completer != null && !completer.isCompleted) {
+        completer.completeError(SocketFailure.fromError(error));
+      }
+      _handleTokenErrorIfNeeded(error);
+    });
+
     _socket!.onError((error) {
       log('Socket error: $error');
-      if (error.toString().contains('Invalid token') || 
-          error.toString().contains('Authentication error') ||
-          error.toString().contains('Token expired')) {
-        _handleTokenError();
-      }
+      _handleTokenErrorIfNeeded(error);
     });
+
+    _socket!.onDisconnect((_) => log('Socket disconnected'));
     _socket!.onReconnect((_) => log('Socket reconnected'));
   }
+
+  static void _handleTokenErrorIfNeeded(dynamic error) {
+    final err = error.toString();
+    if (err.contains('Invalid token') || err.contains('Authentication error') || err.contains('Token expired')) {
+      _handleTokenError();
+    }
+  }
+
 
   static void _handleTokenError() {
     log('Handling token error - disconnecting socket and invalidating token');

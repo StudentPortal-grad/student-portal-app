@@ -22,8 +22,10 @@ class CustomToast {
     required CustomToastBody toastBody,
     int durationInMillis = 3000,
     ToastGravity gravity = ToastGravity.BOTTOM,
+    bool isDismissible = false
   }) {
     _fToast.showToast(
+      isDismissible: isDismissible,
       toastDuration: Duration(milliseconds: durationInMillis),
       gravity: gravity,
       child: toastBody.build(),
@@ -35,8 +37,10 @@ class CustomToast {
     required CustomToastBody toastBody,
     int durationInMillis = 3000,
     ToastGravity gravity = ToastGravity.BOTTOM,
+    bool isDismissible = false
   }) {
     _showToast(
+      isDismissible: isDismissible,
       toastBody: toastBody,
       durationInMillis: durationInMillis,
       gravity: gravity,
@@ -48,8 +52,10 @@ class CustomToast {
     String? message,
     int durationInMillis = 3000,
     ToastGravity gravity = ToastGravity.BOTTOM,
+    bool isDismissible = false
   }) {
     _showToast(
+      isDismissible: isDismissible,
       toastBody: CustomToastBody(
         msg: message ?? "Unknown Error",
         icon: const Icon(Icons.error, color: Colors.red),
@@ -64,8 +70,10 @@ class CustomToast {
     String? message,
     int durationInMillis = 3000,
     ToastGravity gravity = ToastGravity.BOTTOM,
+    bool isDismissible = false
   }) {
     _showToast(
+      isDismissible: isDismissible,
       toastBody: CustomToastBody(
         msg: message ?? "Success",
         icon: const Icon(Icons.check, color: ColorsManager.mainColor),
@@ -79,8 +87,10 @@ class CustomToast {
   void showLoadingToast({
     int durationInMillis = 3000,
     ToastGravity gravity = ToastGravity.BOTTOM,
+    bool isDismissible = false
   }) {
     _showToast(
+      isDismissible: isDismissible,
       toastBody: const CustomToastBody(
         msg: "Loading...",
         icon: CircularProgressIndicator(
@@ -149,8 +159,10 @@ extension CustomToastExtension on BuildContext {
     String? message,
     int durationInMillis = 3000,
     ToastGravity gravity = ToastGravity.BOTTOM,
+    bool isDismissible = false
   }) =>
       customToast.showSuccessToast(
+        isDismissible: isDismissible,
         message: message,
         durationInMillis: durationInMillis,
         gravity: gravity,
@@ -160,8 +172,10 @@ extension CustomToastExtension on BuildContext {
     String? message,
     int durationInMillis = 3000,
     ToastGravity gravity = ToastGravity.BOTTOM,
+    bool isDismissible = false
   }) =>
       customToast.showErrorToast(
+        isDismissible: isDismissible,
         message: message,
         durationInMillis: durationInMillis,
         gravity: gravity,

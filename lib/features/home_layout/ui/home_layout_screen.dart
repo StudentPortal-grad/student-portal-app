@@ -1,7 +1,10 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:student_portal/core/helpers/app_size_boxes.dart';
+import 'package:student_portal/core/helpers/custom_toast.dart';
 import 'package:student_portal/core/theming/colors.dart';
 import 'package:student_portal/core/theming/text_styles.dart';
 import 'package:student_portal/core/utils/app_router.dart';
@@ -10,6 +13,7 @@ import 'package:student_portal/features/home/presentation/manager/discussion_blo
 import 'package:student_portal/features/home_layout/ui/widgets/drawer.dart';
 import 'package:student_portal/features/home_layout/ui/widgets/nav_bar.dart';
 import 'package:student_portal/features/resource/presentation/manager/get_resource_bloc/get_resource_bloc.dart';
+import '../../../core/errors/data/model/socket_failure.dart';
 import '../../../core/utils/socket_service.dart';
 import '../../chats/presentation/manager/chats_bloc/chats_bloc.dart';
 import '../../chats/presentation/pages/chats_screen.dart';
@@ -34,8 +38,16 @@ class _HomeLayoutScreenState extends State<HomeLayoutScreen> {
   }
 
   Future<void> _initializeSocket() async {
-    await SocketService.init();
-    _listenToSocketEvents();
+    try {
+      await SocketService.init();
+      _listenToSocketEvents();
+    } on SocketFailure catch (e) {
+      log("Socket failure: ${e.message}");
+      context.showErrorToast(message: e.message, durationInMillis: 180000, isDismissible: true);
+    } catch (e) {
+      log("Unexpected error: $e");
+      context.showErrorToast(message: "Unexpected error: ", durationInMillis: 180000, isDismissible: true);
+    }
   }
 
   void _listenToSocketEvents() {

@@ -10,3 +10,8 @@ class NewConversationReceived extends ChatsEvent {
 
   NewConversationReceived(this.conversation);
 }
+
+class SocketErrorOccurred extends ChatsEvent {
+  final String message;
+  SocketErrorOccurred(this.message);
+}
