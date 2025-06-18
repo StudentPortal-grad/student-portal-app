@@ -29,32 +29,36 @@ class User {
   final String? status;
   final bool? isGraduated;
   final int? graduationYear;
+  final bool? isFollowed;
+  final bool? isBlocked;
 
   User({
     this.id,
-    this.name,
-    this.username,
-    this.gender,
-    this.phoneNumber,
-    this.dateOfBirth,
-    this.university,
-    this.college,
-     this.email,
-    this.role,
-    this.profilePicture,
-    this.profile,
-    this.addresses,
-    this.friends,
-    this.level,
-    this.gpa,
-    this.universityEmail,
-    this.universityEmailVerified = false,
-    this.tempEmail,
-    this.emailVerified = false,
-    this.roles,
-     this.status,
-    this.isGraduated = false,
-    this.graduationYear,
+      this.name,
+      this.username,
+      this.gender,
+      this.phoneNumber,
+      this.dateOfBirth,
+      this.university,
+      this.college,
+      this.email,
+      this.role,
+      this.profilePicture,
+      this.profile,
+      this.addresses,
+      this.friends,
+      this.level,
+      this.gpa,
+      this.universityEmail,
+      this.universityEmailVerified = false,
+      this.tempEmail,
+      this.emailVerified = false,
+      this.roles,
+      this.status,
+      this.isGraduated = false,
+      this.graduationYear,
+      this.isBlocked,
+      this.isFollowed,
   });
 
   /// Convert a `User` object into a JSON map
@@ -84,6 +88,8 @@ class User {
       'status': status,
       'isGraduated': isGraduated,
       'graduationYear': graduationYear,
+      'isFollowed' : isFollowed,
+      'isBlocked' : isBlocked,
     };
   }
 
@@ -114,6 +120,8 @@ class User {
       status: json['status'],
       isGraduated: json['isGraduated'] ?? false,
       graduationYear: json['graduationYear'],
+      isFollowed: json['isFollowed'],
+      isBlocked: json['isBlocked']
     );
   }
 
@@ -142,6 +150,9 @@ class User {
     required String status,
     bool isGraduated = false,
     int? graduationYear,
+    bool? isFollowed,
+    bool? isBlocked,
+    String? profilePicture,
   }) {
     return User(
       id: id,
@@ -167,6 +178,9 @@ class User {
       status: status,
       isGraduated: isGraduated,
       graduationYear: graduationYear,
+      isFollowed: isFollowed,
+      isBlocked: isBlocked,
+      profilePicture: profilePicture,
     );
   }
 }
