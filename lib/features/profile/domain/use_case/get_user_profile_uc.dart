@@ -9,6 +9,5 @@ class GetUserProfileUc {
 
   GetUserProfileUc({required this.profileRepository});
 
-  Future<Either<Failure, User>> call({required String userId}) =>
-      profileRepository.getUserProfile(userId: userId);
+  Future<Either<Failure, User>> call({required String userId}) => profileRepository.getUserProfile(userId: userId);
 }

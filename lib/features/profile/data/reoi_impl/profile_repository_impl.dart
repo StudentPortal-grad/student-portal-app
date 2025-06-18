@@ -79,4 +79,56 @@ class ProfileRepositoryImpl implements ProfileRepository {
       return Left(ServerFailure.fromDioError(e));
     }
   }
+
+
+
+  @override
+  Future<Either<Failure, String>> follow(String userId) async {
+    try {
+      var data = await apiService.post(
+        endpoint: ApiEndpoints.followById(userId),
+      );
+      return Right(data['message'] ?? '');
+    } on DioException catch (e) {
+      return Left(ServerFailure.fromDioError(e));
+    }
+  }
+
+
+  @override
+  Future<Either<Failure, String>> unfollow(String userId) async {
+    try {
+      var data = await apiService.post(
+        endpoint: ApiEndpoints.unfollowById(userId),
+      );
+      return Right(data['message'] ?? '');
+    } on DioException catch (e) {
+      return Left(ServerFailure.fromDioError(e));
+    }
+  }
+
+  @override
+  Future<Either<Failure, String>> block(String userId) async {
+    try {
+      var data = await apiService.patch(
+        endpoint: ApiEndpoints.blockById(userId),
+      );
+      return Right(data['message'] ?? '');
+    } on DioException catch (e) {
+      return Left(ServerFailure.fromDioError(e));
+    }
+  }
+
+
+  @override
+  Future<Either<Failure, String>> unBlock(String userId) async {
+    try {
+      var data = await apiService.patch(
+        endpoint: ApiEndpoints.unBlockById(userId),
+      );
+      return Right(data['message'] ?? '');
+    } on DioException catch (e) {
+      return Left(ServerFailure.fromDioError(e));
+    }
+  }
 }

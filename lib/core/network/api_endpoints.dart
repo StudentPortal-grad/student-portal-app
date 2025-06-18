@@ -20,7 +20,10 @@ abstract class ApiEndpoints {
   static String getUserProfile(String userId) => "users/$userId";
   static const String changePassword = "users/me/password";
   static const String usersSiblings = "users/siblings";
-
+  static String followById(String userId) => "users/$userId/follow";
+  static String unfollowById(String userId) => "users/$userId/unfollow";
+  static String blockById(String userId) => "users/$userId/block";
+  static String unBlockById(String userId) => "users/$userId/unblock";
 
   // Messaging Endpoints
   static const String conversations = "conversations";

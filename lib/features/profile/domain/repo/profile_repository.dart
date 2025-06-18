@@ -13,4 +13,12 @@ abstract class ProfileRepository {
   Future<Either<Failure, User>> getUserProfile({required String userId});
 
   Future<Either<Failure, String>> changePassword({required ChangePasswordDto changePasswordDto});
+
+  Future<Either<Failure, String>> follow(String userId);
+
+  Future<Either<Failure, String>> unfollow(String userId);
+
+  Future<Either<Failure, String>> block(String userId);
+
+  Future<Either<Failure, String>> unBlock(String userId);
 }
