@@ -39,21 +39,15 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   final changePasswordFormKey = GlobalKey<FormState>();
 
 // Change Password
-  final TextEditingController currentPasswordController =
-      TextEditingController();
+  final TextEditingController currentPasswordController = TextEditingController();
   final TextEditingController newPasswordController = TextEditingController();
-  final TextEditingController confirmPasswordController =
-      TextEditingController();
+  final TextEditingController confirmPasswordController = TextEditingController();
 
   // Profile Controllers
-  final TextEditingController nameController =
-      TextEditingController(text: UserRepository.user?.name ?? '');
-  final TextEditingController userNameController =
-      TextEditingController(text: UserRepository.user?.username ?? '');
-  final TextEditingController phoneController =
-      TextEditingController(text: UserRepository.user?.phoneNumber);
-  final TextEditingController bioController =
-      TextEditingController(text: UserRepository.user?.profile?.bio);
+  final TextEditingController nameController = TextEditingController(text: UserRepository.user?.name ?? '');
+  final TextEditingController userNameController = TextEditingController(text: UserRepository.user?.username ?? '');
+  final TextEditingController phoneController = TextEditingController(text: UserRepository.user?.phoneNumber);
+  final TextEditingController bioController = TextEditingController(text: UserRepository.user?.profile?.bio);
   PhoneNumber? phoneNumber;
 
   final TextEditingController dateOfBirthController = TextEditingController(text: UserRepository.user?.dateOfBirth != null ? DateFormat('dd/MM/yyyy').format(UserRepository.user!.dateOfBirth!) : '');
@@ -64,21 +58,15 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   // academic Controllers
   final TextEditingController universityController = TextEditingController(text: UserRepository.user?.university);
   final TextEditingController collegeController = TextEditingController(text: UserRepository.user?.college);
-  final TextEditingController gpaController =
-      TextEditingController(text: UserRepository.user?.gpa?.toString());
-  final TextEditingController levelController =
-      TextEditingController(text: UserRepository.user?.level?.toString());
+  final TextEditingController gpaController = TextEditingController(text: UserRepository.user?.gpa?.toString());
+  final TextEditingController levelController = TextEditingController(text: UserRepository.user?.level?.toString());
   String? position = UserRepository.user?.role;
 
 // usecases
-  final GetMyProfileUs getMyProfileUs =
-      GetMyProfileUs(profileRepository: getIt<ProfileRepository>());
-  final GetUserProfileUc getUserProfileUs =
-      GetUserProfileUc(profileRepository: getIt<ProfileRepository>());
-  final UpdateMyProfileUC updateMyProfileUC =
-      UpdateMyProfileUC(profileRepository: getIt<ProfileRepository>());
-  final ChangePasswordUc changePasswordUc =
-      ChangePasswordUc(profileRepository: getIt<ProfileRepository>());
+  final GetMyProfileUs getMyProfileUs = GetMyProfileUs(profileRepository: getIt<ProfileRepository>());
+  final GetUserProfileUc getUserProfileUs = GetUserProfileUc(profileRepository: getIt<ProfileRepository>());
+  final UpdateMyProfileUC updateMyProfileUC = UpdateMyProfileUC(profileRepository: getIt<ProfileRepository>());
+  final ChangePasswordUc changePasswordUc = ChangePasswordUc(profileRepository: getIt<ProfileRepository>());
 
   Future<void> _getMyProfile(
       GetMyProfileEvent event, Emitter<ProfileState> emit) async {
