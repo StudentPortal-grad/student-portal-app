@@ -1,15 +1,18 @@
 import 'dart:developer';
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:student_portal/core/helpers/app_size_boxes.dart';
 import 'package:student_portal/core/helpers/file_service.dart';
 import 'package:student_portal/core/theming/colors.dart';
 import 'package:student_portal/core/utils/assets_app.dart';
 import 'package:student_portal/core/widgets/custom_text_field.dart';
+import 'package:student_portal/features/chats/presentation/manager/conversation_bloc/conversation_bloc.dart';
 
 import '../../../../core/theming/text_styles.dart';
 import '../../../../core/widgets/custom_image_view.dart';
+import '../../data/dto/attachment_dto.dart';
 
 class MessageField extends StatefulWidget {
   const MessageField({super.key, this.controller, this.onSendTap});
@@ -73,6 +76,7 @@ class _MessageFieldState extends State<MessageField> {
 
   @override
   Widget build(BuildContext context) {
+    final bloc = context.read<ConversationBloc>();
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -114,8 +118,11 @@ class _MessageFieldState extends State<MessageField> {
                   CustomImageView(
                     imagePath: AssetsApp.attachmentIcon,
                     onTap: () async {
-                      final file = await FileService.pickFile();
-                      log(file?.path ?? 'not selected');
+                      final files = await FileService.pickFiles();
+                      if (files.isNotEmpty) {
+                        final paths = files.map((e) => e.path).toList();
+                        bloc.add(SendAttachedMessageEvent(attachmentDto: AttachmentDto(conversationId: bloc.conversation?.id ?? '', attachments: paths)));
+                      }
                     },
                   ),
                 5.widthBox,

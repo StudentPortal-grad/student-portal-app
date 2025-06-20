@@ -11,6 +11,7 @@ import '../../../../core/network/api_endpoints.dart';
 import '../../../../core/network/api_service.dart';
 import '../../../../core/utils/socket_service.dart';
 import '../../domain/repo/messaging_repo.dart';
+import '../dto/attachment_dto.dart';
 import '../model/conversation.dart';
 import '../model/message.dart';
 
@@ -64,7 +65,19 @@ class MessagingImpl implements MessagingRepo {
       return Left(ServerFailure.fromDioError(e));
     }
   }
-
+  @override
+  Future<Either<Failure, Message>> sendAttachment(AttachmentDto attachmentDto) async {
+    try {
+      var data = await apiService.post(
+        endpoint: ApiEndpoints.messages(attachmentDto.conversationId),
+        formData: await attachmentDto.toFormData(),
+      );
+      log("Attachment MESSAGES:: $data");
+      return Right(Message.fromJson(data));
+    } on DioException catch (e) {
+      return Left(ServerFailure.fromDioError(e));
+    }
+  }
   @override
   void sendMessage(Map<String, dynamic> messagePayload,) {
     log("Sending message: $messagePayload");

@@ -3,6 +3,7 @@ import 'dart:developer';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
+import 'package:student_portal/features/chats/data/dto/attachment_dto.dart';
 import 'package:student_portal/features/chats/data/model/message.dart';
 import 'package:student_portal/features/chats/domain/repo/messaging_repo.dart';
 import 'package:student_portal/features/chats/domain/usecases/listen_new_message_uc.dart';
@@ -21,6 +22,7 @@ class ConversationBloc extends Bloc<ConversationEvent, ConversationState> {
   ConversationBloc({this.conversation}) : super(ConversationInitial()) {
     on<GetConversationEvent>(_onGetConversationEvent);
     on<SendMessageEvent>(_onSendMessageEvent);
+    on<SendAttachedMessageEvent>(_onSendAttachedMessageEvent);
     on<NewMessageReceivedEvent>(_onNewMessageReceived);
   }
 
@@ -80,6 +82,20 @@ class ConversationBloc extends Bloc<ConversationEvent, ConversationState> {
     emit(ConversationLoaded(chats: List.from(chats)));
 
     sendMessageUc.call(event.messageDto.toJson());
+  }
+
+  Future<void> _onSendAttachedMessageEvent(SendAttachedMessageEvent event, Emitter<ConversationState> emit) async {
+    chats.insert(0, event.message ?? Message());
+    emit(ConversationLoaded(chats: List.from(chats)));
+    final result = await sendMessageUc.sendAttachment(event.attachmentDto);
+    result.fold(
+      (error) => emit(ConversationFailed(error.message ?? 'Something went wrong')),
+      (model) {
+        chats.removeWhere((message) => message.id == model.id);
+        chats.insert(0, model);
+        emit(ConversationLoaded(chats: List.from(chats)));
+      },
+    );
   }
 
   @override

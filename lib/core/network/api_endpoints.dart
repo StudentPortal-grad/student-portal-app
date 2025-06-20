@@ -48,6 +48,9 @@ abstract class ApiEndpoints {
   static String resourcesReply(String id) => "resources/$id/comment";
   static String resourcesCommentDelete(String id) => "comments/$id";
 
+  // Messaging
+  static String messages(String conversationId) => "conversations/$conversationId/message";
+
   // search
   static const String searchPeers = "search/peers";
   static const String globalSearch = "search";

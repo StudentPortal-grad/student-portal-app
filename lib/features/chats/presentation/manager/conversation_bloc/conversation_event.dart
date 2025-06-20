@@ -16,6 +16,14 @@ final class SendMessageEvent extends ConversationEvent {
   SendMessageEvent({required this.messageDto,required this.message});
 }
 
+
+final class SendAttachedMessageEvent extends ConversationEvent {
+  final AttachmentDto attachmentDto;
+  final Message? message;
+
+  SendAttachedMessageEvent({required this.attachmentDto, this.message});
+}
+
 final class NewMessageReceivedEvent extends ConversationEvent {
   final Message message;
 
