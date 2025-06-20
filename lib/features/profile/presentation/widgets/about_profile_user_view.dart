@@ -69,22 +69,24 @@ class AboutProfileUserView extends StatelessWidget {
               color: ColorsManager.textColor,
             ),
           ),
-          20.heightBox,
-          "Interests".make(
-            style: Styles.font18w700.copyWith(color: ColorsManager.textColor),
-          ),
-          10.heightBox,
-          Wrap(
-            spacing: 7.w,
-            runSpacing: 7.h,
-            children: List.generate(
-              userProfile?.interests?.length ?? 0,
-              (index) => CategoryTagView(
-                index: index,
-                title: userProfile?.interests?[index] ?? '',
+          if (userProfile?.interests?.isNotEmpty ?? false) ...[
+            20.heightBox,
+            "Interests".make(
+              style: Styles.font18w700.copyWith(color: ColorsManager.textColor),
+            ),
+            10.heightBox,
+            Wrap(
+              spacing: 7.w,
+              runSpacing: 7.h,
+              children: List.generate(
+                userProfile?.interests?.length ?? 0,
+                (index) => CategoryTagView(
+                  index: index,
+                  title: userProfile?.interests?[index] ?? '',
+                ),
               ),
             ),
-          ),
+          ]
         ],
       ),
     );
