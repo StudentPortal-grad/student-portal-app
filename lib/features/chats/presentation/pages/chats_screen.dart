@@ -23,6 +23,15 @@ class ChatsScreen extends StatelessWidget {
         padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 28.w),
         child: BlocBuilder<ChatsBloc, ChatsState>(
           builder: (context, state) {
+            if (state is ChatsLoading) {
+              return const Center(child: CustomLoadingIndicator());
+            }
+            if (state is ChatsError) {
+              return ErrorScreen(
+                failure: Failure(message: state.message),
+                onRetry: () async => BlocProvider.of<ChatsBloc>(context).add(StartListeningToConversations()),
+              );
+            }
             if (state is ChatsStreamUpdated) {
               if (state.conversations.isEmpty) {
                 return const Center(child: Text("No Conversations"));
@@ -43,16 +52,6 @@ class ChatsScreen extends StatelessWidget {
                     ),
                   ),
                 ],
-              );
-            }
-            if (state is ChatsLoading) {
-              return const Center(child: CustomLoadingIndicator());
-            }
-            if (state is ChatsError) {
-              return ErrorScreen(
-                failure: Failure(message: state.message),
-                onRetry: () async => BlocProvider.of<ChatsBloc>(context)
-                    .add(StartListeningToConversations()),
               );
             }
             return SizedBox.shrink();

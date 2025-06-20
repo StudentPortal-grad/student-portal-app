@@ -32,9 +32,12 @@ class ChatsBloc extends Bloc<ChatsEvent, ChatsState> {
 
     await _subscription?.cancel(); // Cancel any previous stream
     try {
-      _subscription = getConversationUc.call().listen(
-            (conversations) {
+      _subscription = getConversationUc.call().listen((conversations) {
           add(NewConversationReceived(conversations));
+        },
+        onError: (error) {
+          log('ChatsBloc caught exception:: $error');
+          emit(ChatsError(error.toString()));
         },
       );
     } catch (e) {
