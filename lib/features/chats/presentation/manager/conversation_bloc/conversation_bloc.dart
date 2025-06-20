@@ -3,6 +3,7 @@ import 'dart:developer';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
+import 'package:student_portal/core/repo/user_repository.dart';
 import 'package:student_portal/features/chats/data/dto/attachment_dto.dart';
 import 'package:student_portal/features/chats/data/model/message.dart';
 import 'package:student_portal/features/chats/domain/repo/messaging_repo.dart';
@@ -85,7 +86,14 @@ class ConversationBloc extends Bloc<ConversationEvent, ConversationState> {
   }
 
   Future<void> _onSendAttachedMessageEvent(SendAttachedMessageEvent event, Emitter<ConversationState> emit) async {
-    chats.insert(0, event.message ?? Message());
+    final me = UserRepository.user;
+    chats.insert(0, event.message ?? Message(
+      sender: Sender(
+        id: me?.id ?? '',
+        name: me?.name ?? '',
+        profilePicture: me?.profilePicture ?? '',
+      ),
+    ));
     emit(ConversationLoaded(chats: List.from(chats)));
     final result = await sendMessageUc.sendAttachment(event.attachmentDto);
     result.fold(

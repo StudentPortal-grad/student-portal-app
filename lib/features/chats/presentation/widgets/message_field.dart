@@ -1,21 +1,13 @@
 import 'dart:developer';
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:student_portal/core/helpers/app_size_boxes.dart';
-import 'package:student_portal/core/helpers/file_service.dart';
 import 'package:student_portal/core/theming/colors.dart';
-import 'package:student_portal/core/utils/assets_app.dart';
 import 'package:student_portal/core/widgets/custom_text_field.dart';
-import 'package:student_portal/features/chats/presentation/manager/conversation_bloc/conversation_bloc.dart';
 
-import '../../../../core/repo/user_repository.dart';
 import '../../../../core/theming/text_styles.dart';
-import '../../../../core/widgets/custom_image_view.dart';
-import '../../data/dto/attachment_dto.dart';
-import '../../data/model/attachment.dart';
-import '../../data/model/message.dart';
+import 'attachment_buttons.dart';
 
 class MessageField extends StatefulWidget {
   const MessageField({super.key, this.controller, this.onSendTap});
@@ -79,7 +71,6 @@ class _MessageFieldState extends State<MessageField> {
 
   @override
   Widget build(BuildContext context) {
-    final bloc = context.read<ConversationBloc>();
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -117,68 +108,7 @@ class _MessageFieldState extends State<MessageField> {
                   ),
                 ),
                 15.widthBox,
-                if (!isRecording) ...[
-                  CustomImageView(
-                    imagePath: AssetsApp.attachmentIcon,
-                    onTap: () async {
-                      final files = await FileService.pickFiles();
-                      if (files.isNotEmpty) {
-                        final paths = files.map((e) => e.path).toList();
-                        final me = UserRepository.user;
-                        final Message message = Message(
-                          createdAt: DateTime.now(),
-                          uploading: true,
-                          conversationId: bloc.conversation?.id,
-                          sender: Sender(
-                            id: me?.id ?? '',
-                            name: me?.name ?? '',
-                            profilePicture: me?.profilePicture ?? '',
-                          ),
-                        );
-
-                        bloc.add(SendAttachedMessageEvent(
-                            message: message,
-                            attachmentDto: AttachmentDto(
-                              conversationId: bloc.conversation?.id ?? '',
-                              attachments: paths,
-                            )));
-                      }
-                    },
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.camera_alt_outlined,
-                        color: ColorsManager.gray, size: 20.r),
-                    onPressed: () async {
-                      final files = await FileService.pickImages();
-                      if (files?.isNotEmpty ?? false) {
-                        final paths =
-                            files?.map((e) => e?.path ?? '').toList() ?? [];
-                        final attachments = files
-                            ?.map((e) => Attachment(url: e?.path ?? ''))
-                            .toList();
-
-                        final me = UserRepository.user;
-                        final Message message = Message(
-                          createdAt: DateTime.now(),
-                          uploading: true,
-                          conversationId: bloc.conversation?.id,
-                          sender: Sender(
-                            id: me?.id ?? '',
-                            name: me?.name ?? '',
-                            profilePicture: me?.profilePicture ?? '',
-                          ),
-                        );
-
-                        bloc.add(SendAttachedMessageEvent(
-                            message: message,
-                            attachmentDto: AttachmentDto(
-                              conversationId: bloc.conversation?.id ?? '',
-                              attachments: paths,
-                            )));
-                      }
-                    },
-                  ),
-                ],
+                if (!isRecording) AttachmentButtons(),
                 5.widthBox,
                 (isEmpty)
                     ? SizedBox.shrink()
