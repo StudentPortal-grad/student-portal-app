@@ -73,7 +73,7 @@ class MessagingImpl implements MessagingRepo {
         formData: await attachmentDto.toFormData(),
       );
       log("Attachment MESSAGES:: $data");
-      return Right(Message.fromJson(data));
+      return Right(Message.fromJson(data['data']));
     } on DioException catch (e) {
       return Left(ServerFailure.fromDioError(e));
     }

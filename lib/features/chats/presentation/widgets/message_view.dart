@@ -8,6 +8,7 @@ import '../../../../core/theming/text_styles.dart';
 import '../../../../core/utils/get_color_from_id.dart';
 import '../../../../core/widgets/custom_image_view.dart';
 import '../../../../core/widgets/app_text.dart';
+import '../../../resource/presentation/widgets/pdf_post_view.dart';
 import '../../data/model/message.dart' as model;
 
 class MessageItemView extends StatelessWidget {
@@ -52,24 +53,12 @@ class MessageItemView extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // if (message.reply != null) ...[_buildReply(userName: 'You', reply: message.reply!), 8.heightBox],
-              if (message.attachments?.isNotEmpty ?? false) ...[
-                CustomImageView(imagePath: message.attachments?[0].resource ?? ''),
-                if (message.content?.isNotEmpty ?? false) ...[
-                  10.heightBox,
-                  Align(
-                    alignment: AlignmentDirectional.centerEnd,
-                    child: AppText(
-                      text: message.content ?? '',
-                      style: Styles.font16w500
-                          .copyWith(fontWeight: FontWeight.w400),
-                    ),
-                  ),
-                ]
-              ] else
+              if (message.attachments?.isNotEmpty ?? false)
+                _buildAttachedView()
+                else
                 AppText(
                   text: message.content ?? '',
-                  style:
-                      Styles.font16w500.copyWith(fontWeight: FontWeight.w400),
+                  style: Styles.font16w500.copyWith(fontWeight: FontWeight.w400),
                 ),
             ],
           ),
@@ -118,12 +107,47 @@ class MessageItemView extends StatelessWidget {
               ),
               AppText(
                   text: reply.content ?? '',
-                  style:
-                      Styles.font16w500.copyWith(fontWeight: FontWeight.w400)),
+                  style: Styles.font16w500.copyWith(fontWeight: FontWeight.w400)),
             ],
           )
         ],
       ),
     );
+  }
+
+  Widget _buildAttachedView() {
+    return Column(children: [
+      SizedBox(
+        width: 0.6.sw,
+        child: ListView.builder(
+          shrinkWrap: true,
+          physics: NeverScrollableScrollPhysics(),
+          itemBuilder: (context, index) {
+            if(message.attachments?[index].type == 'file') {
+              return PdfPostView(
+                title: '${message.attachments?[index].fileName}',
+                url: message.attachments?[index].url ?? '',
+                size: message.attachments?[index].fileSize,
+              );
+            }
+            return CustomImageView(
+              height: 150.h,
+              imagePath: message.attachments?[index].url ?? '');
+          },
+          itemCount: message.attachments?.length ?? 0,
+        ),
+      ),
+      if (message.content?.isNotEmpty ?? false) ...[
+        10.heightBox,
+        Align(
+          alignment: AlignmentDirectional.centerEnd,
+          child: AppText(
+            text: message.content ?? '',
+            style: Styles.font16w500
+                .copyWith(fontWeight: FontWeight.w400),
+          ),
+        ),
+      ]
+    ]);
   }
 }

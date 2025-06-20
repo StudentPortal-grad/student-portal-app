@@ -35,7 +35,7 @@ class SocketService {
 
     try {
       final TokenModel? token = await getIt<SecureStorage>().readSecureData();
-
+      log("TOKEN:: ${token?.accessToken}");
       _socket = io.io(
         ApiEndpoints.host,
         io.OptionBuilder()
