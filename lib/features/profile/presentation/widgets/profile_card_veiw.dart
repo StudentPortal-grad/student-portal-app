@@ -51,15 +51,6 @@ class ProfileCardView extends StatelessWidget {
                   color: Colors.white,
                   onSelect: (value) {},
                   items: [
-                    user?.isFollowed == true
-                        ? PopupMenuItem(
-                            value: 'UnFollow',
-                            child: Text('UnFollow'),
-                          )
-                        : PopupMenuItem(
-                            value: 'Follow',
-                            child: Text('Follow'),
-                          ),
                     user?.isBlocked == true
                         ? PopupMenuItem(
                             value: 'UnBlock',
@@ -100,13 +91,11 @@ class ProfileCardView extends StatelessWidget {
               // to show posts, followers, following and title
               ProfileDetails(
                 user: user,
-                onPostsTap: onPostsTap,
-                onFollowersTap: () {
-                  AppRouter.router.push(AppRouter.followers);
+                onFollow: (){
+                  print('object');
                 },
-                onFollowingTap: () {
-                  AppRouter.router.push(AppRouter.followings);
-                },
+                onFollowersTap: () => AppRouter.router.push(AppRouter.followers),
+                onFollowingTap: () => AppRouter.router.push(AppRouter.followings),
               ),
             ],
           ),

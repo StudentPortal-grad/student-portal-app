@@ -6,50 +6,54 @@ import 'package:student_portal/core/helpers/app_text_view.dart';
 import '../../../../core/theming/colors.dart';
 import '../../../../core/theming/text_styles.dart';
 import '../../../auth/data/model/user_model/user.dart';
+import 'follow_button.dart';
 
 class ProfileDetails extends StatelessWidget {
   const ProfileDetails({
     super.key,
-    this.onPostsTap,
+    this.onFollow,
     this.onFollowersTap,
     this.onFollowingTap,
     this.user,
   });
 
   final User? user;
-  final Function()? onPostsTap;
+  final Function()? onFollow;
   final Function()? onFollowersTap;
   final Function()? onFollowingTap;
 
   @override
   Widget build(BuildContext context) {
-    // return CustomLoadingIndicator();
     return Column(
       children: [
-        Row(
-          children: [
-            _buildStatItem("0", "Posts", onPostsTap),
-            _buildDivider(),
-            _buildStatItem("0", "Followers", onFollowersTap),
-            _buildDivider(),
-            _buildStatItem("0", "Following", onFollowingTap),
-          ],
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 10.w),
+          child: Row(
+            children: [
+              _buildStatItem("0", "Followers", onFollowersTap),
+              _buildDivider(),
+              _buildStatItem("0", "Following", onFollowingTap),
+              FollowButton(
+                onTap: onFollow,
+                isFollowed: true,
+              ),
+            ],
+          ),
         ),
         20.heightBox,
-        Row(
-          // mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            35.widthBox,
-            Icon(Icons.person_rounded,
-                color: ColorsManager.mainColorLight, size: 20.sp),
-            3.widthBox,
-            "Student at Damanhour University".make(
-              style: Styles.font14w400.copyWith(
-                color: ColorsManager.mainColorLight,
+        if (user?.university?.isNotEmpty ?? false)
+          Row(
+            children: [
+              35.widthBox,
+              Icon(Icons.person_rounded, color: ColorsManager.mainColorLight, size: 20.sp),
+              3.widthBox,
+              "Student at ${user?.university}".make(
+                style: Styles.font14w400.copyWith(
+                  color: ColorsManager.mainColorLight,
+                ),
               ),
-            ),
-          ],
-        ),
+            ],
+          ),
       ],
     );
   }
