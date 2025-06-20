@@ -342,10 +342,12 @@ abstract class AppRouter {
       GoRoute(
         path: followings,
         pageBuilder: (context, state) {
+          final args = state.extra as Map<String, dynamic>?;
+          String? userId = args?['userId'];
           return buildPage(
             context: context,
             state: state,
-            child: FollowingScreen(),
+            child: FollowingScreen(userId: userId),
           );
         },
       ),

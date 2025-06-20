@@ -9,11 +9,11 @@ part 'follow_event.dart';
 part 'follow_state.dart';
 
 class FollowBloc extends Bloc<FollowEvent, FollowState> {
-  FollowBloc() : super(FollowInitial()) {
+  FollowBloc(this.isFollowing) : super(FollowInitial()) {
     on<FollowUserEvent>(_followUser);
     on<UnFollowUserEvent>(_unfollowUser);
   }
-
+  bool? isFollowing;
   final FollowUserUc followUserUc = FollowUserUc(getIt<ProfileRepository>());
 
   Future<void> _followUser(FollowUserEvent event, Emitter<FollowState> emit) async {
@@ -21,7 +21,10 @@ class FollowBloc extends Bloc<FollowEvent, FollowState> {
     var data = await followUserUc.follow(userId: event.userId);
     data.fold(
       (error) => emit(FollowFailed(error.message ?? "Something went wrong")),
-      (response) => emit(FollowSuccess(response)),
+      (response) {
+        isFollowing = true;
+        emit(FollowSuccess(response));
+      },
     );
   }
 
@@ -30,7 +33,10 @@ class FollowBloc extends Bloc<FollowEvent, FollowState> {
     var data = await followUserUc.unfollow(userId: event.userId);
     data.fold(
       (error) => emit(UnFollowFailed(error.message ?? "Something went wrong")),
-      (response) => emit(UnFollowSuccess(response)),
+      (response) {
+        isFollowing = false;
+        emit(UnFollowSuccess(response));
+      },
     );
   }
 }

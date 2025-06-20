@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:student_portal/core/helpers/app_size_boxes.dart';
 import 'package:student_portal/core/helpers/app_text_view.dart';
 
+import '../../../../core/repo/user_repository.dart';
 import '../../../../core/theming/colors.dart';
 import '../../../../core/theming/text_styles.dart';
 import '../../../auth/data/model/user_model/user.dart';
@@ -12,13 +13,17 @@ class ProfileDetails extends StatelessWidget {
   const ProfileDetails({
     super.key,
     this.onFollow,
+    this.isFollowing = false,
     this.onFollowersTap,
     this.onFollowingTap,
+    this.onPostTap,
     this.user,
   });
 
   final User? user;
+  final bool isFollowing;
   final Function()? onFollow;
+  final Function()? onPostTap;
   final Function()? onFollowersTap;
   final Function()? onFollowingTap;
 
@@ -33,10 +38,15 @@ class ProfileDetails extends StatelessWidget {
               _buildStatItem("0", "Followers", onFollowersTap),
               _buildDivider(),
               _buildStatItem("0", "Following", onFollowingTap),
+              if(user?.id != UserRepository.user?.id)
               FollowButton(
                 onTap: onFollow,
-                isFollowed: true,
-              ),
+                isFollowed: isFollowing,
+              )
+              else ...[
+                _buildDivider(),
+                _buildStatItem("0", "Posts", onPostTap),
+              ]
             ],
           ),
         ),

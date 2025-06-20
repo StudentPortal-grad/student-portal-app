@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:student_portal/core/helpers/app_size_boxes.dart';
 import 'package:student_portal/core/helpers/app_text_view.dart';
@@ -13,6 +14,7 @@ import '../../../../core/widgets/custom_appbar.dart';
 import '../../../../core/widgets/custom_image_view.dart';
 import '../../../../core/widgets/more_options_buttons.dart';
 import '../../../auth/data/model/user_model/user.dart';
+import '../manager/follow_unfollow_bloc/follow_bloc.dart';
 
 class ProfileCardView extends StatelessWidget {
   const ProfileCardView({super.key, this.onPostsTap, this.user});
@@ -48,20 +50,20 @@ class ProfileCardView extends StatelessWidget {
           action: (user?.id == UserRepository.user?.id)
               ? null
               : MoreOptionsButton(
-                  color: Colors.white,
-                  onSelect: (value) {},
-                  items: [
-                    user?.isBlocked == true
-                        ? PopupMenuItem(
-                            value: 'UnBlock',
-                            child: Text('UnBlock'),
-                          )
-                        : PopupMenuItem(
-                            value: 'Block',
-                            child: Text('Block'),
-                          ),
-                  ],
-                ),
+            color: Colors.white,
+            onSelect: (value) {},
+            items: [
+              user?.isBlocked == true
+                  ? PopupMenuItem(
+                value: 'UnBlock',
+                child: Text('UnBlock'),
+              )
+                  : PopupMenuItem(
+                value: 'Block',
+                child: Text('Block'),
+              ),
+            ],
+          ),
         ),
 
         // profile body
@@ -88,14 +90,27 @@ class ProfileCardView extends StatelessWidget {
                     style: Styles.font14w400
                         .copyWith(color: ColorsManager.grayColor)),
               25.heightBox,
-              // to show posts, followers, following and title
-              ProfileDetails(
-                user: user,
-                onFollow: (){
-                  print('object');
-                },
-                onFollowersTap: () => AppRouter.router.push(AppRouter.followers),
-                onFollowingTap: () => AppRouter.router.push(AppRouter.followings),
+              BlocProvider(
+                create: (context) => FollowBloc(user?.isFollowed ?? false),
+                child: BlocBuilder<FollowBloc, FollowState>(
+                  builder: (context, state) {
+                    final bloc = context.read<FollowBloc>();
+                    return ProfileDetails(
+                      user: user,
+                      isFollowing: bloc.isFollowing ?? false,
+                      onPostTap: onPostsTap,
+                      onFollow: () {
+                        if (bloc.isFollowing ?? false) {
+                          context.read<FollowBloc>().add(UnFollowUserEvent(user?.id ?? ''));
+                        } else {
+                          context.read<FollowBloc>().add(FollowUserEvent(user?.id ?? ''));
+                        }
+                      },
+                      onFollowersTap: () => AppRouter.router.push(AppRouter.followers),
+                      onFollowingTap: () => AppRouter.router.push(AppRouter.followings, extra: {'userId' : user?.id}),
+                    );
+                  },
+                ),
               ),
             ],
           ),

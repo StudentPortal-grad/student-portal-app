@@ -4,6 +4,7 @@ import 'package:student_portal/core/helpers/app_size_boxes.dart';
 import 'package:student_portal/core/helpers/app_text_view.dart';
 import 'package:student_portal/core/widgets/custom_appbar.dart';
 
+import '../../../../core/repo/user_repository.dart';
 import '../../../../core/theming/colors.dart';
 import '../../../../core/theming/text_styles.dart';
 import '../../../../core/utils/assets_app.dart';
@@ -12,7 +13,9 @@ import '../../../../core/widgets/custom_text_field.dart';
 import '../../../../core/widgets/user_row_view.dart';
 
 class FollowingScreen extends StatefulWidget {
-  const FollowingScreen({super.key});
+  const FollowingScreen({super.key, this.userId});
+
+  final String? userId;
 
   @override
   State<FollowingScreen> createState() => _FollowingScreenState();
@@ -31,7 +34,7 @@ class _FollowingScreenState extends State<FollowingScreen> {
         title: "Following".make(style: Styles.font20w600),
       ),
       body: Padding(
-        padding:  EdgeInsets.symmetric(horizontal: 24.w),
+        padding: EdgeInsets.symmetric(horizontal: 24.w),
         child: Column(
           children: [
             15.heightBox,
@@ -50,7 +53,7 @@ class _FollowingScreenState extends State<FollowingScreen> {
                 physics: const BouncingScrollPhysics(),
                 shrinkWrap: true,
                 padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 20.h),
-                itemBuilder: (context, index) => UserRowView(showRemoveIcon: true),
+                itemBuilder: (context, index) => UserRowView(showRemoveIcon: widget.userId  == UserRepository.user?.id),
                 separatorBuilder: (context, index) => 15.heightBox,
                 itemCount: 50,
               ),

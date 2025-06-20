@@ -22,7 +22,7 @@ class FollowButton extends StatelessWidget {
       borderRadius: 20.r,
       label: isFollowed ? 'Following' : 'Follow',
       textStyle: Styles.font16w700.copyWith(color: Colors.white),
-      onTap: onTap?.call() ?? () {},
+      onTap: () => onTap?.call(),
       spacing: 5.w,
       prefixIcon: Icon(
           isFollowed ? Icons.check_rounded : Icons.person_add_alt_1_rounded,

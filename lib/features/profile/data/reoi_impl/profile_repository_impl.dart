@@ -88,6 +88,7 @@ class ProfileRepositoryImpl implements ProfileRepository {
       var data = await apiService.post(
         endpoint: ApiEndpoints.followById(userId),
       );
+      log("FOLLOW:: ${data.toString()}");
       return Right(data['message'] ?? '');
     } on DioException catch (e) {
       return Left(ServerFailure.fromDioError(e));
@@ -101,6 +102,7 @@ class ProfileRepositoryImpl implements ProfileRepository {
       var data = await apiService.post(
         endpoint: ApiEndpoints.unfollowById(userId),
       );
+      log("UNFOLLOW:: ${data.toString()}");
       return Right(data['message'] ?? '');
     } on DioException catch (e) {
       return Left(ServerFailure.fromDioError(e));

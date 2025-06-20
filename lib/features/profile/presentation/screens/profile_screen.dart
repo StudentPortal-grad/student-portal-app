@@ -95,15 +95,14 @@ class _ProfileScreenState extends State<ProfileScreen>
                   controller: _scrollController,
                   child: Column(
                     children: [
-                      ProfileCardView(onPostsTap: _onPostTap, user: state.user),
+                      ProfileCardView(onPostsTap: _onPostTap, user: state.user,),
                       TabBar(
                         controller: _tabController,
                         splashFactory: NoSplash.splashFactory,
                         dividerColor: Colors.transparent,
                         labelStyle: Styles.font14w400,
                         indicator: UnderlineTabIndicator(
-                          borderSide: BorderSide(
-                              color: ColorsManager.mainColor, width: 2.5.w),
+                          borderSide: BorderSide(color: ColorsManager.mainColor, width: 2.5.w),
                           borderRadius: BorderRadius.circular(7.r),
                         ),
                         labelColor: ColorsManager.mainColor,

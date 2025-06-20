@@ -39,10 +39,14 @@ class UserRowView extends StatelessWidget {
                 style: Styles.font15w600
                     .copyWith(fontSize: 16.sp, color: ColorsManager.textColor)),
             if (user?.username != null)
-              Text(
-                '@${user?.username}',
-                style: Styles.font14w400.copyWith(
-                    fontWeight: FontWeight.w400, color: ColorsManager.black53),
+              SizedBox(
+                width: 0.45.sw,
+                child: Text(
+                  '@${user?.username}',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: Styles.font14w400.copyWith(fontWeight: FontWeight.w400, color: ColorsManager.black53),
+                ),
               ),
           ],
         ),
