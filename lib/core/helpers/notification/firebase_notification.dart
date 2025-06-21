@@ -1,12 +1,13 @@
-/*
-// ignore_for_file: avoid_print
+import 'dart:developer';
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:goalak_app/data/utils/api_paths.dart';
-import 'package:goalak_app/data/utils/api_service.dart';
+import '../../network/api_service.dart';
+import '../../utils/service_locator.dart';
 import 'notification_manger.dart';
 
 String? fCMToken;
+
 class FirebaseManager {
   static final _firebaseMessaging = FirebaseMessaging.instance;
 
@@ -15,17 +16,32 @@ class FirebaseManager {
     fCMToken = await _firebaseMessaging.getToken();
 
     NotificationManager().initNotification();
-    print('FCM Token: $fCMToken');
-
+    log('FCM Token: $fCMToken');
     initPushNotifications();
+  }
+
+  @pragma('vm:entry-point')
+  static Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+    await Firebase.initializeApp();
+
+    final title = message.data['title'] ?? '';
+    final body = message.data['body'] ?? '';
+
+    await NotificationManager().initNotification(); // ensure plugin initialized
+    await NotificationManager().showNotification(
+      title: title,
+      description: body,
+      payload: message.data,
+      background: true,
+    );
   }
 
   void handleMessage(RemoteMessage? message) {
     if (message == null) return;
 
-    print('Title is: ${message.notification?.title}');
-    print('Body is: ${message.notification?.body}');
-    print('Payload is: ${message.data}');
+    log('Title is: ${message.notification?.title}');
+    log('Body is: ${message.notification?.body}');
+    log('Payload is: ${message.data}');
 
     final title = message.data['title'] ?? '';
     final body = message.data['body'] ?? '';
@@ -49,8 +65,7 @@ class FirebaseManager {
 
 
   static saveToken() async{
-    final res = await ApiService.postApi(ApiPaths.fbToken, body: {'fbToken': fCMToken});
-    print(res.data);
+    final res = await getIt<ApiService>().post(endpoint: '', data: {'fbToken': fCMToken});
+    log("Saving Token:: $res");
   }
 }
-*/

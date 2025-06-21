@@ -1,11 +1,10 @@
-/*
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:goalak_app/data/repositories/settings_repository.dart';
-import 'package:goalak_app/data/utils/api_paths.dart';
+
 import 'package:http/http.dart' as http;
+import 'package:student_portal/core/network/api_endpoints.dart';
 
 class NotificationManager {
   final FlutterLocalNotificationsPlugin notificationsPlugin = FlutterLocalNotificationsPlugin();
@@ -35,10 +34,10 @@ class NotificationManager {
   }) async {
     AndroidNotificationCategory? category;
     if(message) category = AndroidNotificationCategory.message;
-    if(!SettingsRepository.notification) return;
+    // if(!SettingsRepository.notification) return;
     AndroidNotificationDetails androidNotificationDetails = AndroidNotificationDetails(
-      'golak_channel_id',
-      'golak_channel_name',
+      'student_portal_channel_id',
+      'student_portal_channel_name',
       priority: Priority.high,
       importance: Importance.max,
       category: category,
@@ -79,7 +78,7 @@ class NotificationManager {
       );
     }
 
-    final image = Uri.tryParse('${ApiPaths.base}${payload?['image']}');
+    final image = Uri.tryParse('${ApiEndpoints.baseUrl}${payload?['image']}');
     if(image != null){
       try {
         final http.Response response = await http.get(image);
@@ -92,4 +91,3 @@ class NotificationManager {
     return null;
   }
 }
-*/

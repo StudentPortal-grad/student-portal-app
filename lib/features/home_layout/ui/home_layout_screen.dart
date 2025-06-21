@@ -31,6 +31,7 @@ class HomeLayoutScreen extends StatefulWidget {
 }
 
 class _HomeLayoutScreenState extends State<HomeLayoutScreen> {
+
   @override
   void initState() {
     super.initState();
@@ -43,10 +44,10 @@ class _HomeLayoutScreenState extends State<HomeLayoutScreen> {
       _listenToSocketEvents();
     } on SocketFailure catch (e) {
       log("Socket failure: ${e.message}");
-      context.showErrorToast(message: e.message, durationInMillis: 180000, isDismissible: true);
+      context.showErrorToast(message: e.message);
     } catch (e) {
       log("Unexpected error: $e");
-      context.showErrorToast(message: "Unexpected error: ", durationInMillis: 180000, isDismissible: true);
+      context.showErrorToast(message: "Unexpected error: ");
     }
   }
 
