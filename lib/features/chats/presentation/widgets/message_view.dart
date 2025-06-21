@@ -3,11 +3,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:student_portal/core/helpers/app_size_boxes.dart';
 import 'package:student_portal/core/theming/colors.dart';
 
+import '../../../../core/helpers/extensions.dart';
 import '../../../../core/repo/user_repository.dart';
 import '../../../../core/theming/text_styles.dart';
 import '../../../../core/utils/get_color_from_id.dart';
 import '../../../../core/widgets/custom_image_view.dart';
 import '../../../../core/widgets/app_text.dart';
+import '../../../home/data/model/post_model/attachment.dart' show Attachment;
+import '../../../home/presentation/pages/image_post_screen.dart';
 import '../../../resource/presentation/widgets/pdf_post_view.dart';
 import '../../data/model/message.dart' as model;
 
@@ -132,7 +135,20 @@ class MessageItemView extends StatelessWidget {
             }
             return CustomImageView(
               height: 150.h,
-              imagePath: message.attachments?[index].url ?? '');
+              imagePath: message.attachments?[index].url ?? '',
+              onTap: () {
+                push(
+                  ImagePostView(
+                    id: 0,
+                    title: '',
+                    attachment: Attachment(
+                      resource: message.attachments?[index].url ?? '',
+                      type: 'image',
+                    ),
+                  ),
+                );
+              },
+            );
           },
           itemCount: message.attachments?.length ?? 0,
         ),

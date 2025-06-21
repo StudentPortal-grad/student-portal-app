@@ -8,11 +8,12 @@ class ImagePostView extends StatelessWidget {
   const ImagePostView({
     super.key,
     required this.id,
-    this.attachment,
+    this.attachment, this.title,
   });
 
   final int id;
   final Attachment? attachment;
+  final String? title;
 
   @override
   Widget build(BuildContext context) {
@@ -30,8 +31,8 @@ class ImagePostView extends StatelessWidget {
           ),
           onPressed: () => Navigator.pop(context),
         ),
-        title: const Text(
-          "Post",
+        title: Text(
+          title ?? "Post",
           style: TextStyle(color: Colors.white),
         ),
       ),
