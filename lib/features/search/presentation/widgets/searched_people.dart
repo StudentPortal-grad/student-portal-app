@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:student_portal/core/helpers/app_size_boxes.dart';
+import 'package:student_portal/core/repo/user_repository.dart';
 import 'package:student_portal/features/groups/data/models/user_sibling.dart';
 import 'package:student_portal/features/search/presentation/widgets/user_searched_view.dart';
 
@@ -20,7 +21,7 @@ class SearchedPeople extends StatelessWidget {
       shrinkWrap: true,
       physics: AlwaysScrollableScrollPhysics(),
       padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 15.h),
-      itemBuilder: (context, index) => UserSearchedView(user: users[index],showDmButton: true),
+      itemBuilder: (context, index) => UserSearchedView(user: users[index],showDmButton: users[index].id != UserRepository.user?.id,),
       separatorBuilder: (context, index) => 15.heightBox,
       itemCount: users.length,
     );

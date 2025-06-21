@@ -21,10 +21,10 @@ class UserSearchedView extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        // AppRouter.router.push(
-        //   AppRouter.profile,
-        //   extra: {'userId': user?.id},
-        // );
+        AppRouter.router.push(
+          AppRouter.profile,
+          extra: {'userId': user?.id},
+        );
       },
       child: Row(
         children: [
