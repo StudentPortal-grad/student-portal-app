@@ -1,4 +1,8 @@
+import 'package:student_portal/features/resource/domain/entities/resource_entity.dart';
+
 import '../../../../../core/utils/assets_app.dart';
+import '../../../../groups/data/models/user_sibling.dart';
+import '../../../../home/domain/entities/post_entity.dart';
 import 'profile.dart';
 import 'address.dart';
 import 'friend.dart';
@@ -31,34 +35,42 @@ class User {
   final int? graduationYear;
   final bool? isFollowed;
   final bool? isBlocked;
+  final List<UserSibling> follower;
+  final List<UserSibling> following;
+  final List<PostEntity> posts;
+  final List<ResourceEntity> resources;
 
   User({
     this.id,
-      this.name,
-      this.username,
-      this.gender,
-      this.phoneNumber,
-      this.dateOfBirth,
-      this.university,
-      this.college,
-      this.email,
-      this.role,
-      this.profilePicture,
-      this.profile,
-      this.addresses,
-      this.friends,
-      this.level,
-      this.gpa,
-      this.universityEmail,
-      this.universityEmailVerified = false,
-      this.tempEmail,
-      this.emailVerified = false,
-      this.roles,
-      this.status,
-      this.isGraduated = false,
-      this.graduationYear,
-      this.isBlocked,
-      this.isFollowed,
+    this.name,
+    this.username,
+    this.gender,
+    this.phoneNumber,
+    this.dateOfBirth,
+    this.university,
+    this.college,
+    this.email,
+    this.role,
+    this.profilePicture,
+    this.profile,
+    this.addresses,
+    this.friends,
+    this.level,
+    this.gpa,
+    this.universityEmail,
+    this.universityEmailVerified = false,
+    this.tempEmail,
+    this.emailVerified = false,
+    this.roles,
+    this.status,
+    this.isGraduated = false,
+    this.graduationYear,
+    this.isBlocked,
+    this.isFollowed,
+    this.following = const [],
+    this.follower = const [],
+    this.posts = const [],
+    this.resources = const [],
   });
 
   /// Convert a `User` object into a JSON map
@@ -89,7 +101,11 @@ class User {
       'isGraduated': isGraduated,
       'graduationYear': graduationYear,
       'isFollowed' : isFollowed,
-      'isBlocked' : isBlocked,
+      'isBlocked': isBlocked,
+      'follower': follower,
+      'following': following,
+      'posts': posts,
+      'resources': resources,
     };
   }
 
@@ -121,7 +137,11 @@ class User {
       isGraduated: json['isGraduated'] ?? false,
       graduationYear: json['graduationYear'],
       isFollowed: json['isFollowed'],
-      isBlocked: json['isBlocked']
+      isBlocked: json['isBlocked'],
+      follower: json['followers'] != null ? (json['followers'] as List).map((r) => UserSibling.fromJson(r)).toList() : [],
+      following: json['following'] != null ? (json['following'] as List).map((r) => UserSibling.fromJson(r)).toList() : [],
+      posts: json['posts'] != null ? (json['posts'] as List).map((r) => PostEntity.fromJson(r)).toList() : [],
+      resources: json ['resources'] != null ? (json['resources'] as List).map((r) => ResourceEntity.fromJson(r)).toList() : []
     );
   }
 
@@ -153,6 +173,8 @@ class User {
     bool? isFollowed,
     bool? isBlocked,
     String? profilePicture,
+    List<UserSibling> followers = const [],
+    List<UserSibling> following =  const [],
   }) {
     return User(
       id: id,
@@ -181,6 +203,8 @@ class User {
       isFollowed: isFollowed,
       isBlocked: isBlocked,
       profilePicture: profilePicture,
+      follower: followers,
+      following: following
     );
   }
 }

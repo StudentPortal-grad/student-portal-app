@@ -23,7 +23,15 @@ class ProfileRepositoryImpl implements ProfileRepository {
     try {
       log('Getting my profile');
       var data = await apiService.get(
-        endpoint: ApiEndpoints.myProfile);
+        endpoint: ApiEndpoints.myProfile,
+        query: {
+          'populateFollowers': true,
+          'populateFollowing': true,
+          'showResources': true,
+          'showPosts': true,
+          'limit': 7
+        },
+      );
       log("Response::: ${data.toString()}");
       User user = User.fromJson(data['data']['user']);
       UserRepository.setUser(user);
@@ -38,7 +46,13 @@ class ProfileRepositoryImpl implements ProfileRepository {
   Future<Either<Failure, User>> getUserProfile({required String userId}) async {
     try {
       log('Getting user profile $userId');
-      var data = await apiService.get(endpoint: ApiEndpoints.getUserProfile(userId));
+      var data = await apiService.get(endpoint: ApiEndpoints.getUserProfile(userId),query: {
+        'populateFollowers': true,
+        'populateFollowing' : true,
+        'showResources' : true,
+        'showPosts' : true,
+        'limit' : 7
+      });
       log("Profile ::: ${data.toString()}");
       return Right(User.fromJson(data['data']['user']));
     } on DioException catch (e) {

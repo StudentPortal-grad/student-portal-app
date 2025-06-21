@@ -4,8 +4,18 @@ class UserSibling {
   final String? profilePicture;
   final int? level;
   final String? userName;
+  final int? followersCount;
+  final int? followingCount;
 
-  const UserSibling({this.id, this.name, this.profilePicture, this.level,this.userName});
+  const UserSibling({
+    this.id,
+    this.name,
+    this.profilePicture,
+    this.level,
+    this.userName,
+    this.followersCount,
+    this.followingCount,
+  });
 
   factory UserSibling.fromJson(Map<String, dynamic> map) {
     return UserSibling(
@@ -14,6 +24,8 @@ class UserSibling {
       profilePicture: map['profilePicture'],
       userName: map['userName'],
       level: map['level'],
+      followersCount: map['followersCount'],
+      followingCount: map['followingCount'],
     );
   }
 
@@ -24,6 +36,8 @@ class UserSibling {
     data['profilePicture'] = profilePicture;
     data['level'] = level;
     data['userName'] = userName;
+    data['followingCount'] = followingCount;
+    data['followersCount'] = followersCount;
     return data;
   }
 }

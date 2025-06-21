@@ -128,7 +128,6 @@ class _ProfileScreenState extends State<ProfileScreen>
                 ),
               );
             }
-
             return SizedBox.shrink();
           },
         ),
