@@ -42,7 +42,8 @@ class NotificationManager {
       importance: Importance.max,
       category: category,
       groupKey: message ? title : null,
-      styleInformation: await getStyleInfo(title, description, message, payload),
+      icon: '@mipmap/launcher_icon',
+      // styleInformation: await getStyleInfo(title, description, message, payload),
     );
 
     NotificationDetails notificationDetails = NotificationDetails(
