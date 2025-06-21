@@ -118,8 +118,8 @@ class _ProfileScreenState extends State<ProfileScreen>
                           controller: _tabController,
                           children: [
                             AboutProfileUserView(userProfile: state.user.profile),
-                            const ProfilePostsView(),
-                            const ProfileResourcesView(),
+                            ProfilePostsView(posts: state.user.posts),
+                            ProfileResourcesView(resources: state.user.resources),
                           ],
                         ),
                       ),

@@ -45,7 +45,7 @@ class ProfileDetails extends StatelessWidget {
               )
               else ...[
                 _buildDivider(),
-                _buildStatItem("0", "Posts", onPostTap),
+                _buildStatItem((user?.posts.length ?? 0).toString(), "Posts", onPostTap),
               ]
             ],
           ),
