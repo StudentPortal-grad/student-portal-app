@@ -138,8 +138,8 @@ class User {
       graduationYear: json['graduationYear'],
       isFollowed: json['isFollowed'],
       isBlocked: json['isBlocked'],
-      follower: json['followers'] != null ? (json['followers'] as List).map((r) => UserSibling.fromJson(r)).toList() : [],
-      following: json['following'] != null ? (json['following'] as List).map((r) => UserSibling.fromJson(r)).toList() : [],
+      follower: json['followers'] != null ? (json['followers'] as List).whereType<Map<String, dynamic>>().map((r) => UserSibling.fromJson(r)).toList() : [],
+      following: json['following'] != null ? (json['following'] as List).whereType<Map<String, dynamic>>().map((r) => UserSibling.fromJson(r)).toList() : [],
       posts: json['posts'] != null ? (json['posts'] as List).map((r) => PostEntity.fromJson(r)).toList() : [],
       resources: json ['resources'] != null ? (json['resources'] as List).map((r) => ResourceEntity.fromJson(r)).toList() : []
     );
