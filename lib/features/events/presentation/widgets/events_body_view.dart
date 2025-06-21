@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:student_portal/core/helpers/app_size_boxes.dart';
 
-import '../../../../core/theming/colors.dart';
 import '../../../../core/theming/text_styles.dart';
 import '../../../../core/utils/app_router.dart';
 import '../../../../core/widgets/loading_screen.dart';
@@ -95,10 +94,7 @@ class _EventsBodyViewState extends State<EventsBodyView> {
                 Padding(
                   padding: EdgeInsets.symmetric(vertical: 20.h),
                   child: Center(
-                    child: LoadingScreen(
-                      highlightColor: ColorsManager.mainColor,
-                      baseColor: ColorsManager.mainColorLight,
-                    ),
+                    child: LoadingScreen(useMainColors: true),
                   ),
                 )
             ],

@@ -150,7 +150,7 @@ class CustomImageView extends StatelessWidget {
               placeholder: (context, url) => const SizedBox(
                 height: 30,
                 width: 30,
-                child: LoadingScreen(),
+                child: LoadingScreen(useMainColors: true),
               ),
               errorWidget: (context, url, error) {
                 log('🛑 Network image failed: $error');

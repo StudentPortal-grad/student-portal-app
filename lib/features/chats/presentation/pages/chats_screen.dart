@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:student_portal/core/errors/data/model/error_model.dart';
 import 'package:student_portal/core/helpers/app_size_boxes.dart';
 import 'package:student_portal/core/utils/app_router.dart';
-import 'package:student_portal/core/widgets/custom_circular_progress_indicator.dart';
+import 'package:student_portal/core/widgets/loading_screen.dart';
 import '../../../../core/errors/view/error_screen.dart';
 import '../../../../core/theming/colors.dart';
 import '../../../../core/theming/text_styles.dart';
@@ -24,7 +24,7 @@ class ChatsScreen extends StatelessWidget {
         child: BlocBuilder<ChatsBloc, ChatsState>(
           builder: (context, state) {
             if (state is ChatsLoading) {
-              return const Center(child: CustomLoadingIndicator());
+              return const Center(child: LoadingScreen(useMainColors: true));
             }
             if (state is ChatsError) {
               return ErrorScreen(

@@ -4,7 +4,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:student_portal/core/helpers/app_size_boxes.dart';
 import 'package:student_portal/features/resource/presentation/widgets/resource_item_view.dart';
 
-import '../../../../core/theming/colors.dart';
 import '../../../../core/widgets/custom_refresh_indicator.dart';
 import '../../../../core/widgets/loading_screen.dart';
 import '../../../home/data/dto/vote_dto.dart';
@@ -102,10 +101,7 @@ class _ResourcesBodyViewState extends State<ResourcesBodyView> {
                   return Padding(
                     padding: EdgeInsets.symmetric(vertical: 20.h),
                     child: Center(
-                      child: LoadingScreen(
-                        highlightColor: ColorsManager.mainColor,
-                        baseColor: ColorsManager.mainColorLight,
-                      ),
+                      child: LoadingScreen(useMainColors: true),
                     ),
                   );
                 }

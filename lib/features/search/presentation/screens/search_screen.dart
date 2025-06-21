@@ -101,7 +101,7 @@ class _SearchScreenState extends State<SearchScreen>
               child: BlocBuilder<GlobalSearchBloc,GlobalSearchState>(
                 builder: (context, state) {
                   if(state is GlobalSearchLoading){
-                    return LoadingScreen();
+                    return LoadingScreen(useMainColors: true);
                   }
                   if (state is GlobalSearchFailed) {
                     return ErrorScreen(failure: Failure(message: state.message));

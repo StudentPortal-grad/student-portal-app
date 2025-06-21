@@ -109,7 +109,7 @@ class _ChooseMemberScreenState extends State<ChooseMemberScreen> {
                         current is GetSiblingsUserLoading),
                   builder: (context, state) {
                     if (state is GetSiblingsUserLoading) {
-                      return LoadingScreen();
+                      return LoadingScreen(useMainColors: true);
                     }
                     if (state is GetSiblingsUserFailed) {
                       return ErrorScreen(

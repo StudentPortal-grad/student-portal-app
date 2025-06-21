@@ -280,10 +280,7 @@ class _AddResourcesScreenState extends State<AddResourcesScreen> {
           builder: (context, state) {
             double percent = 0;
             String label = "Preparing to Upload...";
-            Widget content = const LoadingScreen(
-              baseColor: ColorsManager.mainColor,
-              highlightColor: ColorsManager.mainColorLight,
-            );
+            Widget content = const LoadingScreen(useMainColors: true);
             if (state is UploadResourceProgressLoading) {
               percent = state.percent.toDouble().clamp(0.0, 1.0);
               label = "Uploading... ${(percent * 100).toStringAsFixed(0)}%";

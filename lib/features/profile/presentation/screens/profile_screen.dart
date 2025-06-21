@@ -68,7 +68,7 @@ class _ProfileScreenState extends State<ProfileScreen>
         child: BlocBuilder<ProfileBloc, ProfileState>(
           builder: (context, state) {
             if (state is ProfileLoadingState) {
-              return LoadingScreen();
+              return LoadingScreen(useMainColors: true);
             }
             if(state is ProfileFailureState) {
               return ErrorScreen(

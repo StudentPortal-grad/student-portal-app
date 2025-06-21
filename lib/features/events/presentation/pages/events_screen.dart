@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:student_portal/core/theming/colors.dart';
 import 'package:student_portal/core/widgets/loading_screen.dart';
 import 'package:student_portal/features/events/presentation/manager/events_bloc/events_bloc.dart';
 
@@ -19,10 +18,7 @@ class EventsScreen extends StatelessWidget {
       builder: (context, state) {
         if (state is EventsLoading) {
           return Center(
-            child: LoadingScreen(
-              highlightColor: ColorsManager.mainColor,
-              baseColor: ColorsManager.mainColorLight,
-            ),
+            child: LoadingScreen(useMainColors: true),
           );
         }
         if (state is EventsError) {

@@ -83,7 +83,7 @@ class _SearchPeerScreenState extends State<SearchPeerScreen> {
               child: BlocBuilder<SearchPeopleBloc, SearchPeopleState>(
                 builder: (context, state) {
                   if (state is SearchPeopleLoading) {
-                    return LoadingScreen();
+                    return LoadingScreen(useMainColors: true);
                   }
                   if (state is SearchPeopleFailed) {
                     return ErrorScreen(

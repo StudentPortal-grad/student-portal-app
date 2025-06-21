@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:student_portal/core/helpers/custom_toast.dart';
 import '../../../../core/errors/data/model/error_model.dart';
 import '../../../../core/errors/view/error_screen.dart';
-import '../../../../core/theming/colors.dart';
 import '../../../../core/widgets/loading_screen.dart';
 import '../manager/discussion_bloc/discussion_bloc.dart';
 import '../widgets/home_body_view.dart';
@@ -27,10 +26,7 @@ class HomeScreen extends StatelessWidget {
       builder: (context, state) {
         if (state is DiscussionLoading) {
           return Center(
-            child: LoadingScreen(
-              highlightColor: ColorsManager.mainColor,
-              baseColor: ColorsManager.mainColorLight,
-            ),
+            child: LoadingScreen(useMainColors: true),
           );
         }
         if (state is DiscussionFailed) {

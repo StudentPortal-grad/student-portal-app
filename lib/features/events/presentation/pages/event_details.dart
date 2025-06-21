@@ -46,7 +46,7 @@ class EventDetailsScreen extends StatelessWidget {
               );
             }
             if (state is EventDetailsLoading) {
-              return LoadingScreen(showAppBar: true);
+              return LoadingScreen(showAppBar: true, useMainColors: true);
             } else if (state is EventDetailsLoaded) {
               return CustomRefreshIndicator(
                 onRefresh: () async => BlocProvider.of<EventDetailsBloc>(context).add(EventsRequested(eventId: eventId)),

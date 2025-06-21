@@ -5,7 +5,6 @@ import 'package:student_portal/features/resource/presentation/manager/get_resour
 
 import '../../../../../core/errors/data/model/error_model.dart';
 import '../../../../../core/errors/view/error_screen.dart';
-import '../../../../../core/theming/colors.dart';
 import '../../../../../core/widgets/loading_screen.dart';
 import '../widgets/resources_body_view.dart';
 
@@ -25,10 +24,7 @@ class ResourcesScreen extends StatelessWidget {
       builder: (context, state) {
         if (state is GetResourceLoading) {
           return Center(
-            child: LoadingScreen(
-              highlightColor: ColorsManager.mainColor,
-              baseColor: ColorsManager.mainColorLight,
-            ),
+            child: LoadingScreen(useMainColors: true),
           );
         }
         if (state is GetResourceFailed) {
