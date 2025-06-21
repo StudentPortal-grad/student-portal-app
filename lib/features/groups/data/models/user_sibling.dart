@@ -1,3 +1,5 @@
+import '../../../auth/data/model/user_model/user.dart';
+
 class UserSibling {
   final String? id;
   final String? name;
@@ -40,4 +42,12 @@ class UserSibling {
     data['followersCount'] = followersCount;
     return data;
   }
+
+  User toUser() => User(
+        id: id,
+        name: name,
+        profilePicture: profilePicture,
+        level: level,
+        username: userName,
+      );
 }

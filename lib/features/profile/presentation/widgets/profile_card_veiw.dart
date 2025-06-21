@@ -106,8 +106,8 @@ class ProfileCardView extends StatelessWidget {
                           context.read<FollowBloc>().add(FollowUserEvent(user?.id ?? ''));
                         }
                       },
-                      onFollowersTap: () => AppRouter.router.push(AppRouter.followers),
-                      onFollowingTap: () => AppRouter.router.push(AppRouter.followings, extra: {'userId' : user?.id}),
+                      onFollowersTap: () => AppRouter.router.push(AppRouter.followers,extra: {'followers': user?.follower}),
+                      onFollowingTap: () => AppRouter.router.push(AppRouter.followings, extra: {'userId' : user?.id, 'following' : user?.following}),
                     );
                   },
                 ),

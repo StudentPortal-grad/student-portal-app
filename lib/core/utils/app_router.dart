@@ -7,6 +7,7 @@ import 'package:student_portal/features/chats/presentation/pages/dm_screen.dart'
 import 'package:student_portal/features/chats/presentation/pages/search_peer_screen.dart';
 import 'package:student_portal/features/community/presentation/screens/community_screen.dart';
 import 'package:student_portal/features/community/presentation/screens/create_community_screen.dart';
+import 'package:student_portal/features/groups/data/models/user_sibling.dart';
 import 'package:student_portal/features/home/presentation/manager/create_post_bloc/create_post_bloc.dart';
 import 'package:student_portal/features/home/presentation/manager/discussion_details_bloc/discussion_details_bloc.dart';
 import 'package:student_portal/features/home/presentation/pages/add_post_screen.dart';
@@ -332,10 +333,12 @@ abstract class AppRouter {
       GoRoute(
         path: followers,
         pageBuilder: (context, state) {
+          final args = state.extra as Map<String, dynamic>?;
+          List<UserSibling> followers = args?['followers'] ?? [];
           return buildPage(
             context: context,
             state: state,
-            child: FollowersScreen(),
+            child: FollowersScreen(followers: followers,),
           );
         },
       ),
@@ -344,10 +347,11 @@ abstract class AppRouter {
         pageBuilder: (context, state) {
           final args = state.extra as Map<String, dynamic>?;
           String? userId = args?['userId'];
+          List<UserSibling> following = args?['following'] ?? [];
           return buildPage(
             context: context,
             state: state,
-            child: FollowingScreen(userId: userId),
+            child: FollowingScreen(userId: userId,following: following),
           );
         },
       ),

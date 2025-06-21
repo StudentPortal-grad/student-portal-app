@@ -35,9 +35,9 @@ class ProfileDetails extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: 10.w),
           child: Row(
             children: [
-              _buildStatItem("0", "Followers", onFollowersTap),
+              _buildStatItem((user?.follower.length ?? 0).toString(), "Followers", onFollowersTap),
               _buildDivider(),
-              _buildStatItem("0", "Following", onFollowingTap),
+              _buildStatItem((user?.following.length ?? 0).toString(), "Following", onFollowingTap),
               if(user?.id != UserRepository.user?.id)
               FollowButton(
                 onTap: onFollow,
