@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "389657494950",
+    "project_id": "studentportal-15b50",
+    "storage_bucket": "studentportal-15b50.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:389657494950:android:e97fbb10d31044732fbb67",
+        "android_client_info": {
+          "package_name": "com.example.student_portal"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAOEphBUifeLKMSakydfMKGsVielzfeZFw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
