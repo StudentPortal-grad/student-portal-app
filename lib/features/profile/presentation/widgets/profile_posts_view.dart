@@ -23,7 +23,11 @@ class ProfilePostsView extends StatelessWidget {
       separatorBuilder: (context, index) => 15.heightBox,
       itemBuilder: (context, index) => GestureDetector(
         onTap: () => AppRouter.router.push(AppRouter.postDetails,extra: {'post' : posts[index]}),
-        child: PostView(discussion: posts[index],navToDetails: true,),
+        child: PostView(
+          onVoteTap: (p0) => AppRouter.router.push(AppRouter.postDetails,extra: {'post' : posts[index]}),
+          discussion: posts[index],
+          navToDetails: true,
+        ),
       ),
       itemCount: posts.length,
     );
