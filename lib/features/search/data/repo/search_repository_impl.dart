@@ -22,6 +22,7 @@ class SearchRepositoryImpl implements SearchRepository {
       log('Searching for ::: $query');
       final response = await apiService.get(endpoint: ApiEndpoints.globalSearch, query: {
         'q': query ?? '',
+        'currVoteSpecified' : true,
       });
       log('Searched :: $response');
       return Right(GlobalSearch.fromJson(response['data'] as Map<String, dynamic>));

@@ -1,7 +1,6 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:student_portal/core/helpers/app_size_boxes.dart';
 import 'package:student_portal/core/helpers/custom_toast.dart';
@@ -9,15 +8,11 @@ import 'package:student_portal/core/theming/colors.dart';
 import 'package:student_portal/core/theming/text_styles.dart';
 import 'package:student_portal/core/utils/app_router.dart';
 import 'package:student_portal/core/utils/assets_app.dart';
-import 'package:student_portal/features/home/presentation/manager/discussion_bloc/discussion_bloc.dart';
 import 'package:student_portal/features/home_layout/ui/widgets/drawer.dart';
 import 'package:student_portal/features/home_layout/ui/widgets/nav_bar.dart';
-import 'package:student_portal/features/resource/presentation/manager/get_resource_bloc/get_resource_bloc.dart';
 import '../../../core/errors/data/model/socket_failure.dart';
 import '../../../core/utils/socket_service.dart';
-import '../../chats/presentation/manager/chats_bloc/chats_bloc.dart';
 import '../../chats/presentation/pages/chats_screen.dart';
-import '../../events/presentation/manager/events_bloc/events_bloc.dart';
 import '../../events/presentation/pages/events_screen.dart';
 import '../../home/presentation/pages/home_screen.dart';
 import '../../home/presentation/widgets/app_bar_home.dart';
@@ -94,44 +89,36 @@ class _HomeLayoutScreenState extends State<HomeLayoutScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider<DiscussionBloc>(create: (_) => DiscussionBloc()..add(DiscussionRequested())),
-        BlocProvider<EventsBloc>(create: (_) => EventsBloc()..add(EventsRequested())),
-        BlocProvider<GetResourceBloc>(create: (_) => GetResourceBloc()..add(GetResourceEventRequested())),
-        BlocProvider<ChatsBloc>(create: (context) => ChatsBloc()..add(StartListeningToConversations())),
-      ],
-      child: PopScope(
-        canPop: false,
-        onPopInvokedWithResult: (didPop, result) {
-          if(!didPop){
-            if(currentIndex != 0){
-              _onItemTapped(0);
-            }
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) {
+        if(!didPop){
+          if(currentIndex != 0){
+            _onItemTapped(0);
           }
-        },
-        child: Scaffold(
-          appBar: (currentIndex != 4) ? HomeAppBar() : null,
-          // disappear appbar in chat screen
-          backgroundColor: (currentIndex != 4)
-              ? ColorsManager.backgroundColorLight2
-              : Colors.white,
-          body: widgetOptions[currentIndex],
-          drawer: AppDrawer(),
-          bottomNavigationBar: CustomNavBar(
-            isMenuOpen: isMenuOpen,
-            selectedItemColor: ColorsManager.mainColorLight,
-            floatingOnTap: () {
-              toggleShowPopMenu();
-              _showPopupMenu(context, Offset(0.66.sw, .735.sh));
-            },
-            unselectedItemColor: ColorsManager.mainColorDark,
-            onTap: _onItemTapped,
-            backgroundColor: Colors.white,
-            currentIndex: currentIndex,
-            itemPadding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 12.h),
-            items: _buildNavBarItems(),
-          ),
+        }
+      },
+      child: Scaffold(
+        appBar: (currentIndex != 4) ? HomeAppBar() : null,
+        // disappear appbar in chat screen
+        backgroundColor: (currentIndex != 4)
+            ? ColorsManager.backgroundColorLight2
+            : Colors.white,
+        body: widgetOptions[currentIndex],
+        drawer: AppDrawer(),
+        bottomNavigationBar: CustomNavBar(
+          isMenuOpen: isMenuOpen,
+          selectedItemColor: ColorsManager.mainColorLight,
+          floatingOnTap: () {
+            toggleShowPopMenu();
+            _showPopupMenu(context, Offset(0.66.sw, .735.sh));
+          },
+          unselectedItemColor: ColorsManager.mainColorDark,
+          onTap: _onItemTapped,
+          backgroundColor: Colors.white,
+          currentIndex: currentIndex,
+          itemPadding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 12.h),
+          items: _buildNavBarItems(),
         ),
       ),
     );

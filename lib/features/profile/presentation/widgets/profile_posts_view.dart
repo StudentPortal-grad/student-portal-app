@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:student_portal/core/helpers/app_size_boxes.dart';
 import 'package:student_portal/core/helpers/app_text_view.dart';
 import 'package:student_portal/features/home/domain/entities/post_entity.dart';
 
-import '../../../../core/utils/app_router.dart';
+import '../../../home/data/dto/vote_dto.dart';
+import '../../../home/presentation/manager/discussion_bloc/discussion_bloc.dart';
 import '../../../home/presentation/widgets/post_view.dart';
 
 class ProfilePostsView extends StatelessWidget {
@@ -21,13 +23,15 @@ class ProfilePostsView extends StatelessWidget {
       physics: BouncingScrollPhysics(),
       padding: EdgeInsets.symmetric(horizontal: 28.w, vertical: 15.h),
       separatorBuilder: (context, index) => 15.heightBox,
-      itemBuilder: (context, index) => GestureDetector(
-        onTap: () => AppRouter.router.push(AppRouter.postDetails,extra: {'post' : posts[index]}),
-        child: PostView(
-          onVoteTap: (p0) => AppRouter.router.push(AppRouter.postDetails,extra: {'post' : posts[index]}),
-          discussion: posts[index],
-          navToDetails: true,
-        ),
+      itemBuilder: (context, index) => PostView(
+        onSelect: (p0) {
+          if(p0 == 'delete') {
+            context.read<DiscussionBloc>().add(DeleteDiscussionEvent(posts[index].id ?? ''),);
+          }
+        },
+        onVoteTap: (p0) => context.read<DiscussionBloc>().add(VoteDiscussionEvent(voteDto: VoteDto(postId: posts[index].id ?? '', voteType: p0))),
+        discussion: posts[index],
+        navToDetails: true,
       ),
       itemCount: posts.length,
     );

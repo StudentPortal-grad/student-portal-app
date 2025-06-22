@@ -29,6 +29,7 @@ class ProfileRepositoryImpl implements ProfileRepository {
           'populateFollowing': true,
           'showResources': true,
           'showPosts': true,
+          'currVoteSpecified' : true,
           'limit': 7
         },
       );
@@ -51,6 +52,7 @@ class ProfileRepositoryImpl implements ProfileRepository {
         'populateFollowing' : true,
         'showResources' : true,
         'showPosts' : true,
+        'currVoteSpecified' : true,
         'limit' : 7
       });
       log("Profile ::: ${data.toString()}");
