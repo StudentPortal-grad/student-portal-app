@@ -49,7 +49,7 @@ class NotificationsScreen extends StatelessWidget {
                     Expanded(
                       child: ListView.separated(
                         padding: EdgeInsets.symmetric(vertical: 20.h),
-                        itemBuilder: (context, index) => NotificationItemView(notification: state.notifications[index]),
+                        itemBuilder: (context, index) => NotificationItemView(notification: state.notifications[index],showAvatar: false),
                         separatorBuilder: (context, index) => 10.heightBox,
                         itemCount: state.notifications.length,
                       ),

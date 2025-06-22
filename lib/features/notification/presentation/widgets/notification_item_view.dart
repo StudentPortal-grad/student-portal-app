@@ -12,25 +12,28 @@ import '../../../../core/widgets/custom_image_view.dart';
 import '../../data/model/notification.dart';
 
 class NotificationItemView extends StatelessWidget {
-  const NotificationItemView({super.key, this.notification});
+  const NotificationItemView({super.key, this.notification, this.showAvatar = true});
 
   final NotificationModel? notification;
+  final bool showAvatar;
 
   @override
   Widget build(BuildContext context) {
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        CustomImageView(
-          onTap: () {
-            // AppRouter.router.push(AppRouter.profile, extra: {'userId': user?.id});
-          },
-          circle: true,
-          width: 48.r,
-          height: 48.r,
-          imagePath: kUserImage,
-          placeHolder: kUserPlaceHolder,
-        ),
+        showAvatar
+            ? CustomImageView(
+                // onTap: () => AppRouter.router.push(AppRouter.profile, extra: {'userId': notification?.userId ??''}),
+                circle: true,
+                width: 48.r,
+                height: 48.r,
+                imagePath: kUserImage,
+                placeHolder: kUserPlaceHolder,
+              )
+            : CircleAvatar(
+                backgroundColor: ColorsManager.mainColorLight,
+                radius: 4.r,
+              ),
         12.widthBox,
         Expanded(
           child: Column(
