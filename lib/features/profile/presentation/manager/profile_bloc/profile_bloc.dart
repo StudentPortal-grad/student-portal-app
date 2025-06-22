@@ -154,11 +154,4 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     emit(OnPickProfileImageState());
   }
 
-  @override
-  Future<void> close() {
-    confirmPasswordController.dispose();
-    currentPasswordController.dispose();
-    newPasswordController.dispose();
-    return super.close();
-  }
 }
