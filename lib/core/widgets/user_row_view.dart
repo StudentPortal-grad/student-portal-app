@@ -47,7 +47,7 @@ class UserRowView extends StatelessWidget {
                       .copyWith(fontSize: 16.sp, color: ColorsManager.textColor)),
               if (user?.username != null)
                 SizedBox(
-                  width: 0.45.sw,
+                  width: 0.35.sw,
                   child: Text(
                     '@${user?.username}',
                     maxLines: 1,
