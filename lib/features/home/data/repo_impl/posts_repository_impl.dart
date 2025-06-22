@@ -23,7 +23,12 @@ class PostRepositoryImpl implements PostRepository {
     try {
       final response = await apiService.get(
           endpoint: ApiEndpoints.discussions,
-          query: {'limit': 5, 'page': page, 'currVoteSpecified': true});
+          query: {
+        'limit': 5,
+        'page': page,
+        'currVoteSpecified': true,
+        'ai_enabled': true,
+      });
       log('posts :: $response');
       return Right(response['data']['discussions'].map<Discussion>((e) => Discussion.fromJson(e)).toList());
     } on DioException catch (e) {

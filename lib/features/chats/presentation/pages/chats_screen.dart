@@ -10,6 +10,7 @@ import '../../../../core/theming/colors.dart';
 import '../../../../core/theming/text_styles.dart';
 import '../../../../core/utils/assets_app.dart';
 import '../../../../core/widgets/custom_image_view.dart';
+import '../../../../core/widgets/custom_refresh_indicator.dart';
 import '../manager/chats_bloc/chats_bloc.dart';
 import '../widgets/user_chat_view.dart';
 
@@ -36,22 +37,25 @@ class ChatsScreen extends StatelessWidget {
               if (state.conversations.isEmpty) {
                 return const Center(child: Text("No Conversations"));
               }
-              return Column(
-                children: [
-                  _buildMessagesAppBar(),
-                  20.heightBox,
-                  Expanded(
-                    child: Align(
-                      alignment: Alignment.topCenter,
-                      child: ListView.separated(
-                        shrinkWrap: true,
-                        itemBuilder: (context, index) => UserChatView(conversation: state.conversations[index]),
-                        separatorBuilder: (context, index) => Divider(),
-                        itemCount: state.conversations.length,
+              return CustomRefreshIndicator(
+                onRefresh: () async => BlocProvider.of<ChatsBloc>(context).add(StartListeningToConversations()),
+                child: Column(
+                  children: [
+                    _buildMessagesAppBar(),
+                    20.heightBox,
+                    Expanded(
+                      child: Align(
+                        alignment: Alignment.topCenter,
+                        child: ListView.separated(
+                          shrinkWrap: true,
+                          itemBuilder: (context, index) => UserChatView(conversation: state.conversations[index]),
+                          separatorBuilder: (context, index) => Divider(),
+                          itemCount: state.conversations.length,
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               );
             }
             return SizedBox.shrink();
