@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:dio/dio.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import '../../network/api_endpoints.dart';
@@ -80,11 +81,19 @@ class FirebaseManager {
   }
 
   static Future<void> saveToken() async {
-    final res = await getIt<ApiService>().post(
-      endpoint: ApiEndpoints.updateNotificationToken,
-      data: {'fcmToken': fCMToken, "platform": "mobile"},
-    );
-    log("Saving FCM Token:: $res");
+    if (fCMToken == null || fCMToken!.isEmpty) {
+      log('❌ fCMToken is null or empty. Not sending request.');
+      return;
+    }
+    try {
+      final res = await getIt<ApiService>().post(
+        endpoint: ApiEndpoints.updateNotificationToken,
+        data: {'fcmToken': fCMToken, "platform": "mobile"},
+      );
+      log("Saving FCM Token:: $res");
+    } on DioException catch (e) {
+      log("❌ Failed to save token: ${e.response?.statusCode} ${e.response?.data}");
+    }
   }
 
   static Future<void> removeToken() async {

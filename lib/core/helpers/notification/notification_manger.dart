@@ -50,7 +50,9 @@ class NotificationManager {
       android: androidNotificationDetails, iOS: const DarwinNotificationDetails()
     );
 
-    final id = int.tryParse(payload?['notificationId']) ?? DateTime.now().millisecondsSinceEpoch ~/ 1000;
+    final notificationId = payload?['notificationId'];
+    final id = int.tryParse(notificationId is String ? notificationId : '')
+        ?? DateTime.now().millisecondsSinceEpoch ~/ 1000;
 
     await notificationsPlugin.show(
       id,
