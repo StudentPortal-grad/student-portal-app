@@ -45,29 +45,27 @@ class EventItemView extends StatelessWidget {
               10.widthBox,
               Expanded(
                 child: Text(
-                  event?.title ?? 'NULL',
+                  event?.title ?? '',
                   style:
                       Styles.font18w600.copyWith(fontWeight: FontWeight.w500),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
               ),
-              10.widthBox,
-              CircleAvatar(
-                backgroundColor: ColorsManager.lightBabyBlue,
-                child: Icon(
-                  Icons.bookmark,
-                  color:
-                      ColorsManager.lightGrayColor, // ColorsManager.mainColor
-                ),
-              )
+              // 10.widthBox,
+              // CircleAvatar(
+              //   backgroundColor: ColorsManager.lightBabyBlue,
+              //   child: Icon(
+              //     Icons.bookmark,
+              //     color:
+              //         ColorsManager.lightGrayColor, // ColorsManager.mainColor
+              //   ),
+              // )
             ],
           ),
           10.heightBox,
           Text(
-            event?.description ??
-                'Join us for the Tech Career Fair on March 15, 2024, at the Downtown Convention Center!',
-            style: Styles.font14w400,
+            event?.description ?? '', style: Styles.font14w400,
           ),
           10.heightBox,
           GoingPeopleListView(
