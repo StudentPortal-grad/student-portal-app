@@ -54,4 +54,7 @@ abstract class ApiEndpoints {
   // search
   static const String searchPeers = "search/peers";
   static const String globalSearch = "search";
+
+  // notifications
+  static const String notifications = "notifications";
 }

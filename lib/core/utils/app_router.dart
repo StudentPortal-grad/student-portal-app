@@ -12,6 +12,7 @@ import 'package:student_portal/features/home/presentation/manager/create_post_bl
 import 'package:student_portal/features/home/presentation/manager/discussion_details_bloc/discussion_details_bloc.dart';
 import 'package:student_portal/features/home/presentation/pages/add_post_screen.dart';
 import 'package:student_portal/features/home/presentation/pages/post_details_screen.dart';
+import 'package:student_portal/features/notification/presentation/manager/notification_bloc/notification_bloc.dart';
 import 'package:student_portal/features/profile/presentation/screens/following_screen.dart';
 import 'package:student_portal/features/profile/presentation/screens/profile_screen.dart';
 import 'package:student_portal/features/groups/presentation/screens/create_group_screen.dart';
@@ -313,7 +314,10 @@ abstract class AppRouter {
           return buildPage(
             context: context,
             state: state,
-            child: NotificationsScreen(),
+            child: BlocProvider(
+              create: (context) => NotificationBloc()..add(GetNotificationsEvent()),
+              child: NotificationsScreen(),
+            ),
           );
         },
       ),

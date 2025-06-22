@@ -6,6 +6,7 @@ import 'package:student_portal/features/chats/data/repo_impl/messaging_impl.dart
 import 'package:student_portal/features/chats/domain/repo/messaging_repo.dart';
 import 'package:student_portal/features/events/data/repositories/events_repository_impl.dart';
 import 'package:student_portal/features/home/domain/repo/posts_repository.dart';
+import 'package:student_portal/features/notification/data/repo/notification_repo_impl.dart';
 import 'package:student_portal/features/profile/domain/repo/profile_repository.dart';
 import 'package:student_portal/features/search/data/repo/search_repository_impl.dart';
 import 'package:student_portal/features/search/domain/repo/search_repository.dart';
@@ -15,6 +16,7 @@ import '../../features/events/domain/repositories/events_repository.dart';
 import '../../features/groups/data/repo_impl/group_repository_impl.dart';
 import '../../features/groups/domain/repo/group_repository.dart';
 import '../../features/home/data/repo_impl/posts_repository_impl.dart';
+import '../../features/notification/domain/repo/notification_repo.dart';
 import '../../features/profile/data/reoi_impl/profile_repository_impl.dart';
 import '../../features/resource/data/repo_impl/resource_repository_impl.dart';
 import '../../features/resource/domain/repo/resource_repository.dart';
@@ -53,4 +55,6 @@ void setupServiceLocator() {
   getIt.registerSingleton<GroupRepository>(GroupRepositoryImpl(getIt.get<ApiService>()));
   // Righter Search
   getIt.registerSingleton<SearchRepository>(SearchRepositoryImpl(getIt.get<ApiService>()));
+  // Register Notifications
+  getIt.registerSingleton<NotificationRepo>(NotificationRepoImpl(getIt.get<ApiService>()));
 }

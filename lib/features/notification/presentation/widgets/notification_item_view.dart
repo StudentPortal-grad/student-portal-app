@@ -9,9 +9,12 @@ import '../../../../core/theming/colors.dart';
 import '../../../../core/theming/text_styles.dart';
 import '../../../../core/widgets/app_text.dart';
 import '../../../../core/widgets/custom_image_view.dart';
+import '../../data/model/notification.dart';
 
 class NotificationItemView extends StatelessWidget {
-  const NotificationItemView({super.key});
+  const NotificationItemView({super.key, this.notification});
+
+  final NotificationModel? notification;
 
   @override
   Widget build(BuildContext context) {
@@ -19,10 +22,14 @@ class NotificationItemView extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         CustomImageView(
+          onTap: () {
+            // AppRouter.router.push(AppRouter.profile, extra: {'userId': user?.id});
+          },
           circle: true,
           width: 48.r,
           height: 48.r,
           imagePath: kUserImage,
+          placeHolder: kUserPlaceHolder,
         ),
         12.widthBox,
         Expanded(
@@ -30,12 +37,12 @@ class NotificationItemView extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               AppText(
-                text: "*Sofia, John and +19 others* liked your post.",
+                text: notification?.content ??'',
                 style: Styles.font14w500.copyWith(height: 1.5),
               ),
               5.heightBox,
               TimeHelper.instance
-                  .timeAgo(DateTime.now().subtract(Duration(minutes: 5)))
+                  .timeAgo(notification?.createdAt ?? DateTime.now())
                   .make(
                     style: Styles.font14w500.copyWith(
                       color: ColorsManager.gray3,
