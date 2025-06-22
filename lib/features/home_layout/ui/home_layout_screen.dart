@@ -1,7 +1,9 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:socket_io_client/socket_io_client.dart';
 import 'package:student_portal/core/helpers/app_size_boxes.dart';
 import 'package:student_portal/core/helpers/custom_toast.dart';
 import 'package:student_portal/core/theming/colors.dart';
@@ -11,7 +13,9 @@ import 'package:student_portal/core/utils/assets_app.dart';
 import 'package:student_portal/features/home_layout/ui/widgets/drawer.dart';
 import 'package:student_portal/features/home_layout/ui/widgets/nav_bar.dart';
 import '../../../core/errors/data/model/socket_failure.dart';
+import '../../../core/helpers/notification/firebase_notification.dart';
 import '../../../core/utils/socket_service.dart';
+import '../../chats/presentation/manager/chats_bloc/chats_bloc.dart';
 import '../../chats/presentation/pages/chats_screen.dart';
 import '../../events/presentation/pages/events_screen.dart';
 import '../../home/presentation/pages/home_screen.dart';
@@ -30,12 +34,21 @@ class _HomeLayoutScreenState extends State<HomeLayoutScreen> {
   @override
   void initState() {
     super.initState();
+    FirebaseManager.saveToken();
     _initializeSocket();
   }
 
   Future<void> _initializeSocket() async {
     try {
       await SocketService.init();
+      SocketService.socket.onReconnect(
+        (data) {
+          if (data != null) {
+            context.read<ChatsBloc>().add(StartListeningToConversations());
+            _listenToSocketEvents();
+          }
+        },
+      );
       _listenToSocketEvents();
     } on SocketFailure catch (e) {
       log("Socket failure: ${e.message}");
@@ -47,19 +60,26 @@ class _HomeLayoutScreenState extends State<HomeLayoutScreen> {
   }
 
   void _listenToSocketEvents() {
-    SocketService.socket.on('newMessage', (data) {
+    final socket = SocketService.socket;
+
+    socket.off('newMessage');
+    socket.off('friendRequestReceived');
+    socket.off('friendRequestAccepted');
+    socket.off('friendRequestSent');
+
+    socket.on('newMessage', (data) {
       debugPrint('newMessage: $data');
     });
 
-    SocketService.socket.on('friendRequestReceived', (data) {
+    socket.on('friendRequestReceived', (data) {
       debugPrint('friendRequestReceived: $data');
     });
 
-    SocketService.socket.on('friendRequestAccepted', (data) {
+    socket.on('friendRequestAccepted', (data) {
       debugPrint('friendRequestAccepted: $data');
     });
 
-    SocketService.socket.on('friendRequestSent', (data) {
+    socket.on('friendRequestSent', (data) {
       debugPrint('friendRequestSent: $data');
     });
   }

@@ -57,4 +57,5 @@ abstract class ApiEndpoints {
 
   // notifications
   static const String notifications = "notifications";
+  static const String updateNotificationToken = "fcm/token";
 }

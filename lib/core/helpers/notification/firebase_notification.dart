@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import '../../network/api_endpoints.dart';
 import '../../network/api_service.dart';
 import '../../utils/service_locator.dart';
 import 'notification_manger.dart';
@@ -12,20 +13,25 @@ class FirebaseManager {
   static final _firebaseMessaging = FirebaseMessaging.instance;
 
   Future<void> initNotifications() async {
-    await _firebaseMessaging.requestPermission();
+    await _firebaseMessaging.requestPermission(
+      alert: true,
+      badge: true,
+      sound: true,
+    );
     fCMToken = await _firebaseMessaging.getToken();
 
-    NotificationManager().initNotification();
     log('FCM Token: $fCMToken');
+    NotificationManager().initNotification();
     initPushNotifications();
   }
 
+  /// Top-level background handler
   @pragma('vm:entry-point')
   static Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
     await Firebase.initializeApp();
 
-    final title = message.data['title'] ?? '';
-    final body = message.data['body'] ?? '';
+    final title = message.data['title'] ?? message.notification?.title ?? '';
+    final body = message.data['body'] ?? message.notification?.body ?? '';
 
     await NotificationManager().initNotification(); // ensure plugin initialized
     await NotificationManager().showNotification(
@@ -36,36 +42,56 @@ class FirebaseManager {
     );
   }
 
+  /// Called for foreground, background (onMessageOpenedApp), and terminated (getInitialMessage)
   void handleMessage(RemoteMessage? message) {
     if (message == null) return;
 
-    log('Title is: ${message.notification?.title}');
-    log('Body is: ${message.notification?.body}');
-    log('Payload is: ${message.data}');
+    log('FCM Message Received: ${message.toMap()}');
 
-    final title = message.data['title'] ?? '';
-    final body = message.data['body'] ?? '';
+    final title = message.notification?.title ?? message.data['title'] ?? '';
+    final body = message.notification?.body ?? message.data['body'] ?? '';
 
-    NotificationManager().showNotification(title: title, description: body, payload: message.data);
+    NotificationManager().showNotification(
+      title: title,
+      description: body,
+      payload: message.data,
+    );
   }
 
-  Future initPushNotifications() async {
+  Future<void> initPushNotifications() async {
+    // Set foreground presentation options for iOS
     await _firebaseMessaging.setForegroundNotificationPresentationOptions(
       alert: true,
       badge: true,
       sound: true,
     );
 
-    await _firebaseMessaging.getInitialMessage().then(handleMessage);
+    // Handle terminated state
+    final initialMessage = await _firebaseMessaging.getInitialMessage();
+    if (initialMessage != null) {
+      handleMessage(initialMessage);
+    }
+
+    // Background (when tapped)
     FirebaseMessaging.onMessageOpenedApp.listen(handleMessage);
+
+    // Foreground
     FirebaseMessaging.onMessage.listen(handleMessage);
   }
 
-  static void deleteToken() => _firebaseMessaging.deleteToken();
+  static Future<void> saveToken() async {
+    final res = await getIt<ApiService>().post(
+      endpoint: ApiEndpoints.updateNotificationToken,
+      data: {'fcmToken': fCMToken, "platform": "mobile"},
+    );
+    log("Saving FCM Token:: $res");
+  }
 
-
-  static saveToken() async{
-    final res = await getIt<ApiService>().post(endpoint: '', data: {'fbToken': fCMToken});
-    log("Saving Token:: $res");
+  static Future<void> removeToken() async {
+    final res = await getIt<ApiService>().delete(
+      endpoint: ApiEndpoints.updateNotificationToken,
+    );
+    _firebaseMessaging.deleteToken();
+    log("Removing FCM Token:: $res");
   }
 }

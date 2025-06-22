@@ -24,6 +24,7 @@ import 'package:student_portal/features/auth/data/model/signup_response/signup_r
 import 'package:student_portal/features/auth/data/model/update_response/update_response.dart';
 
 import '../../../../core/errors/data/model/failures.dart';
+import '../../../../core/helpers/notification/firebase_notification.dart';
 import '../../../../core/network/api_endpoints.dart';
 import '../../../../core/network/api_service.dart';
 import '../../../../core/repo/user_repository.dart';
@@ -196,6 +197,7 @@ class AuthRepoImpl implements AuthRepository {
     try {
       var data = await apiService.post(endpoint: ApiEndpoints.logout);
       UserRepository.removeUser();
+      FirebaseManager.removeToken();
       await getIt<SecureStorage>().deleteSecureData();
       return Right(data['message'] ?? 'Logged out successfully');
     } on DioException catch (e) {
