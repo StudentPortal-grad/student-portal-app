@@ -51,14 +51,14 @@ class AppDrawer extends StatelessWidget {
                   icon: Icons.settings,
                   onTap: () => AppRouter.router.push(AppRouter.accountSettings),
                 ),
-                _buildDrawerItem(title: "BookMark", icon: Icons.local_offer),
-                _buildDrawerItem(
-                    title: "Your Communities",
-                    icon: Icons.people,
-                    onTap: () {
-                      // temporarily navigate to community screen
-                      AppRouter.router.push(AppRouter.community);
-                    }),
+                // _buildDrawerItem(title: "BookMark", icon: Icons.local_offer),
+                // _buildDrawerItem(
+                //     title: "Your Communities",
+                //     icon: Icons.people,
+                //     onTap: () {
+                //       // temporarily navigate to community screen
+                //       AppRouter.router.push(AppRouter.community);
+                //     }),
               ],
             ),
           ),
