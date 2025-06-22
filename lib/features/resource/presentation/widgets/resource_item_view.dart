@@ -135,10 +135,10 @@ class _ResourceItemViewState extends State<ResourceItemView> {
                 style: Styles.font12w400.copyWith(color: ColorsManager.grayColor, height: 1.9),
               ),
               20.heightBox,
-              if (widget.resource?.fileUrl != null && widget.resource?.originalFileName != null)
+              if (widget.resource?.fileUrl != null)
                 ListView.separated(
                   itemBuilder: (context, index) => PdfPostView(
-                    title: widget.resource?.originalFileName ?? '',
+                    title: widget.resource?.originalFileName ?? widget.resource?.fileUrl?.split('/').last ??'',
                     url: widget.resource?.fileUrl ?? '',
                     size: widget.resource?.fileSize,
                   ),
