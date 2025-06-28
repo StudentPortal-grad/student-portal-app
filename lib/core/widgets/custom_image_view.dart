@@ -157,9 +157,6 @@ class CustomImageView extends StatelessWidget {
                 return placeHolderWidget ??
                     Image.asset(
                       placeHolder,
-                      height: height,
-                      width: width,
-                      fit: fit ?? BoxFit.cover,
                     );
               },
             );
@@ -168,9 +165,6 @@ class CustomImageView extends StatelessWidget {
             return placeHolderWidget ??
                 Image.asset(
                   placeHolder,
-                  height: height,
-                  width: width,
-                  fit: fit ?? BoxFit.cover,
                 );
           }
         case ImageType.png:
