@@ -40,6 +40,7 @@ class ChatsBloc extends Bloc<ChatsEvent, ChatsState> {
           emit(ChatsError(error.toString()));
         },
       );
+      add(NewConversationReceived(_conversations));
     } catch (e) {
       log('ChatsBloc caught exception: $e');
       emit(ChatsError(e.toString()));
