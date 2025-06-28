@@ -7,6 +7,7 @@ import 'package:student_portal/features/home/presentation/widgets/post_view.dart
 import '../../../../core/theming/colors.dart';
 import '../../../../core/widgets/custom_refresh_indicator.dart';
 import '../../../../core/widgets/loading_screen.dart';
+import '../../../../core/widgets/no_data_view.dart';
 import '../../data/dto/vote_dto.dart';
 import '../../data/model/post_model/post.dart';
 import '../manager/discussion_bloc/discussion_bloc.dart';
@@ -68,12 +69,11 @@ class _HomeBodyViewState extends State<HomeBodyView> {
           builder: (context, state) {
             final discussions = (state is DiscussionLoaded) ? state.posts : widget.discussions;
             if (discussions.isEmpty) {
-              return Center(child: Text('No Discussions'));
+              return NoDataView(text: 'No Discussions');
             }
             return ListView.separated(
               shrinkWrap: true,
               controller: _scrollController,
-              physics: const BouncingScrollPhysics(),
               padding: EdgeInsets.symmetric(horizontal: 28.w, vertical: 15.h),
               separatorBuilder: (context, index) => 15.heightBox,
               itemBuilder: (context, index) {

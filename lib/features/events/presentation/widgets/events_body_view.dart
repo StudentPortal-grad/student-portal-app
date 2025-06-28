@@ -5,6 +5,7 @@ import 'package:student_portal/core/helpers/app_size_boxes.dart';
 import '../../../../core/theming/text_styles.dart';
 import '../../../../core/utils/app_router.dart';
 import '../../../../core/widgets/loading_screen.dart';
+import '../../../../core/widgets/no_data_view.dart';
 import '../../data/models/event_model.dart';
 import 'event_item_view.dart';
 
@@ -65,6 +66,10 @@ class _EventsBodyViewState extends State<EventsBodyView> {
       builder: (context, state) {
         final events = (state is EventsLoaded) ? state.events : widget.events;
         final hasMore = (state is EventsLoaded) ? state.hasMore : false;
+
+        if (events.isEmpty) {
+          return NoDataView(text: 'No Events');
+        }
 
         return SingleChildScrollView(
           controller: _scrollController,

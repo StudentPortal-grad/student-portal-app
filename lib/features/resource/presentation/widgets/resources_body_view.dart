@@ -6,6 +6,7 @@ import 'package:student_portal/features/resource/presentation/widgets/resource_i
 
 import '../../../../core/widgets/custom_refresh_indicator.dart';
 import '../../../../core/widgets/loading_screen.dart';
+import '../../../../core/widgets/no_data_view.dart';
 import '../../../home/data/dto/vote_dto.dart';
 import '../../data/model/resource.dart';
 import '../manager/get_resource_bloc/get_resource_bloc.dart';
@@ -69,7 +70,7 @@ class _ResourcesBodyViewState extends State<ResourcesBodyView> {
                 ? state.resources
                 : widget.resources;
             if (resources.isEmpty) {
-              return Center(child: Text('No Resources'));
+              return NoDataView(text: 'No Resources');
             }
             return ListView.separated(
               controller: _scrollController,
