@@ -68,7 +68,9 @@ class _ResourcesBodyViewState extends State<ResourcesBodyView> {
             final resources = (state is GetResourceLoaded)
                 ? state.resources
                 : widget.resources;
-
+            if (resources.isEmpty) {
+              return Center(child: Text('No Resources'));
+            }
             return ListView.separated(
               controller: _scrollController,
               physics: const BouncingScrollPhysics(),

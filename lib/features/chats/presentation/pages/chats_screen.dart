@@ -22,28 +22,28 @@ class ChatsScreen extends StatelessWidget {
     return SafeArea(
       child: Padding(
         padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 28.w),
-        child: BlocBuilder<ChatsBloc, ChatsState>(
-          builder: (context, state) {
-            if (state is ChatsLoading) {
-              return const Center(child: LoadingScreen(useMainColors: true));
-            }
-            if (state is ChatsError) {
-              return ErrorScreen(
-                failure: Failure(message: state.message),
-                onRetry: () async => BlocProvider.of<ChatsBloc>(context).add(StartListeningToConversations()),
-              );
-            }
-            if (state is ChatsStreamUpdated) {
-              if (state.conversations.isEmpty) {
-                return const Center(child: Text("No Conversations"));
-              }
-              return CustomRefreshIndicator(
-                onRefresh: () async => BlocProvider.of<ChatsBloc>(context).add(StartListeningToConversations()),
-                child: Column(
-                  children: [
-                    _buildMessagesAppBar(),
-                    20.heightBox,
-                    Expanded(
+        child: Column(
+          children: [
+            _buildMessagesAppBar(),
+            20.heightBox,
+            Expanded(
+              child: BlocBuilder<ChatsBloc, ChatsState>(
+                builder: (context, state) {
+                  if (state is ChatsLoading) {
+                    return const Center(child: LoadingScreen(useMainColors: true));
+                  }
+                  if (state is ChatsError) {
+                    return ErrorScreen(
+                      failure: Failure(message: state.message),
+                      onRetry: () async => BlocProvider.of<ChatsBloc>(context).add(StartListeningToConversations()),
+                    );
+                  }
+                  if (state is ChatsStreamUpdated) {
+                    if (state.conversations.isEmpty) {
+                      return const Center(child: Text("No Conversations"));
+                    }
+                    return CustomRefreshIndicator(
+                      onRefresh: () async => BlocProvider.of<ChatsBloc>(context).add(StartListeningToConversations()),
                       child: Align(
                         alignment: Alignment.topCenter,
                         child: ListView.separated(
@@ -53,13 +53,13 @@ class ChatsScreen extends StatelessWidget {
                           itemCount: state.conversations.length,
                         ),
                       ),
-                    ),
-                  ],
-                ),
-              );
-            }
-            return SizedBox.shrink();
-          },
+                    );
+                  }
+                  return SizedBox.shrink();
+                },
+              ),
+            ),
+          ],
         ),
       ),
     );
