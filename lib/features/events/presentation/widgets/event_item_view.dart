@@ -46,8 +46,7 @@ class EventItemView extends StatelessWidget {
               Expanded(
                 child: Text(
                   event?.title ?? '',
-                  style:
-                      Styles.font18w600.copyWith(fontWeight: FontWeight.w500),
+                  style: Styles.font18w600.copyWith(fontWeight: FontWeight.w500),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -80,8 +79,7 @@ class EventItemView extends StatelessWidget {
                 color: ColorsManager.lightGrayColor,
               ),
               1.5.widthBox,
-              Text(formatDateTimeRange(event?.startDate, event?.endDate),
-                  style: Styles.font13w400)
+              Text(formatDateTimeRange(event?.startDate, event?.endDate), style: Styles.font13w400)
             ],
           ),
           10.heightBox,
@@ -93,7 +91,14 @@ class EventItemView extends StatelessWidget {
                 color: ColorsManager.lightGrayColor,
               ),
               1.5.widthBox,
-              Text(event?.location ?? "The Location not defined yet", style: Styles.font13w400)
+              Flexible(
+                child: Text(
+                  event?.location ?? "The Location not defined yet",
+                  style: Styles.font13w400,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              )
             ],
           ),
         ],

@@ -21,6 +21,7 @@ class GoingPeopleListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (rsvpUsers.isEmpty) return const SizedBox.shrink();
     return Row(
       children: [
         // Stacked Profile Pictures
