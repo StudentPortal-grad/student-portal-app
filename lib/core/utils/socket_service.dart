@@ -14,6 +14,7 @@ import '../repo/user_repository.dart';
 class SocketService {
   static Socket? _socket;
   static bool _isInitialized = false;
+  static const _retryDelay = Duration(seconds: 5);
 
   // Getter to ensure socket exists
   static Socket get socket {
@@ -59,7 +60,6 @@ class SocketService {
       throw SocketFailure.fromError(e);
     }
   }
-
   static void _setupEventHandlers(Completer? completer) {
     _socket!.onConnect((_) {
       log('Socket connected');
@@ -74,16 +74,39 @@ class SocketService {
         completer.completeError(SocketFailure.fromError(error));
       }
       _handleTokenErrorIfNeeded(error);
+      _tryReconnect();
     });
 
     _socket!.onError((error) {
       log('Socket error: $error');
       _handleTokenErrorIfNeeded(error);
+      _tryReconnect();
     });
 
-    _socket!.onDisconnect((_) => log('Socket disconnected'));
-    _socket!.onReconnect((_) => log('Socket reconnected'));
+    _socket!.onDisconnect((_) {
+      log('Socket disconnected');
+      _tryReconnect();
+    });
+
+    _socket!.onReconnect((_) {
+      log('Socket reconnected');
+    });
   }
+
+  static void _tryReconnect() {
+    Future.delayed(_retryDelay, () async {
+      log("Attempting socket reconnection...");
+      try {
+        if (!_socket!.connected) {
+          _socket!.connect();
+        }
+      } catch (e) {
+        log("Reconnection attempt failed: $e");
+        _tryReconnect();
+      }
+    });
+  }
+
 
   static void _handleTokenErrorIfNeeded(dynamic error) {
     final err = error.toString();
@@ -97,6 +120,7 @@ class SocketService {
     log('Handling token error - disconnecting socket and invalidating token');
     disconnect();
     UserRepository.invalidToken();
+    return;
   }
 
   static void emit(String event, {Object? message}) {
